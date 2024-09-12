@@ -68,13 +68,14 @@ public class Example
 {
     public void AddParameters()
     {
-        var parameters = new List<DbParameter>();
-
         // For SQL Server
-        parameters.AddParameter<SqlParameter>("@Id", DbType.Int32, 1);
+        var parameters = new List<SqlParameter>();
+        parameters.AddParameter("@Id", DbType.Int32, 1);
+        parameters.AddParameter("@Id", DbType.Int32, 2);
 
         // For PostgreSQL
-        parameters.AddParameter<NpgsqlParameter>("@Name", DbType.String, "John Doe");
+        var parameters = new List<NpgsqlParameter>();
+        parameters.AddParameter("@Name", DbType.String, "John Doe");
 
         // Use parameters with your database command
     }
