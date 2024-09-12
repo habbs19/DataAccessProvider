@@ -17,8 +17,11 @@ This library provides a flexible, generic solution for accessing multiple types 
 
 2. **Register Database Services**: In your `.NET` application, register the required database type in the `Startup.cs` or `Program.cs` file using Dependency Injection.
 
-    ```csharp
-    services.AddSingleton<DatabaseFactory>(sp => new DatabaseFactory(Configuration.GetConnectionString("DefaultConnection")));
+    ```csharp    
+    // Add connection strings for each database type
+    services.AddSingleton<IDatabase<MSSQL>>(provider =>new MSSQLDatabase(Configuration.GetConnectionString("MSSQLConnection")))
+    services.AddSingleton<IDatabase<Postgres>>(provider =>new PostgresDatabase(Configuration.GetConnectionString("PostgresConnection")))
+
     services.AddScoped<IDatabase<MSSQL>, MSSQLDatabase>();
     services.AddScoped<IDatabase<Postgres>, PostgresDatabase>();
     ```
