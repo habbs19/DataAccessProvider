@@ -4,7 +4,7 @@ using System.Data.Common;
 
 namespace DataAccessProvider.Database;
 
-public class PostgresDatabase : BaseDatabase<Postgres>
+public sealed class PostgresDatabase : BaseDatabase<Postgres>
 {
     public PostgresDatabase(string connectionString) : base(connectionString) { }
 

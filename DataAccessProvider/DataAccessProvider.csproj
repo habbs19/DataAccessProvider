@@ -4,6 +4,22 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <OutputType>library</OutputType>
+    <PackageId>DataAccessProvider</PackageId>
+    <Version>1.0.3</Version>
+    <Authors>Habib Shakibanejad</Authors>
+    <Company>HSXuite</Company>
+    <Title>DataAccessProvider</Title>
+    <PackageTags>Data Access Layer; MSSQL; Postgres; MySql; DbAbstraction; DataAccess</PackageTags>
+    <PackageDescription>This package provides a flexible and generic database abstraction for use with multiple database providers 
+    such as SQL Server, PostgreSQL, MySQL, and Oracle. It supports asynchronous execution of SQL commands and stored procedures with 
+    methods like ExecuteReaderAsync and ExecuteNonQueryAsync, enabling efficient data retrieval and manipulation. The package is designed with 
+    extensibility and dependency injection in mind, making it ideal for applications following the repository pattern. Additionally, it includes 
+    support for parameterized queries, and customizable database connections, providing a powerful 
+    solution for multi-database integration in .NET applications.</PackageDescription>
+    <RepositoryUrl>https://github.com/habbs19/DataAccessProvider</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

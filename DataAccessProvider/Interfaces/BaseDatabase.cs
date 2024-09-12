@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using Microsoft.Data.SqlClient;
+using System.Data;
 using System.Data.Common;
 
 namespace DataAccessProvider.Interfaces;
@@ -14,7 +15,7 @@ public abstract class BaseDatabase<TDatabaseType> : IDatabase<TDatabaseType> whe
     protected abstract DbConnection GetConnection();
     protected abstract DbCommand GetCommand(string query, DbConnection connection);
 
-    protected async Task<List<Dictionary<string, object>>> ReadResultAsync(DbDataReader reader)
+    private async Task<List<Dictionary<string, object>>> ReadResultAsync(DbDataReader reader)
     {
         var result = new List<Dictionary<string, object>>();
         var columns = reader.GetColumnSchema();
@@ -34,7 +35,7 @@ public abstract class BaseDatabase<TDatabaseType> : IDatabase<TDatabaseType> whe
         return result;
     }
 
-    public async Task<object> ExecuteReaderAsync(string query, List<DbParameter>? parameters = null, int timeout = 45, CommandType commandType = CommandType.StoredProcedure)
+    public virtual async Task<object> ExecuteReaderAsync(string query, List<DbParameter>? parameters = null, int timeout = 45, CommandType commandType = CommandType.StoredProcedure)
     {
         using (var connection = GetConnection())
         {
@@ -62,7 +63,7 @@ public abstract class BaseDatabase<TDatabaseType> : IDatabase<TDatabaseType> whe
         }
     }
 
-    public async Task<int> ExecuteNonQueryAsync<TConnection, TCommand>(string query, List<DbParameter>? parameters = null, int timeout = 45, CommandType commandType = CommandType.StoredProcedure)
+    public virtual async Task<int> ExecuteNonQueryAsync(string query, List<DbParameter>? parameters = null, int timeout = 45, CommandType commandType = CommandType.StoredProcedure)
     {
         using (var connection = GetConnection())
         {
@@ -75,6 +76,44 @@ public abstract class BaseDatabase<TDatabaseType> : IDatabase<TDatabaseType> whe
 
                 await connection.OpenAsync();
                 return await command.ExecuteNonQueryAsync();
+            }
+        }
+    }
+
+    public virtual async Task<List<T>> ExecuteQueryAsync<T>(string query, List<DbParameter>? parameters = null, int timeout = 45, CommandType commandType = CommandType.StoredProcedure) where T : class, new()
+    {
+        using (var connection = GetConnection())
+        {
+            using (var command = GetCommand(query, connection))
+            {
+                command.CommandTimeout = timeout;
+                command.CommandType = commandType;
+
+                if (parameters != null)
+                {
+                    command.Parameters.AddRange(parameters.ToArray());
+                }
+
+                await connection.OpenAsync();
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    var resultSet = await ReadResultAsync(reader);
+                    var result = new List<T>();
+
+                    foreach (var row in resultSet)
+                    {
+                        var item = new T();
+                        foreach (var property in typeof(T).GetProperties())
+                        {
+                            if (row.ContainsKey(property.Name) && property.CanWrite)
+                            {
+                                property.SetValue(item, Convert.ChangeType(row[property.Name], property.PropertyType));
+                            }
+                        }
+                        result.Add(item);
+                    }
+                    return result;
+                }
             }
         }
     }
