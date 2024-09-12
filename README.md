@@ -79,7 +79,7 @@ Here is how you can use the `AddParameter` extension method to add parameters to
             // Use parameters with your database command
         }
     }
-```
+    ```
 
 ## Supported Databases
 
