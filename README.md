@@ -63,26 +63,22 @@ The library includes an extension method for adding database parameters to a lis
 
 Here is how you can use the `AddParameter` extension method to add parameters to a `List<DbParameter>`:
 
-```csharp
-using System.Data;
-using System.Data.SqlClient;
-using Npgsql; // For PostgreSQL
-
-public class Example
-{
-    public void AddParameters()
+    ```csharp
+    public class Example
     {
-        var parameters = new List<DbParameter>();
+        public void AddParameters()
+        {
+            var parameters = new List<DbParameter>();
 
-        // For SQL Server
-        parameters.AddParameter<SqlParameter>("@Id", DbType.Int32, 1);
+            // For SQL Server
+            parameters.AddParameter<SqlParameter>("@Id", DbType.Int32, 1);
 
-        // For PostgreSQL
-        parameters.AddParameter<NpgsqlParameter>("@Name", DbType.String, "John Doe");
+            // For PostgreSQL
+            parameters.AddParameter<NpgsqlParameter>("@Name", DbType.String, "John Doe");
 
-        // Use parameters with your database command
+            // Use parameters with your database command
+        }
     }
-}
 ```
 
 ## Supported Databases
