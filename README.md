@@ -9,7 +9,6 @@ This library provides a flexible, generic solution for accessing multiple types 
 - **Dependency Injection Ready**: Easily integrates with .NET Core Dependency Injection (DI), enabling you to register and resolve different database services for use in your applications.
 - **Parameter Management**: Provides an extension method for adding database parameters in a type-safe manner.
 - **Command Execution**: Supports both `ExecuteReaderAsync` for fetching data and `ExecuteNonQueryAsync` for executing non-query commands (e.g., inserts, updates).
-- **Fallback Support**: MySQL and Oracle databases can be configured to share a common fallback implementation, with clear error handling for unsupported databases.
 
 ## How to Use
 
