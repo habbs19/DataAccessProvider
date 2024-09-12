@@ -8,7 +8,6 @@ This library provides a flexible, generic solution for accessing multiple types 
 - **Support for Multiple Databases**: Includes built-in support for MSSQL, Postgres, MySQL, and Oracle, with the ability to add more databases as needed.
 - **Dependency Injection Ready**: Easily integrates with .NET Core Dependency Injection (DI), enabling you to register and resolve different database services for use in your applications.
 - **Command Execution**: Supports both `ExecuteReaderAsync` for fetching data and `ExecuteNonQueryAsync` for executing non-query commands (e.g., inserts, updates).
-- **Flexible Factory Pattern**: Uses a `DatabaseFactory` to create the appropriate database service based on the database type (MSSQL, Postgres, etc.).
 - **Fallback Support**: MySQL and Oracle databases can be configured to share a common fallback implementation, with clear error handling for unsupported databases.
 
 ## How to Use
