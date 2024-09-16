@@ -3,21 +3,19 @@ using Microsoft.Data.SqlClient;
 using Npgsql;
 using System.Data.Common;
 
-namespace DataAccessProvider.Database
+namespace DataAccessProvider.Database;
+
+public sealed class MSSQLDatabase : BaseDatabase<MSSQL,SqlParameter>, IDatabaseMSSQL
 {
-    public sealed class MSSQLDatabase : BaseDatabase<MSSQL>
+    public MSSQLDatabase(string connectionString): base(connectionString) { }
+
+    public override DbConnection GetConnection()
     {
-        public MSSQLDatabase(string connectionString): base(connectionString) { }
-
-        protected override DbConnection GetConnection()
-        {
-            return new SqlConnection(_connectionString);
-        }
-
-        protected override DbCommand GetCommand(string query, DbConnection connection)
-        {
-            return new SqlCommand(query, (SqlConnection)connection);
-        }
+        return new SqlConnection(_connectionString);
     }
 
+    public override DbCommand GetCommand(string query, DbConnection connection)
+    {
+        return new SqlCommand(query, (SqlConnection)connection);
+    }
 }

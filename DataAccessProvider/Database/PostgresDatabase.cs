@@ -4,16 +4,16 @@ using System.Data.Common;
 
 namespace DataAccessProvider.Database;
 
-public sealed class PostgresDatabase : BaseDatabase<Postgres>
+public sealed class PostgresDatabase : BaseDatabase<Postgres,NpgsqlParameter>,IDatabasePostgres
 {
     public PostgresDatabase(string connectionString) : base(connectionString) { }
 
-    protected override DbConnection GetConnection()
+    public override DbConnection GetConnection()
     {
         return new NpgsqlConnection(_connectionString);
     }
 
-    protected override DbCommand GetCommand(string query, DbConnection connection)
+    public override DbCommand GetCommand(string query, DbConnection connection)
     {
         return new NpgsqlCommand(query, (NpgsqlConnection)connection);
     }

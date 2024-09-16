@@ -1,69 +1,124 @@
+using DataAccessProvider;
 using DataAccessProvider.Database;
+using DataAccessProvider.Extensions;
 using DataAccessProvider.Interfaces;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using Moq;
+using System.Data;
 using System.Data.Common;
+using System.Threading.Tasks.Dataflow;
 
 namespace Test;
 [TestClass]
 public class Test_MSSQL
 {
-    private Mock<DbConnection> _mockDbConnection;
-    private Mock<DbCommand> _mockDbCommand;
-    private Mock<DbDataReader> _mockDbDataReader;
+    private string _testConnectionString = string.Empty;
+    private IDatabaseMSSQL _mssqlDatabase;
 
-    //[TestInitialize]
+    [TestInitialize]
     public void Setup()
     {
-        _mockDbConnection = new Mock<DbConnection>();
-        _mockDbCommand = new Mock<DbCommand>();
-        _mockDbDataReader = new Mock<DbDataReader>();
+        // Load the configuration from appsettings.json
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)  // Set the base path for config file location
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .Build();
 
-        // Setup the command and connection behavior
-        //_mockDbCommand.Setup(c => c.ExecuteReaderAsync());
-       // _mockDbConnection.Setup(c => c.CreateCommand()).Returns(_mockDbCommand.Object);
+        // Retrieve the connection string from appsettings.json
+        _testConnectionString = configuration.GetConnectionString("TestConnection");
+
+        // Initialize the MSSQLDatabase with a test connection string
+        _mssqlDatabase = new MSSQLDatabase(_testConnectionString);
     }
 
     [TestMethod]
     public async Task ExecuteReaderAsync_ReturnsCorrectResult()
     {
-        _mockDbConnection = new Mock<DbConnection>();
-        _mockDbCommand = new Mock<DbCommand>();
-        _mockDbDataReader = new Mock<DbDataReader>();
-
         // Arrange
-        var testDatabase = new MSSQLDatabase("myConnectionString");
-        var query = "SELECT * FROM Test";
-        var parameters = new List<DbParameter>();
-        var expectedResult = new Dictionary<int, List<Dictionary<string, object>>>
+        var query = "SELECT * FROM dbo.Category";
+        var parameters = new List<SqlParameter>();
+
+
+        // Act
+        var result = await _mssqlDatabase.ExecuteReaderAsync(query, parameters,CommandType.Text);
+
+        // Cast result to List of dictionaries
+        var resultList = ((Dictionary<int, List<Dictionary<string, object>>>)result)[0];
+
+        // Assert
+        Assert.IsNotNull(resultList);                      // Ensure result is not null
+        Assert.IsInstanceOfType(resultList, typeof(List<Dictionary<string, object>>));  // Ensure it's the correct type
+        Assert.AreEqual(4, resultList.Count);              // Ensure the list has 4 items
+
+    }
+
+    [TestMethod]
+    public async Task ExecuteReaderAsync_ReturnsCorrectResultSet()
+    {
+        // Arrange
+        var connectionString = "YourConnectionString";
+        var mockConnection = new Mock<DbConnection>();
+        var mockCommand = new Mock<DbCommand>();
+        var mockReader = new Mock<DbDataReader>();
+
+        // Setup mock command
+        mockCommand.Setup(cmd => cmd.ExecuteReaderAsync()).ReturnsAsync(mockReader.Object);
+        mockConnection.Setup(cmd => cmd.CreateCommand()).Returns(mockCommand.Object);
+
+        // Setup mock reader
+        mockReader.SetupSequence(r => r.Read())
+                  .Returns(true)
+                  .Returns(false); // Simulate that there is one row
+
+        mockReader.Setup(r => r["Column1"]).Returns("Value1");
+
+        var resultSet = new Dictionary<int, List<Dictionary<string, object>>>
         {
             {
-                0, new List<Dictionary<string, object>>
-                {
-                    new Dictionary<string, object> { { "Column1", "Value1" }, { "Column2", 1 } }
+                0, new List<Dictionary<string, object>> {
+                    new Dictionary<string, object> { { "Column1", "Value1" } }
                 }
             }
         };
 
-        // Setup mock data reader behavior
-        _mockDbDataReader.SetupSequence(r => r.ReadAsync(It.IsAny<System.Threading.CancellationToken>()))
-            .ReturnsAsync(true)  // Simulate a row being read
-            .ReturnsAsync(false); // End of result set
+        // Setup mock connection
+        mockConnection.Setup(conn => conn.CreateCommand()).Returns(mockCommand.Object);
+        mockConnection.Setup(conn => conn.OpenAsync(default)).Returns(Task.CompletedTask);
 
-        _mockDbDataReader.Setup(r => r.GetName(0)).Returns("Column1");
-        _mockDbDataReader.Setup(r => r.GetValue(0)).Returns("Value1");
-        _mockDbDataReader.Setup(r => r.GetName(1)).Returns("Column2");
-        _mockDbDataReader.Setup(r => r.GetValue(1)).Returns(1);
-        _mockDbDataReader.Setup(r => r.FieldCount).Returns(2);
+        var database = new MSSQLDatabase(connectionString);
 
         // Act
-        var result = await testDatabase.ExecuteReaderAsync(query, parameters);
+        var result = await database.ExecuteReaderAsync("SELECT * FROM TestTable");
 
         // Assert
         Assert.IsNotNull(result);
-        var resultSet = result as Dictionary<int, List<Dictionary<string, object>>>;
-        Assert.AreEqual(expectedResult.Count, resultSet.Count);
-        Assert.AreEqual(expectedResult[0][0]["Column1"], resultSet[0][0]["Column1"]);
-        Assert.AreEqual(expectedResult[0][0]["Column2"], resultSet[0][0]["Column2"]);
+        Assert.IsInstanceOfType<Dictionary<int, List<Dictionary<string, object>>>>(result);
+        Assert.Equals(resultSet, result);
+    }
+
+    [TestMethod]
+    public void AddParametersExtension()
+    {
+        var parameters = new List<SqlParameter>();
+        parameters.AddParameter("myParam1", SqlDbType.Int, 19);
+        parameters.AddParameter("myParam2", SqlDbType.NChar, "Hello World!");
+        var mssql = _mssqlDatabase.ExecuteNonQueryAsync("");
+        
+        Assert.AreEqual(2, parameters.Count);
+        
+    }
+
+    [TestMethod]
+    public void GetConnection_ShouldReturnSqlConnection()
+    {
+        // Act
+
+        var connection = _mssqlDatabase.GetConnection();
+
+        // Assert
+        Assert.IsNotNull(connection);
+        Assert.IsInstanceOfType(connection, typeof(SqlConnection));
+        Assert.AreEqual(_testConnectionString, connection.ConnectionString);
     }
 }
