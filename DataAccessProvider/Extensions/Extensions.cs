@@ -14,7 +14,12 @@ public static class Extensions
         object value, int size = -1)
     {
         // Create the appropriate parameter and add it to the list
-        var parameter = CreateParameter<NpgsqlParameter>(parameterName, (DbType)dbType, value, size);
+        var parameter = new NpgsqlParameter();
+        parameter.ParameterName = parameterName;
+        parameter.NpgsqlDbType = dbType;
+        parameter.Value = value;
+        parameter.Size = size;
+
         parameters.Add(parameter);
         return parameters;
     }
@@ -23,7 +28,12 @@ public static class Extensions
         object value, int size = -1)
     {
         // Create the appropriate parameter and add it to the list
-        var parameter = CreateParameter<SqlParameter>(parameterName, (DbType)dbType, value, size);
+        var parameter = new SqlParameter();
+        parameter.ParameterName = parameterName;
+        parameter.SqlDbType = dbType;
+        parameter.Value = value;
+        parameter.Size = size;
+
         parameters.Add(parameter);
         return parameters;
     }
@@ -72,24 +82,6 @@ public static class Extensions
 
         }
         return service;
-    }
-
-    private static TParameter CreateParameter<TParameter>(string parameterName, DbType dbType,
-           object value, int size = -1) where TParameter : DbParameter, new()
-    {
-        var parameter = new TParameter();
-
-        // Set common properties
-        parameter.ParameterName = parameterName;
-        parameter.DbType = dbType;
-        parameter.Value = value;
-        parameter.Size = size;
-
-        // If needed, handle specific parameter types (e.g., SqlParameter, NpgsqlParameter)
-        // This is generally not needed if you're only working with TParameter as DbParameter
-        // but could be useful if there are type-specific properties to set
-
-        return parameter;
     }
 }
 
