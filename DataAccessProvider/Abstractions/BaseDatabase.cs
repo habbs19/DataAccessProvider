@@ -1,16 +1,17 @@
-﻿using DataAccessProvider.Types;
+﻿using DataAccessProvider.Interfaces;
+using DataAccessProvider.Types;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
 
-namespace DataAccessProvider.Interfaces;
+namespace DataAccessProvider.Abstractions;
 
 /// <summary>
 /// Abstract base class for a database implementation, providing methods for executing commands, queries, and managing connections.
 /// </summary>
 /// <typeparam name="TDataSourceType">The type of the data source (e.g., MSSQL, Postgres, etc.).</typeparam>
 /// <typeparam name="TDbParameter">The type of database parameter (e.g., SqlParameter, NpgsqlParameter).</typeparam>
-public abstract class BaseDatabase<TDataSourceType, TDbParameter> : IDatabase<TDataSourceType, TDbParameter>
+public abstract class BaseDatabase<TDataSourceType, TDbParameter> 
     where TDataSourceType : DataSourceType
     where TDbParameter : DbParameter
 {
@@ -85,31 +86,6 @@ public abstract class BaseDatabase<TDataSourceType, TDbParameter> : IDatabase<TD
                 }
                 if (resultSet.Count == 1) return resultSet[0];
                 return resultSet;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Executes a non-query command, such as an INSERT, UPDATE, or DELETE operation.
-    /// </summary>
-    /// <param name="query">The SQL query to execute.</param>
-    /// <param name="parameters">Optional parameters to pass to the query.</param>
-    /// <param name="commandType">The type of the SQL command (e.g., StoredProcedure, Text).</param>
-    /// <param name="timeout">The command timeout in seconds.</param>
-    /// <returns>The number of rows affected by the query.</returns>
-    public virtual async Task<int> ExecuteNonQueryAsync(string query, List<TDbParameter>? parameters = null, CommandType commandType = CommandType.StoredProcedure, int timeout = 45)
-    {
-        using (var connection = GetConnection())
-        {
-            using (var command = GetCommand(query, connection))
-            {
-                command.CommandTimeout = timeout;
-                command.CommandType = commandType;
-                if (parameters != null)
-                    command.Parameters.AddRange(parameters.ToArray());
-
-                await connection.OpenAsync();
-                return await command.ExecuteNonQueryAsync();
             }
         }
     }

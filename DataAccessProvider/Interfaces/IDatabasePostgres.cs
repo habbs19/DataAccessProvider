@@ -1,6 +1,7 @@
-﻿using DataAccessProvider.Types;
-using Npgsql;
+﻿using DataAccessProvider.DataSource.Params;
 
 namespace DataAccessProvider.Interfaces;
 
-public interface IDatabasePostgres : IDatabase<Postgres, NpgsqlParameter> { }
+public interface IDatabasePostgres<IPostgresDataSourceParams> : IDataSource<IPostgresDataSourceParams> where IPostgresDataSourceParams : PostgresSourceParams { }
+
+public interface IDatabasePostgres : IDataSource { }

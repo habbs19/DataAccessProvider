@@ -3,7 +3,7 @@
 public enum DataSourceTypeEnum
 {
     MSSQL,
-    Postgres,
+    PostgreSQL,
     MySql,
     Oracle,
     MongoDB,

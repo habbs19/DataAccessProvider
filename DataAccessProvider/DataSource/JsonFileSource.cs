@@ -1,128 +1,202 @@
-﻿using DataAccessProvider.Interfaces;
-using MongoDB.Bson.IO;
-using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using DataAccessProvider.Abstractions;
+using DataAccessProvider.DataSource.Params;
+using DataAccessProvider.Interfaces;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace DataAccessProvider.DataSource
 {
-    public class JsonFileSource : IJsonFileSource
+    /// <summary>
+    /// Represents a data source for reading and writing JSON files.
+    /// </summary>
+    public class JsonFileSource : IJsonFileSource<JsonFileSourceParams>, IJsonFileSource
     {
         /// <summary>
-        /// Asynchronously writes content to a file or performs a non-query file operation (e.g., write or delete).
+        /// Writes the content provided in <paramref name="params"/> to a JSON file.
         /// </summary>
-        /// <param name="filePath">The path to the file where the content will be written.</param>
-        /// <param name="parameters">Optional parameters for the operation. For file operations, this could be used for passing content or instructions.</param>
-        /// <param name="commandType">The type of command. Not applicable in the file context, but included for interface compatibility.</param>
-        /// <param name="timeout">The time in seconds to wait before the operation times out. Not applicable for file operations, but included for interface compatibility.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result contains the number of bytes written to the file.</returns>
-        /// <exception cref="Exception">Thrown when an error occurs while writing to the file.</exception>
-        public async Task<int> ExecuteNonQueryAsync(string filePath, List<DbParameter>? parameters = null, CommandType commandType = CommandType.StoredProcedure, int timeout = 45)
+        /// <param name="params">The parameters including file path and content to write.</param>
+        /// <returns>The parameters with an updated value of written bytes.</returns>
+        public async Task<JsonFileSourceParams> ExecuteNonQueryAsync(JsonFileSourceParams @params)
         {
             try
             {
-                // Example content to write to the file (from parameters or hardcoded for simplicity)
-                string content = parameters != null && parameters.Any()!
-                    ? parameters.First().Value!.ToString()! // Assuming content is passed via parameters
-                    : "Default file content";
+                string content = @params.Content;
 
                 // Write content to the file (overwriting any existing content)
-                await File.WriteAllTextAsync(filePath, content);
+                await File.WriteAllTextAsync(@params.FilePath, content);
 
-                // Return the number of bytes written
-                return content.Length;
+                // Set the value to the number of bytes written
+                @params.SetValue(content.Length);
+
+                return @params;
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error writing to file at {filePath}: {ex.Message}", ex);
+                throw new Exception($"Error writing to file at {@params.FilePath}: {ex.Message}", ex);
             }
         }
 
         /// <summary>
-        /// Reads a JSON file from the given file path and deserializes it into a list of objects of type T.
+        /// Executes a non-query operation for a parameterized data source.
         /// </summary>
-        /// <typeparam name="T">The type of objects to deserialize from the JSON content.</typeparam>
-        /// <param name="filePath">The path to the JSON file.</param>
-        /// <param name="parameters">Unused in this implementation, present for interface compatibility.</param>
-        /// <param name="commandType">Unused in this implementation, present for interface compatibility.</param>
-        /// <param name="timeout">Unused in this implementation, present for interface compatibility.</param>
-        /// <returns>A task that represents the asynchronous operation, containing a list of objects of type T.</returns>
-        public async Task<List<T>> ExecuteReaderAsync<T>(string filePath, List<DbParameter>? parameters = null, CommandType commandType = CommandType.StoredProcedure, int timeout = 45) where T : class, new()
+        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
+        /// <param name="params">The data source parameters.</param>
+        /// <returns>The parameters after execution.</returns>
+        public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
         {
-            try
+            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
+
+            if (jsonFileSourceParams != null)
             {
-                // Read the content from the file asynchronously
-                var fileContent = await File.ReadAllTextAsync(filePath);
-
-                // Deserialize the JSON content into a list of objects of type T
-                var result = JsonSerializer.Deserialize<List<T>>(fileContent);
-
-                // Return the deserialized result
-                return result ?? new List<T>();
+                return (TBaseDataSourceParams)(object)await ExecuteNonQueryAsync(jsonFileSourceParams);
             }
-            catch (Exception ex)
+            else
             {
-                // Handle any exceptions (e.g., file not found, deserialization errors)
-                throw new Exception($"Error reading or deserializing JSON file at {filePath}: {ex.Message}", ex);
+                throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
             }
         }
 
         /// <summary>
-        /// Reads a JSON file from the given file path and returns the raw file content as a string.
+        /// Reads content from the JSON file and deserializes it to an object of type <typeparamref name="T"/>.
         /// </summary>
-        /// <param name="filePath">The path to the JSON file.</param>
-        /// <param name="parameters">Unused in this implementation, present for interface compatibility.</param>
-        /// <param name="commandType">Unused in this implementation, present for interface compatibility.</param>
-        /// <param name="timeout">Unused in this implementation, present for interface compatibility.</param>
-        /// <returns>A task that represents the asynchronous operation, containing the file content as a string.</returns>
-        public async Task<object> ExecuteReaderAsync(string filePath, List<DbParameter>? parameters = null, CommandType commandType = CommandType.StoredProcedure, int timeout = 45)
+        /// <typeparam name="T">The type to deserialize the JSON content into.</typeparam>
+        /// <param name="params">The parameters including file path.</param>
+        /// <returns>The parameters after reading the file.</returns>
+        public async Task<JsonFileSourceParams> ExecuteReaderAsync<T>(JsonFileSourceParams @params) where T : class, new()
         {
             try
             {
-                // Read the content from the file asynchronously
-                var fileContent = await File.ReadAllTextAsync(filePath);
+                // Read file content
+                string content = await File.ReadAllTextAsync(@params.FilePath);
 
-                // Return the file content as a string
-                return fileContent;
+                // Deserialize the content to the specified type
+                T result = JsonSerializer.Deserialize<T>(content)!;
+
+                // Set the result in parameters
+                @params.SetValue(result);
+
+                return @params;
             }
             catch (Exception ex)
             {
-                // Handle any exceptions (e.g., file not found)
-                throw new Exception($"Error reading file at {filePath}: {ex.Message}", ex);
+                throw new Exception($"Error reading file at {@params.FilePath}: {ex.Message}", ex);
             }
         }
+
         /// <summary>
-        /// Asynchronously retrieves a scalar value from a file. In this implementation, it returns the size of the file in bytes.
+        /// Reads content from the JSON file.
         /// </summary>
-        /// <param name="filePath">The path to the file from which the scalar value (file size) will be retrieved.</param>
-        /// <param name="parameters">Optional parameters for the method. Not applicable in the file context, but included for interface compatibility.</param>
-        /// <param name="commandType">The type of command. Not applicable in the file context, but included for interface compatibility.</param>
-        /// <param name="timeout">The time in seconds to wait before the operation times out. Not applicable for file operations, but included for interface compatibility.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result contains the file size in bytes as an object.</returns>
-        /// <exception cref="Exception">Thrown when an error occurs while accessing or retrieving file information.</exception>
-        public async Task<object> ExecuteScalarAsync(string filePath, List<DbParameter>? parameters = null, CommandType commandType = CommandType.StoredProcedure, int timeout = 45)
+        /// <param name="params">The parameters including file path.</param>
+        /// <returns>The parameters after reading the file.</returns>
+        public async Task<JsonFileSourceParams> ExecuteReaderAsync(JsonFileSourceParams @params)
         {
             try
             {
-                // Get file info
-                var fileInfo = new FileInfo(filePath);
+                // Read file content
+                string content = await File.ReadAllTextAsync(@params.FilePath);
 
-                // Return the file size (in bytes) as a scalar value
-                return await Task.FromResult(fileInfo.Length);
+                // Set the content as the value in parameters
+                @params.SetValue(content);
+
+                return @params;
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error retrieving file info from {filePath}: {ex.Message}", ex);
+                throw new Exception($"Error reading file at {@params.FilePath}: {ex.Message}", ex);
             }
         }
 
+        /// <summary>
+        /// Reads content from the JSON file and deserializes it to an object of type <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type to deserialize the JSON content into.</typeparam>
+        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
+        /// <param name="params">The data source parameters including file path.</param>
+        /// <returns>The parameters after reading the file.</returns>
+        public async Task<TBaseDataSourceParams> ExecuteReaderAsync<T,TBaseDataSourceParams>(TBaseDataSourceParams @params)
+            where T : class,new()
+            where TBaseDataSourceParams : BaseDataSourceParams
+        {
+            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
 
-        public DbCommand GetCommand(string filePath, DbConnection connection)
+            if (jsonFileSourceParams != null)
+            {     
+                return (TBaseDataSourceParams)(object)await ExecuteReaderAsync<T>(jsonFileSourceParams);
+            }
+            else
+            {
+                throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
+            }
+        }
+
+        /// <summary>
+        /// Reads content from the JSON file.
+        /// </summary>
+        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
+        /// <param name="params">The parameters including file path.</param>
+        /// <returns>The parameters after reading the file.</returns>
+        public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
+        {
+            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
+
+            if (jsonFileSourceParams != null)
+            {
+                return (TBaseDataSourceParams)(object)await ExecuteReaderAsync(jsonFileSourceParams);
+            }
+            else
+            {
+                throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
+            }
+        }
+
+        /// <summary>
+        /// Executes a scalar operation and returns a single value.
+        /// </summary>
+        /// <param name="params">The parameters for the operation.</param>
+        /// <returns>The parameters after the scalar operation.</returns>
+        public async Task<JsonFileSourceParams> ExecuteScalarAsync(JsonFileSourceParams @params)
+        {
+            try
+            {
+                // Read file content
+                string content = await File.ReadAllTextAsync(@params.FilePath);
+
+                // Assuming scalar means returning a single value (e.g., first line)
+                string scalarValue = content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+
+                // Set the scalar value
+                @params.SetValue(scalarValue!);
+
+                return @params;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error reading scalar value from file at {@params.FilePath}: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Executes a scalar operation and returns a single value.
+        /// </summary>
+        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
+        /// <param name="params">The data source parameters.</param>
+        /// <returns>The parameters after the scalar operation.</returns>
+        public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
+        {
+            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
+
+            if (jsonFileSourceParams != null)
+            {
+                return (TBaseDataSourceParams)(object)await ExecuteScalarAsync(jsonFileSourceParams);
+            }
+            else
+            {
+                throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
+            }
+        }
+
+        // The DbCommand and DbConnection implementations are not yet implemented.
+        public DbCommand GetCommand(string query, DbConnection connection)
         {
             throw new NotImplementedException();
         }

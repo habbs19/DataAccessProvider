@@ -63,16 +63,16 @@ public static class Extensions
         switch (serviceLifetime)
         {
             case ServiceLifetime.Transient:
-                service.AddTransient<IDatabasePostgres>(factory => new PostgresDatabase(connectionString));
-                service.AddTransient<IDatabase<Postgres, NpgsqlParameter>, PostgresDatabase>(factory => new PostgresDatabase(connectionString));
+               // service.AddTransient<IDatabasePostgres>(factory => new PostgresDatabase(connectionString));
+               // service.AddTransient<IDataSource<Postgres, NpgsqlParameter>, PostgresDatabase>(factory => new PostgresDatabase(connectionString));
                 break;
             case ServiceLifetime.Singleton:
-                service.AddTransient<IDatabasePostgres>(factory => new PostgresDatabase(connectionString));
-                service.AddSingleton<IDatabase<Postgres, NpgsqlParameter>, PostgresDatabase>(factory => new PostgresDatabase(connectionString));
+             //   service.AddTransient<IDatabasePostgres>(factory => new PostgresDatabase(connectionString));
+             //   service.AddSingleton<IDataSource<Postgres, NpgsqlParameter>, PostgresDatabase>(factory => new PostgresDatabase(connectionString));
                 break;
             case ServiceLifetime.Scoped:
-                service.AddTransient<IDatabasePostgres>(factory => new PostgresDatabase(connectionString));
-                service.AddScoped<IDatabase<Postgres, NpgsqlParameter>, PostgresDatabase>(factory => new PostgresDatabase(connectionString));
+             //   service.AddTransient<IDatabasePostgres>(factory => new PostgresDatabase(connectionString));
+            //    service.AddScoped<IDataSource<Postgres, NpgsqlParameter>, PostgresDatabase>(factory => new PostgresDatabase(connectionString));
                 break;
             default: throw new ArgumentNullException(nameof(serviceLifetime));
 
@@ -86,16 +86,16 @@ public static class Extensions
         switch (serviceLifetime)
         {
             case ServiceLifetime.Transient:
-                service.AddTransient<IDatabaseMSSQL>(factory => new MSSQLDatabase(connectionString));
-                service.AddTransient<IDatabase<MSSQL, SqlParameter>, MSSQLDatabase>(factory => new MSSQLDatabase(connectionString));
+             //   service.AddTransient<IDatabaseMSSQL>(factory => new MSSQLDatabase(connectionString));
+             //   service.AddTransient<IDataSource<MSSQL, SqlParameter>, MSSQLDatabase>(factory => new MSSQLDatabase(connectionString));
                 break;
             case ServiceLifetime.Singleton:
-                service.AddSingleton<IDatabaseMSSQL>(factory => new MSSQLDatabase(connectionString));
-                service.AddSingleton<IDatabase<MSSQL, SqlParameter>, MSSQLDatabase>(factory => new MSSQLDatabase(connectionString));
+             //   service.AddSingleton<IDatabaseMSSQL>(factory => new MSSQLDatabase(connectionString));
+             //   service.AddSingleton<IDataSource<MSSQL, SqlParameter>, MSSQLDatabase>(factory => new MSSQLDatabase(connectionString));
                 break;
             case ServiceLifetime.Scoped:
-                service.AddScoped<IDatabaseMSSQL>(factory => new MSSQLDatabase(connectionString));
-                service.AddScoped<IDatabase<MSSQL, SqlParameter>, MSSQLDatabase>(factory => new MSSQLDatabase(connectionString));
+            //    service.AddScoped<IDatabaseMSSQL>(factory => new MSSQLDatabase(connectionString));
+             //   service.AddScoped<IDataSource<MSSQL, SqlParameter>, MSSQLDatabase>(factory => new MSSQLDatabase(connectionString));
                 break;
             default: throw new ArgumentNullException(nameof(serviceLifetime));
 

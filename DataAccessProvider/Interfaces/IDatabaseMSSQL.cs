@@ -1,6 +1,8 @@
-﻿using DataAccessProvider.Types;
-using Microsoft.Data.SqlClient;
+﻿using DataAccessProvider.Abstractions;
+using DataAccessProvider.DataSource.Params;
 
 namespace DataAccessProvider.Interfaces;
 
-public interface IDatabaseMSSQL : IDatabase<MSSQL, SqlParameter> { }
+public interface IDatabaseMSSQL<IMSSQLDataSourceParams> : IDataSource<IMSSQLDataSourceParams> where IMSSQLDataSourceParams : BaseDataSourceParams { }
+
+public interface IDatabaseMSSQL : IDataSource { }

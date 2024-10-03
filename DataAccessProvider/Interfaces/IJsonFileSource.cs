@@ -1,11 +1,8 @@
-﻿using DataAccessProvider.Types;
-using System;
-using System.Collections.Generic;
+﻿using DataAccessProvider.DataSource.Params;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessProvider.Interfaces;
 
-public interface IJsonFileSource :IDatabase<JsonFile, DbParameter> { }
+public interface IJsonFileSource<IJsonFileSourceParams> : IDataSource<IJsonFileSourceParams> where IJsonFileSourceParams : JsonFileSourceParams { }
+
+public interface IJsonFileSource : IDataSource { }
