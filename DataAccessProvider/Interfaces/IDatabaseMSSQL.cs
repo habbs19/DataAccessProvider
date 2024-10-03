@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using DataAccessProvider.Types;
+using Microsoft.Data.SqlClient;
 
 namespace DataAccessProvider.Interfaces;
 

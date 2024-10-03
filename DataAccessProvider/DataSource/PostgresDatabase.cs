@@ -1,8 +1,9 @@
 ﻿using DataAccessProvider.Interfaces;
+using DataAccessProvider.Types;
 using Npgsql;
 using System.Data.Common;
 
-namespace DataAccessProvider.Database;
+namespace DataAccessProvider.DataSource;
 
 public sealed class PostgresDatabase : BaseDatabase<Postgres,NpgsqlParameter>,IDatabasePostgres
 {

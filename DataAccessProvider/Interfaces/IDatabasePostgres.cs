@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using DataAccessProvider.Types;
+using Npgsql;
 
 namespace DataAccessProvider.Interfaces;
 

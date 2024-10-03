@@ -1,5 +1,5 @@
 using DataAccessProvider;
-using DataAccessProvider.Database;
+using DataAccessProvider.DataSource;
 using DataAccessProvider.Extensions;
 using DataAccessProvider.Interfaces;
 using Microsoft.Data.SqlClient;
