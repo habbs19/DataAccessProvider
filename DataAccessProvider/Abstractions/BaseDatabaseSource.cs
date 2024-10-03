@@ -15,7 +15,7 @@ namespace DataAccessProvider.Abstractions
     /// </summary>
     /// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
     public abstract class BaseDatabaseSource<TDatabaseParams, TParameter> : IDataSource<TDatabaseParams>, IDataSource
-        where TDatabaseParams : DatabaseParams<TParameter>
+        where TDatabaseParams : DatabaseSourceParams<TParameter>
         where TParameter : class
 
     {
@@ -71,8 +71,6 @@ namespace DataAccessProvider.Abstractions
 
         public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
         {
-            MSSQLSourceParams mSSQLSourceParams = new MSSQLSourceParams();
-
             using (var connection = GetConnection())
             {
                 using (var command = GetCommand(mSSQLSourceParams.Query, connection))
@@ -121,9 +119,15 @@ namespace DataAccessProvider.Abstractions
             throw new NotImplementedException();
         }
 
-        public BaseDataSourceParams<TValue> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
+        public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
         {
-            throw new NotImplementedException();
+            TValue result = new();
+            if (@params.GetType().Name == nameof(MSSQLSourceParams))
+            {
+                Console.WriteLine("name");
+            }
+
+            return null;
         }
     }
 }

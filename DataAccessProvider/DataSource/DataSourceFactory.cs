@@ -1,6 +1,7 @@
 ﻿using DataAccessProvider.Abstractions;
 using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.Interfaces;
+using DataAccessProvider.Interfaces.Source;
 using DataAccessProvider.Types;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,26 +21,18 @@ public class DataSourceFactory : IDataSourceFactory
 
  
 
-    public IDataSource CreateDataSource(DataSourceTypeEnum sourceType)
+    public IDataSource CreateDataSource()
     {
-        switch(sourceType)
-        {
-            case DataSourceTypeEnum.MSSQL: return _serviceProvider.GetService<IDatabaseMSSQL>()!;                
-            case DataSourceTypeEnum.JsonFile: return _serviceProvider.GetService<IJsonFileSource>()!;
-            case DataSourceTypeEnum.PostgreSQL: return _serviceProvider.GetService<IDatabasePostgres>()!;
-            default:
-                return null!;
-
-        }
+        return _serviceProvider.GetService<IDataSource>()!;
     }
 
     public IDataSource<IBaseDataSourceParams> CreateDataSource<IBaseDataSourceParams>() where IBaseDataSourceParams : BaseDataSourceParams
     {
         return typeof(IBaseDataSourceParams).Name switch
         {
-            nameof(MSSQL) => (IDataSource<IBaseDataSourceParams>)_serviceProvider.GetService<IDatabaseMSSQL<MSSQLSourceParams>>()!,
-            nameof(Postgres) => (IDataSource<IBaseDataSourceParams>)_serviceProvider.GetService<IDatabasePostgres<PostgresSourceParams>>()!,
-            nameof(JsonFile) => (IDataSource<IBaseDataSourceParams>)_serviceProvider.GetService<IJsonFileSource<JsonFileSourceParams>>()!,
+            nameof(MSSQL) => (IDataSource<IBaseDataSourceParams>)_serviceProvider.GetService<IMSSQLSource<MSSQLSourceParams>>()!,
+            nameof(Postgres) => (IDataSource<IBaseDataSourceParams>)_serviceProvider.GetService<IPostgresSource<PostgresSourceParams>>()!,
+            nameof(JsonFile) => (IDataSource<IBaseDataSourceParams>)_serviceProvider.GetService<IDataSource<JsonFileSourceParams>>()!,
             _ => throw new ArgumentException($"Unsupported data source type: {nameof(IBaseDataSourceParams)}")
         };
     }

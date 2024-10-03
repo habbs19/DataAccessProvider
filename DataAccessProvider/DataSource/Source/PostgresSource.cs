@@ -1,18 +1,17 @@
 ﻿using DataAccessProvider.Abstractions;
 using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.Interfaces;
-using DataAccessProvider.Types;
-using Microsoft.Data.SqlClient;
+using DataAccessProvider.Interfaces.Source;
 using Npgsql;
 using System.Data.Common;
 
-namespace DataAccessProvider.DataSource;
+namespace DataAccessProvider.DataSource.Source;
 
-public sealed class PostgresDatabase : BaseDatabaseSource<PostgresSourceParams, NpgsqlParameter>,
-    IDatabasePostgres,
-    IDatabasePostgres<PostgresSourceParams>
+public sealed class PostgresSource : BaseDatabaseSource<PostgresSourceParams, NpgsqlParameter>,
+    IDataSource,
+    IDataSource<PostgresSourceParams>
 {
-    public PostgresDatabase(string connectionString) : base(connectionString) { }
+    public PostgresSource(string connectionString) : base(connectionString) { }
 
     public override DbConnection GetConnection()
     {

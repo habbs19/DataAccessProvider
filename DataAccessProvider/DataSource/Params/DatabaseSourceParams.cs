@@ -3,7 +3,7 @@ using System.Data;
 
 namespace DataAccessProvider.DataSource.Params
 {
-    public class DatabaseParams<TParameter> : BaseDataSourceParams where TParameter : class
+    public class DatabaseSourceParams<TParameter> : BaseDataSourceParams where TParameter : class
     {
         public string Query { get; set; } = string.Empty;
         public List<TParameter>? Parameters { get; set; }

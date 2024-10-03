@@ -1,14 +1,6 @@
-﻿using DataAccessProvider.Abstractions;
-using Microsoft.Data.SqlClient;
-using System.Data;
-
+﻿using Microsoft.Data.SqlClient;
 namespace DataAccessProvider.DataSource.Params;
 
-public class MSSQLSourceParams : DatabaseParams<SqlParameter>
-{
-}
+public class MSSQLSourceParams : DatabaseSourceParams<SqlParameter> { }
 
-public class MSSQLSourceParams<TValue> : DatabaseParams<SqlParameter,TValue> where TValue : class
-{
-
-}
+public class MSSQLSourceParams<TValue> : DatabaseParams<SqlParameter, TValue> where TValue : class { }

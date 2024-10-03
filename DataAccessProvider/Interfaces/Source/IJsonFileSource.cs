@@ -1,8 +1,5 @@
 ﻿using DataAccessProvider.DataSource.Params;
-using System.Data.Common;
+namespace DataAccessProvider.Interfaces.Source;
 
-namespace DataAccessProvider.Interfaces;
-
+//public interface IJsonFileSource : IDataSource { }
 public interface IJsonFileSource<IJsonFileSourceParams> : IDataSource<IJsonFileSourceParams> where IJsonFileSourceParams : JsonFileSourceParams { }
-
-public interface IJsonFileSource : IDataSource { }

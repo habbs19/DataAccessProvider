@@ -1,6 +1,8 @@
 ﻿using DataAccessProvider.DataSource;
 using DataAccessProvider.DataSource.Params;
+using DataAccessProvider.DataSource.Source;
 using DataAccessProvider.Interfaces;
+using DataAccessProvider.Interfaces.Source;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -49,14 +51,16 @@ static ServiceProvider ConfigureServices()
     services.AddSingleton<IDataSourceFactory, DataSourceFactory>();
 
     // Add database source services
-    services.AddScoped<IDatabaseMSSQL<MSSQLSourceParams>, MSSQLDatabase>(provider => new MSSQLDatabase(configuration.GetConnectionString("TestConnection")));
-    services.AddScoped<IDatabaseMSSQL, MSSQLDatabase>((factory) => new MSSQLDatabase(configuration.GetConnectionString("TestConnection")));
+    services.AddScoped<IMSSQLSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(configuration.GetConnectionString("TestConnection")));
+    services.AddScoped<IMSSQLSource, MSSQLSource>((factory) => new MSSQLSource(configuration.GetConnectionString("TestConnection")));
     
-    services.AddScoped<IDatabasePostgres<PostgresSourceParams>, PostgresDatabase>(provider => new PostgresDatabase(configuration.GetConnectionString("TestConnection")));
-    services.AddScoped<IDatabaseMSSQL, MSSQLDatabase>((factory) => new MSSQLDatabase(configuration.GetConnectionString("TestConnection")));
+    services.AddScoped<IPostgresSource<PostgresSourceParams>, PostgresSource>(provider => new PostgresSource(configuration.GetConnectionString("TestConnection")));
+    services.AddScoped<IMSSQLSource, MSSQLSource>((factory) => new MSSQLSource(configuration.GetConnectionString("TestConnection")));
     
-    services.AddSingleton<IJsonFileSource, JsonFileSource>();
-    services.AddSingleton<IJsonFileSource<JsonFileSourceParams>, JsonFileSource>();
+    services.AddScoped<IDataSource, JsonFileSource>();
+    services.AddScoped<IDataSource, MSSQLSource>();
+    services.AddScoped<IDataSource, PostgresSource>();
+    services.AddScoped<IDataSource, OR>();
 
 
     return services.BuildServiceProvider();

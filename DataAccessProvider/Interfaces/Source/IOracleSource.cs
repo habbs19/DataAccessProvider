@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessProvider.Interfaces
+namespace DataAccessProvider.Interfaces.Source
 {
-    internal class IStaticCodeSource
+    internal class IOracleSource
     {
     }
 }

@@ -2,7 +2,6 @@
 using System.Data;
 using Microsoft.Extensions.DependencyInjection;
 using DataAccessProvider.DataSource;
-using DataAccessProvider.Interfaces;
 using Microsoft.Data.SqlClient;
 using NpgsqlTypes;
 using Npgsql;

@@ -1,15 +1,16 @@
 ﻿using DataAccessProvider.Abstractions;
 using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.Interfaces;
+using DataAccessProvider.Interfaces.Source;
 using System.Data.Common;
 using System.Text.Json;
 
-namespace DataAccessProvider.DataSource
+namespace DataAccessProvider.DataSource.Source
 {
     /// <summary>
     /// Represents a data source for reading and writing JSON files.
     /// </summary>
-    public class JsonFileSource : IJsonFileSource<JsonFileSourceParams>, IJsonFileSource
+    public class JsonFileSource : IDataSource<JsonFileSourceParams>, IDataSource
     {
         /// <summary>
         /// Writes the content provided in <paramref name="params"/> to a JSON file.
@@ -113,15 +114,15 @@ namespace DataAccessProvider.DataSource
         /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
         /// <param name="params">The data source parameters including file path.</param>
         /// <returns>The parameters after reading the file.</returns>
-        public async Task<TBaseDataSourceParams> ExecuteReaderAsync<T,TBaseDataSourceParams>(TBaseDataSourceParams @params)
-            where T : class,new()
-            where TBaseDataSourceParams : BaseDataSourceParams
+        public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams @params)
+            where TBaseDataSourceParams : BaseDataSourceParams<TValue>
+            where TValue : class, new()
         {
             JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
 
             if (jsonFileSourceParams != null)
-            {     
-                return (TBaseDataSourceParams)(object)await ExecuteReaderAsync<T>(jsonFileSourceParams);
+            {
+                return (TBaseDataSourceParams)(object)await ExecuteReaderAsync<TValue>(jsonFileSourceParams);
             }
             else
             {
@@ -147,6 +148,12 @@ namespace DataAccessProvider.DataSource
             {
                 throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
             }
+        }
+
+        public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
+        {
+            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
+            return (BaseDataSourceParams<TValue>)(object)await ExecuteReaderAsync<JsonFileSourceParams<TValue>>(jsonFileSourceParams!);
         }
 
         /// <summary>
@@ -193,17 +200,6 @@ namespace DataAccessProvider.DataSource
             {
                 throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
             }
-        }
-
-        // The DbCommand and DbConnection implementations are not yet implemented.
-        public DbCommand GetCommand(string query, DbConnection connection)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DbConnection GetConnection()
-        {
-            throw new NotImplementedException();
         }
     }
 }

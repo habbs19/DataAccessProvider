@@ -6,8 +6,8 @@ namespace DataAccessProvider.Interfaces;
 
 public interface IDataSourceFactory
 {
+    IDataSource CreateDataSource();
     IDataSource<IBaseDataSourceParams> CreateDataSource<IBaseDataSourceParams>() where IBaseDataSourceParams : BaseDataSourceParams;
-    IDataSource CreateDataSource(DataSourceTypeEnum sourceType);
 
     IBaseDataSourceParams CreateParams<IBaseDataSourceParams>() where IBaseDataSourceParams : BaseDataSourceParams;
 }
