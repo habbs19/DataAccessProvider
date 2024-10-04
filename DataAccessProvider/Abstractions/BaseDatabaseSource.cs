@@ -80,38 +80,12 @@ public abstract class BaseDatabaseSource<TDatabaseSourceParams, TParameter> : ID
         return (TBaseDataSourceParams)(object)await ExecuteNonQueryAsync(sourceParams!);
     }
 
-    /// <summary>
-    /// Executes a query asynchronously, retrieves the result set, and maps it to a list of objects of type <typeparamref name="TModel"/>.
-    /// This method uses the provided database parameters to execute the query and map the results into a collection of objects.
-    /// </summary>
-    /// <typeparam name="TModel">
-    /// The type to which each row in the result set will be mapped. The type <typeparamref name="TModel"/> must have a parameterless constructor 
-    /// and properties corresponding to the column names in the result set.
-    /// </typeparam>
-    /// <typeparam name="TBaseDataSourceParams">
-    /// The type of the database parameters, which should inherit from <see cref="BaseDataSourceParams"/>. 
-    /// This type contains details such as the query, command type, timeout, and any parameters required for execution.
-    /// </typeparam>
-    /// <param name="params">
-    /// The database parameters that include the query to be executed, the command type (e.g., text, stored procedure), 
-    /// timeout settings, and any necessary parameters to be added to the command.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation. When the task completes, it returns the same <typeparamref name="TBaseDataSourceParams"/> object, 
-    /// with the result set mapped to a list of objects of type <typeparamref name="TModel"/>.
-    /// </returns>
-    /// <exception cref="InvalidOperationException">
-    /// Thrown if there is an error opening the connection or executing the query.
-    /// </exception>
-    /// <remarks>
-    /// This method automatically maps each row from the result set to an object of type <typeparamref name="TModel"/> by matching the column names
-    /// with the property names of <typeparamref name="TModel"/>. Ensure that <typeparamref name="TModel"/> has a parameterless constructor and writable properties.
-    /// </remarks>
-    public async Task<TDatabaseSourceParams> ExecuteReaderAsync<TModel>(TDatabaseSourceParams @params) 
-        where TModel : class, new()
+   
+    public async Task<TDatabaseSourceParams> ExecuteReaderAsync<TValue>(TDatabaseSourceParams @params) 
+        where TValue : class, new()
     {
-        var sourceParams = @params as BaseDataSourceParams<TModel>;
-        var result = await ExecuteReaderAsync<TModel>(sourceParams!);
+        var sourceParams = @params as BaseDataSourceParams<TValue>;
+        var result = await ExecuteReaderAsync<TValue>(sourceParams!);
         return (TDatabaseSourceParams)(object)result;
     }
     /// <summary>
