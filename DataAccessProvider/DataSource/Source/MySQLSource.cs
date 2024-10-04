@@ -13,8 +13,13 @@ public sealed class MySQLSource : BaseDatabaseSource<MySQLSourceParams, MySqlPar
 {
     public MySQLSource(string connectionString) : base(connectionString) { }
 
+    public override DbConnection GetConnection()
+    {
+        return new MySqlConnection(_connectionString);
+    }
+
     public override DbCommand GetCommand(string query, DbConnection connection)
     {
-        return connection.CreateCommand();
+        return new MySqlCommand(query, (MySqlConnection)connection);
     }
 }

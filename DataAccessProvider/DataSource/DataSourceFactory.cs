@@ -45,13 +45,13 @@ public class DataSourceFactory : IDataSourceFactory
     {
         return baseDataSourceParams.GetType().Name switch
         {
-            nameof(MSSQLSourceParams) => (IDataSource)_serviceProvider.GetService<MSSQLSource>()!,
-            nameof(PostgresSourceParams) => (IDataSource)_serviceProvider.GetService<PostgresSource>()!,
-            nameof(JsonFileSourceParams) => (IDataSource)_serviceProvider.GetService<JsonFileSource>()!,
-            nameof(MySQLSourceParams) => (IDataSource)_serviceProvider.GetService<MySQLSource>()!,
-            nameof(StaticCodeParams) => (IDataSource)_serviceProvider.GetService<StaticCodeSource>()!,
-            nameof(OracleSourceParams) => (IDataSource)_serviceProvider.GetService<OracleDataSource>()!,
-            _ => throw new ArgumentException($"Unsupported data source type: {nameof(baseDataSourceParams)}")
+            nameof(MSSQLSourceParams) => _serviceProvider.GetService<MSSQLSource>() ?? throw new InvalidOperationException("MSSQLSource not found in service provider"),
+            nameof(PostgresSourceParams) => _serviceProvider.GetService<PostgresSource>() ?? throw new InvalidOperationException("PostgresSource not found in service provider"),
+            nameof(JsonFileSourceParams) => _serviceProvider.GetService<JsonFileSource>() ?? throw new InvalidOperationException("JsonFileSource not found in service provider"),
+            nameof(MySQLSourceParams) => _serviceProvider.GetService<MySQLSource>() ?? throw new InvalidOperationException("MySQLSource not found in service provider"),
+            nameof(StaticCodeParams) => _serviceProvider.GetService<StaticCodeSource>() ?? throw new InvalidOperationException("StaticCodeSource not found in service provider"),
+            nameof(OracleSourceParams) => _serviceProvider.GetService<OracleDataSource>() ?? throw new InvalidOperationException("OracleDataSource not found in service provider"),
+            _ => throw new ArgumentException($"Unsupported data source type: {baseDataSourceParams.GetType().Name}")
         };
     }
 
@@ -71,7 +71,15 @@ public class DataSourceFactory : IDataSourceFactory
 
     public IDataSource CreateDataSource<TValue>(BaseDataSourceParams<TValue> baseDataSourceParams) where TValue : class
     {
-        return baseDataSourceParams.GetType().Name switch
+        // Get the actual runtime type
+        var type = baseDataSourceParams.GetType();
+
+        // Get the clean type name: if it's generic, remove the backtick notation (`1)
+        var typeName = type.IsGenericType
+                ? type.GetGenericTypeDefinition().Name.Split('`')[0]  // Removes the "`1" part
+                : type.Name;
+
+        return typeName switch
         {
             nameof(MSSQLSourceParams) => (IDataSource)_serviceProvider.GetService<MSSQLSource>()!,
             nameof(PostgresSourceParams) => (IDataSource)_serviceProvider.GetService<PostgresSource>()!,
@@ -79,7 +87,7 @@ public class DataSourceFactory : IDataSourceFactory
             nameof(MySQLSourceParams) => (IDataSource)_serviceProvider.GetService<MySQLSource>()!,
             nameof(StaticCodeParams) => (IDataSource)_serviceProvider.GetService<StaticCodeSource>()!,
             nameof(OracleSourceParams) => (IDataSource)_serviceProvider.GetService<OracleDataSource>()!,
-            _ => throw new ArgumentException($"Unsupported data source type: {nameof(baseDataSourceParams)}")
+            _ => throw new ArgumentException($"Unsupported data source type: {typeName}")
         };
     }
 

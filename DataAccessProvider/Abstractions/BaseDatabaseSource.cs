@@ -2,6 +2,7 @@
 using System.Data.Common;
 using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.Interfaces;
+using MongoDB.Driver.Core.Misc;
 
 namespace DataAccessProvider.Abstractions;
 
@@ -109,41 +110,9 @@ public abstract class BaseDatabaseSource<TDatabaseSourceParams, TParameter> : ID
     public async Task<TDatabaseSourceParams> ExecuteReaderAsync<TModel>(TDatabaseSourceParams @params) 
         where TModel : class, new()
     {
-        using (var connection = GetConnection())
-        {
-            using (var command = GetCommand(@params.Query, connection))
-            {
-                command.CommandTimeout = @params.Timeout;
-                command.CommandType = @params.CommandType;
-
-                if (@params.Parameters != null)
-                {
-                    command.Parameters.AddRange(@params.Parameters.ToArray());
-                }
-
-                await connection.OpenAsync();
-                using (var reader = await command.ExecuteReaderAsync())
-                {
-                    var resultSet = await ReadResultAsync(reader);
-                    var result = new List<TModel>();
-
-                    foreach (var row in resultSet)
-                    {
-                        var item = new TModel();
-                        foreach (var property in typeof(TModel).GetProperties())
-                        {
-                            if (row.ContainsKey(property.Name) && property.CanWrite)
-                            {
-                                property.SetValue(item, Convert.ChangeType(row[property.Name], property.PropertyType));
-                            }
-                        }
-                        result.Add(item);
-                    }
-                    @params.SetValue(result.AsEnumerable());
-                    return @params;
-                }
-            }
-        }
+        var sourceParams = @params as BaseDataSourceParams<TModel>;
+        var result = await ExecuteReaderAsync<TModel>(sourceParams!);
+        return (TDatabaseSourceParams)(object)result;
     }
     /// <summary>
     /// Executes a query asynchronously and retrieves one or more result sets from the database.
@@ -177,11 +146,11 @@ public abstract class BaseDatabaseSource<TDatabaseSourceParams, TParameter> : ID
     {
         using (var connection = GetConnection())
         {
-            using (var command = connection.CreateCommand())
+            using (var command = GetCommand(@params.Query,connection))
             {
-                command.CommandText = @params.Query;
                 command.CommandTimeout = @params.Timeout;
                 command.CommandType = @params.CommandType;
+
                 if (@params.Parameters != null)
                     command.Parameters.AddRange(@params.Parameters.ToArray());
 
@@ -238,14 +207,48 @@ public abstract class BaseDatabaseSource<TDatabaseSourceParams, TParameter> : ID
         where TBaseDataSourceParams : BaseDataSourceParams<TValue>
         where TValue : class, new()
     {
-        var sourceParams = @params as TDatabaseSourceParams;
-
+        var sourceParams = @params as DatabaseSourceParams<TParameter,TValue>;
+        
         // Ensure the cast was successful
         if (sourceParams == null)
         {
             throw new ArgumentException("Invalid source parameters type.");
         }
-        return (TBaseDataSourceParams)(object) await ExecuteReaderAsync<TValue>(sourceParams);
+        using (var connection = GetConnection())
+        {
+            using (var command = GetCommand(sourceParams!.Query, connection))
+            {
+                command.CommandTimeout = sourceParams.Timeout;
+                command.CommandType = sourceParams.CommandType;
+
+                if (sourceParams.Parameters != null)
+                {
+                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+                }
+
+                await connection.OpenAsync();
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    var resultSet = await ReadResultAsync(reader);
+                    var result = new List<TValue>();
+
+                    foreach (var row in resultSet)
+                    {
+                        var item = new TValue();
+                        foreach (var property in typeof(TValue).GetProperties())
+                        {
+                            if (row.ContainsKey(property.Name) && property.CanWrite)
+                            {
+                                property.SetValue(item, Convert.ChangeType(row[property.Name], property.PropertyType));
+                            }
+                        }
+                        result.Add(item);
+                    }
+                    @params.SetValue(result.AsEnumerable());
+                    return @params;
+                }
+            }
+        }
     }
     /// <summary>
     /// Executes a query asynchronously and retrieves the result set based on the provided database parameters.
@@ -283,6 +286,28 @@ public abstract class BaseDatabaseSource<TDatabaseSourceParams, TParameter> : ID
             throw new ArgumentException("Invalid source parameters type.");
         }
         return (TBaseDataSourceParams)(object)await ExecuteReaderAsync(sourceParams!);
+    }
+
+    /// <summary>
+    /// Executes a query asynchronously, retrieves the result set, and maps it to a list of objects of type <typeparamref name="TValue"/>.
+    /// This method invokes a more specific implementation of <see cref="ExecuteReaderAsync{TValue, TBaseDataSourceParams}"/> to handle the query execution.
+    /// </summary>
+    /// <typeparam name="TValue">
+    /// The type to which each row in the result set will be mapped. The type <typeparamref name="TValue"/> must have a parameterless constructor 
+    /// and properties corresponding to the column names in the result set.
+    /// </typeparam>
+    /// <param name="params">
+    /// The base data source parameters that include the query to be executed, the command type, timeout, and any necessary parameters for execution.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation. When the task completes, it returns the same <see cref="BaseDataSourceParams{TValue}"/> object,
+    /// with the result set mapped to a list of objects of type <typeparamref name="TValue"/>.
+    /// </returns>
+    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params)
+        where TValue : class, new()
+    {
+        // Call a specific ExecuteReaderAsync overload
+        return await ExecuteReaderAsync<TValue, BaseDataSourceParams<TValue>>(@params);
     }
 
     /// <summary>
@@ -339,27 +364,7 @@ public abstract class BaseDatabaseSource<TDatabaseSourceParams, TParameter> : ID
             }
         }
     }
-    /// <summary>
-    /// Executes a query asynchronously, retrieves the result set, and maps it to a list of objects of type <typeparamref name="TValue"/>.
-    /// This method invokes a more specific implementation of <see cref="ExecuteReaderAsync{TValue, TBaseDataSourceParams}"/> to handle the query execution.
-    /// </summary>
-    /// <typeparam name="TValue">
-    /// The type to which each row in the result set will be mapped. The type <typeparamref name="TValue"/> must have a parameterless constructor 
-    /// and properties corresponding to the column names in the result set.
-    /// </typeparam>
-    /// <param name="params">
-    /// The base data source parameters that include the query to be executed, the command type, timeout, and any necessary parameters for execution.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation. When the task completes, it returns the same <see cref="BaseDataSourceParams{TValue}"/> object,
-    /// with the result set mapped to a list of objects of type <typeparamref name="TValue"/>.
-    /// </returns>
-    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) 
-        where TValue : class, new()
-    {
-        // Call a specific ExecuteReaderAsync overload
-        return await ExecuteReaderAsync<TValue, BaseDataSourceParams<TValue>>(@params);
-    }
+  
 
     /// <summary>
     /// Reads the result set from a <see cref="DbDataReader"/> and maps it to a list of dictionaries.

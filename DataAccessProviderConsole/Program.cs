@@ -17,26 +17,26 @@ var dataSourceProvider = serviceProvider.GetService<IDataSourceProvider>();
 /// test normal
 var mssqParams1 = new MSSQLSourceParams
 {
-    Query = "SELECT TOP 100 * FROM [HS].[dbo].[Diary]"
+    Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
 };
 var result = await dataSourceProvider!.ExecuteReaderAsync(mssqParams1);
-Console.WriteLine($"1:  {JsonSerializer.Serialize(result.Value)}");
+Console.WriteLine($"\n1:  {JsonSerializer.Serialize(result.Value)}");
 
 /// test with type return
 var mssqParams2 = new MSSQLSourceParams<Diary>
 {
-    Query = "SELECT TOP 100 * FROM [HS].[dbo].[Diary]"
+    Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
 };
 var result2 = await dataSourceProvider!.ExecuteReaderAsync(mssqParams2);
-Console.WriteLine($"2:  {JsonSerializer.Serialize(result2.Value)}");
+Console.WriteLine($"\n2:  {JsonSerializer.Serialize(result2.Value)}");
 
 /// test with type return
 var codeParams = new StaticCodeParams
 {
-    Content = "Hello my name is what"
+    Content = "Hello World"
 };
 var result3 = await dataSourceProvider!.ExecuteReaderAsync(codeParams);
-Console.WriteLine($"3:  {JsonSerializer.Serialize(result3.Value)}");
+Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result3.Value)}");
 
 
 
@@ -45,11 +45,9 @@ Console.WriteLine($"3:  {JsonSerializer.Serialize(result3.Value)}");
 
 static ServiceProvider ConfigureServices()
 {
-    // Load the configuration from appsettings.json
-    var configuration = new ConfigurationBuilder()
-        .SetBasePath(AppContext.BaseDirectory)  // Set the base path for config file location
-        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-        .Build();
+    string sqlString = "Server=HABIB;Database=HS;Trusted_Connection=Yes;TrustServerCertificate=Yes";
+    string postgresString = "";
+    string mySqlString = "";
 
     var services = new ServiceCollection();
 
@@ -59,15 +57,16 @@ static ServiceProvider ConfigureServices()
     services.AddSingleton<IDataSourceFactory, DataSourceFactory>();
 
     // Add database source services
-    services.AddScoped<IDataSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(configuration.GetConnectionString("TestConnection")));
-    services.AddScoped<IDataSource<PostgresSourceParams>, PostgresSource>(provider => new PostgresSource(configuration.GetConnectionString("TestConnection")));
-    services.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>((factory) => new MySQLSource(configuration.GetConnectionString("TestConnection")));
+    services.AddScoped<IDataSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(sqlString));
+    services.AddScoped<IDataSource<PostgresSourceParams>, PostgresSource>(provider => new PostgresSource(postgresString));
+    services.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>((factory) => new MySQLSource(mySqlString));
     
-    services.AddScoped<IDataSource, PostgresSource>(provider => new PostgresSource(configuration.GetConnectionString("TestConnection")));
-    services.AddScoped<IDataSource, MySQLSource>((factory) => new MySQLSource(configuration.GetConnectionString("TestConnection")));
-    services.AddScoped<IDataSource, MSSQLSource>((factory) => new MSSQLSource(configuration.GetConnectionString("TestConnection")));
-    
-    services.AddScoped<IDataSource, JsonFileSource>();
+    services.AddScoped(factory => new PostgresSource(postgresString));
+    services.AddScoped(factory => new MySQLSource(mySqlString));
+    services.AddScoped(factory => new MSSQLSource(sqlString));
+    services.AddScoped<JsonFileSource>();
+    services.AddScoped<StaticCodeSource>();
+
     services.AddScoped<IDataSource, PostgresSource>();
     services.AddScoped<IDataSource, OracleDataSource>();
     services.AddScoped<IDataSource, MongoDBSource>();
