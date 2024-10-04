@@ -4,55 +4,57 @@ using DataAccessProvider.DataSource.Source;
 using DataAccessProvider.Interfaces;
 using DataAccessProvider.Interfaces.Source;
 using DataAccessProvider.Types;
+using Google.Protobuf.Compiler;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Common;
+using System.Reflection;
 
 namespace DataAccessProvider.DataSource;
 
 public class DataSourceFactory : IDataSourceFactory
 {
     private readonly IServiceProvider _serviceProvider;
+    private readonly Dictionary<Type, Type> _dataSourceMappings = new();
 
     public DataSourceFactory(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
+
+        // Default data source mappings
+        _dataSourceMappings.Add(typeof(MSSQLSourceParams), typeof(MSSQLSource));
+        _dataSourceMappings.Add(typeof(PostgresSourceParams), typeof(PostgresSource));
+        _dataSourceMappings.Add(typeof(JsonFileSourceParams), typeof(JsonFileSource));
+        _dataSourceMappings.Add(typeof(MySQLSourceParams), typeof(MySQLSource));
+        _dataSourceMappings.Add(typeof(StaticCodeParams), typeof(StaticCodeSource));
+        _dataSourceMappings.Add(typeof(OracleSourceParams), typeof(OracleDataSource));
     }
 
+    public void RegisterDataSource<TParams, TSource>()
+     where TParams : BaseDataSourceParams
+     where TSource : IDataSource
+    {
+        _dataSourceMappings[typeof(TParams)] = typeof(TSource);
+    }
 
-    /// <summary>
-    /// Factory method for creating an appropriate data source based on the type of the provided <see cref="BaseDataSourceParams"/>.
-    /// The method inspects the runtime type of the <paramref name="baseDataSourceParams"/> and returns a corresponding <see cref="IDataSource"/> implementation.
-    /// </summary>
-    /// <param name="baseDataSourceParams">
-    /// The base data source parameters object, which determines the type of data source to create. 
-    /// This object contains query details, execution parameters, and other relevant information for the database interaction.
-    /// </param>
-    /// <returns>
-    /// An implementation of <see cref="IDataSource"/> that corresponds to the runtime type of <paramref name="baseDataSourceParams"/>.
-    /// For example, if the provided object is of type <see cref="MSSQLSourceParams"/>, an instance of <see cref="MSSQLSource"/> will be returned.
-    /// </returns>
-    /// <exception cref="ArgumentException">
-    /// Thrown when the type of <paramref name="baseDataSourceParams"/> is not supported, indicating an invalid or unsupported data source type.
-    /// </exception>
-    /// <remarks>
-    /// This method uses a <c>switch</c> expression to match the type of <paramref name="baseDataSourceParams"/> with the corresponding data source type.
-    /// The data source instance is resolved from the service provider (<see cref="_serviceProvider"/>), which is expected to have all supported data sources registered.
-    /// </remarks>
     public IDataSource CreateDataSource(BaseDataSourceParams baseDataSourceParams)
     {
-        return baseDataSourceParams.GetType().Name switch
+        var paramType = baseDataSourceParams.GetType();
+
+        // Check if there is a registered mapping for the given parameter type
+        if (_dataSourceMappings.TryGetValue(paramType, out var dataSourceType))
         {
-            nameof(MSSQLSourceParams) => _serviceProvider.GetService<MSSQLSource>() ?? throw new InvalidOperationException("MSSQLSource not found in service provider"),
-            nameof(PostgresSourceParams) => _serviceProvider.GetService<PostgresSource>() ?? throw new InvalidOperationException("PostgresSource not found in service provider"),
-            nameof(JsonFileSourceParams) => _serviceProvider.GetService<JsonFileSource>() ?? throw new InvalidOperationException("JsonFileSource not found in service provider"),
-            nameof(MySQLSourceParams) => _serviceProvider.GetService<MySQLSource>() ?? throw new InvalidOperationException("MySQLSource not found in service provider"),
-            nameof(StaticCodeParams) => _serviceProvider.GetService<StaticCodeSource>() ?? throw new InvalidOperationException("StaticCodeSource not found in service provider"),
-            nameof(OracleSourceParams) => _serviceProvider.GetService<OracleDataSource>() ?? throw new InvalidOperationException("OracleDataSource not found in service provider"),
-            _ => throw new ArgumentException($"Unsupported data source type: {baseDataSourceParams.GetType().Name}")
-        };
+            var dataSource = _serviceProvider.GetService(dataSourceType);
+            if (dataSource == null)
+            {
+                throw new InvalidOperationException($"{dataSourceType.Name} not found in service provider");
+            }
+            return (IDataSource)dataSource;
+        }
+
+        throw new ArgumentException($"Unsupported data source type: {paramType.Name}");
     }
 
     public IDataSource<T> CreateDataSource<T>() where T : BaseDataSourceParams
@@ -71,8 +73,13 @@ public class DataSourceFactory : IDataSourceFactory
 
     public IDataSource CreateDataSource<TValue>(BaseDataSourceParams<TValue> baseDataSourceParams) where TValue : class
     {
+        Assembly assem = typeof(BaseDataSourceParams<TValue>).Assembly;
+        BaseDataSourceParams p = (BaseDataSourceParams)assem.CreateInstance(assem.FullName);
+
         // Get the actual runtime type
         var type = baseDataSourceParams.GetType();
+
+        
 
         // Get the clean type name: if it's generic, remove the backtick notation (`1)
         var typeName = type.IsGenericType

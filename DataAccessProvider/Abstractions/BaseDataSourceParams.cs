@@ -12,7 +12,7 @@ namespace DataAccessProvider.Abstractions
         public void SetValue(IEnumerable<T> value) => _value = value;
     }
 
-    public abstract class BaseDataSourceParams
+    public abstract class BaseDataSourceParams 
     {
         private object? _value;
 

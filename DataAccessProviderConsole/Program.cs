@@ -14,7 +14,6 @@ var serviceProvider = ConfigureServices();
 
 var dataSourceProvider = serviceProvider.GetService<IDataSourceProvider>();
 
-/// test normal
 var mssqParams1 = new MSSQLSourceParams
 {
     Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
@@ -37,6 +36,15 @@ var codeParams = new StaticCodeParams
 };
 var result3 = await dataSourceProvider!.ExecuteReaderAsync(codeParams);
 Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result3.Value)}");
+
+var jsonFileParams = new JsonFileSourceParams
+{
+    Content = @"{Name: 'Michal Jackson'}"
+};
+var result4 = await dataSourceProvider!.ExecuteReaderAsync(codeParams);
+Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result4.Value)}");
+
+
 
 
 
