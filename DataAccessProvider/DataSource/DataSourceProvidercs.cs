@@ -1,14 +1,5 @@
-﻿using Amazon.Auth.AccessControlPolicy;
-using DataAccessProvider.Abstractions;
-using DataAccessProvider.DataSource.Params;
+﻿using DataAccessProvider.Abstractions;
 using DataAccessProvider.Interfaces;
-using System;
-using System.Buffers.Text;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Runtime.Intrinsics.X86;
-using System.Threading.Tasks;
-using static MongoDB.Driver.WriteConcern;
 
 namespace DataAccessProvider.DataSource
 {
@@ -55,8 +46,8 @@ namespace DataAccessProvider.DataSource
         /// </exception>
         public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
         {
-            IDataSource dataSource = GetDataSourceByParams<TBaseDataSourceParams>(_sourceFactory)!;
-            return await dataSource.ExecuteNonQueryAsync(@params);
+            IDataSource dataSource = _sourceFactory.CreateDataSource(@params);
+            return await dataSource.ExecuteNonQueryAsync<TBaseDataSourceParams>(@params);
         }
 
         /// <summary>
@@ -70,8 +61,8 @@ namespace DataAccessProvider.DataSource
             where TBaseDataSourceParams : BaseDataSourceParams<TValue>
             where TValue : class, new()
         {
-            IDataSource dataSource = GetDataSourceByParams<TValue,TBaseDataSourceParams>(_sourceFactory)!;
-            return await dataSource.ExecuteReaderAsync<TValue, TBaseDataSourceParams>(@params);
+            IDataSource dataSource = _sourceFactory.CreateDataSource(@params);
+            return await dataSource.ExecuteReaderAsync<TValue,TBaseDataSourceParams>(@params);
         }
 
         /// <summary>
@@ -82,28 +73,14 @@ namespace DataAccessProvider.DataSource
         /// <returns>The same parameter object after execution, with the result stored as a dictionary.</returns>
         public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
         {
-            IDataSource dataSource = GetDataSourceByParams<TBaseDataSourceParams>(_sourceFactory)!;
-            return await dataSource.ExecuteReaderAsync(@params);
+            IDataSource dataSource = _sourceFactory.CreateDataSource(@params);
+            return await dataSource.ExecuteReaderAsync<TBaseDataSourceParams>(@params);
         }
 
-        public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
+        public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
         {
-            IDataSource dataSource = null!;
-            switch (@params.GetType().Name)
-            {
-                case nameof(MSSQLSourceParams):
-                    dataSource = _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.MSSQL);
-                    break;
-                case nameof(JsonFileSourceParams):
-                    dataSource = _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.JsonFile);
-                    break;
-                case nameof(PostgresSourceParams):
-                    dataSource = _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.PostgreSQL);
-                    break;
-                default:
-                    throw new ArgumentException("Unsupported data source type for ExecuteReaderAsync");
-            }
-            return dataSource.ExecuteReaderAsync(@params);
+            IDataSource dataSource = _sourceFactory.CreateDataSource(@params);
+            return await dataSource.ExecuteReaderAsync<TValue>(@params);
         }
 
         /// <summary>
@@ -114,66 +91,8 @@ namespace DataAccessProvider.DataSource
         /// <returns>The same parameter object after execution, with the scalar result stored in it.</returns>
         public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
         {
-            IDataSource dataSource = GetDataSourceByParams<TBaseDataSourceParams>(_sourceFactory)!;
-            return await dataSource.ExecuteScalarAsync(@params);
-        }
-
-        /// <summary>
-        /// Creates a database command for the given query and connection.
-        /// </summary>
-        /// <param name="query">The SQL query to execute.</param>
-        /// <param name="connection">The database connection to use.</param>
-        /// <returns>The <see cref="DbCommand"/> ready for execution.</returns>
-        public DbCommand GetCommand(string query, DbConnection connection)
-        {
-            IDataSource dataSource = GetDataSourceByParams<TBaseDataSourceParams>(_sourceFactory)!;
-            return dataSource.GetCommand(query, connection);
-        }
-
-        /// <summary>
-        /// Gets the database connection object.
-        /// </summary>
-        /// <returns>The <see cref="DbConnection"/> object representing the database connection.</returns>
-        public DbConnection GetConnection()
-        {
-            throw new NotImplementedException();
-        }
-        private static IDataSource GetDataSourceByParams<TBaseDataSourceParams>(IDataSourceFactory _sourceFactory) where TBaseDataSourceParams : BaseDataSourceParams
-        {
-            // Use switch to select the appropriate IDataSource based on TBaseDataSourceParams
-            switch (typeof(TBaseDataSourceParams).Name)
-            {
-                case nameof(MSSQLSourceParams):
-                    return _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.MSSQL);
-
-                case nameof(JsonFileSourceParams):
-                    return _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.JsonFile);
-
-                case nameof(PostgresSourceParams):
-                    return _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.PostgreSQL);
-
-                default:
-                    throw new ArgumentException("Unsupported data source type");
-            }
-        }
-
-        private static IDataSource GetDataSourceByParams<TValue,TBaseDataSourceParams>(IDataSourceFactory _sourceFactory) where TBaseDataSourceParams : BaseDataSourceParams<TValue> where TValue : class
-        {
-            // Use switch to select the appropriate IDataSource based on TBaseDataSourceParams
-            switch (typeof(TBaseDataSourceParams).Name)
-            {
-                case nameof(MSSQLSourceParams):
-                    return _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.MSSQL);
-
-                case nameof(JsonFileSourceParams):
-                    return _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.JsonFile);
-
-                case nameof(PostgresSourceParams):
-                    return _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.PostgreSQL);
-
-                default:
-                    throw new ArgumentException("Unsupported data source type");
-            }
+            IDataSource dataSource = _sourceFactory.CreateDataSource(@params);
+            return await dataSource.ExecuteScalarAsync<TBaseDataSourceParams>(@params);
         }
     }
 
@@ -204,36 +123,7 @@ namespace DataAccessProvider.DataSource
         /// <returns>The same parameter object after execution, potentially updated with affected rows or other details.</returns>
         public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync(TBaseDataSourceParams @params)
         {
-            IDataSource<TBaseDataSourceParams> dataSource = null!;
-
-            // Determine the appropriate data source based on the parameter type
-            switch (typeof(TBaseDataSourceParams).Name)
-            {
-                case nameof(MSSQLSourceParams):
-                    {
-                        dataSource = _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.MSSQL) as IDataSource<TBaseDataSourceParams>;
-                        break;
-                    }
-                case nameof(JsonFileSourceParams):
-                    {
-                        dataSource = _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.JsonFile) as IDataSource<TBaseDataSourceParams>;
-                        break;
-                    }
-                case nameof(PostgresSourceParams):
-                    {
-                        dataSource = _sourceFactory.CreateDataSource(Types.DataSourceTypeEnum.PostgreSQL) as IDataSource<TBaseDataSourceParams>;
-                        break;
-                    }
-                default:
-                    throw new ArgumentException("Unsupported data source type");
-            }
-
-            if (dataSource == null)
-            {
-                throw new InvalidOperationException("Failed to create data source.");
-            }
-
-            // Execute the non-query operation on the selected data source
+            var dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
             return await dataSource.ExecuteNonQueryAsync(@params);
         }
 
@@ -243,9 +133,10 @@ namespace DataAccessProvider.DataSource
         /// <typeparam name="TValue">The type to map the result set to.</typeparam>
         /// <param name="params">The parameters containing the query and necessary details for execution.</param>
         /// <returns>The same parameter object after execution, with the result stored in it.</returns>
-        public Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue>(TBaseDataSourceParams @params) where TValue : class, new()
+        public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue>(TBaseDataSourceParams @params) where TValue : class, new()
         {
-            throw new NotImplementedException();
+            var dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
+            return await dataSource.ExecuteReaderAsync<TValue>(@params);
         }
 
         /// <summary>
@@ -253,9 +144,10 @@ namespace DataAccessProvider.DataSource
         /// </summary>
         /// <param name="params">The parameters containing the query and necessary details for execution.</param>
         /// <returns>The same parameter object after execution, with the result stored in it.</returns>
-        public Task<TBaseDataSourceParams> ExecuteReaderAsync(TBaseDataSourceParams @params)
+        public async Task<TBaseDataSourceParams> ExecuteReaderAsync(TBaseDataSourceParams @params)
         {
-            throw new NotImplementedException();
+            var dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
+            return await dataSource.ExecuteReaderAsync(@params);
         }
 
         /// <summary>
@@ -263,29 +155,10 @@ namespace DataAccessProvider.DataSource
         /// </summary>
         /// <param name="params">The parameters containing the query and necessary details for execution.</param>
         /// <returns>The same parameter object after execution, with the scalar result stored in it.</returns>
-        public Task<TBaseDataSourceParams> ExecuteScalarAsync(TBaseDataSourceParams @params)
+        public async Task<TBaseDataSourceParams> ExecuteScalarAsync(TBaseDataSourceParams @params)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Creates a database command for the given query and connection.
-        /// </summary>
-        /// <param name="query">The SQL query to execute.</param>
-        /// <param name="connection">The database connection to use.</param>
-        /// <returns>The <see cref="DbCommand"/> ready for execution.</returns>
-        public DbCommand GetCommand(string query, DbConnection connection)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Gets the database connection object.
-        /// </summary>
-        /// <returns>The <see cref="DbConnection"/> object representing the database connection.</returns>
-        public DbConnection GetConnection()
-        {
-            throw new NotImplementedException();
+            var dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
+            return await dataSource.ExecuteScalarAsync(@params);
         }
     }
     # endregion DataSourceProvider<TBaseDataSourceParams>

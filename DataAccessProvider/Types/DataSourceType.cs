@@ -1,18 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DataAccessProvider.Types;
 
-namespace DataAccessProvider.Types;
+/// <summary>
+/// Enum representing different types of data sources.
+/// </summary>
+public enum DataSourceType
+{
+    /// <summary>
+    /// MySQL database source.
+    /// </summary>
+    MySQL,
 
-public abstract class DataSourceType { }
+    /// <summary>
+    /// Microsoft SQL Server database source.
+    /// </summary>
+    MSSQL,
 
+    /// <summary>
+    /// PostgreSQL database source.
+    /// </summary>
+    Postgres,
 
-public class MSSQL : DataSourceType { }
-public class Postgres : DataSourceType { }
-public class MySql : DataSourceType { }
-public class Oracle : DataSourceType { }
-public class MongoDB : DataSourceType { }
-public class JsonFile : DataSourceType { }
-public class StaticCode : DataSourceType { }
+    /// <summary>
+    /// MySQL (alternative capitalization) database source.
+    /// </summary>
+    MySql,
+
+    /// <summary>
+    /// Oracle database source.
+    /// </summary>
+    Oracle,
+
+    /// <summary>
+    /// MongoDB document database source.
+    /// </summary>
+    MongoDB,
+
+    /// <summary>
+    /// JSON file data source.
+    /// </summary>
+    JsonFile,
+
+    /// <summary>
+    /// Static code data source.
+    /// </summary>
+    StaticCode
+}

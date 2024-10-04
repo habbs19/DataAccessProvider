@@ -109,13 +109,13 @@ public static class Extensions
         switch (serviceLifetime)
         {
             case ServiceLifetime.Transient:
-                service.AddTransient<IJsonFileSource>(factory => new JsonFileSource());
+                //service.AddTransient<IJsonFileSource>(factory => new JsonFileSource());
                 break;
             case ServiceLifetime.Singleton:
-                service.AddSingleton<IJsonFileSource>(factory => new JsonFileSource());
+                //service.AddSingleton<IJsonFileSource>(factory => new JsonFileSource());
                 break;
             case ServiceLifetime.Scoped:
-                service.AddScoped<IJsonFileSource>(factory => new JsonFileSource());
+                //service.AddScoped<IJsonFileSource>(factory => new JsonFileSource());
                 break;
             default:
                 throw new ArgumentNullException(nameof(serviceLifetime));

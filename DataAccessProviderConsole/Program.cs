@@ -5,33 +5,42 @@ using DataAccessProvider.Interfaces;
 using DataAccessProvider.Interfaces.Source;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel;
+using System.Text.Json;
 
 var serviceProvider = ConfigureServices();
 
 // Resolve the IDataSourceProvider and use it
 
 var dataSourceProvider = serviceProvider.GetService<IDataSourceProvider>();
-var mssqlResult = dataSourceProvider!.ExecuteNonQueryAsync(new MSSQLSourceParams());
-var fileResult = dataSourceProvider.ExecuteNonQueryAsync(new JsonFileSourceParams());
 
-var mssqlProvider = serviceProvider.GetService<IDataSourceProvider<MSSQLSourceParams>>();
-var msparams = new MSSQLSourceParams<List<int>>();
-//var paramsd = mssqlProvider!.ExecuteReaderAsync<List<int>>(msparams);
-//var mssqlProvider = serviceProvider.GetService<IDataSourceProvider<MSSQLSourceParams>>();
-
-
-if (dataSourceProvider != null)
+/// test normal
+var mssqParams1 = new MSSQLSourceParams
 {
-    // Example of using the provider for MSSQL non-query execution
-    var mssqlParams = new MSSQLSourceParams
-    {
-        Query = "INSERT INTO Users (Name) VALUES ('John Doe')"
-    };
+    Query = "SELECT TOP 100 * FROM [HS].[dbo].[Diary]"
+};
+var result = await dataSourceProvider!.ExecuteReaderAsync(mssqParams1);
+Console.WriteLine($"1:  {JsonSerializer.Serialize(result.Value)}");
 
-    await dataSourceProvider.ExecuteNonQueryAsync(mssqlParams);
+/// test with type return
+var mssqParams2 = new MSSQLSourceParams<Diary>
+{
+    Query = "SELECT TOP 100 * FROM [HS].[dbo].[Diary]"
+};
+var result2 = await dataSourceProvider!.ExecuteReaderAsync(mssqParams2);
+Console.WriteLine($"2:  {JsonSerializer.Serialize(result2.Value)}");
 
-    Console.WriteLine("Non-query executed successfully.");
-}
+/// test with type return
+var codeParams = new StaticCodeParams
+{
+    Content = "Hello my name is what"
+};
+var result3 = await dataSourceProvider!.ExecuteReaderAsync(codeParams);
+Console.WriteLine($"3:  {JsonSerializer.Serialize(result3.Value)}");
+
+
+
+
 
 
 static ServiceProvider ConfigureServices()
@@ -47,21 +56,32 @@ static ServiceProvider ConfigureServices()
     // Register necessary services
     services.AddSingleton<IDataSourceProvider, DataSourceProvider>();
     services.AddSingleton(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
-
     services.AddSingleton<IDataSourceFactory, DataSourceFactory>();
 
     // Add database source services
-    services.AddScoped<IMSSQLSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(configuration.GetConnectionString("TestConnection")));
-    services.AddScoped<IMSSQLSource, MSSQLSource>((factory) => new MSSQLSource(configuration.GetConnectionString("TestConnection")));
+    services.AddScoped<IDataSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(configuration.GetConnectionString("TestConnection")));
+    services.AddScoped<IDataSource<PostgresSourceParams>, PostgresSource>(provider => new PostgresSource(configuration.GetConnectionString("TestConnection")));
+    services.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>((factory) => new MySQLSource(configuration.GetConnectionString("TestConnection")));
     
-    services.AddScoped<IPostgresSource<PostgresSourceParams>, PostgresSource>(provider => new PostgresSource(configuration.GetConnectionString("TestConnection")));
-    services.AddScoped<IMSSQLSource, MSSQLSource>((factory) => new MSSQLSource(configuration.GetConnectionString("TestConnection")));
+    services.AddScoped<IDataSource, PostgresSource>(provider => new PostgresSource(configuration.GetConnectionString("TestConnection")));
+    services.AddScoped<IDataSource, MySQLSource>((factory) => new MySQLSource(configuration.GetConnectionString("TestConnection")));
+    services.AddScoped<IDataSource, MSSQLSource>((factory) => new MSSQLSource(configuration.GetConnectionString("TestConnection")));
     
     services.AddScoped<IDataSource, JsonFileSource>();
-    services.AddScoped<IDataSource, MSSQLSource>();
     services.AddScoped<IDataSource, PostgresSource>();
-    services.AddScoped<IDataSource, OR>();
+    services.AddScoped<IDataSource, OracleDataSource>();
+    services.AddScoped<IDataSource, MongoDBSource>();
+    services.AddScoped<IDataSource, MySQLSource>();
 
 
     return services.BuildServiceProvider();
+}
+
+class Diary
+{
+    public int DiaryID { get; set; }
+    public string UserID { get; set; }
+    public string Category { get; set; }
+    public DateTime Date { get; set; }
+    public string Content { get; set; }
 }

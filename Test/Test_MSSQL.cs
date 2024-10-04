@@ -59,7 +59,7 @@ public class Test_MSSQL
             .ReturnsAsync(mssqlParams);  // Simulate the return value
 
         _dataSourceFactoryMock
-            .Setup(f => f.CreateDataSource(DataAccessProvider.Types.DataSourceTypeEnum.MSSQL))
+            .Setup(f => f.CreateDataSource())
             .Returns(mockDataSource.Object);
 
         // Act
