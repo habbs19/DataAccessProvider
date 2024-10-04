@@ -5,7 +5,7 @@ public class OracleSourceParams : DatabaseSourceParams<object>
 {
 }
 
-public class OracleSourceParams<TValue> : DatabaseParams<object, TValue> where TValue : class
+public class OracleSourceParams<TValue> : DatabaseSourceParams<object, TValue> where TValue : class
 {
 
 }

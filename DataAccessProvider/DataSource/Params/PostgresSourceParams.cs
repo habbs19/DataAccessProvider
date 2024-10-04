@@ -6,7 +6,7 @@ public class PostgresSourceParams : DatabaseSourceParams<NpgsqlParameter>
 {
 }
 
-public class PostgresSourceParams<TValue> : DatabaseParams<NpgsqlParameter, TValue> where TValue : class
+public class PostgresSourceParams<TValue> : DatabaseSourceParams<NpgsqlParameter, TValue> where TValue : class
 {
 
 }

@@ -12,7 +12,7 @@ namespace DataAccessProvider.DataSource.Params
         public int AffectedRows { get; set; }
     }
 
-    public class DatabaseParams<TParameter,KValue> : BaseDataSourceParams<KValue> where TParameter : class where KValue : class
+    public class DatabaseSourceParams<TParameter,KValue> : BaseDataSourceParams<KValue> where TParameter : class where KValue : class
     {
         public string Query { get; set; } = string.Empty;
         public List<TParameter>? Parameters { get; set; }

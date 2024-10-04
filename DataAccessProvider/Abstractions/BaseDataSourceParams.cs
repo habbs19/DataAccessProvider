@@ -1,12 +1,15 @@
-﻿namespace DataAccessProvider.Abstractions
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace DataAccessProvider.Abstractions
 {
     public abstract class BaseDataSourceParams<T> where T : class
     {
-        private T? _value;
+        private IEnumerable<T>? _value;
 
-        public T? Value => _value;
+        public IEnumerable<T>? Value => _value;
 
-        public void SetValue(T value) => _value = value;
+        public void SetValue(IEnumerable<T> value) => _value = value;
     }
 
     public abstract class BaseDataSourceParams
