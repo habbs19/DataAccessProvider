@@ -1,7 +1,7 @@
 ﻿namespace DataAccessProvider.DataSource.Params;
 
 
-public class OracleSourceParams : DatabaseSourceParams<object>
+public class OracleSourceParams : BaseDatabaseSourceParams<object>
 {
 }
 

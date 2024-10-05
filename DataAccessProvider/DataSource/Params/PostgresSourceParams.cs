@@ -2,7 +2,7 @@
 
 namespace DataAccessProvider.DataSource.Params;
 
-public class PostgresSourceParams : DatabaseSourceParams<NpgsqlParameter>
+public class PostgresSourceParams : BaseDatabaseSourceParams<NpgsqlParameter>
 {
 }
 

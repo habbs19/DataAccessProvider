@@ -6,6 +6,6 @@ public class MongoDBParams : BaseDataSourceParams
 {
 }
 
-public class MongoDBParams<TValue> : DatabaseSourceParams<TValue> where TValue : class
+public class MongoDBParams<TValue> : BaseDatabaseSourceParams<TValue> where TValue : class
 {
 }

@@ -83,7 +83,7 @@ public abstract partial class BaseDatabaseSource<TDatabaseSourceParams, TParamet
     public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
        where TBaseDataSourceParams : BaseDataSourceParams
     {
-        var sourceParams = @params as DatabaseSourceParams<TParameter>;
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
         using (var connection = GetConnection())
         {
             using (var command = GetCommand(sourceParams!.Query, connection))
@@ -191,7 +191,7 @@ public abstract partial class BaseDatabaseSource<TDatabaseSourceParams, TParamet
 /// </summary>
 /// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
 public abstract partial class BaseDatabaseSource<TDatabaseSourceParams, TParameter> : IDataSource<TDatabaseSourceParams>
-    where TDatabaseSourceParams : DatabaseSourceParams<TParameter>
+    where TDatabaseSourceParams : BaseDatabaseSourceParams<TParameter>
     where TParameter : class
 
 {
