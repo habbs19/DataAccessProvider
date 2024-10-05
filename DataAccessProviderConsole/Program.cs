@@ -13,41 +13,46 @@ var serviceProvider = ConfigureServices();
 
 // Resolve the IDataSourceProvider and use it
 
-var dataSourceProvider = serviceProvider.GetService<IDataSourceProvider>();
+var dataSourceProvider1 = serviceProvider.GetService<IDataSourceProvider>();
+var dataSourceProvider2 = serviceProvider.GetService<IDataSourceProvider<MSSQLSourceParams>>();
 
 var mssqParams1 = new MSSQLSourceParams
 {
     Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
 };
-var result = await dataSourceProvider!.ExecuteReaderAsync(mssqParams1);
-Console.WriteLine($"\n1:  {JsonSerializer.Serialize(result.Value)}");
+var result1a = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams1);
+Console.WriteLine($"\n1a:  {JsonSerializer.Serialize(result1a.Value)}");
+var result1b = await dataSourceProvider2!.ExecuteReaderAsync(mssqParams1);
+Console.WriteLine($"\n1b:  {JsonSerializer.Serialize(result1b.Value)}");
 
 /// test with type return
 var mssqParams2 = new MSSQLSourceParams<Diary>
 {
     Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
 };
-var result2 = await dataSourceProvider!.ExecuteReaderAsync(mssqParams2);
-Console.WriteLine($"\n2:  {JsonSerializer.Serialize(result2.Value)}");
+var result2a = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams2);
+Console.WriteLine($"\n2a:  {JsonSerializer.Serialize(result2a.Value)}");
+var result2b = await dataSourceProvider2!.ExecuteReaderAsync<Diary>(mssqParams1);
+Console.WriteLine($"\n2b:  {JsonSerializer.Serialize(result2b.Value)}");
+
 
 /// test with type return
 var codeParams = new StaticCodeParams
 {
     Content = "Hello World"
 };
-var result3 = await dataSourceProvider!.ExecuteReaderAsync(codeParams);
+var result3 = await dataSourceProvider1!.ExecuteReaderAsync(codeParams);
 Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result3.Value)}");
 
 var jsonFileParams = new JsonFileSourceParams<List<Movie>>
 {
     FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "Movie.json"),
 };
-var result4 = await dataSourceProvider!.ExecuteReaderAsync(jsonFileParams);
+var result4 = await dataSourceProvider1!.ExecuteReaderAsync(jsonFileParams);
 Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result4.Value.First().First().Genre)}");
 
 
 
-//var dataSourceProvider = serviceProvider.GetService<IDataSourceProvider>();
 
 
 
