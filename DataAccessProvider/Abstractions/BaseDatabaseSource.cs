@@ -139,7 +139,7 @@ public abstract partial class BaseDatabaseSource<TDatabaseSourceParams, TParamet
         where TBaseDataSourceParams : BaseDataSourceParams<TValue>
         where TValue : class, new()
     {
-        var sourceParams = @params as DatabaseSourceParams<TParameter, TValue>;
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter, TValue>;
 
         // Ensure the cast was successful
         if (sourceParams == null)

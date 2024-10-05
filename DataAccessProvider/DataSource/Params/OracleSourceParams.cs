@@ -1,11 +1,5 @@
-﻿namespace DataAccessProvider.DataSource.Params;
+﻿using Oracle.ManagedDataAccess.Client;
+namespace DataAccessProvider.DataSource.Params;
 
-
-public class OracleSourceParams : BaseDatabaseSourceParams<object>
-{
-}
-
-public class OracleSourceParams<TValue> : DatabaseSourceParams<object, TValue> where TValue : class
-{
-
-}
+public class OracleSourceParams : OracleSourceParams<object> { }
+public class OracleSourceParams<TValue> : BaseDatabaseSourceParams<TValue, OracleParameter> where TValue : class { }

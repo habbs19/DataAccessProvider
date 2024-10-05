@@ -30,7 +30,7 @@ var mssqParams2 = new MSSQLSourceParams<Diary>
 {
     Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
 };
-var result2a = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams2);
+var result2a = await dataSourceProvider1!.ExecuteReaderAsync<Diary>(mssqParams2);
 Console.WriteLine($"\n2a:  {JsonSerializer.Serialize(result2a.Value)}");
 var result2b = await dataSourceProvider2!.ExecuteReaderAsync<Diary>(mssqParams1);
 Console.WriteLine($"\n2b:  {JsonSerializer.Serialize(result2b.Value)}");

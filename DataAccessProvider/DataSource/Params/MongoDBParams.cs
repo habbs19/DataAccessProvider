@@ -2,10 +2,10 @@
 
 namespace DataAccessProvider.DataSource.Params;
 
-public class MongoDBParams : BaseDataSourceParams
+public class MongoDBParams : MongoDBParams<object>
 {
 }
 
-public class MongoDBParams<TValue> : BaseDatabaseSourceParams<TValue> where TValue : class
+public class MongoDBParams<TValue> : BaseDataSourceParams<TValue> where TValue : class
 {
 }
