@@ -2,7 +2,7 @@
 
 namespace DataAccessProvider.DataSource.Params;
 
-public class MongoDBParams : MongoDBParams<object>
+public class MongoDBParams : BaseDataSourceParams
 {
 }
 

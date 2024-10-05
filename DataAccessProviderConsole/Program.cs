@@ -26,7 +26,7 @@ var result1b = await dataSourceProvider2!.ExecuteReaderAsync(mssqParams1);
 Console.WriteLine($"\n1b:  {JsonSerializer.Serialize(result1b.Value)}");
 
 /// test with type return
-var mssqParams2 = new MSSQLSourceParams<Diary>
+var mssqParams2 = new MSSQLSourceParams
 {
     Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
 };
@@ -72,6 +72,9 @@ static ServiceProvider ConfigureServices()
     services.AddSingleton<IDataSourceFactory, DataSourceFactory>();
 
     // Add database source services
+
+    services.AddScoped<IDataSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(sqlString));
+
     services.AddScoped<IDataSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(sqlString));
     services.AddScoped<IDataSource<PostgresSourceParams>, PostgresSource>(provider => new PostgresSource(postgresString));
     services.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>((factory) => new MySQLSource(mySqlString));

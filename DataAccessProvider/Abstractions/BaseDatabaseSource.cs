@@ -11,9 +11,8 @@ namespace DataAccessProvider.Abstractions;
 /// Represents a base class for database sources, providing common database operations like ExecuteNonQuery, ExecuteReader, and ExecuteScalar.
 /// </summary>
 /// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
-public abstract partial class BaseDatabaseSource<TDatabaseSourceParams, TParameter>
+public abstract partial class BaseDatabaseSource<TParameter>
 {
-
     /// <summary>
     /// The connection string used for the database connection.
     /// </summary>
@@ -72,13 +71,15 @@ public abstract partial class BaseDatabaseSource<TDatabaseSourceParams, TParamet
         return result;
     }
 }
+
 #endregion 
 #region BaseDatabaseSource
 /// <summary>
 /// Represents a base class for database sources, providing common database operations like ExecuteNonQuery, ExecuteReader, and ExecuteScalar.
 /// </summary>
 /// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
-public abstract partial class BaseDatabaseSource<TDatabaseSourceParams, TParameter> : IDataSource
+public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
+    where TParameter : DbParameter
 {
     public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
        where TBaseDataSourceParams : BaseDataSourceParams
@@ -105,41 +106,26 @@ public abstract partial class BaseDatabaseSource<TDatabaseSourceParams, TParamet
     public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
        where TBaseDataSourceParams : BaseDataSourceParams
     {
-        var sourceParams = @params as TDatabaseSourceParams;
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
 
         // Ensure the cast was successful
         if (sourceParams == null)
         {
             throw new ArgumentException("Invalid source parameters type.");
         }
-        return (TBaseDataSourceParams)(object)await ExecuteReaderAsync(sourceParams!);
+        return await ExecuteReaderAsync<object,TBaseDataSourceParams>(@params!);
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="TBaseDataSourceParams"></typeparam>
-    /// <param name="params"></param>
-    /// <returns></returns>
     public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
         where TBaseDataSourceParams : BaseDataSourceParams
     {
-        var sourceParams = @params as TDatabaseSourceParams;
+        var sourceParams = @params as TBaseDataSourceParams;
         return (TBaseDataSourceParams)(object)await ExecuteNonQueryAsync(sourceParams!);
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="TValue"></typeparam>
-    /// <typeparam name="TBaseDataSourceParams"></typeparam>
-    /// <param name="params"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
     public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams @params)
         where TBaseDataSourceParams : BaseDataSourceParams<TValue>
         where TValue : class, new()
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter, TValue>;
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter,TValue>;
 
         // Ensure the cast was successful
         if (sourceParams == null)
@@ -190,11 +176,15 @@ public abstract partial class BaseDatabaseSource<TDatabaseSourceParams, TParamet
 /// Represents a base class for database sources, providing common database operations like ExecuteNonQuery, ExecuteReader, and ExecuteScalar.
 /// </summary>
 /// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
-public abstract partial class BaseDatabaseSource<TDatabaseSourceParams, TParameter> : IDataSource<TDatabaseSourceParams>
+public abstract partial class BaseDatabaseSource<TParameter, TDatabaseSourceParams> : BaseDatabaseSource<TParameter>,IDataSource<TDatabaseSourceParams>
     where TDatabaseSourceParams : BaseDatabaseSourceParams<TParameter>
-    where TParameter : class
+    where TParameter : DbParameter
 
 {
+    protected BaseDatabaseSource(string connectionString) : base(connectionString)
+    {
+    }
+
     public async Task<TDatabaseSourceParams> ExecuteNonQueryAsync(TDatabaseSourceParams @params)
     {
         using (var connection = GetConnection())
@@ -265,6 +255,11 @@ public abstract partial class BaseDatabaseSource<TDatabaseSourceParams, TParamet
     public async Task<TDatabaseSourceParams> ExecuteScalarAsync(TDatabaseSourceParams @params)
     {
         return await ExecuteScalarAsync<TDatabaseSourceParams>(@params);       
+    }
+
+    Task<BaseDataSourceParams<TValue>> IDataSource<TDatabaseSourceParams>.ExecuteReaderAsync<TValue>(TDatabaseSourceParams @params)
+    {
+        throw new NotImplementedException();
     }
 }
 #endregion BaseDatabaseSource<>  

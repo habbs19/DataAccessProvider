@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 namespace DataAccessProvider.DataSource.Params;
 
-public class MSSQLSourceParams : MSSQLSourceParams<object> { }
+public class MSSQLSourceParams : BaseDatabaseSourceParams<SqlParameter> { }
 
-public class MSSQLSourceParams<TValue> : BaseDatabaseSourceParams<TValue,SqlParameter> where TValue : class { }
+public class MSSQLSourceParams<TValue> : BaseDatabaseSourceParams<SqlParameter,TValue> where TValue : class { }

@@ -2,6 +2,6 @@
 
 namespace DataAccessProvider.DataSource.Params;
 
-public class PostgresSourceParams : PostgresSourceParams<NpgsqlParameter> { }
+public class PostgresSourceParams : BaseDatabaseSourceParams<NpgsqlParameter> { }
 
-public class PostgresSourceParams<TValue> : BaseDatabaseSourceParams<TValue, NpgsqlParameter> where TValue : class { }
+public class PostgresSourceParams<TValue> : BaseDatabaseSourceParams<NpgsqlParameter,TValue> where TValue : class { }

@@ -1,5 +1,5 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 namespace DataAccessProvider.DataSource.Params;
 
-public class OracleSourceParams : OracleSourceParams<object> { }
-public class OracleSourceParams<TValue> : BaseDatabaseSourceParams<TValue, OracleParameter> where TValue : class { }
+public class OracleSourceParams : BaseDatabaseSourceParams<OracleParameter> { }
+public class OracleSourceParams<TValue> : BaseDatabaseSourceParams<OracleParameter,TValue> where TValue : class { }
