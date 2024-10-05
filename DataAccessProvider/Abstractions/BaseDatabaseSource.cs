@@ -51,7 +51,7 @@ public abstract partial class BaseDatabaseSource<TParameter>
     /// </summary>
     /// <param name="reader">The <see cref="DbDataReader"/> to read from.</param>
     /// <returns>A list of dictionaries where each dictionary represents a row from the result set.</returns>
-    private async Task<List<Dictionary<string, object>>> ReadResultAsync(DbDataReader reader)
+    protected async Task<List<Dictionary<string, object>>> ReadResultAsync(DbDataReader reader)
     {
         var result = new List<Dictionary<string, object>>();
         var columns = reader.GetColumnSchema();
@@ -69,6 +69,87 @@ public abstract partial class BaseDatabaseSource<TParameter>
         }
 
         return result;
+    }
+
+    protected async Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
+    {
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
+        if(sourceParams != null)
+        {
+            throw new ArgumentException("Invalid source parameters type.");
+        }
+
+        using (var connection = GetConnection())
+        {
+            using (var command = GetCommand(sourceParams!.Query, connection))
+            {
+                command.CommandTimeout = sourceParams.Timeout;
+                command.CommandType = sourceParams.CommandType;
+
+                if (sourceParams.Parameters != null)
+                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+
+                var resultSet = new Dictionary<int, List<Dictionary<string, object>>>();
+                await connection.OpenAsync();
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    int resultCount = 0;
+                    do
+                    {
+                        resultSet[resultCount] = await ReadResultAsync(reader);
+                        resultCount++;
+                    }
+                    while (await reader.NextResultAsync());
+                }
+                if (resultSet.Count == 1)
+                    @params.SetValue(resultSet[0]);
+                else
+                    @params.SetValue(resultSet);
+                return @params;
+            }
+        }
+    }
+
+    protected async Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params) where TValue : class, new()
+    {
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter,TValue>;
+
+        using (var connection = GetConnection())
+        {
+            using (var command = GetCommand(sourceParams!.Query, connection))
+            {
+                command.CommandTimeout = sourceParams.Timeout;
+                command.CommandType = sourceParams.CommandType;
+
+                if (sourceParams.Parameters != null)
+                {
+                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+                }
+
+                await connection.OpenAsync();
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    var resultSet = await ReadResultAsync(reader);
+                    var result = new List<TValue>();
+
+                    foreach (var row in resultSet)
+                    {
+                        var item = new TValue();
+                        foreach (var property in typeof(TValue).GetProperties())
+                        {
+                            if (row.ContainsKey(property.Name) && property.CanWrite)
+                            {
+                                property.SetValue(item, Convert.ChangeType(row[property.Name], property.PropertyType));
+                            }
+                        }
+                        result.Add(item);
+                    }
+                    @params.SetValue(result);
+
+                    return (BaseDataSourceParams<TValue>)(object)@params;
+                }
+            }
+        }
     }
 }
 
@@ -106,15 +187,9 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
     public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
        where TBaseDataSourceParams : BaseDataSourceParams
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
-
-        // Ensure the cast was successful
-        if (sourceParams == null)
-        {
-            throw new ArgumentException("Invalid source parameters type.");
-        }
-        return await ExecuteReaderAsync<object,TBaseDataSourceParams>(@params!);
+        return (TBaseDataSourceParams)(object)await ExecuteReader(@params);
     }
+
     public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
         where TBaseDataSourceParams : BaseDataSourceParams
     {
@@ -125,48 +200,8 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
         where TBaseDataSourceParams : BaseDataSourceParams<TValue>
         where TValue : class, new()
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter,TValue>;
-
-        // Ensure the cast was successful
-        if (sourceParams == null)
-        {
-            throw new ArgumentException("Invalid source parameters type.");
-        }
-        using (var connection = GetConnection())
-        {
-            using (var command = GetCommand(sourceParams!.Query, connection))
-            {
-                command.CommandTimeout = sourceParams.Timeout;
-                command.CommandType = sourceParams.CommandType;
-
-                if (sourceParams.Parameters != null)
-                {
-                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
-                }
-
-                await connection.OpenAsync();
-                using (var reader = await command.ExecuteReaderAsync())
-                {
-                    var resultSet = await ReadResultAsync(reader);
-                    var result = new List<TValue>();
-
-                    foreach (var row in resultSet)
-                    {
-                        var item = new TValue();
-                        foreach (var property in typeof(TValue).GetProperties())
-                        {
-                            if (row.ContainsKey(property.Name) && property.CanWrite)
-                            {
-                                property.SetValue(item, Convert.ChangeType(row[property.Name], property.PropertyType));
-                            }
-                        }
-                        result.Add(item);
-                    }
-                    @params.SetValue(result);
-                    return @params;
-                }
-            }
-        }
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
+        return (TBaseDataSourceParams)await ExecuteReader<TValue>(sourceParams!);
     }
 
 }
@@ -202,64 +237,17 @@ public abstract partial class BaseDatabaseSource<TParameter, TDatabaseSourcePara
             }
         }
     }
-   
-    public async Task<TDatabaseSourceParams> ExecuteReaderAsync<TValue>(TDatabaseSourceParams @params) 
-        where TValue : class, new()
-    {
-        var sourceParams = @params as BaseDataSourceParams<TValue>;
-        var result = await ExecuteReaderAsync<TValue>(sourceParams!);
-        return (TDatabaseSourceParams)(object)result;
-    }
-
     public async Task<TDatabaseSourceParams> ExecuteReaderAsync(TDatabaseSourceParams @params)
     {
-        using (var connection = GetConnection())
-        {
-            using (var command = GetCommand(@params.Query,connection))
-            {
-                command.CommandTimeout = @params.Timeout;
-                command.CommandType = @params.CommandType;
-
-                if (@params.Parameters != null)
-                    command.Parameters.AddRange(@params.Parameters.ToArray());
-
-                var resultSet = new Dictionary<int, List<Dictionary<string, object>>>();
-                await connection.OpenAsync();
-                using (var reader = await command.ExecuteReaderAsync())
-                {
-                    int resultCount = 0;
-                    do
-                    {
-                        resultSet[resultCount] = await ReadResultAsync(reader);
-                        resultCount++;
-                    }
-                    while (await reader.NextResultAsync());
-                }
-                if (resultSet.Count == 1)
-                    @params.SetValue(resultSet[0]);
-                else
-                    @params.SetValue(resultSet);
-
-                return @params;
-            }
-        }
+        return (TDatabaseSourceParams)(object)await ExecuteReader(@params);
     }
-
-    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params)
-        where TValue : class, new()
-    {
-        // Call a specific ExecuteReaderAsync overload
-        return await ExecuteReaderAsync<TValue, BaseDataSourceParams<TValue>>(@params);
-    }
-
     public async Task<TDatabaseSourceParams> ExecuteScalarAsync(TDatabaseSourceParams @params)
     {
         return await ExecuteScalarAsync<TDatabaseSourceParams>(@params);       
     }
-
-    Task<BaseDataSourceParams<TValue>> IDataSource<TDatabaseSourceParams>.ExecuteReaderAsync<TValue>(TDatabaseSourceParams @params)
+    async Task<BaseDataSourceParams<TValue>> IDataSource<TDatabaseSourceParams>.ExecuteReaderAsync<TValue>(TDatabaseSourceParams @params)
     {
-        throw new NotImplementedException();
+        return await ExecuteReader<TValue>(@params!);
     }
 }
 #endregion BaseDatabaseSource<>  
