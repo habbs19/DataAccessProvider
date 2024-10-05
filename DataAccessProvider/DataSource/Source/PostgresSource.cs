@@ -6,7 +6,7 @@ using System.Data.Common;
 
 namespace DataAccessProvider.DataSource.Source;
 
-public sealed class PostgresSource : BaseDatabaseSource<PostgresSourceParams, NpgsqlParameter>,
+public sealed class PostgresSource : BaseDatabaseSource<NpgsqlParameter,PostgresSourceParams>,
     IDataSource,
     IDataSource<PostgresSourceParams>
 {

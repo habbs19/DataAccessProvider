@@ -7,7 +7,7 @@ using System.Data.Common;
 
 namespace DataAccessProvider.DataSource.Source;
 
-public sealed class MySQLSource : BaseDatabaseSource<MySQLSourceParams, MySqlParameter>,
+public sealed class MySQLSource : BaseDatabaseSource<MySqlParameter,MySQLSourceParams>,
     IDataSource,
     IDataSource<MySQLSourceParams>
 {

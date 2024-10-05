@@ -23,7 +23,7 @@ public partial class JsonFileSource : BaseSource
             // Set the result in parameters
             jsonFileSourceParams.SetValue(content);
 
-            return @params;
+            return jsonFileSourceParams;
         }
         catch (Exception ex)
         {

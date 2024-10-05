@@ -39,10 +39,10 @@ public partial class BaseDatabaseSource<TParameter> : BaseSource
                     while (await reader.NextResultAsync());
                 }
                 if (resultSet.Count == 1)
-                    @params.SetValue(resultSet[0]);
+                    sourceParams.SetValue(resultSet[0]);
                 else
-                    @params.SetValue(resultSet);
-                return @params;
+                    sourceParams.SetValue(resultSet);
+                return sourceParams;
             }
         }
     }
@@ -81,9 +81,9 @@ public partial class BaseDatabaseSource<TParameter> : BaseSource
                         }
                         result.Add(item);
                     }
-                    @params.SetValue(result);
+                    sourceParams.SetValue(result);
 
-                    return (BaseDataSourceParams<TValue>)(object)@params;
+                    return sourceParams;
                 }
             }
         }
@@ -217,7 +217,6 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
 public abstract partial class BaseDatabaseSource<TParameter, TDatabaseSourceParams> : BaseDatabaseSource<TParameter>, IDataSource<TDatabaseSourceParams>
     where TDatabaseSourceParams : BaseDatabaseSourceParams<TParameter>
     where TParameter : DbParameter
-
 {
     protected BaseDatabaseSource(string connectionString) : base(connectionString)
     {
