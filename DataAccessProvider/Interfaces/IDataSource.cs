@@ -1,42 +1,9 @@
 ﻿using DataAccessProvider.Abstractions;
 namespace DataAccessProvider.Interfaces;
 
+#region IDataSource
 public interface IDataSource
 {
-    /// <summary>
-    /// Executes a query asynchronously, retrieves the result set, and maps each row in the result set to an object of type <typeparamref name="TValue"/>.
-    /// This method utilizes the provided database parameters to execute the query and map the results into a collection of objects, with each object 
-    /// representing a row in the result set.
-    /// </summary>
-    /// <typeparam name="TValue">
-    /// The type to which each row in the result set will be mapped. The type <typeparamref name="TValue"/> must have a parameterless constructor 
-    /// and public properties that correspond to the column names in the result set. The column names in the database must match the property names
-    /// of <typeparamref name="TValue"/> (case-insensitive) for successful mapping.
-    /// </typeparam>
-    /// <typeparam name="TBaseDataSourceParams">
-    /// The type of the data source parameters, which must inherit from <see cref="BaseDataSourceParams{TValue}"/>.
-    /// This type contains details like the SQL query, the command type (e.g., text or stored procedure), the timeout period, and any necessary 
-    /// parameters required for the query execution.
-    /// </typeparam>
-    /// <param name="params">
-    /// The database parameters containing the query to be executed, along with additional settings such as command type, timeout, 
-    /// and parameters to be passed to the query.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation. Upon completion, it returns the same <typeparamref name="TBaseDataSourceParams"/> object, 
-    /// where the result set is mapped to a list of objects of type <typeparamref name="TValue"/> stored in the <see cref="BaseDataSourceParams{TValue}.Value"/> property.
-    /// </returns>
-    /// <exception cref="InvalidOperationException">
-    /// Thrown if there is a failure when opening the connection, preparing the query, or executing the query.
-    /// This exception can also occur if the query returns no results or the column names do not match the properties of <typeparamref name="TValue"/>.
-    /// </exception>
-    /// <remarks>
-    /// This method uses reflection to map each column in the result set to a corresponding property of <typeparamref name="TValue"/>. 
-    /// Ensure that <typeparamref name="TValue"/> has a parameterless constructor and that all properties that need to be mapped are public and writable.
-    /// If the query result contains multiple rows, each row is mapped to a separate instance of <typeparamref name="TValue"/>.
-    /// </remarks>
-    Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new();
-
     /// <summary>
     /// Executes a query asynchronously, retrieves the result set, and maps it to a list of objects of type <typeparamref name="TValue"/>.
     /// This method uses the provided database parameters to execute the query and map the results into a collection of objects.
@@ -128,7 +95,9 @@ public interface IDataSource
     /// </remarks>
     Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams;
 }
+#endregion IDataSource
 
+#region IDataSource<>
 public interface IDataSource<TBaseDataSourceParams> where TBaseDataSourceParams : BaseDataSourceParams
 {
     /// <summary>
@@ -149,6 +118,40 @@ public interface IDataSource<TBaseDataSourceParams> where TBaseDataSourceParams 
     /// This method is typically used for reading data and mapping it to a strongly-typed collection of <typeparamref name="TValue"/> objects.
     /// </remarks>
     Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue>(TBaseDataSourceParams @params) where TValue : class, new();
+
+    /// <summary>
+    /// Executes a query asynchronously, retrieves the result set, and maps each row in the result set to an object of type <typeparamref name="TValue"/>.
+    /// This method utilizes the provided database parameters to execute the query and map the results into a collection of objects, with each object 
+    /// representing a row in the result set.
+    /// </summary>
+    /// <typeparam name="TValue">
+    /// The type to which each row in the result set will be mapped. The type <typeparamref name="TValue"/> must have a parameterless constructor 
+    /// and public properties that correspond to the column names in the result set. The column names in the database must match the property names
+    /// of <typeparamref name="TValue"/> (case-insensitive) for successful mapping.
+    /// </typeparam>
+    /// <typeparam name="TBaseDataSourceParams">
+    /// The type of the data source parameters, which must inherit from <see cref="BaseDataSourceParams{TValue}"/>.
+    /// This type contains details like the SQL query, the command type (e.g., text or stored procedure), the timeout period, and any necessary 
+    /// parameters required for the query execution.
+    /// </typeparam>
+    /// <param name="params">
+    /// The database parameters containing the query to be executed, along with additional settings such as command type, timeout, 
+    /// and parameters to be passed to the query.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation. Upon completion, it returns the same <typeparamref name="TBaseDataSourceParams"/> object, 
+    /// where the result set is mapped to a list of objects of type <typeparamref name="TValue"/> stored in the <see cref="BaseDataSourceParams{TValue}.Value"/> property.
+    /// </returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if there is a failure when opening the connection, preparing the query, or executing the query.
+    /// This exception can also occur if the query returns no results or the column names do not match the properties of <typeparamref name="TValue"/>.
+    /// </exception>
+    /// <remarks>
+    /// This method uses reflection to map each column in the result set to a corresponding property of <typeparamref name="TValue"/>. 
+    /// Ensure that <typeparamref name="TValue"/> has a parameterless constructor and that all properties that need to be mapped are public and writable.
+    /// If the query result contains multiple rows, each row is mapped to a separate instance of <typeparamref name="TValue"/>.
+    /// </remarks>
+    Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new();
 
     /// <summary>
     /// Executes a query asynchronously and retrieves a result set based on the provided data source parameters.
@@ -199,7 +202,4 @@ public interface IDataSource<TBaseDataSourceParams> where TBaseDataSourceParams 
     /// </remarks>
     Task<TBaseDataSourceParams> ExecuteScalarAsync(TBaseDataSourceParams @params);
 }
-    
-
-
-
+#endregion IDataSource<>
