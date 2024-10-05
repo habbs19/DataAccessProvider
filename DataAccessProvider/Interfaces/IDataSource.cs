@@ -32,7 +32,8 @@ public interface IDataSource
     /// with the property names of <typeparamref name="TValue"/>. Ensure that <typeparamref name="TValue"/> has a parameterless constructor and writable properties.
     /// </remarks>
     Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue,TBaseDataSourceParams>(TBaseDataSourceParams @params) 
-        where TBaseDataSourceParams : BaseDataSourceParams<TValue> where TValue : class, new();
+        where TBaseDataSourceParams : BaseDataSourceParams<TValue> 
+        where TValue : class, new();
 
     /// <summary>
     /// Executes a query asynchronously and retrieves a result set based on the provided data source parameters.

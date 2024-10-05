@@ -1,7 +1,6 @@
 ﻿using DataAccessProvider.Abstractions;
 using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.Interfaces;
-using DataAccessProvider.Interfaces.Source;
 using Npgsql;
 using System.Data.Common;
 
