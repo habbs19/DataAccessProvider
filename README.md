@@ -1,6 +1,7 @@
-# DataAccessProvider
+# Data Access Provider
 
-The **DataAccessProvider** library provides a flexible, extensible way to interact with multiple data sources (such as MSSQL, PostgreSQL, MongoDB, JSON-based file sources, and more) through a unified interface. The library allows you to execute queries, read results, and perform non-query operations across various data sources using a standardized API, making it easy to switch between databases without changing your core logic.
+The **Data Access Provider** is a flexible and extensible solution designed to simplify working with multiple data sources, such as MSSQL, PostgreSQL, MongoDB, JSON-based file sources, and more. This framework provides a unified interface that allows developers to interact with different data sources in a consistent way, enabling easy switching between data sources without altering core application logic.
+
 
 ## Table of Contents
 
@@ -27,6 +28,11 @@ The **DataAccessProvider** library provides a flexible, extensible way to intera
 - **Parameterization**: Safely execute parameterized queries.
 - **Result Mapping**: Map query results directly to objects or handle raw data as dictionaries.
 - **Extensibility**: Easily extend the framework to add support for new data sources.
+- **Unified API**: The framework abstracts the differences between various databases, allowing you to use a standardized set of methods to execute queries and operations, regardless of the underlying data source.
+- **Flexible Testing**: With its design, the framework makes it easier to test different database interactions. By simply passing different data source parameter objects, you can test against multiple databases, file systems, or other data sources in a seamless manner.
+- **Seamless Data Source Switching**: You can switch from one data source to another by providing the appropriate parameter class. For example, switch from MSSQL to PostgreSQL by passing `MSSQLSourceParams` or `PostgresSourceParams`, with no changes to the core execution logic.
+- **Custom Data Source Support**: The framework allows developers to register their own custom data sources. Using the `DataSourceFactory`, you can define and register custom parameter classes and their corresponding data source implementations, extending the framework for specific use cases.
+
 
 ## Supported Data Sources
 
@@ -72,7 +78,6 @@ The **DataAccessProvider** allows you to register your own custom data sources a
 public void RegisterDataSource<TParams, TSource>() 
     where TParams : BaseDataSourceParams
     where TSource : IDataSource;
-```bash
 
 ### How It Works:
 

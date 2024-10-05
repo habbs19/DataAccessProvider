@@ -10,11 +10,11 @@ public interface IJsonFileSourceParams
 public class JsonFileSourceParams : BaseDataSourceParams, IJsonFileSourceParams
 {
     public string FilePath { get ; set ; } = string.Empty;
-    public string Content { get; set; } = "Default file content";
+    public string Content { get; set; } = @"{Content:'Default file content'}";
 }
 
 public class JsonFileSourceParams<T> : BaseDataSourceParams<T>, IJsonFileSourceParams where T : class
 {
     public string FilePath { get; set; } = string.Empty;
-    public string Content { get; set; } = "Default file content";
+    public string Content { get; set; } = @"{Content:'Default file content'}";
 }

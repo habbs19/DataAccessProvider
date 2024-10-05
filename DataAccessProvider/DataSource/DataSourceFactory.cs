@@ -59,27 +59,26 @@ public class DataSourceFactory : IDataSourceFactory
 
     public IDataSource<T> CreateDataSource<T>() where T : BaseDataSourceParams
     {
-        return typeof(T).Name switch
+        var paramType = typeof(T);
+
+        // Check if there is a registered mapping for the given parameter type
+        if (_dataSourceMappings.TryGetValue(paramType, out var dataSourceType))
         {
-            nameof(MSSQLSourceParams) => (IDataSource<T>)_serviceProvider.GetService<IDataSource<MSSQLSourceParams>>()!,
-            nameof(PostgresSourceParams) => (IDataSource<T>)_serviceProvider.GetService<IDataSource<PostgresSourceParams>>()!,
-            nameof(JsonFileSourceParams) => (IDataSource<T>)_serviceProvider.GetService<IDataSource<JsonFileSourceParams>>()!,
-            nameof(MySQLSourceParams) => (IDataSource<T>)_serviceProvider.GetService<IDataSource<MySQLSourceParams>>()!,
-            nameof(StaticCodeParams) => (IDataSource<T>)_serviceProvider.GetService<IDataSource<StaticCodeParams>>()!,
-            nameof(OracleSourceParams) => (IDataSource<T>)_serviceProvider.GetService<IDataSource<OracleSourceParams>>()!,
-            _ => throw new ArgumentException($"Unsupported data source type: {nameof(T)}")
-        };
+            var dataSource = _serviceProvider.GetService(dataSourceType);
+            if (dataSource == null)
+            {
+                throw new InvalidOperationException($"{dataSourceType.Name} not found in service provider");
+            }
+            return (IDataSource<T>)dataSource;
+        }
+
+        throw new ArgumentException($"Unsupported data source type: {paramType.Name}");
     }
 
     public IDataSource CreateDataSource<TValue>(BaseDataSourceParams<TValue> baseDataSourceParams) where TValue : class
     {
-        Assembly assem = typeof(BaseDataSourceParams<TValue>).Assembly;
-        BaseDataSourceParams p = (BaseDataSourceParams)assem.CreateInstance(assem.FullName);
-
         // Get the actual runtime type
         var type = baseDataSourceParams.GetType();
-
-        
 
         // Get the clean type name: if it's generic, remove the backtick notation (`1)
         var typeName = type.IsGenericType

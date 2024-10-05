@@ -12,7 +12,7 @@ public interface IDataSource
     /// and properties corresponding to the column names in the result set.
     /// </typeparam>
     /// <typeparam name="TBaseDataSourceParams">
-    /// The type of the database parameters, which should inherit from <see cref="BaseDataSourceParams"/>. 
+    /// The type of the base data source parameters, which must inherit from <see cref="BaseDataSourceParams{TValue}"/>.
     /// This type contains details such as the query, command type, timeout, and any parameters required for execution.
     /// </typeparam>
     /// <param name="params">

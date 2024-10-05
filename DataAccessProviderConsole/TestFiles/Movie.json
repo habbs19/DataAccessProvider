@@ -1,0 +1,115 @@
+[
+  {
+    "Id": 1,
+    "Title": "Inception",
+    "Description": "A thief who enters the dreams of others to steal secrets is tasked with planting an idea in someone's mind.",
+    "Genre": "Sci-Fi",
+    "ReleaseDate": "2010-07-16",
+    "Director": "Christopher Nolan",
+    "Actors": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Ellen Page",
+      "Tom Hardy"
+    ],
+    "Duration": 148,
+    "Rating": 8.8,
+    "BoxOfficeRevenue": 829895144.00,
+    "Country": "USA",
+    "Languages": [
+      "English",
+      "Japanese",
+      "French"
+    ]
+  },
+  {
+    "Id": 2,
+    "Title": "The Godfather",
+    "Description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+    "Genre": "Crime",
+    "ReleaseDate": "1972-03-24",
+    "Director": "Francis Ford Coppola",
+    "Actors": [
+      "Marlon Brando",
+      "Al Pacino",
+      "James Caan",
+      "Robert Duvall"
+    ],
+    "Duration": 175,
+    "Rating": 9.2,
+    "BoxOfficeRevenue": 246120974.00,
+    "Country": "USA",
+    "Languages": [
+      "English",
+      "Italian",
+      "Latin"
+    ]
+  },
+  {
+    "Id": 3,
+    "Title": "The Dark Knight",
+    "Description": "When the Joker emerges as a new criminal mastermind, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+    "Genre": "Action",
+    "ReleaseDate": "2008-07-18",
+    "Director": "Christopher Nolan",
+    "Actors": [
+      "Christian Bale",
+      "Heath Ledger",
+      "Aaron Eckhart",
+      "Michael Caine"
+    ],
+    "Duration": 152,
+    "Rating": 9.0,
+    "BoxOfficeRevenue": 1004558444.00,
+    "Country": "USA",
+    "Languages": [
+      "English",
+      "Mandarin"
+    ]
+  },
+  {
+    "Id": 4,
+    "Title": "Parasite",
+    "Description": "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
+    "Genre": "Thriller",
+    "ReleaseDate": "2019-05-30",
+    "Director": "Bong Joon Ho",
+    "Actors": [
+      "Kang-ho Song",
+      "Sun-kyun Lee",
+      "Yeo-jeong Jo",
+      "Woo-sik Choi"
+    ],
+    "Duration": 132,
+    "Rating": 8.6,
+    "BoxOfficeRevenue": 263129282.00,
+    "Country": "South Korea",
+    "Languages": [
+      "Korean",
+      "English"
+    ]
+  },
+  {
+    "Id": 5,
+    "Title": "The Lord of the Rings: The Fellowship of the Ring",
+    "Description": "A meek Hobbit and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.",
+    "Genre": "Fantasy",
+    "ReleaseDate": "2001-12-19",
+    "Director": "Peter Jackson",
+    "Actors": [
+      "Elijah Wood",
+      "Ian McKellen",
+      "Orlando Bloom",
+      "Sean Astin"
+    ],
+    "Duration": 178,
+    "Rating": 8.8,
+    "BoxOfficeRevenue": 871530324.00,
+    "Country": "New Zealand",
+    "Languages": [
+      "English",
+      "Elvish",
+      "Sindarin"
+    ]
+  }
+]

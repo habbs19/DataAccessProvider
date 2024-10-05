@@ -3,6 +3,7 @@ using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.DataSource.Source;
 using DataAccessProvider.Interfaces;
 using DataAccessProvider.Interfaces.Source;
+using DataAccessProviderConsole.Classes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
@@ -37,15 +38,16 @@ var codeParams = new StaticCodeParams
 var result3 = await dataSourceProvider!.ExecuteReaderAsync(codeParams);
 Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result3.Value)}");
 
-var jsonFileParams = new JsonFileSourceParams
+var jsonFileParams = new JsonFileSourceParams<List<Movie>>
 {
-    Content = @"{Name: 'Michal Jackson'}"
+    FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "Movie.json"),
 };
-var result4 = await dataSourceProvider!.ExecuteReaderAsync(codeParams);
-Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result4.Value)}");
+var result4 = await dataSourceProvider!.ExecuteReaderAsync(jsonFileParams);
+Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result4.Value.First().First().Genre)}");
 
 
 
+//var dataSourceProvider = serviceProvider.GetService<IDataSourceProvider>();
 
 
 

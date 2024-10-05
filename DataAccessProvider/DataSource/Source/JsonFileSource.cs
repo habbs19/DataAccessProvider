@@ -3,14 +3,119 @@ using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.Interfaces;
 using DataAccessProvider.Interfaces.Source;
 using System.Data.Common;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 
 namespace DataAccessProvider.DataSource.Source
 {
+    #region JsonFileSource
+    public partial class JsonFileSource : IDataSource
+    {
+        /// <summary>
+        /// Executes a non-query operation for a parameterized data source.
+        /// </summary>
+        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
+        /// <param name="params">The data source parameters.</param>
+        /// <returns>The parameters after execution.</returns>
+        public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
+        {
+            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
+
+            if (jsonFileSourceParams != null)
+            {
+                return (TBaseDataSourceParams)(object)await ExecuteNonQueryAsync(jsonFileSourceParams);
+            }
+            else
+            {
+                throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
+            }
+        }
+
+        /// <summary>
+        /// Reads content from the JSON file and deserializes it to an object of type <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type to deserialize the JSON content into.</typeparam>
+        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
+        /// <param name="params">The data source parameters including file path.</param>
+        /// <returns>The parameters after reading the file.</returns>
+        public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams @params)
+            where TBaseDataSourceParams : BaseDataSourceParams<TValue>
+            where TValue : class, new()
+        {
+            JsonFileSourceParams<TValue>? jsonFileSourceParams = @params as JsonFileSourceParams<TValue>;
+
+            try
+            {
+
+                // Read file content
+                string content = await File.ReadAllTextAsync(jsonFileSourceParams!.FilePath);
+
+                var result = JsonSerializer.Deserialize<TValue>(content)!;
+
+                // Set the result in parameters
+                @params.SetValue(result);
+
+                return @params;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error reading file at {jsonFileSourceParams!.FilePath}: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Reads content from the JSON file.
+        /// </summary>
+        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
+        /// <param name="params">The parameters including file path.</param>
+        /// <returns>The parameters after reading the file.</returns>
+        public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
+        {
+            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
+
+            if (jsonFileSourceParams != null)
+            {
+                return (TBaseDataSourceParams)(object)await ExecuteReaderAsync(jsonFileSourceParams);
+            }
+            else
+            {
+                throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
+            }
+        }
+
+        /// <summary>
+        /// Executes a scalar operation and returns a single value.
+        /// </summary>
+        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
+        /// <param name="params">The data source parameters.</param>
+        /// <returns>The parameters after the scalar operation.</returns>
+        public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
+        {
+            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
+
+            if (jsonFileSourceParams != null)
+            {
+                return (TBaseDataSourceParams)(object)await ExecuteScalarAsync(jsonFileSourceParams);
+            }
+            else
+            {
+                throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
+            }
+        }
+
+        public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
+        {
+            return await ExecuteReaderAsync<TValue, BaseDataSourceParams<TValue>>(@params);
+        }
+
+    }
+    #endregion JsonFileSource
+    #region JsonFileSource<>
     /// <summary>
     /// Represents a data source for reading and writing JSON files.
     /// </summary>
-    public class JsonFileSource : IDataSource<JsonFileSourceParams>, IDataSource
+    public partial class JsonFileSource : IDataSource<JsonFileSourceParams>
     {
         /// <summary>
         /// Writes the content provided in <paramref name="params"/> to a JSON file.
@@ -38,50 +143,17 @@ namespace DataAccessProvider.DataSource.Source
         }
 
         /// <summary>
-        /// Executes a non-query operation for a parameterized data source.
-        /// </summary>
-        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
-        /// <param name="params">The data source parameters.</param>
-        /// <returns>The parameters after execution.</returns>
-        public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
-        {
-            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
-
-            if (jsonFileSourceParams != null)
-            {
-                return (TBaseDataSourceParams)(object)await ExecuteNonQueryAsync(jsonFileSourceParams);
-            }
-            else
-            {
-                throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
-            }
-        }
-
-        /// <summary>
         /// Reads content from the JSON file and deserializes it to an object of type <typeparamref name="T"/>.
         /// </summary>
         /// <typeparam name="T">The type to deserialize the JSON content into.</typeparam>
         /// <param name="params">The parameters including file path.</param>
         /// <returns>The parameters after reading the file.</returns>
-        public async Task<JsonFileSourceParams> ExecuteReaderAsync<T>(JsonFileSourceParams @params) where T : class, new()
+        public async Task<JsonFileSourceParams> ExecuteReaderAsync<TValue>(JsonFileSourceParams @params) 
+            where TValue : class, new()
         {
-            try
-            {
-                // Read file content
-                string content = await File.ReadAllTextAsync(@params.FilePath);
-
-                // Deserialize the content to the specified type
-                T result = JsonSerializer.Deserialize<T>(content)!;
-
-                // Set the result in parameters
-                @params.SetValue(result);
-
-                return @params;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error reading file at {@params.FilePath}: {ex.Message}", ex);
-            }
+            var sourceParams = @params as BaseDataSourceParams<TValue>;
+            var result = await ExecuteReaderAsync<TValue>(sourceParams!);
+            return (JsonFileSourceParams)(object)result;
         }
 
         /// <summary>
@@ -105,55 +177,6 @@ namespace DataAccessProvider.DataSource.Source
             {
                 throw new Exception($"Error reading file at {@params.FilePath}: {ex.Message}", ex);
             }
-        }
-
-        /// <summary>
-        /// Reads content from the JSON file and deserializes it to an object of type <typeparamref name="T"/>.
-        /// </summary>
-        /// <typeparam name="T">The type to deserialize the JSON content into.</typeparam>
-        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
-        /// <param name="params">The data source parameters including file path.</param>
-        /// <returns>The parameters after reading the file.</returns>
-        public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams @params)
-            where TBaseDataSourceParams : BaseDataSourceParams<TValue>
-            where TValue : class, new()
-        {
-            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
-
-            if (jsonFileSourceParams != null)
-            {
-                return (TBaseDataSourceParams)(object)await ExecuteReaderAsync<TValue>(jsonFileSourceParams);
-            }
-            else
-            {
-                throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
-            }
-        }
-
-        /// <summary>
-        /// Reads content from the JSON file.
-        /// </summary>
-        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
-        /// <param name="params">The parameters including file path.</param>
-        /// <returns>The parameters after reading the file.</returns>
-        public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
-        {
-            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
-
-            if (jsonFileSourceParams != null)
-            {
-                return (TBaseDataSourceParams)(object)await ExecuteReaderAsync(jsonFileSourceParams);
-            }
-            else
-            {
-                throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
-            }
-        }
-
-        public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
-        {
-            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
-            return (BaseDataSourceParams<TValue>)(object)await ExecuteReaderAsync<JsonFileSourceParams<TValue>>(jsonFileSourceParams!);
         }
 
         /// <summary>
@@ -182,24 +205,7 @@ namespace DataAccessProvider.DataSource.Source
             }
         }
 
-        /// <summary>
-        /// Executes a scalar operation and returns a single value.
-        /// </summary>
-        /// <typeparam name="TBaseDataSourceParams">The base type for data source parameters.</typeparam>
-        /// <param name="params">The data source parameters.</param>
-        /// <returns>The parameters after the scalar operation.</returns>
-        public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
-        {
-            JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
-
-            if (jsonFileSourceParams != null)
-            {
-                return (TBaseDataSourceParams)(object)await ExecuteScalarAsync(jsonFileSourceParams);
-            }
-            else
-            {
-                throw new InvalidCastException($"The provided parameter is not of type JsonFileSourceParams.");
-            }
-        }
+        
     }
+    #endregion JsonFileSource<>
 }
