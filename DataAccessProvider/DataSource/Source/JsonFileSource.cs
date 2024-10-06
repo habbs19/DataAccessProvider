@@ -12,6 +12,26 @@ namespace DataAccessProvider.DataSource.Source;
 public partial class JsonFileSource : BaseSource
 {
     private static readonly string ExceptionMessage = $"The provided parameter is not of type JsonFileSourceParams.";
+
+    protected async override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams @params)
+    {
+        JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
+
+        try
+        {
+            // Write content to the file (overwriting any existing content)
+            await File.WriteAllTextAsync(jsonFileSourceParams!.FilePath, jsonFileSourceParams.Content);
+
+            // Set the value to the number of bytes written
+            jsonFileSourceParams.SetValue(jsonFileSourceParams.Content.Length);
+            return jsonFileSourceParams;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error writing to file at {jsonFileSourceParams!.FilePath}: {ex.Message}", ex);
+        }
+    }
+
     protected async override Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
     {
         JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
@@ -49,6 +69,43 @@ public partial class JsonFileSource : BaseSource
             throw new Exception($"Error reading file at {jsonFileSourceParams!.FilePath}: {ex.Message}", ex);
         }
     }
+
+    protected async override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams @params)
+    {
+        // Cast the params to JsonFileSourceParams
+        JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
+
+        if (jsonFileSourceParams == null)
+        {
+            throw new ArgumentException("Invalid parameter type. Expected JsonFileSourceParams.");
+        }
+
+        try
+        {
+            // Get the file information
+            var fileInfo = new FileInfo(jsonFileSourceParams.FilePath);
+
+            // Ensure the file exists
+            if (!fileInfo.Exists)
+            {
+                throw new FileNotFoundException($"File not found at {jsonFileSourceParams.FilePath}");
+            }
+
+            // Get the size of the file in bytes (scalar value)
+            long fileSizeInBytes = fileInfo.Length;
+
+            // Set the scalar result (file size in bytes) as the result
+            jsonFileSourceParams.SetValue(fileSizeInBytes);
+
+            await Task.CompletedTask;
+            // Return the modified params with the result
+            return (BaseDataSourceParams)(object)jsonFileSourceParams;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error accessing file at {jsonFileSourceParams.FilePath}: {ex.Message}", ex);
+        }
+    }
 }
 
 
@@ -59,16 +116,7 @@ public partial class JsonFileSource : IDataSource
 {
     public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
     {
-        JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
-
-        if (jsonFileSourceParams != null)
-        {
-            return (TBaseDataSourceParams)(object)await ExecuteNonQueryAsync(jsonFileSourceParams);
-        }
-        else
-        {
-            throw new InvalidCastException(ExceptionMessage);
-        }
+        return (TBaseDataSourceParams)await ExecuteNonQuery(@params);
     }
 
     public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams @params)
@@ -76,17 +124,17 @@ public partial class JsonFileSource : IDataSource
         where TValue : class, new()
     {
         var sourceParams = @params as BaseDataSourceParams;
-        return (TBaseDataSourceParams)(object)await ExecuteReader<TValue>(sourceParams!);
+        return (TBaseDataSourceParams)await ExecuteReader<TValue>(sourceParams!);
     }
 
     public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
     {
-        return (TBaseDataSourceParams)(object)await ExecuteReader(@params);
+        return (TBaseDataSourceParams)await ExecuteReader(@params);
     }
 
-    public Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
+    public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
     {
-        throw new NotImplementedException();
+        return (TBaseDataSourceParams)await ExecuteScalar(@params);
     }
 }
 #endregion JsonFileSource
@@ -103,19 +151,7 @@ public partial class JsonFileSource : IDataSource<JsonFileSourceParams>
     /// <returns>The parameters with an updated value of written bytes.</returns>
     public async Task<JsonFileSourceParams> ExecuteNonQueryAsync(JsonFileSourceParams @params)
     {
-        try
-        {
-            // Write content to the file (overwriting any existing content)
-            await File.WriteAllTextAsync(@params.FilePath, @params.Content);
-
-            // Set the value to the number of bytes written
-            @params.SetValue(@params.Content.Length);
-            return @params;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"Error writing to file at {@params.FilePath}: {ex.Message}", ex);
-        }
+        return (JsonFileSourceParams)await ExecuteNonQuery(@params);
     }
 
     public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(JsonFileSourceParams @params) where TValue : class, new()
@@ -125,7 +161,7 @@ public partial class JsonFileSource : IDataSource<JsonFileSourceParams>
 
     public async Task<JsonFileSourceParams> ExecuteReaderAsync(JsonFileSourceParams @params)
     {
-        return (JsonFileSourceParams)(object)await ExecuteReader(@params);
+        return (JsonFileSourceParams)await ExecuteReader(@params);
     }
 
     /// <summary>
@@ -135,23 +171,8 @@ public partial class JsonFileSource : IDataSource<JsonFileSourceParams>
     /// <returns>The parameters after the scalar operation.</returns>
     public async Task<JsonFileSourceParams> ExecuteScalarAsync(JsonFileSourceParams @params)
     {
-        try
-        {
-            // Read file content
-            string content = await File.ReadAllTextAsync(@params.FilePath);
-
-            // Assuming scalar means returning a single value (e.g., first line)
-            string scalarValue = content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
-
-            // Set the scalar value
-            @params.SetValue(scalarValue!);
-
-            return @params;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"Error reading scalar value from file at {@params.FilePath}: {ex.Message}", ex);
-        }
+        var sourceParams = @params as BaseDataSourceParams;
+        return (JsonFileSourceParams)await ExecuteScalar(sourceParams);
     }
 
     

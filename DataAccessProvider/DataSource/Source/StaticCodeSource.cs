@@ -1,6 +1,7 @@
 ﻿using DataAccessProvider.Abstractions;
 using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.Interfaces;
+using System.Text;
 
 namespace DataAccessProvider.DataSource.Source;
 #region Props
@@ -67,9 +68,33 @@ public partial class StaticCodeSource : IDataSource
         return (TBaseDataSourceParams)await ExecuteReader(@params);
     }
 
-    public Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
+    public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
     {
-        throw new NotImplementedException();
+        // Cast the params to StaticCodeParams<TValue>
+        StaticCodeParams? staticCodeParams = @params as StaticCodeParams;
+
+        if (staticCodeParams == null)
+        {
+            throw new ArgumentException("Invalid parameter type. Expected StaticCodeParams.");
+        }
+
+        try
+        {
+            // Calculate the size of the content in bytes using UTF-8 encoding
+            int contentSizeInBytes = Encoding.UTF8.GetByteCount(staticCodeParams.Content.ToString()!);
+
+            // Set the scalar result (content size in bytes)
+            staticCodeParams.SetValue(contentSizeInBytes);
+
+            await Task.CompletedTask;
+
+            // Return the modified params with the result
+            return (TBaseDataSourceParams)(object)staticCodeParams;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error processing content: {ex.Message}", ex);
+        }
     }
 }
 
@@ -90,8 +115,8 @@ public partial class StaticCodeSource : IDataSource<StaticCodeParams>
         throw new NotImplementedException();
     }
 
-    public Task<StaticCodeParams> ExecuteScalarAsync(StaticCodeParams @params)
+    public async Task<StaticCodeParams> ExecuteScalarAsync(StaticCodeParams @params)
     {
-        throw new NotImplementedException();
+        
     }
 }

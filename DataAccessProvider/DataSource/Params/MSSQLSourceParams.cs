@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using DataAccessProvider.Abstractions;
+using Microsoft.Data.SqlClient;
 namespace DataAccessProvider.DataSource.Params;
 
 public class MSSQLSourceParams : BaseDatabaseSourceParams<SqlParameter> { }
