@@ -9,27 +9,19 @@ namespace DataAccessProvider.DataSource;
 public class DataSourceFactory : IDataSourceFactory
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly Dictionary<Type, Type> _dataSourceMappings = new();
+    private readonly Dictionary<string, Type> _dataSourceMappings = new();
 
     public DataSourceFactory(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
 
         // Default data source mappings
-        _dataSourceMappings.Add(typeof(MSSQLSourceParams), typeof(MSSQLSource));
-        _dataSourceMappings.Add(typeof(PostgresSourceParams), typeof(PostgresSource));
-        _dataSourceMappings.Add(typeof(JsonFileSourceParams), typeof(JsonFileSource));
-        _dataSourceMappings.Add(typeof(MySQLSourceParams), typeof(MySQLSource));
-        _dataSourceMappings.Add(typeof(StaticCodeParams), typeof(StaticCodeSource));
-        _dataSourceMappings.Add(typeof(OracleSourceParams), typeof(OracleSource));
-
-        // Add generic types
-        _dataSourceMappings.Add(typeof(MSSQLSourceParams<>), typeof(MSSQLSource));
-        _dataSourceMappings.Add(typeof(PostgresSourceParams<>), typeof(PostgresSource));
-        _dataSourceMappings.Add(typeof(JsonFileSourceParams<>), typeof(JsonFileSource));
-        _dataSourceMappings.Add(typeof(MySQLSourceParams<>), typeof(MySQLSource));
-        _dataSourceMappings.Add(typeof(StaticCodeParams<>), typeof(StaticCodeSource));
-        _dataSourceMappings.Add(typeof(OracleSourceParams<>), typeof(OracleSource));
+        _dataSourceMappings.Add(nameof(MSSQLSourceParams), typeof(MSSQLSource));
+        _dataSourceMappings.Add(nameof(PostgresSourceParams), typeof(PostgresSource));
+        _dataSourceMappings.Add(nameof(JsonFileSourceParams), typeof(JsonFileSource));
+        _dataSourceMappings.Add(nameof(MySQLSourceParams), typeof(MySQLSource));
+        _dataSourceMappings.Add(nameof(StaticCodeParams), typeof(StaticCodeSource));
+        _dataSourceMappings.Add(nameof(OracleSourceParams), typeof(OracleSource));
     }
 
     public void RegisterDataSource<TParams, TSource>()
@@ -37,16 +29,18 @@ public class DataSourceFactory : IDataSourceFactory
      where TSource : IDataSource
     {
         // Register the non-generic type
-        _dataSourceMappings[typeof(TParams)] = typeof(TSource);
+        _dataSourceMappings[nameof(TParams)] = typeof(TSource);
 
         // Check if TParams is a generic type definition and register the generic type
         if (typeof(TParams).IsGenericTypeDefinition)
         {
-            _dataSourceMappings[typeof(TParams).GetGenericTypeDefinition()] = typeof(TSource);
+            var name = typeof(TParams).GetGenericTypeDefinition().GetCleanGenericTypeName();
+            _dataSourceMappings[name] = typeof(TSource);
         }
         else if (typeof(TParams).IsGenericType)
         {
-            _dataSourceMappings[typeof(TParams).GetGenericTypeDefinition()] = typeof(TSource);
+            var name = typeof(TParams).GetGenericTypeDefinition().GetCleanGenericTypeName();
+            _dataSourceMappings[name] = typeof(TSource);
         }
     }
 
@@ -55,7 +49,7 @@ public class DataSourceFactory : IDataSourceFactory
         var paramType = baseDataSourceParams.GetType();
 
         // Check if there is a registered mapping for the given parameter type
-        if (_dataSourceMappings.TryGetValue(paramType, out var dataSourceType))
+        if (_dataSourceMappings.TryGetValue(paramType.GetCleanGenericTypeName(), out var dataSourceType))
         {
             var dataSource = _serviceProvider.GetService(dataSourceType);
             if (dataSource == null)
@@ -73,15 +67,8 @@ public class DataSourceFactory : IDataSourceFactory
         // Get the actual runtime type
         var type = baseDataSourceParams.GetType();
 
-
-        // Get the clean type name: if it's generic, remove the backtick notation (`1)
-        var typeName = type.IsGenericType
-                ? type.GetGenericTypeDefinition().Name.Split('`')[0]  // Removes the "`1" part
-                : type.Name;
-        
-        typeName = type.GetGenericTypeName();
         // Check if there is a registered mapping for the given parameter type
-        if (_dataSourceMappings.TryGetValue(type, out var dataSourceType))
+        if (_dataSourceMappings.TryGetValue(type.GetCleanGenericTypeName(), out var dataSourceType))
         {
             var dataSource = _serviceProvider.GetService(dataSourceType);
             if (dataSource == null)
@@ -104,7 +91,7 @@ public class DataSourceFactory : IDataSourceFactory
         var paramType = typeof(TBaseDataSourceParams);
 
         // Check if there is a registered mapping for the given parameter type
-        if (_dataSourceMappings.TryGetValue(paramType, out var dataSourceType))
+        if (_dataSourceMappings.TryGetValue(paramType.GetGenericTypeName(), out var dataSourceType))
         {
             var dataSource = _serviceProvider.GetService(dataSourceType);
             if (dataSource == null)

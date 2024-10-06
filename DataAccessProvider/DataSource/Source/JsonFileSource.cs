@@ -128,7 +128,7 @@ public partial class JsonFileSource : IDataSource
 
     public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
     {
-        var sourceParams = @params as BaseDataSourceParams;
+        var sourceParams = @params as BaseDataSourceParams;//sfgsf
         return await ExecuteReader<TValue>(sourceParams!);
     }
 

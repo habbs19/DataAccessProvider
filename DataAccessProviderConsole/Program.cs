@@ -40,6 +40,7 @@ var result1d = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams3);
 Console.WriteLine($"\n1a:  {JsonSerializer.Serialize(result1a.Value)}");
 Console.WriteLine($"\n1b:  {JsonSerializer.Serialize(result1b.Value)}");
 Console.WriteLine($"\n1b:  {JsonSerializer.Serialize(result1c.Value)}");
+Console.WriteLine($"\n1b:  {JsonSerializer.Serialize(result1d.Value?.First().Date)}");
 
 //Console.WriteLine($"\n1c:  {JsonSerializer.Serialize(result1c.Value)}");
 //Console.WriteLine($"\n1d:  {JsonSerializer.Serialize(result1d.Value)}");

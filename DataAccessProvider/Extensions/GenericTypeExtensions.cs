@@ -23,4 +23,11 @@ public static class GenericTypeExtensions
     {
         return @object.GetType().GetGenericTypeName();
     }
+    public static string GetCleanGenericTypeName(this Type type)
+    {
+        var typeName = type.IsGenericType
+          ? type.GetGenericTypeDefinition().Name.Split('`')[0]  // Removes the "`1" part
+          : type.Name;
+        return typeName;
+    }
 }

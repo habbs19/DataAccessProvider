@@ -233,8 +233,50 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
 
     public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
-        return await ExecuteReader<TValue>(sourceParams!);
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter,TValue>;
+        if (sourceParams == null)
+        {
+            throw new ArgumentException("Invalid source parameters type.");
+        }
+        using (var connection = GetConnection())
+        {
+            using (var command = GetCommand(sourceParams!.Query, connection))
+            {
+                command.CommandTimeout = sourceParams.Timeout;
+                command.CommandType = sourceParams.CommandType;
+
+                if (sourceParams.Parameters != null)
+                {
+                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+                }
+
+                await connection.OpenAsync();
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    var resultSet = await ReadResultAsync(reader);
+                    var result = new List<TValue>();
+
+                    foreach (var row in resultSet)
+                    {
+                        var item = new TValue();
+                        foreach (var property in typeof(TValue).GetProperties())
+                        {
+                            if (row.ContainsKey(property.Name) && property.CanWrite)
+                            {
+                                property.SetValue(item, Convert.ChangeType(row[property.Name], property.PropertyType));
+                            }
+                        }
+                        result.Add(item);
+                    }
+                    sourceParams.SetValue(result);
+
+                    //var converted = Convert.ChangeType(sourceParams, typeof(BaseDataSourceParams<TValue>));
+                    return (BaseDataSourceParams<TValue>)(object)sourceParams;
+                }
+            }
+        }
+
+
     }
 }
 #endregion BaseDatabaseSource
