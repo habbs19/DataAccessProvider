@@ -7,12 +7,22 @@ namespace DataAccessProvider.DataSource.Source;
 #region Props
 public partial class MongoDBSource : BaseSource
 {
+    protected override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams @params)
+    {
+        throw new NotImplementedException();
+    }
+
     protected override Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
     {
         throw new NotImplementedException();
     }
 
     protected override Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams @params)
     {
         throw new NotImplementedException();
     }
@@ -47,22 +57,22 @@ public partial class MongoDBSource : IDataSource
 #region MongoDBSource<>
 public partial class MongoDBSource : IDataSource<MongoDBParams>
 {
-    public Task<MongoDBParams> ExecuteNonQueryAsync(MongoDBParams @params)
+    public async Task<MongoDBParams> ExecuteNonQueryAsync(MongoDBParams @params)
     {
         throw new NotImplementedException();
     }
 
-    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(MongoDBParams @params) where TValue : class, new()
+    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(MongoDBParams @params) where TValue : class, new()
     {
         throw new NotImplementedException();
     }
 
-    public Task<MongoDBParams> ExecuteReaderAsync(MongoDBParams @params)
+    public async Task<MongoDBParams> ExecuteReaderAsync(MongoDBParams @params)
     {
         throw new NotImplementedException();
     }
 
-    public Task<MongoDBParams> ExecuteScalarAsync(MongoDBParams @params)
+    public async Task<MongoDBParams> ExecuteScalarAsync(MongoDBParams @params)
     {
         throw new NotImplementedException();
     }

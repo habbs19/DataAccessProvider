@@ -1,4 +1,5 @@
-﻿using DataAccessProvider.DataSource;
+﻿using DataAccessProvider.Abstractions;
+using DataAccessProvider.DataSource;
 using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.DataSource.Source;
 using DataAccessProvider.Interfaces;
@@ -27,8 +28,13 @@ var mssqParams1 = new MSSQLSourceParams
 {
     Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
 };
-var result1a = await dataSourceProvider1!.ExecuteScalarAsync(jsonFileParams1);
-var result1b = await dataSourceProvider1!.ExecuteScalarAsync(mssqParams1);
+var mssqParams3 = new MSSQLSourceParams<Diary>
+{
+    Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
+};
+var result1a = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams1);
+var result1b = await dataSourceProvider1!.ExecuteReaderAsync<Diary, MSSQLSourceParams<Diary>>(mssqParams3);
+result1b = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams3);
 var result1c = await dataSourceProvider1!.ExecuteReaderAsync(codeParams1);
 var result1d = await dataSourceProvider2!.ExecuteScalarAsync(codeParams1);
 Console.WriteLine($"\n1a:  {JsonSerializer.Serialize(result1a.Value)}");

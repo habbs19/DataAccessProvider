@@ -1,12 +1,10 @@
-﻿using System.Data;
-using System.Data.Common;
+﻿using System.Data.Common;
 using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.Interfaces;
-using MongoDB.Driver.Core.Misc;
 
 namespace DataAccessProvider.Abstractions;
 
-public partial class BaseDatabaseSource<TParameter> : BaseSource
+public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
 {
     protected override async Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
     {
@@ -93,6 +91,46 @@ public partial class BaseDatabaseSource<TParameter> : BaseSource
             }
         }
     }
+    protected async override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams @params)
+    {
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
+        using (var connection = GetConnection())
+        {
+            using (var command = GetCommand(sourceParams!.Query, connection))
+            {
+                command.CommandTimeout = sourceParams.Timeout;
+                command.CommandType = sourceParams.CommandType;
+
+                if (sourceParams.Parameters != null)
+                {
+                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+                }
+                await connection.OpenAsync();
+                var result = await command.ExecuteScalarAsync();
+                sourceParams.SetValue(result!);
+                return (BaseDataSourceParams)(object)sourceParams!;
+            }
+        }
+    }
+
+    protected async override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams @params)
+    {
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
+        using (var connection = GetConnection())
+        {
+            using (var command = GetCommand(sourceParams!.Query, connection))
+            {
+                command.CommandTimeout = sourceParams.Timeout;
+                command.CommandType = sourceParams.CommandType;
+                if (sourceParams.Parameters != null)
+                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+
+                await connection.OpenAsync();
+                sourceParams.SetValue(await command.ExecuteNonQueryAsync());
+                return sourceParams;
+            }
+        }
+    }
 }
 #region Props
 /// <summary>
@@ -173,24 +211,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
     public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
        where TBaseDataSourceParams : BaseDataSourceParams
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
-        using (var connection = GetConnection())
-        {
-            using (var command = GetCommand(sourceParams!.Query, connection))
-            {
-                command.CommandTimeout = sourceParams.Timeout;
-                command.CommandType = sourceParams.CommandType;
-
-                if (sourceParams.Parameters != null)
-                {
-                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
-                }
-                await connection.OpenAsync();
-                var result = await command.ExecuteScalarAsync();
-                @params.SetValue(result!);
-                return (TBaseDataSourceParams)(object)sourceParams!;
-            }
-        }
+        return (TBaseDataSourceParams)await ExecuteScalar(@params);   
     }
     public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
        where TBaseDataSourceParams : BaseDataSourceParams
@@ -201,8 +222,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
     public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
         where TBaseDataSourceParams : BaseDataSourceParams
     {
-        var sourceParams = @params as TBaseDataSourceParams;
-        return (TBaseDataSourceParams)(object)await ExecuteNonQueryAsync(sourceParams!);
+        return (TBaseDataSourceParams)(object)await ExecuteNonQuery(@params);
     }
     public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams @params)
         where TBaseDataSourceParams : BaseDataSourceParams<TValue>
@@ -229,20 +249,7 @@ public abstract partial class BaseDatabaseSource<TParameter, TDatabaseSourcePara
 
     public async Task<TDatabaseSourceParams> ExecuteNonQueryAsync(TDatabaseSourceParams @params)
     {
-        using (var connection = GetConnection())
-        {
-            using (var command = GetCommand(@params.Query, connection))
-            {
-                command.CommandTimeout = @params.Timeout;
-                command.CommandType = @params.CommandType;
-                if (@params.Parameters != null)
-                    command.Parameters.AddRange(@params.Parameters.ToArray());
-
-                await connection.OpenAsync();
-                @params.SetValue(await command.ExecuteNonQueryAsync());
-                return @params;
-            }
-        }
+        return (TDatabaseSourceParams)(object)await ExecuteNonQuery(@params);
     }
     public async Task<TDatabaseSourceParams> ExecuteReaderAsync(TDatabaseSourceParams @params)
     {
@@ -250,7 +257,7 @@ public abstract partial class BaseDatabaseSource<TParameter, TDatabaseSourcePara
     }
     public async Task<TDatabaseSourceParams> ExecuteScalarAsync(TDatabaseSourceParams @params)
     {
-        return await ExecuteScalarAsync<TDatabaseSourceParams>(@params);       
+        return (TDatabaseSourceParams)(object)await ExecuteScalar(@params);       
     }
     async Task<BaseDataSourceParams<TValue>> IDataSource<TDatabaseSourceParams>.ExecuteReaderAsync<TValue>(TDatabaseSourceParams @params)
     {

@@ -1,10 +1,7 @@
 ﻿using DataAccessProvider.Abstractions;
 using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.Interfaces;
-using System.Data.Common;
-using System.Runtime.InteropServices.Marshalling;
 using System.Text.Json;
-using System.Text.Json.Serialization.Metadata;
 
 namespace DataAccessProvider.DataSource.Source;
 
@@ -77,7 +74,7 @@ public partial class JsonFileSource : BaseSource
 
         if (jsonFileSourceParams == null)
         {
-            throw new ArgumentException("Invalid parameter type. Expected JsonFileSourceParams.");
+            throw new ArgumentException(ExceptionMessage);
         }
 
         try
@@ -107,9 +104,6 @@ public partial class JsonFileSource : BaseSource
         }
     }
 }
-
-
-
 #endregion Props
 #region JsonFileSource
 public partial class JsonFileSource : IDataSource
@@ -174,7 +168,5 @@ public partial class JsonFileSource : IDataSource<JsonFileSourceParams>
         var sourceParams = @params as BaseDataSourceParams;
         return (JsonFileSourceParams)await ExecuteScalar(sourceParams);
     }
-
-    
 }
 #endregion JsonFileSource<>

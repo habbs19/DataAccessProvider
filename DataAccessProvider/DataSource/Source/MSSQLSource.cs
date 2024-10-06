@@ -7,7 +7,7 @@ using System.Data.Common;
 
 namespace DataAccessProvider.DataSource.Source;
 
-public sealed class MSSQLSource : BaseDatabaseSource<SqlParameter,MSSQLSourceParams>,
+public sealed class MSSQLSource : BaseDatabaseSource<SqlParameter, MSSQLSourceParams>,
     IDataSource,
     IDataSource<MSSQLSourceParams>
 {
