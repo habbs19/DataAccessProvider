@@ -77,6 +77,12 @@ namespace DataAccessProvider.DataSource
             return await dataSource.ExecuteReaderAsync<TBaseDataSourceParams>(@params);
         }
 
+        public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
+        {
+            IDataSource dataSource = _sourceFactory.CreateDataSource(@params);
+            return await dataSource.ExecuteReaderAsync(@params);
+        }
+
         /// <summary>
         /// Executes a scalar query asynchronously and returns a single value (e.g., an aggregate result like COUNT).
         /// </summary>

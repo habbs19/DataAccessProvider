@@ -84,8 +84,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                     }
                     sourceParams.SetValue(result);
 
-                    var re = Convert.ChangeType(sourceParams, typeof(BaseDataSourceParams<TValue>));
-                    return (BaseDataSourceParams<TValue>)re;
+                    //var converted = Convert.ChangeType(sourceParams, typeof(BaseDataSourceParams<TValue>));
                     return (BaseDataSourceParams<TValue>)(object)sourceParams;
                 }
             }
@@ -232,6 +231,11 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
         return (TBaseDataSourceParams)await ExecuteReader<TValue>(sourceParams!);
     }
 
+    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
+    {
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
+        return await ExecuteReader<TValue>(sourceParams!);
+    }
 }
 #endregion BaseDatabaseSource
 #region BaseDatabaseSource<>

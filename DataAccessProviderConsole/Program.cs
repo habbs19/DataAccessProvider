@@ -32,15 +32,17 @@ var mssqParams3 = new MSSQLSourceParams<Diary>
 {
     Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
 };
-var result1a = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams1);
-var result1b = await dataSourceProvider1!.ExecuteReaderAsync<Diary, MSSQLSourceParams<Diary>>(mssqParams3);
-result1b = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams3);
-var result1c = await dataSourceProvider1!.ExecuteReaderAsync(codeParams1);
-var result1d = await dataSourceProvider2!.ExecuteScalarAsync(codeParams1);
+var result1a = await dataSourceProvider1!.ExecuteReaderAsync(jsonFileParams1);
+var result1b = await dataSourceProvider1!.ExecuteReaderAsync(codeParams1);
+var result1c = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams1);
+var result1d = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams3);
+//var result1d = await dataSourceProvider2!.ExecuteScalarAsync(codeParams1);
 Console.WriteLine($"\n1a:  {JsonSerializer.Serialize(result1a.Value)}");
 Console.WriteLine($"\n1b:  {JsonSerializer.Serialize(result1b.Value)}");
-Console.WriteLine($"\n1c:  {JsonSerializer.Serialize(result1c.Value)}");
-Console.WriteLine($"\n1d:  {JsonSerializer.Serialize(result1d.Value)}");
+Console.WriteLine($"\n1b:  {JsonSerializer.Serialize(result1c.Value)}");
+
+//Console.WriteLine($"\n1c:  {JsonSerializer.Serialize(result1c.Value)}");
+//Console.WriteLine($"\n1d:  {JsonSerializer.Serialize(result1d.Value)}");
 
 
 /// test with type return

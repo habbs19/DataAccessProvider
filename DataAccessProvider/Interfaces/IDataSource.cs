@@ -35,6 +35,9 @@ public interface IDataSource
         where TBaseDataSourceParams : BaseDataSourceParams<TValue> 
         where TValue : class, new();
 
+    Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params)
+        where TValue : class, new();
+
     /// <summary>
     /// Executes a query asynchronously and retrieves a result set based on the provided data source parameters.
     /// This method is typically used to read data (e.g., SELECT queries) and return the result to the provided parameters.
@@ -56,6 +59,8 @@ public interface IDataSource
     /// </remarks>
     Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) 
         where TBaseDataSourceParams : BaseDataSourceParams;
+
+  
 
     /// <summary>
     /// Executes a non-query command asynchronously, such as INSERT, UPDATE, or DELETE, based on the provided data source parameters.

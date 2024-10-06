@@ -48,6 +48,18 @@ public partial class MongoDBSource : IDataSource
         throw new NotImplementedException();
     }
 
+    public Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(BaseDataSourceParams<TValue> @params)
+        where TValue : class, new()
+        where TBaseDataSourceParams : BaseDataSourceParams<TValue>
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
     {
         throw new NotImplementedException();
@@ -59,21 +71,25 @@ public partial class MongoDBSource : IDataSource<MongoDBParams>
 {
     public async Task<MongoDBParams> ExecuteNonQueryAsync(MongoDBParams @params)
     {
+        await Task.CompletedTask;
         throw new NotImplementedException();
     }
 
     public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(MongoDBParams @params) where TValue : class, new()
     {
+        await Task.CompletedTask;
         throw new NotImplementedException();
     }
 
     public async Task<MongoDBParams> ExecuteReaderAsync(MongoDBParams @params)
     {
+        await Task.CompletedTask;
         throw new NotImplementedException();
     }
 
     public async Task<MongoDBParams> ExecuteScalarAsync(MongoDBParams @params)
     {
+        await Task.CompletedTask;
         throw new NotImplementedException();
     }
 }

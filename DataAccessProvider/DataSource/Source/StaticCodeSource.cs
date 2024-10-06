@@ -9,7 +9,25 @@ public partial class StaticCodeSource : BaseSource
 {
     protected async override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams @params)
     {
-        throw new NotImplementedException();
+        // Check if the parameters are of type StaticCodeParams
+        if (@params is StaticCodeParams staticCodeParams)
+        {
+            // Perform logic related to non-query operations on StaticCodeParams
+            var content = staticCodeParams.Content;
+
+            var updatedContent = $"{content} - NonQuery executed";
+
+            // Simulate asynchronous work
+            await Task.CompletedTask;
+
+            // Set the updated content as the result
+            staticCodeParams.SetValue(updatedContent);
+
+            return staticCodeParams;
+        }
+
+        // Handle other types of BaseDataSourceParams if needed
+        throw new ArgumentException("Unsupported data source parameter type.");
     }
 
     protected async override Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
@@ -102,6 +120,12 @@ public partial class StaticCodeSource : IDataSource
         return (TBaseDataSourceParams)await ExecuteReader(@params);
     }
 
+    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
+    {
+        var sourceParams = @params as BaseDataSourceParams;
+        return await ExecuteReader<TValue>(sourceParams!);
+    }
+
     public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
     {
         return (TBaseDataSourceParams)await ExecuteScalar(@params);
@@ -110,9 +134,9 @@ public partial class StaticCodeSource : IDataSource
 
 public partial class StaticCodeSource : IDataSource<StaticCodeParams>
 {
-    public Task<StaticCodeParams> ExecuteNonQueryAsync(StaticCodeParams @params)
+    public async Task<StaticCodeParams> ExecuteNonQueryAsync(StaticCodeParams @params)
     {
-        throw new NotImplementedException();
+        return (StaticCodeParams)await ExecuteNonQuery(@params);
     }
 
     public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(StaticCodeParams @params) where TValue : class, new()

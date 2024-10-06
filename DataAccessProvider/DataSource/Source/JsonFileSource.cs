@@ -126,6 +126,12 @@ public partial class JsonFileSource : IDataSource
         return (TBaseDataSourceParams)await ExecuteReader(@params);
     }
 
+    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
+    {
+        var sourceParams = @params as BaseDataSourceParams;
+        return await ExecuteReader<TValue>(sourceParams!);
+    }
+
     public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
     {
         return (TBaseDataSourceParams)await ExecuteScalar(@params);
