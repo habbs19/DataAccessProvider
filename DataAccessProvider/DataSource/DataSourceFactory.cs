@@ -21,7 +21,7 @@ public class DataSourceFactory : IDataSourceFactory
         _dataSourceMappings.Add(typeof(JsonFileSourceParams), typeof(JsonFileSource));
         _dataSourceMappings.Add(typeof(MySQLSourceParams), typeof(MySQLSource));
         _dataSourceMappings.Add(typeof(StaticCodeParams), typeof(StaticCodeSource));
-        _dataSourceMappings.Add(typeof(OracleSourceParams), typeof(OracleDataSource));
+        _dataSourceMappings.Add(typeof(OracleSourceParams), typeof(OracleSource));
 
         // Add generic types
         _dataSourceMappings.Add(typeof(MSSQLSourceParams<>), typeof(MSSQLSource));
@@ -29,7 +29,7 @@ public class DataSourceFactory : IDataSourceFactory
         _dataSourceMappings.Add(typeof(JsonFileSourceParams<>), typeof(JsonFileSource));
         _dataSourceMappings.Add(typeof(MySQLSourceParams<>), typeof(MySQLSource));
         _dataSourceMappings.Add(typeof(StaticCodeParams<>), typeof(StaticCodeSource));
-        _dataSourceMappings.Add(typeof(OracleSourceParams<>), typeof(OracleDataSource));
+        _dataSourceMappings.Add(typeof(OracleSourceParams<>), typeof(OracleSource));
     }
 
     public void RegisterDataSource<TParams, TSource>()

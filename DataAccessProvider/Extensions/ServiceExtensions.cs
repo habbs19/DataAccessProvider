@@ -1,14 +1,14 @@
-﻿using System.Data.Common;
-using System.Data;
-using Microsoft.Extensions.DependencyInjection;
+﻿using DataAccessProvider.DataSource.Params;
+using DataAccessProvider.DataSource.Source;
 using DataAccessProvider.DataSource;
-using Microsoft.Data.SqlClient;
-using NpgsqlTypes;
-using Npgsql;
-using DataAccessProvider.Types;
+using DataAccessProvider.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using System.Data.SqlTypes;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace DataAccessProvider.Extensions;
-public static class Extensions
+public static class ServiceExtensions
 {
    
 
@@ -76,6 +76,31 @@ public static class Extensions
             default:
                 throw new ArgumentNullException(nameof(serviceLifetime));
         }
+
+        return service;
+    }
+
+    public static IServiceCollection AddDataAccessProvider(this IServiceCollection service,IConfiguration configuration)
+    {
+        // Register necessary services
+        service.AddSingleton<IDataSourceProvider, DataSourceProvider>();
+        service.AddSingleton(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
+        service.AddSingleton<IDataSourceFactory, DataSourceFactory>();
+
+        // Add database source services
+
+        service.AddScoped<IDataSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(configuration.GetConnectionString(nameof(MSSQLSource))));
+        service.AddScoped<IDataSource<PostgresSourceParams>, PostgresSource>(provider => new PostgresSource(configuration.GetConnectionString(nameof(PostgresSource))));
+        service.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>((factory) => new MySQLSource(configuration.GetConnectionString(nameof(MySQLSource))));
+        service.AddScoped<IDataSource<OracleSourceParams>, OracleSource>((factory) => new OracleSource(configuration.GetConnectionString(nameof(PostgresSource))));
+
+        service.AddScoped(factory => new MSSQLSource(configuration.GetConnectionString(nameof(MSSQLSource))));
+        service.AddScoped(factory => new PostgresSource(configuration.GetConnectionString(nameof(PostgresSource))));
+        service.AddScoped(factory => new MySQLSource(configuration.GetConnectionString(nameof(MySQLSource))));
+        service.AddScoped(factory => new OracleSource(configuration.GetConnectionString(nameof(PostgresSource))));
+
+        service.AddScoped<JsonFileSource>();
+        service.AddScoped<StaticCodeSource>();
 
         return service;
     }

@@ -6,11 +6,11 @@ using System.Data.Common;
 
 namespace DataAccessProvider.DataSource.Source;
 
-public sealed class OracleDataSource : BaseDatabaseSource<OracleParameter, OracleSourceParams>,
+public sealed class OracleSource : BaseDatabaseSource<OracleParameter, OracleSourceParams>,
     IDataSource,
     IDataSource<OracleSourceParams>
 {
-    public OracleDataSource(string connectionString) : base(connectionString) { }
+    public OracleSource(string connectionString) : base(connectionString) { }
 
     public override DbConnection GetConnection()
     {
