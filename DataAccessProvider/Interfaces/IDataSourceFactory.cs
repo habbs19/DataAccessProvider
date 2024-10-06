@@ -36,8 +36,7 @@ public interface IDataSourceFactory
     IDataSource CreateDataSource<TValue>(BaseDataSourceParams<TValue> baseDataSourceParams) 
         where TValue : class;
 
-    IDataSource<IBaseDataSourceParams> CreateDataSource<IBaseDataSourceParams>() 
-        where IBaseDataSourceParams : BaseDataSourceParams;
+    IDataSource<TBaseDataSourceParams> CreateDataSource<TBaseDataSourceParams>() where TBaseDataSourceParams : BaseDataSourceParams;
 
     IBaseDataSourceParams CreateParams<IBaseDataSourceParams>() 
         where IBaseDataSourceParams : BaseDataSourceParams;

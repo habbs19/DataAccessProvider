@@ -2,7 +2,6 @@
 using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.DataSource.Source;
 using DataAccessProvider.Interfaces;
-using DataAccessProvider.Interfaces.Source;
 using DataAccessProviderConsole.Classes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,40 +15,46 @@ var serviceProvider = ConfigureServices();
 var dataSourceProvider1 = serviceProvider.GetService<IDataSourceProvider>();
 var dataSourceProvider2 = serviceProvider.GetService<IDataSourceProvider<MSSQLSourceParams>>();
 
+var jsonFileParams1 = new JsonFileSourceParams
+{
+    FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "Movie.json"),
+};
+var codeParams1 = new StaticCodeParams
+{
+    Content = "Hello World"
+};
 var mssqParams1 = new MSSQLSourceParams
 {
     Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
 };
-var result1a = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams1);
+var result1a = await dataSourceProvider1!.ExecuteReaderAsync(jsonFileParams1);
+var result1b = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams1);
+var result1c = await dataSourceProvider1!.ExecuteReaderAsync(codeParams1);
+
 Console.WriteLine($"\n1a:  {JsonSerializer.Serialize(result1a.Value)}");
-var result1b = await dataSourceProvider2!.ExecuteReaderAsync(mssqParams1);
 Console.WriteLine($"\n1b:  {JsonSerializer.Serialize(result1b.Value)}");
-
-/// test with type return
-var mssqParams2 = new MSSQLSourceParams
-{
-    Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
-};
-var result2a = await dataSourceProvider1!.ExecuteReaderAsync<Diary>(mssqParams2);
-Console.WriteLine($"\n2a:  {JsonSerializer.Serialize(result2a.Value)}");
-var result2b = await dataSourceProvider2!.ExecuteReaderAsync<Diary>(mssqParams1);
-Console.WriteLine($"\n2b:  {JsonSerializer.Serialize(result2b.Value)}");
+Console.WriteLine($"\n1c:  {JsonSerializer.Serialize(result1c.Value)}");
 
 
 /// test with type return
-var codeParams = new StaticCodeParams
+ var codeParams2 = new StaticCodeParams<string>
 {
     Content = "Hello World"
 };
-var result3 = await dataSourceProvider1!.ExecuteReaderAsync(codeParams);
-Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result3.Value)}");
-
-var jsonFileParams = new JsonFileSourceParams<List<Movie>>
+var mssqParams2 = new MSSQLSourceParams<Diary>
+{
+    Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
+};
+var jsonFileParams2 = new JsonFileSourceParams<Movie>
 {
     FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "Movie.json"),
 };
-var result4 = await dataSourceProvider1!.ExecuteReaderAsync(jsonFileParams);
-Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result4.Value.First().First().Genre)}");
+
+/// test with type return
+
+
+//var result4 = await dataSourceProvider1!.ExecuteReaderAsync(jsonFileParams);
+//Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result4.Value.First().First().Genre)}");
 
 
 

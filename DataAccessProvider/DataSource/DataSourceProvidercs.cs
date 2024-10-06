@@ -4,7 +4,7 @@ using DataAccessProvider.Interfaces;
 namespace DataAccessProvider.DataSource
 {
 
-    #region DataSourceProvider
+#region DataSourceProvider
     /// <summary>
     /// Provides methods to interact with different data sources using a factory to create appropriate sources (e.g., MSSQL, PostgreSQL).
     /// </summary>
@@ -61,7 +61,7 @@ namespace DataAccessProvider.DataSource
             where TBaseDataSourceParams : BaseDataSourceParams<TValue>
             where TValue : class, new()
         {
-            IDataSource dataSource = _sourceFactory.CreateDataSource(@params);
+            IDataSource dataSource = _sourceFactory.CreateDataSource<TValue>(@params);
             return await dataSource.ExecuteReaderAsync<TValue,TBaseDataSourceParams>(@params);
         }
 
@@ -77,12 +77,6 @@ namespace DataAccessProvider.DataSource
             return await dataSource.ExecuteReaderAsync<TBaseDataSourceParams>(@params);
         }
 
-        public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
-        {
-            IDataSource dataSource = _sourceFactory.CreateDataSource(@params);
-            return await dataSource.ExecuteReaderAsync<TValue>(@params);
-        }
-
         /// <summary>
         /// Executes a scalar query asynchronously and returns a single value (e.g., an aggregate result like COUNT).
         /// </summary>
@@ -95,10 +89,9 @@ namespace DataAccessProvider.DataSource
             return await dataSource.ExecuteScalarAsync<TBaseDataSourceParams>(@params);
         }
     }
+#endregion DataSourceProvider
+# region DataSourceProvider<>
 
-   
-    #endregion DataSourceProvider
-    # region DataSourceProvider<TBaseDataSourceParams>
     /// <summary>
     /// Generic data source provider class for executing commands against various data sources.
     /// </summary>
@@ -116,50 +109,29 @@ namespace DataAccessProvider.DataSource
             _sourceFactory = sourceFactory;
         }
 
-        /// <summary>
-        /// Executes a non-query SQL command (e.g., INSERT, UPDATE, DELETE) asynchronously.
-        /// </summary>
-        /// <param name="params">The parameters containing the SQL command and other necessary details.</param>
-        /// <returns>The same parameter object after execution, potentially updated with affected rows or other details.</returns>
         public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync(TBaseDataSourceParams @params)
         {
-            var dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
+            IDataSource<TBaseDataSourceParams> dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
             return await dataSource.ExecuteNonQueryAsync(@params);
         }
 
-        /// <summary>
-        /// Executes a query asynchronously and reads the result set as objects of type <typeparamref name="TValue"/>.
-        /// </summary>
-        /// <typeparam name="TValue">The type to map the result set to.</typeparam>
-        /// <param name="params">The parameters containing the query and necessary details for execution.</param>
-        /// <returns>The same parameter object after execution, with the result stored in it.</returns>
-        public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue>(TBaseDataSourceParams @params) where TValue : class, new()
+        public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(TBaseDataSourceParams @params) where TValue : class, new()
         {
-            var dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
+            IDataSource<TBaseDataSourceParams> dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
             return await dataSource.ExecuteReaderAsync<TValue>(@params);
         }
 
-        /// <summary>
-        /// Executes a query asynchronously and returns a dictionary where the column names are the keys and the values are the row values.
-        /// </summary>
-        /// <param name="params">The parameters containing the query and necessary details for execution.</param>
-        /// <returns>The same parameter object after execution, with the result stored in it.</returns>
         public async Task<TBaseDataSourceParams> ExecuteReaderAsync(TBaseDataSourceParams @params)
         {
-            var dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
+            IDataSource<TBaseDataSourceParams> dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
             return await dataSource.ExecuteReaderAsync(@params);
         }
 
-        /// <summary>
-        /// Executes a scalar query asynchronously and returns a single value (e.g., an aggregate result like COUNT).
-        /// </summary>
-        /// <param name="params">The parameters containing the query and necessary details for execution.</param>
-        /// <returns>The same parameter object after execution, with the scalar result stored in it.</returns>
         public async Task<TBaseDataSourceParams> ExecuteScalarAsync(TBaseDataSourceParams @params)
         {
-            var dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
+            IDataSource<TBaseDataSourceParams> dataSource = _sourceFactory.CreateDataSource<TBaseDataSourceParams>();
             return await dataSource.ExecuteScalarAsync(@params);
         }
     }
-    # endregion DataSourceProvider<TBaseDataSourceParams>
+    # endregion DataSourceProvider<>
 }

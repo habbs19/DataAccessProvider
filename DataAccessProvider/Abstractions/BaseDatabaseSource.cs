@@ -11,7 +11,7 @@ public partial class BaseDatabaseSource<TParameter> : BaseSource
     protected override async Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
     {
         var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
-        if (sourceParams != null)
+        if (sourceParams == null)
         {
             throw new ArgumentException("Invalid source parameters type.");
         }
@@ -49,8 +49,11 @@ public partial class BaseDatabaseSource<TParameter> : BaseSource
 
     protected override async Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params) where TValue : class
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter, TValue>;
-
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
+        if (sourceParams == null)
+        {
+            throw new ArgumentException("Invalid source parameters type.");
+        }
         using (var connection = GetConnection())
         {
             using (var command = GetCommand(sourceParams!.Query, connection))
@@ -83,7 +86,9 @@ public partial class BaseDatabaseSource<TParameter> : BaseSource
                     }
                     sourceParams.SetValue(result);
 
-                    return sourceParams;
+                    var re = Convert.ChangeType(sourceParams, typeof(BaseDataSourceParams<TValue>));
+                    return (BaseDataSourceParams<TValue>)re;
+                    return (BaseDataSourceParams<TValue>)(object)sourceParams;
                 }
             }
         }
