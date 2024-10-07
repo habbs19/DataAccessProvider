@@ -6,8 +6,8 @@ namespace DataAccessProvider.DataSource.Params;
 
 interface IBaseDatabaseSourceParams<TParameter> where TParameter : DbParameter
 {
-    public string Query { get; set; } 
-    public List<TParameter>? Parameters { get; set; }
+    public string Query { get; set; }
+    public List<TParameter>? Parameters { get; set; } 
     public CommandType CommandType { get; set; }
     public int Timeout { get; set; }
     public int AffectedRows { get; set; }
@@ -16,7 +16,7 @@ public abstract class BaseDatabaseSourceParams<TParameter> : BaseDataSourceParam
     where TParameter : DbParameter
 {
     public string Query { get; set; } = string.Empty;
-    public List<TParameter>? Parameters { get; set; }
+    public List<TParameter>? Parameters { get; set; } = new List<TParameter>();
     public CommandType CommandType { get; set; }
     public int Timeout { get; set; }
     public int AffectedRows { get; set; }
