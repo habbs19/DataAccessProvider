@@ -22,15 +22,13 @@ The **Data Access Provider Framework** offers a flexible, pluggable way to inter
 
 ## Features
 
-- **Multi-Database Support**: Switch between MSSQL, MySQL, PostgreSQL, MongoDB, Oracle, and other data sources with minimal code changes.
-- **Asynchronous Execution**: Use `async/await` for non-blocking database operations.
-- **Parameterization**: Safely execute parameterized queries.
-- **Result Mapping**: Map query results directly to objects or handle raw data as dictionaries.
-- **Extensibility**: Easily extend the framework to add support for new data sources.
-- **Unified API**: The framework abstracts the differences between various databases, allowing you to use a standardized set of methods to execute queries and operations, regardless of the underlying data source.
-- **Flexible Testing**: With its design, the framework makes it easier to test different database interactions. By simply passing different data source parameter objects, you can test against multiple databases, file systems, or other data sources in a seamless manner.
-- **Seamless Data Source Switching**: You can switch from one data source to another by providing the appropriate parameter class. For example, switch from MSSQL to PostgreSQL by passing `MSSQLSourceParams` or `PostgresSourceParams`, with no changes to the core execution logic.
-- **Custom Data Source Support**: The framework allows developers to register their own custom data sources. Using the `DataSourceFactory`, you can define and register custom parameter classes and their corresponding data source implementations, extending the framework for specific use cases.
+- **Multi-Database Support**: Seamlessly switch between MSSQL, MySQL, PostgreSQL, MongoDB, Oracle, and other data sources with minimal code changes.
+- **Asynchronous Execution**: Supports `async/await` for efficient, non-blocking database operations.
+- **Parameterization & Result Mapping**: Safely execute parameterized queries and map results to objects or handle raw data.
+- **Extensibility & Custom Support**: Easily extend the framework to add new data sources or register custom ones.
+- **Unified API**: Standardized query execution methods across different databases.
+- **Flexible Testing**: Simplifies testing against multiple data sources with minimal setup.
+- **Seamless Switching**: Switch between data sources by passing appropriate parameter objects, without altering core logic.
 
 
 ## Supported Data Sources
@@ -67,16 +65,9 @@ The **DataAccessProvider** is designed to provide a simple, consistent interface
 
 To get started, clone the repository and reference it in your project. You'll also need to install the required NuGet packages for your data sources.
 
-## Registering a Custom Data Source
 
-The **DataAccessProvider** allows you to register your own custom data sources at runtime using the `RegisterDataSource<TParams, TSource>()` method. This enables you to extend the library by adding support for new data source types, without modifying the existing factory.
-
-### Method Definition
-
-```csharp
-public void RegisterDataSource<TParams, TSource>() 
-    where TParams : BaseDataSourceParams
-    where TSource : IDataSource;
+```bash
+git clone https://github.com/your-repo/dataaccessprovider.git
 ```
 
 ### How It Works:
@@ -87,8 +78,6 @@ public void RegisterDataSource<TParams, TSource>()
 4. **Usage**: Use the `IDataSourceProvider` to execute queries on the custom data source.
 
 ## Example Usage of IDataSourceProvider
-
-Once you have registered your data sources and implemented the factory, you can use the `IDataSourceProvider` to execute queries and handle different data source types seamlessly.
 
 ### Add DataAccessProvider 
 
@@ -129,18 +118,16 @@ var dataSourceProvider = serviceProvider.GetService<IDataSourceProvider>();
 // Example 1: Execute a query using MSSQLSourceParams
 var mssqParams1 = new MSSQLSourceParams
 {
-    Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
+    Query = "SELECT TOP 1 * FROM [dbo].[Diary]"
 };
 var result1 = await dataSourceProvider.ExecuteReaderAsync(mssqParams1);
-Console.WriteLine($"\n1:  {JsonSerializer.Serialize(result1.Value)}");
 
 // Example 2: Execute a query with a typed return (e.g., Diary class)
 var mssqParams2 = new MSSQLSourceParams<Diary>
 {
-    Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
+    Query = "SELECT TOP 1 * FROM [dbo].[Diary]"
 };
 var result2 = await dataSourceProvider.ExecuteReaderAsync(mssqParams2);
-Console.WriteLine($"\n2:  {JsonSerializer.Serialize(result2.Value)}");
 
 // Example 3: Execute a query using StaticCodeParams (for static content)
 var codeParams = new StaticCodeParams
@@ -148,15 +135,13 @@ var codeParams = new StaticCodeParams
     Content = "Hello World"
 };
 var result3 = await dataSourceProvider.ExecuteReaderAsync(codeParams);
-Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result3.Value)}");
 
 // Example 4: Execute a query using JsonFileSourceParams
 var jsonFileParams = new JsonFileSourceParams
 {
     Content = @"{Name: 'Michael Jackson'}"
 };
-var result4 = await dataSourceProvider.ExecuteReaderAsync(jsonFileParams);
-Console.WriteLine($"\n4:  {JsonSerializer.Serialize(result4.Value)}");
+var result4 = await dataSourceProvider.ExecuteNonQueryAsync(jsonFileParams);
 ```
 
 ### Results
@@ -169,6 +154,90 @@ Console.WriteLine($"\n4:  {JsonSerializer.Serialize(result4.Value)}");
 
 4:  {"Name": "Michael Jackson"}
 ```
+
+## Registering a Custom Data Source
+
+The **DataAccessProvider** allows you to register your own custom data sources at runtime using the `RegisterDataSource<TParams, TSource>()` method. This enables you to extend the framework by adding support for new data source types, without modifying the existing factory.
+
+### Method Definition
+
+```csharp
+public void RegisterDataSource<TParams, TSource>() 
+    where TParams : BaseDataSourceParams
+    where TSource : IDataSource;
+```
+
+### Step 1: Create a Custom `SourceParams` Class
+
+Define a custom `SourceParams` class that extends `BaseDataSourceParams` and contains any additional properties you need.
+
+```csharp
+public class XmlFileSourceParams : BaseDataSourceParams
+{
+    /// <summary>
+    /// Path to the XML file to be read.
+    /// </summary>
+    public string FilePath { get; set; }
+
+    /// <summary>
+    /// The root element in the XML file where the data begins.
+    /// </summary>
+    public string RootElement { get; set; }
+
+    /// <summary>
+    /// An optional XPath query to select specific nodes from the XML document.
+    /// </summary>
+    public string? XPathQuery { get; set; }
+
+    /// <summary>
+    /// Specifies whether to ignore namespaces in the XML document.
+    /// </summary>
+    public bool IgnoreNamespaces { get; set; } = true;
+
+    /// <summary>
+    /// Additional attributes or settings related to XML parsing.
+    /// </summary>
+    public Dictionary<string, string>? AdditionalAttributes { get; set; }
+}
+```
+
+### Step 2: Implement a Custom `IDataSource`
+
+Create a custom data source by implementing the `IDataSource` interface and providing the necessary logic to interact with the custom data source.
+
+### Step 3: Register the Custom Data Source with the Factory
+
+Now that the `CustomSourceParams` and `CustomDataSource` are defined, you can register them with the `DataSourceFactory` by calling `RegisterDataSource<TParams, TSource>()` from the DataSourceFactory service.
+
+```csharp
+var dataSourceFactory = serviceProvider.GetService<IDataSourceFactory>();
+
+// Register the custom data source
+dataSourceFactory.RegisterDataSource<XmlFileSourceParams, XmlFileSource>();
+```
+
+## Step 4: Use the Custom Data Source
+
+Once the custom data source is registered, you can use it just like any other data source by passing `CustomSourceParams` to the `IDataSourceProvider`.
+```csharp
+var xmlFileParams = new XmlFileSourceParams
+{
+    FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "data.xml"),
+    RootElement = "Employees",
+    XPathQuery = "//Employee[Age > 30]", // Optional XPath to filter nodes
+    IgnoreNamespaces = true,
+    AdditionalAttributes = new Dictionary<string, string>
+    {
+        { "attribute1", "value1" },
+        { "attribute2", "value2" }
+    }
+};
+
+// Use IDataSourceProvider to execute the query
+var result = await dataSourceProvider.ExecuteReaderAsync(xmlFileParams);
+Console.WriteLine($"\nXML Data Source Result: {JsonSerializer.Serialize(result.Value)}");
+```
+
 
 ### `DbParameter` Extension Method
 
@@ -201,6 +270,6 @@ public class Example
 
 Contributions are welcome! If you'd like to add support for additional databases or improve the library, feel free to open a pull request.
 
+## License
 
-```bash
-git clone https://github.com/your-repo/dataaccessprovider.git
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.txt) file for details.
