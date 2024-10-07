@@ -1,7 +1,6 @@
-# Data Access Provider
+# Data Access Provider Framework
 
-The **Data Access Provider** is a flexible and extensible solution designed to simplify working with multiple data sources, such as MSSQL, PostgreSQL, MongoDB, JSON-based file sources, and more. This framework provides a unified interface that allows developers to interact with different data sources in a consistent way, enabling easy switching between data sources without altering core application logic.
-
+The **Data Access Provider Framework** offers a flexible, pluggable way to interact with various data sources such as SQL databases (MSSQL, PostgreSQL, MySQL), file-based sources (JSON), and non-relational databases (MongoDB). By standardizing the approach to data access with source parameters (SourceParams), the framework allows developers to seamlessly switch between different data sources with minimal code changes.
 
 ## Table of Contents
 
@@ -37,15 +36,15 @@ The **Data Access Provider** is a flexible and extensible solution designed to s
 ## Supported Data Sources
 
 - **SQL Databases**:
-  - MSSQL (SQL Server)
-  - PostgreSQL
-  - MySQL
-  - Oracle
+  - MSSQL (`MSSQLSourceParams`)
+  - PostgreSQL (`PostgresSourceParams`)
+  - MySQL (`MySQLSourceParams`)
+  - Oracle (`OracleSourceParams`)
 - **NoSQL Databases**:
-  - MongoDB
+  - MongoDB (`MongoDBParams`)
 - **File-Based**:
-  - JSON Files
-  - Static Code
+  - JSON File (`JsonFileSourceParams`)
+  - Static Code (`StaticCodeParams`)
 
 You can also extend the provider to support any custom data source by registering new data source implementations.
 
@@ -89,8 +88,6 @@ public void RegisterDataSource<TParams, TSource>()
 ## Example Usage of IDataSourceProvider
 
 Once you have registered your data sources and implemented the factory, you can use the `IDataSourceProvider` to execute queries and handle different data source types seamlessly.
-
-Here’s a comprehensive example showing how to use the `IDataSourceProvider` for multiple data sources:
 
 ```csharp
 // Resolve the IDataSourceProvider and use it
