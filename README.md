@@ -9,7 +9,7 @@ The **Data Access Provider Framework** offers a flexible, pluggable way to inter
 - [Supported Data Sources](#supported-data-sources)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
+  - [Installation (Locally)](#installation-locally)
   - [How It Works](#how-it-works)
 - [Connection Strings in appsettings.json](#connection-strings-in-appsettingsjson)
 - [Example Usage of IDataSourceProvider](#example-usage-of-idatasourceprovider)
@@ -63,14 +63,17 @@ The **DataAccessProvider** is designed to provide a simple, consistent interface
    - **MySQL**: `MySql.Data`
    - **MongoDB**: `MongoDB.Driver`
 
-### Installation
+### Installation (Locally)
 
 To get started, clone the repository and reference it in your project. You'll also need to install the required NuGet packages for your data sources.
-
 
 ```bash
 git clone https://github.com/your-repo/dataaccessprovider.git
 ```
+
+### Installation from GitHub NuGet
+
+The **DataAccessProvider** is available as a NuGet package from GitHub. You can add it as a dependency to your project directly from the GitHub NuGet package repository.
 
 ### How It Works:
 
