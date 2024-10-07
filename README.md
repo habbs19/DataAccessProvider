@@ -77,6 +77,7 @@ The **DataAccessProvider** allows you to register your own custom data sources a
 public void RegisterDataSource<TParams, TSource>() 
     where TParams : BaseDataSourceParams
     where TSource : IDataSource;
+```
 
 ### How It Works:
 
@@ -89,8 +90,40 @@ public void RegisterDataSource<TParams, TSource>()
 
 Once you have registered your data sources and implemented the factory, you can use the `IDataSourceProvider` to execute queries and handle different data source types seamlessly.
 
+### Add DataAccessProvider 
+
+```csharp    
+    // Add connection strings for each database type
+    services.AddDataAccessProvider(configuration)
+```
+
+## Connection Strings in appsettings.json
+
+To store your connection strings in the `appsettings.json` file, use the following structure:
+
+### Example `appsettings.json`:
+
+```json
+{
+  "ConnectionStrings": {
+    "MSSQLSource": "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;",
+    "PostgresSource": "Host=localhost;Port=5432;Database=mydb;Username=myuser;Password=mypassword",
+    "MySQLSource": "Server=myServerAddress;Database=myDataBase;User=myUsername;Password=myPassword;",
+    "OracleSource": "Data Source=MyOracleDB;User Id=myUsername;Password=myPassword;"
+  }
+}
+```
+
+## Example Usage of `IDataSourceProvider`
+
+The `IDataSourceProvider` in this framework automatically determines which data source to use based on the provided `SourceParams`. This makes it flexible to switch between different data sources like MSSQL, PostgreSQL, or even JSON files, without changing your core logic.
+
+Additionally, when using generic types, the provider can infer the type and return results mapped to a specified class, making it easy to handle type-safe responses.
+
+### Example Code:
+
 ```csharp
-// Resolve the IDataSourceProvider and use it
+// Resolve the IDataSourceProvider from the service provider
 var dataSourceProvider = serviceProvider.GetService<IDataSourceProvider>();
 
 // Example 1: Execute a query using MSSQLSourceParams
@@ -98,33 +131,36 @@ var mssqParams1 = new MSSQLSourceParams
 {
     Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
 };
-var result = await dataSourceProvider!.ExecuteReaderAsync(mssqParams1);
-Console.WriteLine($"\n1:  {JsonSerializer.Serialize(result.Value)}");
+var result1 = await dataSourceProvider.ExecuteReaderAsync(mssqParams1);
+Console.WriteLine($"\n1:  {JsonSerializer.Serialize(result1.Value)}");
 
-/// Example 2: Execute a query with a typed return (e.g., Diary class)
+// Example 2: Execute a query with a typed return (e.g., Diary class)
 var mssqParams2 = new MSSQLSourceParams<Diary>
 {
     Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]"
 };
-var result2 = await dataSourceProvider!.ExecuteReaderAsync(mssqParams2);
+var result2 = await dataSourceProvider.ExecuteReaderAsync(mssqParams2);
 Console.WriteLine($"\n2:  {JsonSerializer.Serialize(result2.Value)}");
 
-/// Example 3: Execute a query using StaticCodeParams (for static content)
+// Example 3: Execute a query using StaticCodeParams (for static content)
 var codeParams = new StaticCodeParams
 {
     Content = "Hello World"
 };
-var result3 = await dataSourceProvider!.ExecuteReaderAsync(codeParams);
+var result3 = await dataSourceProvider.ExecuteReaderAsync(codeParams);
 Console.WriteLine($"\n3:  {JsonSerializer.Serialize(result3.Value)}");
 
-/// Example 4: Execute a query using JsonFileSourceParams
+// Example 4: Execute a query using JsonFileSourceParams
 var jsonFileParams = new JsonFileSourceParams
 {
     Content = @"{Name: 'Michael Jackson'}"
 };
-var result4 = await dataSourceProvider!.ExecuteReaderAsync(jsonFileParams);
+var result4 = await dataSourceProvider.ExecuteReaderAsync(jsonFileParams);
 Console.WriteLine($"\n4:  {JsonSerializer.Serialize(result4.Value)}");
+```
 
+### Results
+```csharp
 1:  [{"Id":1,"Title":"First Entry","Date":"2022-01-01T00:00:00"}]
 
 2:  [{"Id":1,"Title":"First Entry","Date":"2022-01-01T00:00:00"}]
@@ -132,6 +168,39 @@ Console.WriteLine($"\n4:  {JsonSerializer.Serialize(result4.Value)}");
 3:  "Hello World"
 
 4:  {"Name": "Michael Jackson"}
+```
+
+### `DbParameter` Extension Method
+
+The library includes an extension method for adding database parameters to a list in a type-safe and generic manner. This method supports multiple database types, including SQL Server and PostgreSQL.
+
+## Example Usage
+
+Here is how you can use the `AddParameter` extension method to add parameters to a `List<DbParameter>`:
+
+```csharp
+public class Example
+{
+    public void AddParameters()
+    {
+        // For SQL Server
+        var parameters = new List<SqlParameter>();
+        parameters.AddParameter("@Id", DbType.Int32, 1);
+        parameters.AddParameter("@Id", DbType.Int32, 2);
+
+        // For PostgreSQL
+        var parameters = new List<NpgsqlParameter>();
+        parameters.AddParameter("@Name", DbType.String, "John Doe");
+
+        // Use parameters with your database command
+    }
+}
+```
+
+## Contributions
+
+Contributions are welcome! If you'd like to add support for additional databases or improve the library, feel free to open a pull request.
+
 
 ```bash
 git clone https://github.com/your-repo/dataaccessprovider.git
