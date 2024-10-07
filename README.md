@@ -4,20 +4,22 @@ The **Data Access Provider Framework** offers a flexible, pluggable way to inter
 
 ## Table of Contents
 
+- [Data Access Provider Framework](#data-access-provider-framework)
 - [Features](#features)
 - [Supported Data Sources](#supported-data-sources)
 - [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-  - [Basic Usage](#basic-usage)
-- [DataSourceFactory](#datasourcefactory)
-- [DataSourceProvider](#datasourceprovider)
-- [API Reference](#api-reference)
-  - [IDataSource](#idatasource)
-  - [IDataSourceFactory](#idatasourcefactory)
-  - [IDataSourceProvider](#idatasourceprovider)
-  - [Data Source Params](#data-source-params)
-  - [Specific Data Sources](#specific-data-sources)
-- [Contributing](#contributing)
+  - [How It Works](#how-it-works)
+- [Connection Strings in appsettings.json](#connection-strings-in-appsettingsjson)
+- [Example Usage of IDataSourceProvider](#example-usage-of-idatasourceprovider)
+- [Registering a Custom Data Source](#registering-a-custom-data-source)
+  - [Method Definition](#method-definition)
+  - [Step 1: Create a Custom SourceParams Class](#step-1-create-a-custom-sourceparams-class)
+  - [Step 2: Implement a Custom IDataSource](#step-2-implement-a-custom-idatasource)
+  - [Step 3: Register the Custom Data Source with the Factory](#step-3-register-the-custom-data-source-with-the-factory)
+  - [Step 4: Use the Custom Data Source](#step-4-use-the-custom-data-source)
+- [Contributions](#contributions)
 - [License](#license)
 
 ## Features
@@ -216,7 +218,7 @@ var dataSourceFactory = serviceProvider.GetService<IDataSourceFactory>();
 dataSourceFactory.RegisterDataSource<XmlFileSourceParams, XmlFileSource>();
 ```
 
-## Step 4: Use the Custom Data Source
+### Step 4: Use the Custom Data Source
 
 Once the custom data source is registered, you can use it just like any other data source by passing `CustomSourceParams` to the `IDataSourceProvider`.
 ```csharp
@@ -238,12 +240,11 @@ var result = await dataSourceProvider.ExecuteReaderAsync(xmlFileParams);
 Console.WriteLine($"\nXML Data Source Result: {JsonSerializer.Serialize(result.Value)}");
 ```
 
-
-### `DbParameter` Extension Method
+## `DbParameter` Extension Method
 
 The library includes an extension method for adding database parameters to a list in a type-safe and generic manner. This method supports multiple database types, including SQL Server and PostgreSQL.
 
-## Example Usage
+### Example Usage
 
 Here is how you can use the `AddParameter` extension method to add parameters to a `List<DbParameter>`:
 
