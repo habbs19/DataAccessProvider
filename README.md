@@ -1,64 +1,253 @@
-# Multi-Database Access Library with Generic Implementation for MSSQL, Postgres, MySQL, and Oracle
+# Data Access Provider Framework
 
-This library provides a flexible, generic solution for accessing multiple types of relational databases, including MSSQL, Postgres, MySQL, and Oracle, using a unified interface. The goal of this project is to allow seamless integration with different database engines, enabling developers to switch between databases with minimal code changes.
+The **Data Access Provider Framework** offers a flexible, pluggable way to interact with various data sources such as SQL databases (MSSQL, PostgreSQL, MySQL), file-based sources (JSON), and non-relational databases (MongoDB). By standardizing the approach to data access with source parameters (SourceParams), the framework allows developers to seamlessly switch between different data sources with minimal code changes.
 
-## Key Features
+## Table of Contents
 
-- **Generic Database Interface**: A single `IDatabase<TDatabaseType>` interface provides methods for executing queries and commands on various database systems.
-- **Support for Multiple Databases**: Includes built-in support for MSSQL, Postgres, MySQL, and Oracle, with the ability to add more databases as needed.
-- **Dependency Injection Ready**: Easily integrates with .NET Core Dependency Injection (DI), enabling you to register and resolve different database services for use in your applications.
-- **Parameter Management**: Provides an extension method for adding database parameters in a type-safe manner.
-- **Command Execution**: Supports both `ExecuteReaderAsync` for fetching data and `ExecuteNonQueryAsync` for executing non-query commands (e.g., inserts, updates).
+- [Data Access Provider Framework](#data-access-provider-framework)
+- [Features](#features)
+- [Supported Data Sources](#supported-data-sources)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation (Locally)](#installation-locally)
+  - [How It Works](#how-it-works)
+- [Connection Strings in appsettings.json](#connection-strings-in-appsettingsjson)
+- [Example Usage of IDataSourceProvider](#example-usage-of-idatasourceprovider)
+- [Registering a Custom Data Source](#registering-a-custom-data-source)
+  - [Method Definition](#method-definition)
+  - [Step 1: Create a Custom SourceParams Class](#step-1-create-a-custom-sourceparams-class)
+  - [Step 2: Implement a Custom IDataSource](#step-2-implement-a-custom-idatasource)
+  - [Step 3: Register the Custom Data Source with the Factory](#step-3-register-the-custom-data-source-with-the-factory)
+  - [Step 4: Use the Custom Data Source](#step-4-use-the-custom-data-source)
+- [Contributions](#contributions)
+- [License](#license)
 
-## How to Use
+## Features
 
-1. **Install the Library**: Add this library as a dependency to your project (instructions vary based on package management system).
+- **Multi-Database Support**: Seamlessly switch between MSSQL, MySQL, PostgreSQL, MongoDB, Oracle, and other data sources with minimal code changes.
+- **Asynchronous Execution**: Supports `async/await` for efficient, non-blocking database operations.
+- **Parameterization & Result Mapping**: Safely execute parameterized queries and map results to objects or handle raw data.
+- **Extensibility & Custom Support**: Easily extend the framework to add new data sources or register custom ones.
+- **Unified API**: Standardized query execution methods across different databases.
+- **Flexible Testing**: Simplifies testing against multiple data sources with minimal setup.
+- **Seamless Switching**: Switch between data sources by passing appropriate parameter objects, without altering core logic.
 
-2. **Register Database Services**: In your `.NET` application, register the required database type in the `Startup.cs` or `Program.cs` file using Dependency Injection.
 
-    ```csharp    
+## Supported Data Sources
+
+- **SQL Databases**:
+  - MSSQL (`MSSQLSourceParams`)
+  - PostgreSQL (`PostgresSourceParams`)
+  - MySQL (`MySQLSourceParams`)
+  - Oracle (`OracleSourceParams`)
+- **NoSQL Databases**:
+  - MongoDB (`MongoDBParams`)
+- **File-Based**:
+  - JSON File (`JsonFileSourceParams`)
+  - Static Code (`StaticCodeParams`)
+
+You can also extend the provider to support any custom data source by registering new data source implementations.
+
+---
+
+## Getting Started
+
+The **DataAccessProvider** is designed to provide a simple, consistent interface for interacting with multiple database types, such as MSSQL, MySQL, PostgreSQL, MongoDB, and more. By leveraging this provider, you can easily switch between databases by passing the appropriate data source parameters, without needing to modify your core application logic.
+
+### Prerequisites
+
+1. **.NET Framework or .NET Core**: Make sure you have a compatible version of .NET installed.
+2. **Database Drivers**: Install the necessary database drivers based on the data sources you're using.
+   - **MSSQL**: `Microsoft.Data.SqlClient`
+   - **PostgreSQL**: `Npgsql`
+   - **MySQL**: `MySql.Data`
+   - **MongoDB**: `MongoDB.Driver`
+
+### Installation (Locally)
+
+To get started, clone the repository and reference it in your project. You'll also need to install the required NuGet packages for your data sources.
+
+```bash
+git clone https://github.com/your-repo/dataaccessprovider.git
+```
+
+### Installation from GitHub NuGet
+
+The **DataAccessProvider** is available as a NuGet package from GitHub. You can add it as a dependency to your project directly from the GitHub NuGet package repository.
+
+### How It Works:
+
+1. **`RegisterDataSource<TParams, TSource>()`**: This method allows the external consumer to register new custom data source types.
+2. **Custom Data Source**: You create new `BaseDataSourceParams` and `IDataSource` implementations.
+3. **Service Registration**: Register the custom data source with the DI container and factory in `Startup.cs`.
+4. **Usage**: Use the `IDataSourceProvider` to execute queries on the custom data source.
+
+## Example Usage of IDataSourceProvider
+
+### Add DataAccessProvider 
+
+```csharp    
     // Add connection strings for each database type
-    services.AddSingleton<IDatabase<MSSQL>>(provider =>new MSSQLDatabase(Configuration.GetConnectionString("MSSQLConnection")))
-    services.AddSingleton<IDatabase<Postgres>>(provider =>new PostgresDatabase(Configuration.GetConnectionString("PostgresConnection")))
+    services.AddDataAccessProvider(configuration)
+```
 
-    services.AddScoped<IDatabase<MSSQL>, MSSQLDatabase>();
-    services.AddScoped<IDatabase<Postgres>, PostgresDatabase>();
-    ```
+## Connection Strings in appsettings.json
 
-3. **Inject Database into Services**: Inject the desired `IDatabase` implementation into your service classes or controllers to perform database operations.
+To store your connection strings in the `appsettings.json` file, use the following structure:
 
-    ```csharp
-    public class UserRepository : IUserRepository
+### Example `appsettings.json`:
+
+```json
+{
+  "ConnectionStrings": {
+    "MSSQLSource": "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;",
+    "PostgresSource": "Host=localhost;Port=5432;Database=mydb;Username=myuser;Password=mypassword",
+    "MySQLSource": "Server=myServerAddress;Database=myDataBase;User=myUsername;Password=myPassword;",
+    "OracleSource": "Data Source=MyOracleDB;User Id=myUsername;Password=myPassword;"
+  }
+}
+```
+
+## Example Usage of `IDataSourceProvider`
+
+The `IDataSourceProvider` in this framework automatically determines which data source to use based on the provided `SourceParams`. This makes it flexible to switch between different data sources like MSSQL, PostgreSQL, or even JSON files, without changing your core logic.
+
+Additionally, when using generic types, the provider can infer the type and return results mapped to a specified class, making it easy to handle type-safe responses.
+
+### Example Code:
+
+```csharp
+// Resolve the IDataSourceProvider from the service provider
+var dataSourceProvider = serviceProvider.GetService<IDataSourceProvider>();
+
+// Example 1: Execute a query using MSSQLSourceParams
+var mssqParams1 = new MSSQLSourceParams
+{
+    Query = "SELECT TOP 1 * FROM [dbo].[Diary]"
+};
+var result1 = await dataSourceProvider.ExecuteReaderAsync(mssqParams1);
+
+// Example 2: Execute a query with a typed return (e.g., Diary class)
+var mssqParams2 = new MSSQLSourceParams<Diary>
+{
+    Query = "SELECT TOP 1 * FROM [dbo].[Diary]"
+};
+var result2 = await dataSourceProvider.ExecuteReaderAsync(mssqParams2);
+
+// Example 3: Execute a query using StaticCodeParams (for static content)
+var codeParams = new StaticCodeParams
+{
+    Content = "Hello World"
+};
+var result3 = await dataSourceProvider.ExecuteReaderAsync(codeParams);
+
+// Example 4: Execute a query using JsonFileSourceParams
+var jsonFileParams = new JsonFileSourceParams
+{
+    Content = @"{Name: 'Michael Jackson'}"
+};
+var result4 = await dataSourceProvider.ExecuteNonQueryAsync(jsonFileParams);
+```
+
+### Results
+```csharp
+1:  [{"Id":1,"Title":"First Entry","Date":"2022-01-01T00:00:00"}]
+
+2:  [{"Id":1,"Title":"First Entry","Date":"2022-01-01T00:00:00"}]
+
+3:  "Hello World"
+
+4:  {"Name": "Michael Jackson"}
+```
+
+## Registering a Custom Data Source
+
+The **DataAccessProvider** allows you to register your own custom data sources at runtime using the `RegisterDataSource<TParams, TSource>()` method. This enables you to extend the framework by adding support for new data source types, without modifying the existing factory.
+
+### Method Definition
+
+```csharp
+public void RegisterDataSource<TParams, TSource>() 
+    where TParams : BaseDataSourceParams
+    where TSource : IDataSource;
+```
+
+### Step 1: Create a Custom `SourceParams` Class
+
+Define a custom `SourceParams` class that extends `BaseDataSourceParams` and contains any additional properties you need.
+
+```csharp
+public class XmlFileSourceParams : BaseDataSourceParams
+{
+    /// <summary>
+    /// Path to the XML file to be read.
+    /// </summary>
+    public string FilePath { get; set; }
+
+    /// <summary>
+    /// The root element in the XML file where the data begins.
+    /// </summary>
+    public string RootElement { get; set; }
+
+    /// <summary>
+    /// An optional XPath query to select specific nodes from the XML document.
+    /// </summary>
+    public string? XPathQuery { get; set; }
+
+    /// <summary>
+    /// Specifies whether to ignore namespaces in the XML document.
+    /// </summary>
+    public bool IgnoreNamespaces { get; set; } = true;
+
+    /// <summary>
+    /// Additional attributes or settings related to XML parsing.
+    /// </summary>
+    public Dictionary<string, string>? AdditionalAttributes { get; set; }
+}
+```
+
+### Step 2: Implement a Custom `IDataSource`
+
+Create a custom data source by implementing the `IDataSource` interface and providing the necessary logic to interact with the custom data source.
+
+### Step 3: Register the Custom Data Source with the Factory
+
+Now that the `CustomSourceParams` and `CustomDataSource` are defined, you can register them with the `DataSourceFactory` by calling `RegisterDataSource<TParams, TSource>()` from the DataSourceFactory service.
+
+```csharp
+var dataSourceFactory = serviceProvider.GetService<IDataSourceFactory>();
+
+// Register the custom data source
+dataSourceFactory.RegisterDataSource<XmlFileSourceParams, XmlFileSource>();
+```
+
+### Step 4: Use the Custom Data Source
+
+Once the custom data source is registered, you can use it just like any other data source by passing `CustomSourceParams` to the `IDataSourceProvider`.
+```csharp
+var xmlFileParams = new XmlFileSourceParams
+{
+    FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "data.xml"),
+    RootElement = "Employees",
+    XPathQuery = "//Employee[Age > 30]", // Optional XPath to filter nodes
+    IgnoreNamespaces = true,
+    AdditionalAttributes = new Dictionary<string, string>
     {
-        private readonly IDatabase<MSSQL> _mssqlDatabase;
-
-        public UserRepository(IDatabase<MSSQL> mssqlDatabase)
-        {
-            _mssqlDatabase = mssqlDatabase;
-        }
-
-        public async Task<object> GetUsersByRoleAsync(string roleName)
-        {
-            // Define the stored procedure and parameters
-            string storedProcedure = "sp_GetUsersByRole";
-            var parameters = new List<SqlParameter>
-            {
-                new SqlParameter("@RoleName", SqlDbType.NVarChar) { Value = roleName }
-            };
-
-            // Execute the stored procedure
-            var result = await _mssqlDatabase.ExecuteReaderAsync(storedProcedure, parameters);
-
-            return result;
-        }
+        { "attribute1", "value1" },
+        { "attribute2", "value2" }
     }
-    ```
+};
 
-### `DbParameter` Extension Method
+// Use IDataSourceProvider to execute the query
+var result = await dataSourceProvider.ExecuteReaderAsync(xmlFileParams);
+Console.WriteLine($"\nXML Data Source Result: {JsonSerializer.Serialize(result.Value)}");
+```
+
+## `DbParameter` Extension Method
 
 The library includes an extension method for adding database parameters to a list in a type-safe and generic manner. This method supports multiple database types, including SQL Server and PostgreSQL.
 
-#### Example Usage
+### Example Usage
 
 Here is how you can use the `AddParameter` extension method to add parameters to a `List<DbParameter>`:
 
@@ -80,13 +269,6 @@ public class Example
     }
 }
 ```
-
-## Supported Databases
-
-- **MSSQL**: Microsoft SQL Server
-- **Postgres**: PostgreSQL
-- **MySQL**: MySQL and MariaDB
-- **Oracle**: Oracle Database (shared fallback with MySQL)
 
 ## Contributions
 

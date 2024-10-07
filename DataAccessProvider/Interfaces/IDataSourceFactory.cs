@@ -1,4 +1,5 @@
-﻿using DataAccessProvider.Types;
+﻿using DataAccessProvider.Abstractions;
+using DataAccessProvider.Types;
 using System.Data.Common;
 
 namespace DataAccessProvider.Interfaces;
@@ -6,11 +7,37 @@ namespace DataAccessProvider.Interfaces;
 public interface IDataSourceFactory
 {
     /// <summary>
-    /// Creates the appropriate data source based on the provided type.
+    /// Allows external consumers to add their own custom data source mappings.
     /// </summary>
-    /// <param name="sourceType">The type of data source to create (e.g., MSSQL, Postgres, File).</param>
-    /// <returns>An instance of a data source that implements the IDataSource interface.</returns>
-    IDatabase<IDataSourceType, TDbParameter> CreateDataSource<IDataSourceType, TDbParameter>(DataSourceTypeEnum sourceType)
-        where IDataSourceType : DataSourceType
-        where TDbParameter : DbParameter;
+    public void RegisterDataSource<TParams, TSource>() 
+        where TParams : BaseDataSourceParams
+        where TSource : IDataSource;
+
+    /// <summary>
+    /// Factory method for creating an appropriate data source based on the type of the provided <see cref="BaseDataSourceParams"/>.
+    /// The method inspects the runtime type of the <paramref name="baseDataSourceParams"/> and returns a corresponding <see cref="IDataSource"/> implementation.
+    /// </summary>
+    /// <param name="baseDataSourceParams">
+    /// The base data source parameters object, which determines the type of data source to create. 
+    /// This object contains query details, execution parameters, and other relevant information for the database interaction.
+    /// </param>
+    /// <returns>
+    /// An implementation of <see cref="IDataSource"/> that corresponds to the runtime type of <paramref name="baseDataSourceParams"/>.
+    /// For example, if the provided object is of type <see cref="MSSQLSourceParams"/>, an instance of <see cref="MSSQLSource"/> will be returned.
+    /// </returns>
+    /// <exception cref="ArgumentException">
+    /// Thrown when the type of <paramref name="baseDataSourceParams"/> is not supported, indicating an invalid or unsupported data source type.
+    /// </exception>
+    /// <remarks>
+    /// This method uses a <c>switch</c> expression to match the type of <paramref name="baseDataSourceParams"/> with the corresponding data source type.
+    /// The data source instance is resolved from the service provider (<see cref="_serviceProvider"/>), which is expected to have all supported data sources registered.
+    /// </remarks>
+    IDataSource CreateDataSource(BaseDataSourceParams baseDataSourceParams);
+    IDataSource CreateDataSource<TValue>(BaseDataSourceParams<TValue> baseDataSourceParams) 
+        where TValue : class;
+
+    IDataSource<TBaseDataSourceParams> CreateDataSource<TBaseDataSourceParams>() where TBaseDataSourceParams : BaseDataSourceParams;
+
+    IBaseDataSourceParams CreateParams<IBaseDataSourceParams>() 
+        where IBaseDataSourceParams : BaseDataSourceParams;
 }
