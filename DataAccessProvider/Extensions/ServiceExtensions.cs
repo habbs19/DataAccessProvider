@@ -13,9 +13,9 @@ public static class ServiceExtensions
     public static IServiceCollection AddDataAccessProvider(this IServiceCollection service,IConfiguration configuration)
     {
         // Register necessary services
-        service.AddSingleton<IDataSourceProvider, DataSourceProvider>();
-        service.AddSingleton(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
-        service.AddSingleton<IDataSourceFactory, DataSourceFactory>();
+        service.AddScoped<IDataSourceProvider, DataSourceProvider>();
+        service.AddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
+        service.AddScoped<IDataSourceFactory, DataSourceFactory>();
 
         // Add database source services
 
