@@ -28,6 +28,7 @@
     <PackageReference Include="MySql.Data" Version="9.0.0" />
     <PackageReference Include="Npgsql" Version="8.0.4" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.6.0" />
+    <PackageReference Include="Snowflake.Data" Version="4.1.0" />
   </ItemGroup>
 
 </Project>

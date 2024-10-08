@@ -3,6 +3,8 @@ using MySql.Data.MySqlClient;
 using Npgsql;
 using NpgsqlTypes;
 using Oracle.ManagedDataAccess.Client;
+using Snowflake.Data.Client;
+using Snowflake.Data.Core;
 using System.Data;
 
 namespace DataAccessProvider.Extensions;
@@ -79,6 +81,21 @@ public static class DbParameterExtensions
         var parameter = new MySqlParameter();
         parameter.ParameterName = parameterName;
         parameter.MySqlDbType = dbType;
+        parameter.Value = value;
+        parameter.Size = size;
+        parameter.Direction = direction;
+
+        parameters.Add(parameter);
+        return parameters;
+    }
+
+    public static List<SnowflakeDbParameter> AddParameter(this List<SnowflakeDbParameter> parameters, string parameterName, SFDataType dbType,
+        object value, ParameterDirection direction = ParameterDirection.Input, int size = -1)
+    {
+        // Create the appropriate parameter and add it to the list
+        var parameter = new SnowflakeDbParameter();
+        parameter.ParameterName = parameterName;
+        parameter.SFDataType = dbType;
         parameter.Value = value;
         parameter.Size = size;
         parameter.Direction = direction;
