@@ -1,6 +1,9 @@
-﻿using DataAccessProvider.Abstractions;
+﻿using Amazon.Runtime;
+using DataAccessProvider.Abstractions;
 using DataAccessProvider.Types;
+using Microsoft.Extensions.DependencyInjection;
 using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DataAccessProvider.Interfaces;
 
@@ -9,7 +12,8 @@ public interface IDataSourceFactory
     /// <summary>
     /// Allows external consumers to add their own custom data source mappings.
     /// </summary>
-    public void RegisterDataSource<TParams, TSource>() 
+    /// 
+    public void RegisterDataSource<TParams, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TSource>() 
         where TParams : BaseDataSourceParams
         where TSource : IDataSource;
 

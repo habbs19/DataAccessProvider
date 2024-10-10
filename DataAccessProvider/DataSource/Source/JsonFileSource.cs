@@ -1,6 +1,7 @@
 ﻿using DataAccessProvider.Abstractions;
 using DataAccessProvider.DataSource.Params;
 using DataAccessProvider.Interfaces;
+using System.Net.Http;
 using System.Text.Json;
 
 namespace DataAccessProvider.DataSource.Source;
@@ -9,11 +10,18 @@ namespace DataAccessProvider.DataSource.Source;
 public partial class JsonFileSource : BaseSource
 {
     private static readonly string ExceptionMessage = $"The provided parameter is not of type JsonFileSourceParams.";
-
+    private void CheckFileExists(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            throw new FileNotFoundException($"File not found at {filePath}");
+        }
+    }
+    
     protected async override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams @params)
     {
         JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
-
+        CheckFileExists(jsonFileSourceParams!.FilePath);
         try
         {
             // Write content to the file (overwriting any existing content)
@@ -32,25 +40,30 @@ public partial class JsonFileSource : BaseSource
     protected async override Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
     {
         JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
+        CheckFileExists(jsonFileSourceParams!.FilePath);
+
+        string content = string.Empty;
+       
         try
         {
             // Read file content
-            string content = await File.ReadAllTextAsync(jsonFileSourceParams!.FilePath);
-
-            // Set the result in parameters
-            jsonFileSourceParams.SetValue(content);
-
-            return jsonFileSourceParams;
+            content = await File.ReadAllTextAsync(jsonFileSourceParams.FilePath);
         }
         catch (Exception ex)
         {
             throw new Exception($"Error reading file at {jsonFileSourceParams!.FilePath}: {ex.Message}", ex);
         }
+        // Set the result in parameters
+        jsonFileSourceParams.SetValue(content);
+        return jsonFileSourceParams;
     }
+
+
 
     protected async override Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params)
     {
         JsonFileSourceParams<TValue>? jsonFileSourceParams = @params as JsonFileSourceParams<TValue>;
+        CheckFileExists(jsonFileSourceParams!.FilePath);
         try
         {
             // Read file content
@@ -65,6 +78,7 @@ public partial class JsonFileSource : BaseSource
         {
             throw new Exception($"Error reading file at {jsonFileSourceParams!.FilePath}: {ex.Message}", ex);
         }
+
     }
 
     protected async override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams @params)
@@ -76,17 +90,12 @@ public partial class JsonFileSource : BaseSource
         {
             throw new ArgumentException(ExceptionMessage);
         }
+        CheckFileExists(jsonFileSourceParams!.FilePath);
 
         try
         {
             // Get the file information
             var fileInfo = new FileInfo(jsonFileSourceParams.FilePath);
-
-            // Ensure the file exists
-            if (!fileInfo.Exists)
-            {
-                throw new FileNotFoundException($"File not found at {jsonFileSourceParams.FilePath}");
-            }
 
             // Get the size of the file in bytes (scalar value)
             long fileSizeInBytes = fileInfo.Length;
