@@ -59,6 +59,14 @@ var jsonFileParams2 = new JsonFileSourceParams<Movie>
 {
     FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "Movie.json"),
 };
+
+var jsonFileParams3 = new JsonFileSourceParams<List<Genre>>
+{
+    FilePath = Path.Combine("C:\\Users\\habibs\\source\\repos\\aznV\\aznV.Infrastructure\\TestData", "Genres.json"),
+};
+var jsonFileParams3Result = await dataSourceProvider1!.ExecuteReaderAsync(jsonFileParams3);
+Console.WriteLine($"\n3:  {JsonSerializer.Serialize(jsonFileParams3Result.Value)}");
+
 //var result2a = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams2);
 //var result2b = await dataSourceProvider1!.ExecuteReaderAsync<string,StaticCodeParams>(codeParams2);
 //var result2c = await dataSourceProvider1!.ExecuteReaderAsync(jsonFileParams2);
@@ -117,4 +125,17 @@ class Diary
     public string Category { get; set; }
     public DateTime Date { get; set; }
     public string Content { get; set; }
+}
+
+public class Genre
+{
+    /// <summary>
+    /// Gets or sets the category of the genre (e.g., anime, movies, drama).
+    /// </summary>
+    public string Category { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the list of items (genres) under the category.
+    /// </summary>
+    public List<string> Items { get; set; } = new List<string>();
 }

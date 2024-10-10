@@ -25,7 +25,7 @@ public partial class JsonFileSource : BaseSource
         try
         {
             // Write content to the file (overwriting any existing content)
-            await File.WriteAllTextAsync(jsonFileSourceParams!.FilePath, jsonFileSourceParams.Content);
+            await File.WriteAllTextAsync(jsonFileSourceParams!.FilePath, jsonFileSourceParams.Content,jsonFileSourceParams.Encoding);
 
             // Set the value to the number of bytes written
             jsonFileSourceParams.SetValue(jsonFileSourceParams.Content.Length);
@@ -47,7 +47,7 @@ public partial class JsonFileSource : BaseSource
         try
         {
             // Read file content
-            content = await File.ReadAllTextAsync(jsonFileSourceParams.FilePath);
+            content = await File.ReadAllTextAsync(jsonFileSourceParams.FilePath,jsonFileSourceParams.Encoding);
         }
         catch (Exception ex)
         {
@@ -67,8 +67,8 @@ public partial class JsonFileSource : BaseSource
         try
         {
             // Read file content
-            string content = await File.ReadAllTextAsync(jsonFileSourceParams!.FilePath);
-            var result = JsonSerializer.Deserialize<TValue>(content)!;
+            string content = await File.ReadAllTextAsync(jsonFileSourceParams!.FilePath,jsonFileSourceParams.Encoding);
+            var result = JsonSerializer.Deserialize<TValue>(content,jsonFileSourceParams.SerializerOptions)!;
 
             // Set the result in parameters
             jsonFileSourceParams.SetValue(result);
@@ -137,8 +137,22 @@ public partial class JsonFileSource : IDataSource
 
     public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
     {
-        var sourceParams = @params as BaseDataSourceParams;//sfgsf
-        return await ExecuteReader<TValue>(sourceParams!);
+        JsonFileSourceParams<TValue>? jsonFileSourceParams = @params as JsonFileSourceParams<TValue>;
+        CheckFileExists(jsonFileSourceParams!.FilePath);
+        try
+        {
+            // Read file content
+            string content = await File.ReadAllTextAsync(jsonFileSourceParams!.FilePath, jsonFileSourceParams.Encoding);
+
+            var result = JsonSerializer.Deserialize<TValue>(content, jsonFileSourceParams.SerializerOptions)!;
+
+            jsonFileSourceParams.SetValue(result);
+            return jsonFileSourceParams;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error reading file at {jsonFileSourceParams!.FilePath}: {ex.Message}", ex);
+        }
     }
 
     public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
