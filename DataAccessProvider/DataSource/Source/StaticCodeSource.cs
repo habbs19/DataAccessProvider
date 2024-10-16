@@ -35,12 +35,10 @@ public partial class StaticCodeSource : BaseSource
         // Check if the parameters are of type StaticCodeParams
         if (@params is StaticCodeParams staticCodeParams)
         {
-            var content = $"{staticCodeParams.Content}";
+            staticCodeParams.SetValue(staticCodeParams.Content);
 
-            // Perform any logic required here
             await Task.CompletedTask;
 
-            staticCodeParams.SetValue(content);
             return staticCodeParams;
         }
 
