@@ -125,7 +125,9 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                     command.Parameters.AddRange(sourceParams.Parameters.ToArray());
 
                 await connection.OpenAsync();
-                sourceParams.SetValue(await command.ExecuteNonQueryAsync());
+                var affectedRows = await command.ExecuteNonQueryAsync();
+                sourceParams.SetValue(affectedRows);
+                sourceParams.AffectedRows = affectedRows;
                 return sourceParams;
             }
         }
