@@ -27,7 +27,7 @@ public static class DbParameterExtensions
         var parameter = new NpgsqlParameter();
         parameter.ParameterName = parameterName;
         parameter.NpgsqlDbType = dbType;
-        parameter.Value = value;
+        parameter.Value = value ?? DBNull.Value;
         parameter.Size = size;
         parameter.Direction = direction;
 
@@ -51,7 +51,7 @@ public static class DbParameterExtensions
         var parameter = new SqlParameter();
         parameter.ParameterName = parameterName;
         parameter.SqlDbType = dbType;
-        parameter.Value = value;
+        parameter.Value = value ?? DBNull.Value;
         parameter.Size = size;
         parameter.Direction = direction;
 
@@ -66,7 +66,7 @@ public static class DbParameterExtensions
         var parameter = new OracleParameter();
         parameter.ParameterName = parameterName;
         parameter.OracleDbType = dbType;
-        parameter.Value = value;
+        parameter.Value = value ?? DBNull.Value;
         parameter.Size = size;
         parameter.Direction = direction;
 
@@ -81,22 +81,26 @@ public static class DbParameterExtensions
         var parameter = new MySqlParameter();
         parameter.ParameterName = parameterName;
         parameter.MySqlDbType = dbType;
-        parameter.Value = value;
-        parameter.Size = size;
+        parameter.Value = value ?? DBNull.Value;
         parameter.Direction = direction;
+
+        if (size > 0)
+        {
+            parameter.Size = size;
+        }
 
         parameters.Add(parameter);
         return parameters;
     }
 
     public static List<SnowflakeDbParameter> AddParameter(this List<SnowflakeDbParameter> parameters, string parameterName, SFDataType dbType,
-        object value, ParameterDirection direction = ParameterDirection.Input, int size = -1)
+        object value, ParameterDirection direction = ParameterDirection.Input, int size = 0)
     {
         // Create the appropriate parameter and add it to the list
         var parameter = new SnowflakeDbParameter();
         parameter.ParameterName = parameterName;
         parameter.SFDataType = dbType;
-        parameter.Value = value;
+        parameter.Value = value ?? DBNull.Value;
         parameter.Size = size;
         parameter.Direction = direction;
 
