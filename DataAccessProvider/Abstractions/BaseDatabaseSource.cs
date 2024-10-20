@@ -47,8 +47,9 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                         sourceParams.SetValue(resultSet[0]);
                     }
                 }
-                else
+                else if(resultSet.Count > 1)
                     sourceParams.SetValue(resultSet);
+            
                 return sourceParams;
             }
         }
