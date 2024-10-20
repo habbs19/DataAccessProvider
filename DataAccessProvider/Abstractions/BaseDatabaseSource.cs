@@ -40,16 +40,21 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                 {
                     if (resultSet[0].Count == 1)
                     {
+                        // return single row
                         sourceParams.SetValue(resultSet[0][0]);
                     }
                     else
                     {
+                        // return list
                         sourceParams.SetValue(resultSet[0]);
                     }
                 }
                 else if(resultSet.Count > 1)
                     sourceParams.SetValue(resultSet);
-            
+                else
+                {
+                    sourceParams.SetValue(new Dictionary<string,object>());
+                }
                 return sourceParams;
             }
         }
@@ -104,7 +109,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                     {
                         sourceParams.SetValue(result[0]);
                     }
-                    else
+                    else if(result.Count > 1)
                     {
                         sourceParams.SetValue(result);
                     }
