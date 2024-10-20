@@ -36,24 +36,32 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                     }
                     while (await reader.NextResultAsync());
                 }
+                // Handle single result set or multiple result sets
                 if (resultSet.Count == 1)
                 {
-                    if (resultSet[0].Count == 1)
+                    var firstResultSet = resultSet[0];
+
+                    // Handle single row, empty result, or list
+                    if (firstResultSet.Count == 1)
                     {
-                        // return single row
-                        sourceParams.SetValue(resultSet[0][0]);
+                        // Return the single row
+                        sourceParams.SetValue(firstResultSet[0]);
+                    }
+                    else if (firstResultSet.Count == 0)
+                    {
+                        // Return an empty dictionary if no results
+                        sourceParams.SetValue(new Dictionary<string, object>());
                     }
                     else
                     {
-                        // return list
-                        sourceParams.SetValue(resultSet[0]);
+                        // Return the entire list for multiple rows
+                        sourceParams.SetValue(firstResultSet);
                     }
                 }
-                else if(resultSet.Count > 1)
-                    sourceParams.SetValue(resultSet);
-                else
+                else if (resultSet.Count > 1)
                 {
-                    sourceParams.SetValue(new Dictionary<string,object>());
+                    // Handle multiple result sets
+                    sourceParams.SetValue(resultSet);
                 }
                 return sourceParams;
             }
