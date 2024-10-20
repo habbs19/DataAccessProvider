@@ -3,4 +3,4 @@ namespace DataAccessProvider.DataSource.Params;
 
 public class MySQLSourceParams : BaseDatabaseSourceParams<MySqlParameter> { }
 
-public class MySQLSourceParams<TValue> : BaseDatabaseSourceParams<MySqlParameter,TValue> where TValue : class { }
+public class MySQLSourceParams<TValue> : BaseDatabaseSourceParams<MySqlParameter, TValue> where TValue : class { }

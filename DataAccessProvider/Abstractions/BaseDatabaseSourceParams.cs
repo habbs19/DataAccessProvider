@@ -17,7 +17,7 @@ public abstract class BaseDatabaseSourceParams<TParameter> : BaseDataSourceParam
 {
     public string Query { get; set; } = string.Empty;
     public List<TParameter>? Parameters { get; set; } = new List<TParameter>();
-    public CommandType CommandType { get; set; }
+    public CommandType CommandType { get; set; } = CommandType.StoredProcedure;
     public int Timeout { get; set; }
     public int AffectedRows { get; set; }
 }
@@ -29,7 +29,7 @@ public abstract class BaseDatabaseSourceParams<TParameter,TValue> : BaseDataSour
 {
     public string Query { get; set; } = string.Empty;
     public List<TParameter>? Parameters { get; set; } = new List<TParameter>();
-    public CommandType CommandType { get; set; }
+    public CommandType CommandType { get; set; } = CommandType.StoredProcedure;
     public int Timeout { get; set; }
     public int AffectedRows { get; set; }
 }
