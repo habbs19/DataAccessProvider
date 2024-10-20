@@ -37,7 +37,16 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                     while (await reader.NextResultAsync());
                 }
                 if (resultSet.Count == 1)
-                    sourceParams.SetValue(resultSet[0]);
+                {
+                    if (resultSet[0].Count == 1)
+                    {
+                        sourceParams.SetValue(resultSet[0][0]);
+                    }
+                    else
+                    {
+                        sourceParams.SetValue(resultSet[0]);
+                    }
+                }
                 else
                     sourceParams.SetValue(resultSet);
                 return sourceParams;
@@ -67,22 +76,37 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                 await connection.OpenAsync();
                 using (var reader = await command.ExecuteReaderAsync())
                 {
-                    var resultSet = await ReadResultAsync(reader);
                     var result = new List<TValue>();
+                    var columns = reader.GetColumnSchema(); 
 
-                    foreach (var row in resultSet)
+                    while (await reader.ReadAsync())
                     {
-                        var item = new TValue();
+                        var item = new TValue();  
+
                         foreach (var property in typeof(TValue).GetProperties())
                         {
-                            if (row.ContainsKey(property.Name) && property.CanWrite)
+                            var column = columns.FirstOrDefault(c => c.ColumnName.Equals(property.Name, StringComparison.OrdinalIgnoreCase));
+                            if (column != null && property.CanWrite)
                             {
-                                property.SetValue(item, Convert.ChangeType(row[property.Name], property.PropertyType));
+                                var value = reader[property.Name];
+
+                                if (value != DBNull.Value)
+                                {
+                                    property.SetValue(item, Convert.ChangeType(value, property.PropertyType));
+                                }
                             }
                         }
                         result.Add(item);
                     }
-                    sourceParams.SetValue(result);
+
+                    if (result.Count == 1)
+                    {
+                        sourceParams.SetValue(result[0]);
+                    }
+                    else
+                    {
+                        sourceParams.SetValue(result);
+                    }
 
                     //var converted = Convert.ChangeType(sourceParams, typeof(BaseDataSourceParams<TValue>));
                     return (BaseDataSourceParams<TValue>)(object)sourceParams;
