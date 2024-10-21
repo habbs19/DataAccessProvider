@@ -1,9 +1,13 @@
 ﻿using System.Data.Common;
+using System.Reflection;
 using DataAccessProvider.DataSource.Params;
+using DataAccessProvider.Extensions;
 using DataAccessProvider.Interfaces;
+using Google.Protobuf.WellKnownTypes;
 
 namespace DataAccessProvider.Abstractions;
 
+#region ExecuteMethods
 public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
 {
     protected override async Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
@@ -103,11 +107,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                             if (column != null && property.CanWrite)
                             {
                                 var value = reader[property.Name];
-
-                                if (value != DBNull.Value)
-                                {
-                                    property.SetValue(item, Convert.ChangeType(value, property.PropertyType));
-                                }
+                                property.SetPropertyValue(item,value);                              
                             }
                         }
                         result.Add(item);
@@ -171,6 +171,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
         }
     }
 }
+#endregion ExecuteMethods
 #region Props
 /// <summary>
 /// Represents a base class for database sources, providing common database operations like ExecuteNonQuery, ExecuteReader, and ExecuteScalar.
@@ -232,10 +233,8 @@ public abstract partial class BaseDatabaseSource<TParameter>
             }
             result.Add(row);
         }
-
         return result;
-    }
-
+    }   
 }
 
 #endregion 
@@ -303,12 +302,21 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
                         {
                             if (row.ContainsKey(property.Name) && property.CanWrite)
                             {
-                                property.SetValue(item, Convert.ChangeType(row[property.Name], property.PropertyType));
+                                var value = row[property.Name];
+                                property.SetPropertyValue(item, value);
                             }
                         }
                         result.Add(item);
                     }
-                    sourceParams.SetValue(result);
+
+                    if (result.Count == 1)
+                    {
+                        sourceParams.SetValue(result[0]);
+                    }
+                    else if (result.Count > 1)
+                    {
+                        sourceParams.SetValue(result);
+                    }
 
                     //var converted = Convert.ChangeType(sourceParams, typeof(BaseDataSourceParams<TValue>));
                     return (BaseDataSourceParams<TValue>)(object)sourceParams;
