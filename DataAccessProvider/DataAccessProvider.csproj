@@ -5,11 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-	<PackageReadmeFile>readme.md</PackageReadmeFile>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
 
 	  <OutputType>library</OutputType>
     <PackageId>DataAccessProvider</PackageId>
-    <Version>1.1.9</Version>
+    <Version>1.1.10</Version>
     <Authors>Habib Shakibanejad</Authors>
     <Company>HSX</Company>
     <Title>DataAccessProvider</Title>
@@ -31,6 +31,8 @@
     <PackageReference Include="Npgsql" Version="8.0.5" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.6.0" />
     <PackageReference Include="Snowflake.Data" Version="4.1.0" />
+	 
+	<None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
