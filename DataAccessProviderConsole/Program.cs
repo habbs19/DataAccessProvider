@@ -1,9 +1,9 @@
-﻿using Azure;
-using DataAccessProvider.DataSource;
-using DataAccessProvider.DataSource.Params;
-using DataAccessProvider.DataSource.Source;
-using DataAccessProvider.Extensions;
-using DataAccessProvider.Interfaces;
+﻿using DataAccessProvider.Core.DataSource;
+using DataAccessProvider.Core.DataSource.Params;
+using DataAccessProvider.Core.DataSource.Source;
+using DataAccessProvider.Core.Interfaces;
+using DataAccessProvider.MSSQL;
+using DataAccessProvider.MySql;
 using DataAccessProviderConsole.Classes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -80,7 +80,7 @@ var myParams = new MySQLSourceParams
 };
 var json1 = new { Email = "hs_19@hotmail.com", OTPCode = 9839081 };
 myParams.Parameters!.AddParameter("Operation", MySql.Data.MySqlClient.MySqlDbType.UInt16, 3);
-myParams.Parameters.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json1));
+myParams.Parameters!.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json1));
 var myParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(myParams);
 Console.WriteLine($"\n4:  {JsonSerializer.Serialize(myParamsResult.Value)}");
 
@@ -116,10 +116,10 @@ static ServiceProvider ConfigureServices()
     // Add database source services
 
     services.AddScoped<IDataSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(sqlString));
-    services.AddScoped<IDataSource<PostgresSourceParams>, PostgresSource>(provider => new PostgresSource(postgresString));
+    //services.AddScoped<IDataSource<PostgresSourceParams>, PostgresSource>(provider => new PostgresSource(postgresString));
     services.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>((factory) => new MySQLSource(mySqlString));
     
-    services.AddScoped(factory => new PostgresSource(postgresString));
+    //services.AddScoped(factory => new PostgresSource(postgresString));
     services.AddScoped(factory => new MySQLSource(mySqlString));
     services.AddScoped(factory => new MSSQLSource(sqlString));
     services.AddScoped<JsonFileSource>();

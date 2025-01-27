@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -24,7 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccessProvider\DataAccessProvider.csproj" />
+    <ProjectReference Include="..\DataAccessProvider.Core\DataAccessProvider.Core.csproj" />
+    <ProjectReference Include="..\DataAccessProvider.MSSQL\DataAccessProvider.MSSQL.csproj" />
+    <ProjectReference Include="..\DataAccessProvider.MySql\DataAccessProvider.MySql.csproj" />
   </ItemGroup>
 
 </Project>
