@@ -7,8 +7,6 @@ using DataAccessProvider.MySql;
 using DataAccessProviderConsole.Classes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MySql.Data.MySqlClient;
-using System.ComponentModel;
 using System.Text.Json;
 
 var serviceProvider = ConfigureServices();
@@ -74,26 +72,29 @@ var jsonFileParams3 = new JsonFileSourceParams<List<Genre>>
 var jsonFileParams3Result = await dataSourceProvider1!.ExecuteReaderAsync(jsonFileParams3);
 Console.WriteLine($"\n3:  {JsonSerializer.Serialize(jsonFileParams3Result.Value)}");
 
-var myParams = new MySQLSourceParams
-{
-    Query = "SP_RegistrationCRUD"
-};
-var json1 = new { Email = "hs_19@hotmail.com", OTPCode = 9839081 };
-myParams.Parameters!.AddParameter("Operation", MySql.Data.MySqlClient.MySqlDbType.UInt16, 3);
-myParams.Parameters!.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json1));
-var myParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(myParams);
-Console.WriteLine($"\n4:  {JsonSerializer.Serialize(myParamsResult.Value)}");
+//var myParams = new MySQLSourceParams
+//{
+//    Query = "SP_RegistrationCRUD"
+//};
+//var json1 = new { Email = "hs_19@hotmail.com", OTPCode = 9839081 };
 
-var appuserParams = new MySQLSourceParams<AppUser>
-{
-    Query = "SP_UserEmailStore"
-};
-appuserParams.Parameters.AddParameter("Operation", MySqlDbType.UInt16, 1);
-var json2 = new { Email = "hs_19@hotmail.com" };
-appuserParams.Parameters.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json2));
+//myParams.AddParameter("Operation", MySql.Data.MySqlClient.MySqlDbType.UInt16, 3);
+//myParams.Parameters!.AddParameter("Operation", MySql.Data.MySqlClient.MySqlDbType.UInt16, 3);
+//myParams.Parameters!.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json1));
+//var myParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(myParams);
+//Console.WriteLine($"\n4:  {JsonSerializer.Serialize(myParamsResult.Value)}");
 
-var appuserParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(appuserParams);
-Console.WriteLine($"\n5:  {JsonSerializer.Serialize(appuserParamsResult.Value?.FirstOrDefault())}");
+//var appuserParams = new MySQLSourceParams<AppUser>
+//{
+//    Query = "SP_UserEmailStore"
+//};
+//appuserParams.AddParameter<AppUser>("Operation",  , 1);
+//appuserParams.Parameters.AddParameter("Operation", MySqlDbType.UInt16, 1);
+//var json2 = new { Email = "hs_19@hotmail.com" };
+//appuserParams.Parameters.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json2));
+
+//var appuserParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(appuserParams);
+//Console.WriteLine($"\n5:  {JsonSerializer.Serialize(appuserParamsResult.Value?.FirstOrDefault())}");
 
 
 

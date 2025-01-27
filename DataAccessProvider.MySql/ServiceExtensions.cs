@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace DataAccessProvider.MySql;
 public static class ServiceExtensions
 {
-
     public static IServiceCollection AddDataAccessProviderMySql(this IServiceCollection service, IConfiguration configuration)
     {
         // Register necessary services
