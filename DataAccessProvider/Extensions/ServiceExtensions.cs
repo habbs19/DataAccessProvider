@@ -3,8 +3,6 @@ using DataAccessProvider.DataSource.Source;
 using DataAccessProvider.DataSource;
 using DataAccessProvider.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data.SqlTypes;
-using System.Configuration;
 using Microsoft.Extensions.Configuration;
 
 namespace DataAccessProvider.Extensions;
