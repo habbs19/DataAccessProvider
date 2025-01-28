@@ -25,7 +25,7 @@ public class DataSourceFactory : IDataSourceFactory
      where TSource : IDataSource
     {
         // Register the non-generic type
-        _dataSourceMappings[nameof(TParams)] = typeof(TSource);
+        _dataSourceMappings[typeof(TParams).Name] = typeof(TSource);
 
         // Check if TParams is a generic type definition and register the generic type
         if (typeof(TParams).IsGenericTypeDefinition)

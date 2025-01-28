@@ -1,7 +1,4 @@
 ﻿using DataAccessProvider.Core.Abstractions;
-using DataAccessProvider.Core.Types;
-using Microsoft.Extensions.DependencyInjection;
-using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DataAccessProvider.Core.Interfaces;

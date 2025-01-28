@@ -1,15 +1,17 @@
-﻿using DataAccessProvider.Core.DataSource;
-using DataAccessProvider.Core.DataSource.Params;
-using DataAccessProvider.Core.DataSource.Source;
+﻿using DataAccessProvider.Core.DataSource.Params;
+using DataAccessProvider.Core.Extensions;
 using DataAccessProvider.Core.Interfaces;
 using DataAccessProvider.MSSQL;
 using DataAccessProvider.MySql;
 using DataAccessProviderConsole.Classes;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MySql.Data.MySqlClient;
 using System.Text.Json;
 
 var serviceProvider = ConfigureServices();
+
+serviceProvider.UseDataAccessProviderMSSQL();
+serviceProvider.UseDataAccessProviderMySql();
 
 // Resolve the IDataSourceProvider and use it
 
@@ -35,12 +37,12 @@ var mssqParams3 = new MSSQLSourceParams<Diary>
 };
 mssqParams3.CommandType = System.Data.CommandType.Text;
 
-var result1a = await dataSourceProvider1!.ExecuteReaderAsync(jsonFileParams1);
+//var result1a = await dataSourceProvider1!.ExecuteReaderAsync(jsonFileParams1);
 var result1b = await dataSourceProvider1!.ExecuteReaderAsync(codeParams1);
 var result1c = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams1);
 var result1d = await dataSourceProvider1!.ExecuteReaderAsync(mssqParams3);
 //var result1d = await dataSourceProvider2!.ExecuteScalarAsync(codeParams1);
-Console.WriteLine($"\n1a:  {JsonSerializer.Serialize(result1a.Value)}");
+//Console.WriteLine($"\n1a:  {JsonSerializer.Serialize(result1a.Value)}");
 Console.WriteLine($"\n1b:  {JsonSerializer.Serialize(result1b.Value)}");
 Console.WriteLine($"\n1b:  {JsonSerializer.Serialize(result1c.Value)}");
 Console.WriteLine($"\n1b:  {JsonSerializer.Serialize(result1d.Value)}");
@@ -72,29 +74,29 @@ var jsonFileParams3 = new JsonFileSourceParams<List<Genre>>
 var jsonFileParams3Result = await dataSourceProvider1!.ExecuteReaderAsync(jsonFileParams3);
 Console.WriteLine($"\n3:  {JsonSerializer.Serialize(jsonFileParams3Result.Value)}");
 
-//var myParams = new MySQLSourceParams
-//{
-//    Query = "SP_RegistrationCRUD"
-//};
-//var json1 = new { Email = "hs_19@hotmail.com", OTPCode = 9839081 };
+var myParams = new MySQLSourceParams
+{
+    Query = "SP_RegistrationCRUD"
+};
+var json1 = new { Email = "hs_19@hotmail.com", OTPCode = 9839081 };
 
-//myParams.AddParameter("Operation", MySql.Data.MySqlClient.MySqlDbType.UInt16, 3);
-//myParams.Parameters!.AddParameter("Operation", MySql.Data.MySqlClient.MySqlDbType.UInt16, 3);
-//myParams.Parameters!.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json1));
-//var myParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(myParams);
-//Console.WriteLine($"\n4:  {JsonSerializer.Serialize(myParamsResult.Value)}");
+myParams.AddParameter("Operation", MySqlDbType.UInt16, 3);
+myParams.Parameters!.AddParameter("Operation", MySqlDbType.UInt16, 3);
+myParams.Parameters!.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json1));
+var myParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(myParams);
+Console.WriteLine($"\n4:  {JsonSerializer.Serialize(myParamsResult.Value)}");
 
-//var appuserParams = new MySQLSourceParams<AppUser>
-//{
-//    Query = "SP_UserEmailStore"
-//};
-//appuserParams.AddParameter<AppUser>("Operation",  , 1);
-//appuserParams.Parameters.AddParameter("Operation", MySqlDbType.UInt16, 1);
-//var json2 = new { Email = "hs_19@hotmail.com" };
-//appuserParams.Parameters.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json2));
+var appuserParams = new MySQLSourceParams<AppUser>
+{
+    Query = "SP_UserEmailStore"
+};
+appuserParams.AddParameter("Operation", MySqlDbType.Int32, 1);
+appuserParams.Parameters.AddParameter("Operation", MySqlDbType.UInt16, 1);
+var json2 = new { Email = "hs_19@hotmail.com" };
+appuserParams.Parameters.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json2));
 
-//var appuserParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(appuserParams);
-//Console.WriteLine($"\n5:  {JsonSerializer.Serialize(appuserParamsResult.Value?.FirstOrDefault())}");
+var appuserParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(appuserParams);
+Console.WriteLine($"\n5:  {JsonSerializer.Serialize(appuserParamsResult.Value?.FirstOrDefault())}");
 
 
 
@@ -109,23 +111,11 @@ static ServiceProvider ConfigureServices()
 
     var services = new ServiceCollection();
 
-    // Register necessary services
-    services.AddSingleton<IDataSourceProvider, DataSourceProvider>();
-    services.AddSingleton(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
-    services.AddSingleton<IDataSourceFactory, DataSourceFactory>();
-
     // Add database source services
 
-    services.AddScoped<IDataSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(sqlString));
-    //services.AddScoped<IDataSource<PostgresSourceParams>, PostgresSource>(provider => new PostgresSource(postgresString));
-    services.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>((factory) => new MySQLSource(mySqlString));
-    
-    //services.AddScoped(factory => new PostgresSource(postgresString));
-    services.AddScoped(factory => new MySQLSource(mySqlString));
-    services.AddScoped(factory => new MSSQLSource(sqlString));
-    services.AddScoped<JsonFileSource>();
-    services.AddScoped<StaticCodeSource>();
-
+    services.AddDataAccessProviderCore();
+    services.AddDataAccessProviderMySql(mySqlString);
+    services.AddDataAccessProviderMSSQL(sqlString);
     //services.AddScoped<IDataSource, PostgresSource>();
     //services.AddScoped<IDataSource, OracleDataSource>();
     //services.AddScoped<IDataSource, MongoDBSource>();
