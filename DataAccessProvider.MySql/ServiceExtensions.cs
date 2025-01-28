@@ -36,9 +36,9 @@ public static class ServiceExtensions
     public static IServiceCollection AddDataAccessProviderMySql(this IServiceCollection service, string connectionString)
     {
         // Register necessary services
-        service.AddScoped<IDataSourceProvider, DataSourceProvider>();
-        service.AddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
-        service.AddScoped<IDataSourceFactory, DataSourceFactory>();
+        service.TryAddScoped<IDataSourceProvider, DataSourceProvider>();
+        service.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
+        service.TryAddScoped<IDataSourceFactory, DataSourceFactory>();
 
         // Register necessary services
         service.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>(provider => new MySQLSource(connectionString));
