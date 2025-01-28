@@ -18,9 +18,8 @@ public static class ServiceExtensions
         // Add database source service
         string mssqlString = configuration.GetConnectionString(nameof(MSSQLSource)) ?? "";
 
-        service.AddScoped<IDataSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(mssqlString));
-
         // Register necessary services
+        service.AddScoped<IDataSource<MSSQLSourceParams>, MSSQLSource>(provider => new MSSQLSource(mssqlString));
         service.AddScoped(factory => new MSSQLSource(mssqlString));
 
         return service;

@@ -3,6 +3,7 @@ using DataAccessProvider.Core.DataSource.Params;
 using DataAccessProvider.Core.DataSource.Source;
 using DataAccessProvider.Core.Extensions;
 using DataAccessProvider.Core.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DataAccessProvider.Core.DataSource;
 
@@ -19,6 +20,8 @@ public class DataSourceFactory : IDataSourceFactory
         _dataSourceMappings.Add(nameof(JsonFileSourceParams), typeof(JsonFileSource));
         _dataSourceMappings.Add(nameof(StaticCodeParams), typeof(StaticCodeSource));
     }
+
+    public Dictionary<string, Type> GetRegisteredDataSources() => _dataSourceMappings;
 
     public void RegisterDataSource<TParams, TSource>()
      where TParams : BaseDataSourceParams
@@ -47,7 +50,8 @@ public class DataSourceFactory : IDataSourceFactory
         // Check if there is a registered mapping for the given parameter type
         if (_dataSourceMappings.TryGetValue(paramType.GetCleanGenericTypeName(), out var dataSourceType))
         {
-            var dataSource = _serviceProvider.GetService(dataSourceType);
+            using var scope = _serviceProvider.CreateScope();
+            var dataSource = scope.ServiceProvider.GetService(dataSourceType);
             if (dataSource == null)
             {
                 throw new InvalidOperationException($"{dataSourceType.Name} not found in service provider");
@@ -66,7 +70,8 @@ public class DataSourceFactory : IDataSourceFactory
         // Check if there is a registered mapping for the given parameter type
         if (_dataSourceMappings.TryGetValue(type.GetCleanGenericTypeName(), out var dataSourceType))
         {
-            var dataSource = _serviceProvider.GetService(dataSourceType);
+            using var scope = _serviceProvider.CreateScope();
+            var dataSource = scope.ServiceProvider.GetService(dataSourceType);
             if (dataSource == null)
             {
                 throw new InvalidOperationException($"{dataSourceType.Name} not found in service provider");
@@ -89,7 +94,8 @@ public class DataSourceFactory : IDataSourceFactory
         // Check if there is a registered mapping for the given parameter type
         if (_dataSourceMappings.TryGetValue(paramType.GetGenericTypeName(), out var dataSourceType))
         {
-            var dataSource = _serviceProvider.GetService(dataSourceType);
+            using var scope = _serviceProvider.CreateScope();
+            var dataSource = scope.ServiceProvider.GetService(dataSourceType);
             if (dataSource == null)
             {
                 throw new InvalidOperationException($"{dataSourceType.Name} not found in service provider");
