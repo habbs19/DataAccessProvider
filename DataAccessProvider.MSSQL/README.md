@@ -36,7 +36,7 @@ The **Data Access Provider Framework** offers a flexible, pluggable way to inter
 ## Supported Data Sources
 
 - **SQL Databases**:
-  - MySQL (`MySQLSourceParams`)
+  - MSSQL (`MSSQLSourceParams`)
 
 You can also extend the provider to support any custom data source by registering new data source implementations.
 
@@ -50,7 +50,7 @@ The **DataAccessProvider** is designed to provide a simple, consistent interface
 
 1. **.NET Framework or .NET Core**: Make sure you have a compatible version of .NET installed.
 2. **Database Drivers**: Install the necessary database drivers based on the data sources you're using.
-   - **MySQL**: `MySql.Data`
+   - **MSSQL**: `Microsoft.Data.SqlClient`
 
 ### Installation (Locally)
 
@@ -77,11 +77,9 @@ The **DataAccessProvider** is available as a NuGet package from GitHub. You can 
 
 ```csharp    
     // Add connection strings for each database type
-    services.AddDataAccessProviderMySQL(configuration);
-    
-    
-    serviceProvider.UseDataAccessProviderMySQL();
+    services.AddDataAccessProviderMSSQL(configuration);
 
+    serviceProvider.UseDataAccessProviderMySQL();
 ```
 
 ## Connection Strings in appsettings.json
@@ -93,7 +91,7 @@ To store your connection strings in the `appsettings.json` file, use the followi
 ```json
 {
   "ConnectionStrings": {
-    "MySQLSource": "Server=myServerAddress;Database=myDataBase;User=myUsername;Password=myPassword;",
+    "MSSQLSource": "Server=myServerAddress;Database=myDataBase;User=myUsername;Password=myPassword;",
   }
 }
 ```
@@ -110,19 +108,19 @@ Additionally, when using generic types, the provider can infer the type and retu
 // Resolve the IDataSourceProvider from the service provider
 var dataSourceProvider = serviceProvider.GetService<IDataSourceProvider>();
 
-// Example 1: Execute a query using MySQLSourceParams
-var mssqParams1 = new MySQLSourceParams
+// Example 1: Execute a query using MSSQLSourceParams
+var mssqlParams1 = new MSSQLSourceParams
 {
     Query = "SELECT TOP 1 * FROM [dbo].[Diary]"
 };
-var result1 = await dataSourceProvider.ExecuteReaderAsync(mssqParams1);
+var result1 = await dataSourceProvider.ExecuteReaderAsync(mssqlParams1);
 
 // Example 2: Execute a query with a typed return (e.g., Diary class)
-var mssqParams2 = new MySQLSourceParams<Diary>
+var mssqlParams2 = new MSSQLSourceParams<Diary>
 {
     Query = "SELECT TOP 1 * FROM [dbo].[Diary]"
 };
-var result2 = await dataSourceProvider.ExecuteReaderAsync(mssqParams2);
+var result2 = await dataSourceProvider.ExecuteReaderAsync(mssqlParams2);
 ```
 
 ### Results
@@ -155,10 +153,6 @@ public class Example
         var parameters = new List<SqlParameter>();
         parameters.AddParameter("@Id", DbType.Int32, 1);
         parameters.AddParameter("@Id", DbType.Int32, 2);
-
-        // For PostgreSQL
-        var parameters = new List<NpgsqlParameter>();
-        parameters.AddParameter("@Name", DbType.String, "John Doe");
 
         // Use parameters with your database command
     }
