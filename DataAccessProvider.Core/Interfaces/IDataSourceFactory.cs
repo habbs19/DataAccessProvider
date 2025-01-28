@@ -5,6 +5,8 @@ namespace DataAccessProvider.Core.Interfaces;
 
 public interface IDataSourceFactory
 {
+    public Dictionary<string, Type> GetRegisteredDataSources();
+
     /// <summary>
     /// Allows external consumers to add their own custom data source mappings.
     /// </summary>
