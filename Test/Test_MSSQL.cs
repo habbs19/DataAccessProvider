@@ -1,14 +1,8 @@
-using DataAccessProvider;
-using DataAccessProvider.DataSource;
-using DataAccessProvider.DataSource.Params;
-using DataAccessProvider.Extensions;
-using DataAccessProvider.Interfaces;
-using Microsoft.Data.SqlClient;
+using DataAccessProvider.Core.Interfaces;
+using DataAccessProvider.MSSQL;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using System.Data;
-using System.Data.Common;
-using System.Threading.Tasks.Dataflow;
 
 namespace Test;
 [TestClass]
@@ -44,13 +38,10 @@ public class Test_MSSQL
         var mssqlParams = new MSSQLSourceParams
         {
             Query = "INSERT INTO Users (Name) VALUES ('John Doe')",
-            Parameters = new List<SqlParameter>
-            {
-                new SqlParameter("@Name", SqlDbType.NVarChar) { Value = "John Doe" }
-            },
             CommandType = CommandType.Text,
             Timeout = 30
         };
+        mssqlParams.AddParameter("@Name", SqlDbType.NVarChar, "John Doe");
 
         // Mock the CreateDataSource method to return a mock IDataSource
         var mockDataSource = new Mock<IDataSource>();
