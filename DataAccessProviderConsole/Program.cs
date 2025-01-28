@@ -76,13 +76,11 @@ Console.WriteLine($"\n3:  {JsonSerializer.Serialize(jsonFileParams3Result.Value)
 
 var myParams = new MySQLSourceParams
 {
-    Query = "SP_RegistrationCRUD"
+    Query = "SP_StreamStore"
 };
 var json1 = new { Email = "hs_19@hotmail.com", OTPCode = 9839081 };
 
-myParams.AddParameter("Operation", MySqlDbType.UInt16, 3);
-myParams.Parameters!.AddParameter("Operation", MySqlDbType.UInt16, 3);
-myParams.Parameters!.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json1));
+myParams.AddJSONParams(3);
 var myParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(myParams);
 Console.WriteLine($"\n4:  {JsonSerializer.Serialize(myParamsResult.Value)}");
 
@@ -91,7 +89,6 @@ var appuserParams = new MySQLSourceParams<AppUser>
     Query = "SP_UserEmailStore"
 };
 appuserParams.AddParameter("Operation", MySqlDbType.Int32, 1);
-appuserParams.Parameters.AddParameter("Operation", MySqlDbType.UInt16, 1);
 var json2 = new { Email = "hs_19@hotmail.com" };
 appuserParams.Parameters.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json2));
 

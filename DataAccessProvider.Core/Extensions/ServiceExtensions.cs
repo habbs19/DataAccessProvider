@@ -13,7 +13,7 @@ public static class ServiceExtensions
         // Register necessary services
         service.TryAddScoped<IDataSourceProvider, DataSourceProvider>();
         service.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
-        service.TryAddScoped<IDataSourceFactory, DataSourceFactory>();
+        service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
 
         service.AddScoped<JsonFileSource>();
         service.AddScoped<StaticCodeSource>();

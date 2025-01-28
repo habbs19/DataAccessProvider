@@ -13,7 +13,7 @@ public static class ServiceExtensions
         // Register necessary services
         service.TryAddScoped<IDataSourceProvider, DataSourceProvider>();
         service.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
-        service.TryAddScoped<IDataSourceFactory, DataSourceFactory>();
+        service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
 
         // Add database source service
         string mssqlString = configuration.GetConnectionString(nameof(MySQLSource)) ?? "";
@@ -21,14 +21,6 @@ public static class ServiceExtensions
         // Register necessary services
         service.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>(provider => new MySQLSource(mssqlString));
         service.AddScoped(factory => new MySQLSource(mssqlString));
-
-        // Register MSSQLSource
-        service.AddScoped(provider =>
-        {
-            var factory = provider.GetRequiredService<IDataSourceFactory>();
-            factory.RegisterDataSource<MySQLSourceParams, MySQLSource>();
-            return factory;
-        });
 
         return service;
     }
@@ -38,7 +30,7 @@ public static class ServiceExtensions
         // Register necessary services
         service.TryAddScoped<IDataSourceProvider, DataSourceProvider>();
         service.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
-        service.TryAddScoped<IDataSourceFactory, DataSourceFactory>();
+        service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
 
         // Register necessary services
         service.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>(provider => new MySQLSource(connectionString));
