@@ -1,5 +1,5 @@
 ﻿using DataAccessProvider.Core.Abstractions;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 namespace DataAccessProvider.MySql;
 
 public class MySQLSourceParams : BaseDatabaseSourceParams<MySqlParameter> { }
