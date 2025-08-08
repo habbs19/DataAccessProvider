@@ -1,6 +1,6 @@
 ﻿using DataAccessProvider.Core.Abstractions;
 using DataAccessProvider.Core.Interfaces;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using System.Data.Common;
 
 namespace DataAccessProvider.MySql;

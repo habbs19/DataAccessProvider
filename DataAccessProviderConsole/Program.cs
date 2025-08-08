@@ -5,7 +5,6 @@ using DataAccessProvider.MSSQL;
 using DataAccessProvider.MySql;
 using DataAccessProviderConsole.Classes;
 using Microsoft.Extensions.DependencyInjection;
-using MySql.Data.MySqlClient;
 using System.Text.Json;
 
 var serviceProvider = ConfigureServices();
@@ -88,9 +87,9 @@ var appuserParams = new MySQLSourceParams<AppUser>
 {
     Query = "SP_UserEmailStore"
 };
-appuserParams.AddParameter("Operation", MySqlDbType.Int32, 1);
+appuserParams.AddParameter("Operation", MySqlConnector.MySqlDbType.Int32, 1);
 var json2 = new { Email = "hs_19@hotmail.com" };
-appuserParams.Parameters.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json2));
+appuserParams.Parameters.AddParameter("Params", MySqlConnector.MySqlDbType.JSON, JsonSerializer.Serialize(json2));
 
 var appuserParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(appuserParams);
 Console.WriteLine($"\n5:  {JsonSerializer.Serialize(appuserParamsResult.Value?.FirstOrDefault())}");
