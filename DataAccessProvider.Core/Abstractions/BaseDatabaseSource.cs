@@ -267,6 +267,65 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
         return (TBaseDataSourceParams)await ExecuteReader<TValue>(sourceParams!);
     }
 
+    private object? GetPropertyValue<TValue>(System.Reflection.PropertyInfo property, object? value) where TValue : class, new()
+    {
+        var targetType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+
+        if (value == null || value == DBNull.Value)
+            return null;
+
+        try
+        {
+            return targetType switch
+            {
+                Type t when t.IsEnum =>
+                    value is string s ? Enum.Parse(t, s, ignoreCase: true) : Enum.ToObject(t, value),
+
+                Type t when t == typeof(bool) =>
+                    value is string strVal ? (strVal == "1" || strVal.Equals("true", StringComparison.OrdinalIgnoreCase)) : Convert.ToBoolean(value),
+
+                Type t when t == typeof(DateTime) =>
+                    Convert.ToDateTime(value),
+
+                Type t when t == typeof(Guid) =>
+                    value switch
+                    {
+                        string g => Guid.Parse(g),
+                        byte[] b => new Guid(b),
+                        _ => throw new InvalidCastException($"Cannot convert {value.GetType()} to Guid")
+                    },
+
+                Type t when t == typeof(TimeSpan) =>
+                    value switch
+                    {
+                        string tsStr => TimeSpan.Parse(tsStr),
+                        long ticks => TimeSpan.FromTicks(ticks),
+                        _ => throw new InvalidCastException($"Cannot convert {value.GetType()} to TimeSpan")
+                    },
+
+                Type t when t == typeof(byte[]) =>
+                    (byte[])value,
+
+                Type t when t.IsPrimitive || t == typeof(decimal) =>
+                    Convert.ChangeType(value, t),
+
+                Type t when t == typeof(string) =>
+                    value.ToString(),
+
+                _ => Convert.ChangeType(value, targetType),
+            };
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException(
+                $"Error setting property '{property.Name}' on type '{typeof(TValue).Name}' with value '{value ?? "null"}' ({value?.GetType().Name ?? "null"}).",
+                ex
+            );
+        }
+    }
+
+
+
     public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
     {
         var sourceParams = @params as BaseDatabaseSourceParams<TParameter,TValue>;
@@ -297,11 +356,21 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
                         var item = new TValue();
                         foreach (var property in typeof(TValue).GetProperties())
                         {
-                            if (row.ContainsKey(property.Name) && property.CanWrite)
+                            if (!row.ContainsKey(property.Name) || !property.CanWrite)
+                                continue;
+
+                            var value = row[property.Name];
+                            if (value == DBNull.Value)
+                                value = null;
+
+                            // Handle Enum, Boolean, DateTime, and other conversions
+                            value = GetPropertyValue<TValue>(property, value);
+
+                            if (value != null)
                             {
-                                var value = row[property.Name];
                                 property.SetPropertyValue(item, value);
                             }
+
                         }
                         result.Add(item);
                     }
