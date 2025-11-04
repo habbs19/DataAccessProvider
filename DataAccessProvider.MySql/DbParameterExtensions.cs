@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System.Data;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace DataAccessProvider.MySql;
 
@@ -53,7 +54,15 @@ public static class DbParameterExtensions
     {
         var parameters = sourceParams.Parameters ?? new List<MySqlParameter>();
         parameters.AddParameter("Operation",MySqlDbType.UInt16, operation);
-        parameters.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json));
+
+        var options = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        };
+
+        string? jsonPayload = json == null ? null : JsonSerializer.Serialize(json, options);
+
+        parameters.AddParameter("Params", MySqlDbType.JSON, jsonPayload!);
         return sourceParams;
     }
     /// <summary>
@@ -69,7 +78,14 @@ public static class DbParameterExtensions
     {
         var parameters = sourceParams.Parameters ?? new List<MySqlParameter>();
         parameters.AddParameter("Operation", MySqlDbType.UInt16, operation);
-        parameters.AddParameter("Params", MySqlDbType.JSON, JsonSerializer.Serialize(json));
+        var options = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        };
+
+        string? jsonPayload = json == null ? null : JsonSerializer.Serialize(json, options);
+
+        parameters.AddParameter("Params", MySqlDbType.JSON, jsonPayload!);
         return sourceParams;
     }
 }
