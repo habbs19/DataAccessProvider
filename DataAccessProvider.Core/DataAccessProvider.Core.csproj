@@ -10,7 +10,7 @@
 
 	<OutputType>library</OutputType>
 	<PackageId>DataAccessProvider.Core</PackageId>
-	<Version>1.2.6</Version>
+	<Version>1.2.7</Version>
 	<Authors>Habib Shakibanejad</Authors>
 	<Company>HSX</Company>
 	<Title>DataAccessProvider.Core</Title>
