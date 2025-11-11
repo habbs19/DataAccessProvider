@@ -103,7 +103,7 @@ static ServiceProvider ConfigureServices()
 {
     string sqlString = "Server=HABIB;Database=HS;Trusted_Connection=Yes;TrustServerCertificate=Yes";
     string postgresString = "";
-    string mySqlString = "Server=127.0.0.1;Port=3310;Database=aznv;Uid=root;Pwd=password;";
+    string mySqlString = "Server=127.0.0.1;Port=3306;Database=aznv;Uid=root;Pwd=password;";
 
     var services = new ServiceCollection();
 

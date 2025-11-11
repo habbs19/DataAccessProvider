@@ -72,7 +72,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
         }
     }
 
-    protected override async Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params) where TValue : class, new()
+    protected override async Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params)
     {
         var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
         if (sourceParams == null)
