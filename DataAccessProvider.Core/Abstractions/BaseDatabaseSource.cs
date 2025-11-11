@@ -1,4 +1,8 @@
-﻿using System.Data.Common;
+﻿using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text.Json;
 using DataAccessProvider.Core.Extensions;
 using DataAccessProvider.Core.Interfaces;
@@ -70,7 +74,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
         }
     }
 
-    protected override async Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params) where TValue : class
+    protected override async Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params)
     {
         var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
         if (sourceParams == null)
@@ -92,35 +96,17 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                 await connection.OpenAsync();
                 using (var reader = await command.ExecuteReaderAsync())
                 {
-                    var result = new List<TValue>();
-                    var columns = reader.GetColumnSchema(); 
-
-                    while (await reader.ReadAsync())
-                    {
-                        var item = new TValue();  
-
-                        foreach (var property in typeof(TValue).GetProperties())
-                        {
-                            var column = columns.FirstOrDefault(c => c.ColumnName.Equals(property.Name, StringComparison.OrdinalIgnoreCase));
-                            if (column != null && property.CanWrite)
-                            {
-                                var value = reader[property.Name];
-                                property.SetPropertyValue(item,value);                              
-                            }
-                        }
-                        result.Add(item);
-                    }
+                    var result = await MaterializeAsync<TValue>(reader);
 
                     if (result.Count == 1)
                     {
                         sourceParams.SetValue(result[0]);
                     }
-                    else if(result.Count > 1)
+                    else if (result.Count > 1)
                     {
                         sourceParams.SetValue(result);
                     }
 
-                    //var converted = Convert.ChangeType(sourceParams, typeof(BaseDataSourceParams<TValue>));
                     return (BaseDataSourceParams<TValue>)(object)sourceParams;
                 }
             }
@@ -268,12 +254,15 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
         return (TBaseDataSourceParams)await ExecuteReader<TValue>(sourceParams!);
     }
 
-    private object? GetPropertyValue<TValue>(System.Reflection.PropertyInfo property, object? value) where TValue : class, new()
+    private object? GetPropertyValue<TValue>(PropertyInfo property, object? value) where TValue : class, new()
     {
         var targetType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
 
         if (value == null || value == DBNull.Value)
             return null;
+
+        if (targetType.IsInstanceOfType(value))
+            return value;
 
         try
         {
@@ -369,32 +358,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
                 await connection.OpenAsync();
                 using (var reader = await command.ExecuteReaderAsync())
                 {
-                    var resultSet = await ReadResultAsync(reader);
-                    var result = new List<TValue>();
-
-                    foreach (var row in resultSet)
-                    {
-                        var item = new TValue();
-                        foreach (var property in typeof(TValue).GetProperties())
-                        {
-                            if (!row.ContainsKey(property.Name) || !property.CanWrite)
-                                continue;
-
-                            var value = row[property.Name];
-                            if (value == DBNull.Value)
-                                value = null;
-
-                            // Handle Enum, Boolean, DateTime, and other conversions
-                            value = GetPropertyValue<TValue>(property, value);
-
-                            if (value != null)
-                            {
-                                property.SetPropertyValue(item, value);
-                            }
-
-                        }
-                        result.Add(item);
-                    }
+                    var result = await MaterializeAsync<TValue>(reader);
 
                     if (result.Count == 1)
                     {
@@ -405,13 +369,151 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
                         sourceParams.SetValue(result);
                     }
 
-                    //var converted = Convert.ChangeType(sourceParams, typeof(BaseDataSourceParams<TValue>));
                     return (BaseDataSourceParams<TValue>)(object)sourceParams;
                 }
             }
         }
 
 
+    }
+
+    private async Task<List<TValue>> MaterializeAsync<TValue>(DbDataReader reader) where TValue : class, new()
+    {
+        var accessors = TypeAccessorCache<TValue>.GetColumnAccessors(reader);
+        var result = new List<TValue>();
+
+        if (accessors.Length == 0)
+        {
+            while (await reader.ReadAsync())
+            {
+                result.Add(new TValue());
+            }
+
+            return result;
+        }
+
+        while (await reader.ReadAsync())
+        {
+            var item = new TValue();
+
+            foreach (var accessor in accessors)
+            {
+                object? rawValue = reader.IsDBNull(accessor.Ordinal) ? null : reader.GetValue(accessor.Ordinal);
+
+                if (rawValue == null)
+                {
+                    if (accessor.AllowNullAssignments)
+                    {
+                        accessor.Assign(item, null);
+                    }
+
+                    continue;
+                }
+
+                var converted = GetPropertyValue<TValue>(accessor.Property, rawValue);
+
+                if (converted == null)
+                {
+                    if (accessor.AllowNullAssignments)
+                    {
+                        accessor.Assign(item, null);
+                    }
+
+                    continue;
+                }
+
+                accessor.Assign(item, converted);
+            }
+
+            result.Add(item);
+        }
+
+        return result;
+    }
+
+    private static class TypeAccessorCache<T>
+        where T : class, new()
+    {
+        private static readonly PropertyAccessor[] _writableProperties = typeof(T)
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .Where(p => p.CanWrite)
+            .Select(p => new PropertyAccessor(p))
+            .ToArray();
+
+        private static readonly Dictionary<string, PropertyAccessor> _lookup = _writableProperties
+            .GroupBy(p => p.Property.Name, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
+
+        public static PropertyColumnAccessor<T>[] GetColumnAccessors(DbDataReader reader)
+        {
+            var matched = new List<PropertyColumnAccessor<T>>(_writableProperties.Length);
+
+            for (var ordinal = 0; ordinal < reader.FieldCount; ordinal++)
+            {
+                var columnName = reader.GetName(ordinal);
+                if (string.IsNullOrWhiteSpace(columnName))
+                {
+                    continue;
+                }
+
+                if (_lookup.TryGetValue(columnName, out var accessor))
+                {
+                    matched.Add(new PropertyColumnAccessor<T>(accessor.Property, accessor.Setter, ordinal));
+                }
+            }
+
+            return matched.ToArray();
+        }
+
+        private sealed class PropertyAccessor
+        {
+            public PropertyAccessor(PropertyInfo property)
+            {
+                Property = property;
+                Setter = CreateSetter(property);
+            }
+
+            public PropertyInfo Property { get; }
+
+            public Action<T, object?> Setter { get; }
+
+            private static Action<T, object?> CreateSetter(PropertyInfo property)
+            {
+                var target = Expression.Parameter(typeof(T), "target");
+                var value = Expression.Parameter(typeof(object), "value");
+
+                var convertedValue = Expression.Condition(
+                    Expression.Equal(value, Expression.Constant(null)),
+                    Expression.Default(property.PropertyType),
+                    Expression.Convert(value, property.PropertyType));
+
+                var body = Expression.Assign(Expression.Property(target, property), convertedValue);
+
+                return Expression.Lambda<Action<T, object?>>(body, target, value).Compile();
+            }
+        }
+    }
+
+    private readonly struct PropertyColumnAccessor<T>
+        where T : class
+    {
+        private readonly Action<T, object?> _setter;
+
+        public PropertyColumnAccessor(PropertyInfo property, Action<T, object?> setter, int ordinal)
+        {
+            Property = property;
+            _setter = setter;
+            Ordinal = ordinal;
+            AllowNullAssignments = !property.PropertyType.IsValueType || Nullable.GetUnderlyingType(property.PropertyType) != null;
+        }
+
+        public PropertyInfo Property { get; }
+
+        public int Ordinal { get; }
+
+        public bool AllowNullAssignments { get; }
+
+        public void Assign(T target, object? value) => _setter(target, value);
     }
 }
 #endregion BaseDatabaseSource
