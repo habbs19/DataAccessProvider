@@ -1,4 +1,5 @@
 ﻿using System.Data.Common;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
@@ -200,22 +201,29 @@ public abstract partial class BaseDatabaseSource<TParameter>
     /// <returns>A list of dictionaries where each dictionary represents a row from the result set.</returns>
     protected async Task<List<Dictionary<string, object>>> ReadResultAsync(DbDataReader reader)
     {
+        var schema = reader.GetColumnSchema();
+        var columns = schema
+            .Where(column => column.ColumnOrdinal.HasValue && !string.IsNullOrEmpty(column.ColumnName))
+            .Select(column => (Name: column.ColumnName!, Ordinal: column.ColumnOrdinal!.Value))
+            .ToArray();
+
         var result = new List<Dictionary<string, object>>();
-        var columns = reader.GetColumnSchema();
 
         while (await reader.ReadAsync())
         {
-            var row = new Dictionary<string, object>();
+            var row = new Dictionary<string, object>(columns.Length);
 
-            foreach (var column in columns)
+            foreach (var (name, ordinal) in columns)
             {
-                string columnName = column.ColumnName;
-                row[columnName] = reader[columnName] is DBNull ? null : reader[columnName];
+                object? value = reader.IsDBNull(ordinal) ? null : reader.GetValue(ordinal);
+                row[name] = value!;
             }
+
             result.Add(row);
         }
+
         return result;
-    }   
+    }
 }
 
 #endregion 
