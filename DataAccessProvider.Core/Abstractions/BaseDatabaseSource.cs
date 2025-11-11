@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
+﻿using System.Data.Common;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.Json;
 using DataAccessProvider.Core.Interfaces;
 
 namespace DataAccessProvider.Core.Abstractions;
@@ -266,8 +265,28 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
         {
             return targetType switch
             {
-                Type t when t.IsEnum =>
-                    value is string s ? Enum.Parse(t, s, ignoreCase: true) : Enum.ToObject(t, value),
+                Type t when t.IsEnum => value switch
+                {
+                    null => default, // or throw if enums are required
+
+                    // Direct string input
+                    string s => Enum.Parse(t, s, ignoreCase: true),
+
+                    // JSON string value
+                    JsonElement je when je.ValueKind == JsonValueKind.String
+                        => Enum.Parse(t, je.GetString() ?? string.Empty, ignoreCase: true),
+
+                    // JSON number value
+                    JsonElement je when je.ValueKind == JsonValueKind.Number
+                        => Enum.ToObject(t, je.GetInt32()),
+
+                    // Already the correct underlying type (int, byte, etc.)
+                    int i => Enum.ToObject(t, i),
+                    long l => Enum.ToObject(t, l),
+
+                    // Fallback - try to convert to string and parse
+                    _ => Enum.Parse(t, value.ToString() ?? string.Empty, ignoreCase: true)
+                },
 
                 Type t when t == typeof(bool) =>
                     value is string strVal ? (strVal == "1" || strVal.Equals("true", StringComparison.OrdinalIgnoreCase)) : Convert.ToBoolean(value),
