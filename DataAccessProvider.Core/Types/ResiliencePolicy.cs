@@ -1,5 +1,6 @@
 using System.Data.Common;
 using Polly;
+using Polly.Timeout;
 using Polly.Wrap;
 
 namespace DataAccessProvider.Core.Types;
@@ -20,9 +21,12 @@ public sealed class ResiliencePolicy
             throw new ArgumentNullException(nameof(options));
         }
 
+        var timeoutPolicy = Policy.TimeoutAsync(options.OperationTimeout);
+
         var retryPolicy = Policy
             .Handle<DbException>()
             .Or<TimeoutException>()
+            .Or<TimeoutRejectedException>()
             .WaitAndRetryAsync(
                 options.MaxRetryCount,
                 attempt => CalculateDelay(attempt, options),
@@ -34,9 +38,10 @@ public sealed class ResiliencePolicy
         var circuitBreakerPolicy = Policy
             .Handle<DbException>()
             .Or<TimeoutException>()
+            .Or<TimeoutRejectedException>()
             .CircuitBreakerAsync(options.CircuitBreakerFailureThreshold, options.CircuitBreakerDuration);
 
-        return new ResiliencePolicy(Policy.WrapAsync(retryPolicy, circuitBreakerPolicy));
+        return new ResiliencePolicy(Policy.WrapAsync(timeoutPolicy, retryPolicy, circuitBreakerPolicy));
     }
 
     public Task<TResult> ExecuteAsync<TResult>(Func<Task<TResult>> action)

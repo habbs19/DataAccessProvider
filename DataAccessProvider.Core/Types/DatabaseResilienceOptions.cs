@@ -10,6 +10,11 @@ public sealed class DatabaseResilienceOptions
     public int MaxRetryCount { get; init; } = 3;
 
     /// <summary>
+    /// Maximum duration to wait for a single database operation before timing out.
+    /// </summary>
+    public TimeSpan OperationTimeout { get; init; } = TimeSpan.FromSeconds(30);
+
+    /// <summary>
     /// Base delay used for exponential backoff between retries.
     /// </summary>
     public TimeSpan BaseDelay { get; init; } = TimeSpan.FromMilliseconds(200);
