@@ -1,5 +1,6 @@
 using System.Data.Common;
 using Polly;
+using Polly.Wrap;
 
 namespace DataAccessProvider.Core.Types;
 

@@ -1,38 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 
-	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
-	  <PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 
-	  <OutputType>library</OutputType>
-	  <PackageId>DataAccessProvider.MySql</PackageId>
-	  <Version>1.2.8</Version>
-	  <Authors>Habib Shakibanejad</Authors>
-	  <Company>HSX</Company>
-	  <Title>DataAccessProvider.MySql</Title>
-	  <PackageTags>Data Access Layer; MySql; DbAbstraction; DataAccess</PackageTags>
-	  <PackageDescription>This package offers a flexible and generic database abstraction supporting multiple providers, including MySQL. It facilitates asynchronous execution of SQL commands, stored procedures, and parameterized queries with methods like ExecuteReaderAsync and ExecuteNonQueryAsync. Designed for extensibility and integration with dependency injection, it is ideal for applications using the repository pattern. The package simplifies multi-database integration, providing customizable database connections for efficient data handling in .NET applications.</PackageDescription>
-	  <RepositoryUrl>https://github.com/habbs19/DataAccessProvider</RepositoryUrl>
-	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
+		<OutputType>library</OutputType>
+		<PackageId>DataAccessProvider.MySql</PackageId>
+		<Version>1.3.0</Version>
+		<Authors>Habib Shakibanejad</Authors>
+		<Company>HSX</Company>
+		<Title>DataAccessProvider.MySql</Title>
+		<PackageTags>Data Access Layer; MySql; DbAbstraction; DataAccess</PackageTags>
+		<PackageDescription>This package offers a flexible and generic database abstraction supporting multiple providers, including MySQL. It facilitates asynchronous execution of SQL commands, stored procedures, and parameterized queries with methods like ExecuteReaderAsync and ExecuteNonQueryAsync. Designed for extensibility and integration with dependency injection, it is ideal for applications using the repository pattern. The package simplifies multi-database integration, providing customizable database connections for efficient data handling in .NET applications.</PackageDescription>
+		<RepositoryUrl>https://github.com/habbs19/DataAccessProvider</RepositoryUrl>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
 
-  <ItemGroup>
-	  <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.1">
-		  <PrivateAssets>all</PrivateAssets>
-	  </PackageReference>
-	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1">
-		  <PrivateAssets>all</PrivateAssets>
-	  </PackageReference>
-	  <PackageReference Include="MySqlConnector" Version="2.5.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.1">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="MySqlConnector" Version="2.5.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DataAccessProvider.Core\DataAccessProvider.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\DataAccessProvider.Core\DataAccessProvider.Core.csproj" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="" />
