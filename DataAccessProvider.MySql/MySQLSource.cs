@@ -9,7 +9,7 @@ public sealed class MySQLSource : BaseDatabaseSource<MySqlParameter,MySQLSourceP
     IDataSource,
     IDataSource<MySQLSourceParams>
 {
-    public MySQLSource(string connectionString) : base(connectionString) { }
+    public MySQLSource(string connectionString, IResiliencePolicy? resiliencePolicy = null) : base(connectionString, resiliencePolicy) { }
 
     public override DbConnection GetConnection()
     {

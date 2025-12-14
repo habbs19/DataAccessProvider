@@ -16,11 +16,19 @@ public static class ServiceExtensions
         service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
 
         // Add database source service
-        string mssqlString = configuration.GetConnectionString(nameof(MySQLSource)) ?? "";
+        string connectionString = configuration.GetConnectionString(nameof(MySQLSource)) ?? "";
 
         // Register necessary services
-        service.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>(provider => new MySQLSource(mssqlString));
-        service.AddScoped(factory => new MySQLSource(mssqlString));
+        service.AddScoped<IDataSource<MySQLSourceParams>>(sp =>
+        {
+            var policy = sp.GetService<IResiliencePolicy>();
+            return new MySQLSource(connectionString, policy);
+        });
+        service.AddScoped(sp =>
+        {
+            var policy = sp.GetService<IResiliencePolicy>();
+            return new MySQLSource(connectionString, policy);
+        });
 
         return service;
     }
@@ -33,8 +41,16 @@ public static class ServiceExtensions
         service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
 
         // Register necessary services
-        service.AddScoped<IDataSource<MySQLSourceParams>, MySQLSource>(provider => new MySQLSource(connectionString));
-        service.AddScoped(factory => new MySQLSource(connectionString));
+        service.AddScoped<IDataSource<MySQLSourceParams>>(sp =>
+        {
+            var policy = sp.GetService<IResiliencePolicy>();
+            return new MySQLSource(connectionString, policy);
+        });
+        service.AddScoped(sp =>
+        {
+            var policy = sp.GetService<IResiliencePolicy>();
+            return new MySQLSource(connectionString, policy);
+        });
 
         return service;
     }
