@@ -1,16 +1,71 @@
 ﻿using DataAccessProvider.Core.DataSource.Params;
 using DataAccessProvider.Core.Extensions;
 using DataAccessProvider.Core.Interfaces;
+using DataAccessProvider.Core.Resilience;
 using DataAccessProvider.MSSQL;
 using DataAccessProvider.MySql;
 using DataAccessProviderConsole.Classes;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 using System.Text.Json;
 
 var serviceProvider = ConfigureServices();
+static ServiceProvider ConfigureServices()
+{
+    string sqlString = "Server=HABIB;Database=HS;Trusted_Connection=Yes;TrustServerCertificate=Yes";
+    string postgresString = "";
+    string mySqlString = "Server=127.0.0.1;Port=3306;Database=aznv;Uid=root;Pwd=password;";
+
+    var services = new ServiceCollection();
+
+    // Add database source services
+
+    services.AddDataAccessProviderCore();
+    services.AddDataAccessProviderMySql(mySqlString);
+    services.AddDataAccessProviderMSSQL(sqlString);
+    //services.AddScoped<IDataSource, PostgresSource>();
+    //services.AddScoped<IDataSource, OracleDataSource>();
+    //services.AddScoped<IDataSource, MongoDBSource>();
+    //services.AddScoped<IDataSource, StaticCodeSource>();
+
+    return services.BuildServiceProvider();
+}
 
 serviceProvider.UseDataAccessProviderMSSQL();
 serviceProvider.UseDataAccessProviderMySql();
+
+// ------------------------------------------------------------------
+// RESILIENCE POLICY DEMO
+// ------------------------------------------------------------------
+var policy = new BasicResiliencePolicy(maxRetries: 3, perAttemptTimeout: TimeSpan.FromSeconds(1));
+
+var unstableResult = await policy.ExecuteAsync<int>(async ct =>
+{
+    // simple unstable action: fail first 2 attempts, then succeed
+    const int failUntilAttempt = 2;
+
+    // track attempts using Activity.Current or a static counter
+    // for demo we store attempt count in static local
+    var currentAttempt = UnstableOperationState.NextAttempt();
+
+    Debug.WriteLine($"[ResilienceTest] Attempt {currentAttempt}");
+
+    // simulate some work
+    await Task.Delay(600, ct);
+
+    if (currentAttempt <= failUntilAttempt)
+    {
+        throw new InvalidOperationException($"Simulated transient failure on attempt {currentAttempt}");
+    }
+
+    return currentAttempt;
+});
+
+Console.WriteLine($"\n[ResilienceTest] Completed with attempt: {unstableResult}");
+
+// ------------------------------------------------------------------
+// EXISTING DATAACCESS TESTS
+// ------------------------------------------------------------------
 
 // Resolve the IDataSourceProvider and use it
 
@@ -94,32 +149,18 @@ appuserParams.Parameters.AddParameter("Params", MySqlConnector.MySqlDbType.JSON,
 var appuserParamsResult = await dataSourceProvider1!.ExecuteReaderAsync(appuserParams);
 Console.WriteLine($"\n5:  {JsonSerializer.Serialize(appuserParamsResult.Value?.FirstOrDefault())}");
 
-
-
-
-
-
-static ServiceProvider ConfigureServices()
+// helper state for the resilience test
+static class UnstableOperationState
 {
-    string sqlString = "Server=HABIB;Database=HS;Trusted_Connection=Yes;TrustServerCertificate=Yes";
-    string postgresString = "";
-    string mySqlString = "Server=127.0.0.1;Port=3306;Database=aznv;Uid=root;Pwd=password;";
+    private static int _attempt;
 
-    var services = new ServiceCollection();
-
-    // Add database source services
-
-    services.AddDataAccessProviderCore();
-    services.AddDataAccessProviderMySql(mySqlString);
-    services.AddDataAccessProviderMSSQL(sqlString);
-    //services.AddScoped<IDataSource, PostgresSource>();
-    //services.AddScoped<IDataSource, OracleDataSource>();
-    //services.AddScoped<IDataSource, MongoDBSource>();
-    //services.AddScoped<IDataSource, StaticCodeSource>();
-
-
-    return services.BuildServiceProvider();
+    public static int NextAttempt()
+    {
+        return Interlocked.Increment(ref _attempt);
+    }
 }
+
+
 
 class Diary
 {
@@ -158,6 +199,7 @@ public class AppUser : IdentityUser<int>
     public int? LastTopup { get; set; }
     public int? LastInviteSent { get; set; }
 }
+
 public enum MemberGroupEnum
 {
     regular,
@@ -166,6 +208,7 @@ public enum MemberGroupEnum
     mod,
     Admin
 }
+
 /// <summary>
 /// Represents a user in the identity system
 /// </summary>
@@ -188,11 +231,9 @@ public class IdentityUser<TKey> where TKey : IEquatable<TKey>
 
     public virtual TKey Id { get; set; } = default!;
 
-
     public virtual string? Username { get; set; }
     public virtual string? NormalizedUsername { get; set; }
 
- 
     public virtual string? Email { get; set; }
     public virtual string? NormalizedEmail { get; set; }
     public virtual bool EmailConfirmed { get; set; }
