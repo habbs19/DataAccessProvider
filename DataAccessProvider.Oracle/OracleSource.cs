@@ -11,7 +11,7 @@ public sealed class OracleSource : BaseDatabaseSource<OracleParameter, OracleSou
 {
     public OracleSource(string connectionString) : base(connectionString) { }
 
-    protected override DbConnection CreateConnection()
+    public override DbConnection GetConnection()
     {
         return new OracleConnection(_connectionString);
     }

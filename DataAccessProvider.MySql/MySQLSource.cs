@@ -11,7 +11,7 @@ public sealed class MySQLSource : BaseDatabaseSource<MySqlParameter,MySQLSourceP
 {
     public MySQLSource(string connectionString) : base(connectionString) { }
 
-    protected override DbConnection CreateConnection()
+    public override DbConnection GetConnection()
     {
         return new MySqlConnection(_connectionString);
     }

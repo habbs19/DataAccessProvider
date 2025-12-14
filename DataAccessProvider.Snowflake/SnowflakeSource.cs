@@ -10,7 +10,7 @@ public sealed class SnowflakeSource : BaseDatabaseSource<SnowflakeDbParameter, S
 {
     public SnowflakeSource(string connectionString) : base(connectionString) { }
 
-    protected override DbConnection CreateConnection()
+    public override DbConnection GetConnection()
     {
         return new SnowflakeDbConnection(_connectionString);
     }

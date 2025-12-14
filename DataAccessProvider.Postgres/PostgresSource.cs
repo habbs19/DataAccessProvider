@@ -11,7 +11,7 @@ public sealed class PostgresSource : BaseDatabaseSource<NpgsqlParameter,Postgres
 {
     public PostgresSource(string connectionString) : base(connectionString) { }
 
-    protected override DbConnection CreateConnection()
+    public override DbConnection GetConnection()
     {
         return new NpgsqlConnection(_connectionString);
     }

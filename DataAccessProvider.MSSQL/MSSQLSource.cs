@@ -11,7 +11,7 @@ public sealed class MSSQLSource : BaseDatabaseSource<SqlParameter, MSSQLSourcePa
 {
     public MSSQLSource(string connectionString) : base(connectionString) { }
 
-    protected override DbConnection CreateConnection()
+    public override DbConnection GetConnection()
     {
         return new SqlConnection(_connectionString);
     }
