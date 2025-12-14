@@ -12,6 +12,10 @@ The **Data Access Provider Framework** offers a flexible, pluggable way to inter
   - [Installation (Locally)](#installation-locally)
   - [How It Works](#how-it-works)
 - [Connection Strings in appsettings.json](#connection-strings-in-appsettingsjson)
+- [Resilience](#resilience)
+  - [Configuration via appsettings.json](#configuration-via-appsettingsjson)
+  - [Service Registration](#service-registration)
+  - [Per-call Overrides](#per-call-overrides)
 - [Example Usage of IDataSourceProvider](#example-usage-of-idatasourceprovider)
 - [Registering a Custom Data Source](#registering-a-custom-data-source)
   - [Method Definition](#method-definition)
@@ -19,6 +23,7 @@ The **Data Access Provider Framework** offers a flexible, pluggable way to inter
   - [Step 2: Implement a Custom IDataSource](#step-2-implement-a-custom-idatasource)
   - [Step 3: Register the Custom Data Source with the Factory](#step-3-register-the-custom-data-source-with-the-factory)
   - [Step 4: Use the Custom Data Source](#step-4-use-the-custom-data-source)
+- [DbParameter Extension Method](#dbparameter-extension-method)
 - [Contributions](#contributions)
 - [License](#license)
 
@@ -31,7 +36,7 @@ The **Data Access Provider Framework** offers a flexible, pluggable way to inter
 - **Unified API**: Standardized query execution methods across different databases.
 - **Flexible Testing**: Simplifies testing against multiple data sources with minimal setup.
 - **Seamless Switching**: Switch between data sources by passing appropriate parameter objects, without altering core logic.
-
+- **Built-in Resilience**: Optional retry and timeout policies configurable via `appsettings.json`.
 
 ## Supported Data Sources
 
@@ -82,15 +87,6 @@ The **DataAccessProvider** is available as a NuGet package from GitHub. You can 
 3. **Service Registration**: Register the custom data source with the DI container and factory in `Startup.cs`.
 4. **Usage**: Use the `IDataSourceProvider` to execute queries on the custom data source.
 
-## Example Usage of IDataSourceProvider
-
-### Add DataAccessProvider 
-
-```csharp    
-    // Add connection strings for each database type
-    services.AddDataAccessProvider(configuration)
-```
-
 ## Connection Strings in appsettings.json
 
 To store your connection strings in the `appsettings.json` file, use the following structure:
@@ -106,6 +102,64 @@ To store your connection strings in the `appsettings.json` file, use the followi
     "OracleSource": "Data Source=MyOracleDB;User Id=myUsername;Password=myPassword;"
   }
 }
+```
+
+## Resilience
+
+To enhance the reliability of database operations, the **DataAccessProvider** includes built-in resilience features. These features allow the framework to automatically retry failed operations and enforce timeouts, ensuring that transient issues do not cause unnecessary application errors.
+
+### Configuration via appsettings.json
+
+You can configure the default resilience policies for all database operations in your `appsettings.json` file.
+
+#### Example `appsettings.json`:
+
+```json
+{
+  "ConnectionStrings": {
+    "MSSQLSource": "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;",
+    "PostgresSource": "Host=localhost;Port=5432;Database=mydb;Username=myuser;Password=mypassword",
+    "MySQLSource": "Server=myServerAddress;Database=myDataBase;User=myUsername;Password=myPassword;",
+    "OracleSource": "Data Source=MyOracleDB;User Id=myUsername;Password=myPassword;"
+  },
+  "DataAccessProvider": {
+    "Resilience": {
+      "MaxRetries": 3,
+      "PerAttemptTimeoutSeconds": "30"
+    }
+  }
+}
+```
+
+### Service Registration
+
+The resilience features are automatically registered when you add the **DataAccessProvider** to your application's services. Ensure that you have the necessary configuration in your `appsettings.json`, and the framework will take care of the rest.
+
+### Per-call Overrides
+
+If you need to override the default resilience settings for specific calls, you can do so by using the `WithTimeout`, `WithRetry`, and `WithCircuitBreaker` extension methods provided by the framework.
+
+#### Example Code:
+
+```csharp
+var mySqlParams = new MySQLSourceParams
+{
+    Query = "SELECT * FROM mytable",
+    Timeout = TimeSpan.FromSeconds(30), // Override default timeout
+    RetryCount = 5, // Override default retry count
+    CircuitBreakerThreshold = 0.5 // Override circuit breaker threshold
+};
+
+var result = await dataSourceProvider.ExecuteReaderAsync(mySqlParams);
+```
+
+## Example Usage of IDataSourceProvider
+
+### Add DataAccessProvider 
+
+```csharp    
+    // Add connection strings for each database type
+    services.AddDataAccessProvider(configuration)
 ```
 
 ## Example Usage of `IDataSourceProvider`
