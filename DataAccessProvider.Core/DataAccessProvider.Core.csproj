@@ -1,12 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-	  
-	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 
 	<OutputType>library</OutputType>
 	<PackageId>DataAccessProvider.Core</PackageId>
@@ -28,6 +25,7 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
+		<PackageReference Include="Polly" Version="8.3.1" />
 	</ItemGroup>
 
 	<ItemGroup>
