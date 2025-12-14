@@ -26,48 +26,57 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                 command.CommandType = sourceParams.CommandType;
 
                 if (sourceParams.Parameters != null)
+                {
                     command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+                }
 
-                var resultSet = new Dictionary<int, List<Dictionary<string, object>>>();
-                await connection.OpenAsync();
-                using (var reader = await command.ExecuteReaderAsync())
+                async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
                 {
-                    int resultCount = 0;
-                    do
-                    {
-                        resultSet[resultCount] = await ReadResultAsync(reader);
-                        resultCount++;
-                    }
-                    while (await reader.NextResultAsync());
-                }
-                // Handle single result set or multiple result sets
-                if (resultSet.Count == 1)
-                {
-                    var firstResultSet = resultSet[0];
+                    var resultSet = new Dictionary<int, List<Dictionary<string, object>>>();
 
-                    // Handle single row, empty result, or list
-                    if (firstResultSet.Count == 1)
+                    await connection.OpenAsync(ct).ConfigureAwait(false);
+                    using (var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false))
                     {
-                        // Return the single row
-                        sourceParams.SetValue(firstResultSet[0]);
+                        int resultCount = 0;
+                        do
+                        {
+                            resultSet[resultCount] = await ReadResultAsync(reader).ConfigureAwait(false);
+                            resultCount++;
+                        }
+                        while (await reader.NextResultAsync(ct).ConfigureAwait(false));
                     }
-                    else if (firstResultSet.Count == 0)
+
+                    if (resultSet.Count == 1)
                     {
-                        // Return an empty dictionary if no results
-                        sourceParams.SetValue(new Dictionary<string, object>());
+                        var firstResultSet = resultSet[0];
+
+                        if (firstResultSet.Count == 1)
+                        {
+                            sourceParams.SetValue(firstResultSet[0]);
+                        }
+                        else if (firstResultSet.Count == 0)
+                        {
+                            sourceParams.SetValue(new Dictionary<string, object>());
+                        }
+                        else
+                        {
+                            sourceParams.SetValue(firstResultSet);
+                        }
                     }
-                    else
+                    else if (resultSet.Count > 1)
                     {
-                        // Return the entire list for multiple rows
-                        sourceParams.SetValue(firstResultSet);
+                        sourceParams.SetValue(resultSet);
                     }
+
+                    return sourceParams;
                 }
-                else if (resultSet.Count > 1)
+
+                if (_resiliencePolicy == null)
                 {
-                    // Handle multiple result sets
-                    sourceParams.SetValue(resultSet);
+                    return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
                 }
-                return sourceParams;
+
+                return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
             }
         }
     }
@@ -79,6 +88,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
         {
             throw new ArgumentException("Invalid source parameters type.");
         }
+
         using (var connection = GetConnection())
         {
             using (var command = GetCommand(sourceParams!.Query, connection))
@@ -91,25 +101,36 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                     command.Parameters.AddRange(sourceParams.Parameters.ToArray());
                 }
 
-                await connection.OpenAsync();
-                using (var reader = await command.ExecuteReaderAsync())
+                async Task<BaseDataSourceParams<TValue>> ExecuteCoreAsync(CancellationToken ct)
                 {
-                    var result = await MaterializeAsync<TValue>(reader);
-
-                    if (result.Count == 1)
+                    await connection.OpenAsync(ct).ConfigureAwait(false);
+                    using (var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false))
                     {
-                        sourceParams.SetValue(result[0]);
-                    }
-                    else if (result.Count > 1)
-                    {
-                        sourceParams.SetValue(result);
-                    }
+                        var result = await MaterializeAsync<TValue>(reader).ConfigureAwait(false);
 
-                    return (BaseDataSourceParams<TValue>)(object)sourceParams;
+                        if (result.Count == 1)
+                        {
+                            sourceParams.SetValue(result[0]);
+                        }
+                        else if (result.Count > 1)
+                        {
+                            sourceParams.SetValue(result);
+                        }
+
+                        return (BaseDataSourceParams<TValue>)(object)sourceParams;
+                    }
                 }
+
+                if (_resiliencePolicy == null)
+                {
+                    return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
+                }
+
+                return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
             }
         }
     }
+
     protected async override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams @params)
     {
         var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
@@ -124,10 +145,21 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
                 {
                     command.Parameters.AddRange(sourceParams.Parameters.ToArray());
                 }
-                await connection.OpenAsync();
-                var result = await command.ExecuteScalarAsync();
-                sourceParams.SetValue(result!);
-                return (BaseDataSourceParams)(object)sourceParams!;
+
+                async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
+                {
+                    await connection!.OpenAsync(ct).ConfigureAwait(false);
+                    var result = await command!.ExecuteScalarAsync(ct).ConfigureAwait(false);
+                    sourceParams?.SetValue(result!);
+                    return sourceParams!;
+                }
+
+                if (_resiliencePolicy == null)
+                {
+                    return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
+                }
+
+                return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
             }
         }
     }
@@ -136,23 +168,35 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
     {
         var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
         using (var connection = GetConnection())
+        using (var command = GetCommand(sourceParams!.Query, connection))
         {
-            using (var command = GetCommand(sourceParams!.Query, connection))
-            {
-                command.CommandTimeout = sourceParams.Timeout;
-                command.CommandType = sourceParams.CommandType;
-                if (sourceParams.Parameters != null)
-                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+            command.CommandTimeout = sourceParams.Timeout;
+            command.CommandType = sourceParams.CommandType;
 
-                await connection.OpenAsync();
-                var affectedRows = await command.ExecuteNonQueryAsync();
+            if (sourceParams.Parameters != null)
+            {
+                command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+            }
+
+            async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
+            {
+                await connection.OpenAsync(ct).ConfigureAwait(false);
+                var affectedRows = await command.ExecuteNonQueryAsync(ct).ConfigureAwait(false);
                 sourceParams.SetValue(affectedRows);
                 sourceParams.AffectedRows = affectedRows;
                 return sourceParams;
             }
+
+            if (_resiliencePolicy == null)
+            {
+                return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
+            }
+
+            return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
         }
     }
 }
+
 #endregion ExecuteMethods
 #region Props
 /// <summary>
@@ -165,14 +209,16 @@ public abstract partial class BaseDatabaseSource<TParameter>
     /// The connection string used for the database connection.
     /// </summary>
     protected string _connectionString { get; }
+    protected IResiliencePolicy? _resiliencePolicy { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BaseDatabase{TDataSourceType, TDbParameter}"/> class.
     /// </summary>
     /// <param name="connectionString">The database connection string.</param>
-    public BaseDatabaseSource(string connectionString)
+    public BaseDatabaseSource(string connectionString, IResiliencePolicy? resiliencePolicy = null)
     {
         _connectionString = connectionString;
+        _resiliencePolicy = resiliencePolicy;
     }
 
     /// <summary>
@@ -325,7 +371,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
                     Convert.ChangeType(value, t),
 
                 Type t when t == typeof(string) =>
-                    value.ToString(),
+                    value.ToString(),                
 
                 _ => Convert.ChangeType(value, targetType),
             };
@@ -343,11 +389,12 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
 
     public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter,TValue>;
+        var sourceParams = @params as BaseDatabaseSourceParams<TParameter, TValue>;
         if (sourceParams == null)
         {
             throw new ArgumentException("Invalid source parameters type.");
         }
+
         using (var connection = GetConnection())
         {
             using (var command = GetCommand(sourceParams!.Query, connection))
@@ -360,26 +407,34 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
                     command.Parameters.AddRange(sourceParams.Parameters.ToArray());
                 }
 
-                await connection.OpenAsync();
-                using (var reader = await command.ExecuteReaderAsync())
+                async Task<BaseDataSourceParams<TValue>> ExecuteCoreAsync(CancellationToken ct)
                 {
-                    var result = await MaterializeAsync<TValue>(reader);
-
-                    if (result.Count == 1)
+                    await connection.OpenAsync(ct).ConfigureAwait(false);
+                    using (var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false))
                     {
-                        sourceParams.SetValue(result[0]);
-                    }
-                    else if (result.Count > 1)
-                    {
-                        sourceParams.SetValue(result);
-                    }
+                        var result = await MaterializeAsync<TValue>(reader).ConfigureAwait(false);
 
-                    return (BaseDataSourceParams<TValue>)(object)sourceParams;
+                        if (result.Count == 1)
+                        {
+                            sourceParams.SetValue(result[0]);
+                        }
+                        else if (result.Count > 1)
+                        {
+                            sourceParams.SetValue(result);
+                        }
+
+                        return (BaseDataSourceParams<TValue>)(object)sourceParams;
+                    }
                 }
+
+                if (_resiliencePolicy == null)
+                {
+                    return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
+                }
+
+                return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
             }
         }
-
-
     }
 
     private async Task<List<TValue>> MaterializeAsync<TValue>(DbDataReader reader) where TValue : class, new()
@@ -531,8 +586,11 @@ public abstract partial class BaseDatabaseSource<TParameter, TDatabaseSourcePara
     where TDatabaseSourceParams : BaseDatabaseSourceParams<TParameter>
     where TParameter : DbParameter
 {
-    protected BaseDatabaseSource(string connectionString) : base(connectionString)
+    protected IResiliencePolicy? _resiliencePolicy { get; }
+
+    protected BaseDatabaseSource(string connectionString, IResiliencePolicy? resiliencePolicy = null) : base(connectionString)
     {
+        _resiliencePolicy = resiliencePolicy;
     }
 
     public async Task<TDatabaseSourceParams> ExecuteNonQueryAsync(TDatabaseSourceParams @params)

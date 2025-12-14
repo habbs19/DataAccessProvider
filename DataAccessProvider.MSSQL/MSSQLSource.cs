@@ -9,7 +9,10 @@ public sealed class MSSQLSource : BaseDatabaseSource<SqlParameter, MSSQLSourcePa
     IDataSource,
     IDataSource<MSSQLSourceParams>
 {
-    public MSSQLSource(string connectionString) : base(connectionString) { }
+    public MSSQLSource(string connectionString, IResiliencePolicy? resiliencePolicy = null)
+        : base(connectionString, resiliencePolicy)
+    {
+    }
 
     public override DbConnection GetConnection()
     {
