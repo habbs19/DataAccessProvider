@@ -19,15 +19,13 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
     protected string _connectionString { get; }
 
     private readonly ConnectionPool _connectionPool;
-    private readonly ResiliencePolicy _resiliencePolicy;
+    protected IResiliencePolicy? _resiliencePolicy { get; }
     private readonly DatabaseResilienceOptions _options;
 
-    protected BaseDatabaseSource(string connectionString, DatabaseResilienceOptions? options = null)
+    protected BaseDatabaseSource(string connectionString, IResiliencePolicy? resiliencePolicy = null)
     {
         _connectionString = connectionString;
-        _options = options ?? DatabaseResilienceOptions.Default;
-        _connectionPool = new ConnectionPool(CreateConnection, _options.MaxPoolSize);
-        _resiliencePolicy = ResiliencePolicy.Create(_options);
+        _resiliencePolicy = resiliencePolicy;
     }
 
     protected abstract DbConnection CreateConnection();
