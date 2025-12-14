@@ -1,5 +1,6 @@
 using DataAccessProvider.Core.DataSource.Params;
 using DataAccessProvider.Core.Interfaces;
+using DataAccessProvider.Core.Resilience;
 using DataAccessProvider.MSSQL;
 using DataAccessProvider.MySql;
 using DataAccessProviderConsole.Models;
@@ -25,6 +26,7 @@ public static class DataAccessDemo
         await RunBasicQueriesAsync(dataSourceProvider);
         await RunTypedQueriesAsync(dataSourceProvider, dataSourceProviderTyped);
         await RunMySqlQueriesAsync(dataSourceProvider);
+        await RunMssqlWithResiliencePolicyAsync(dataSourceProvider);
     }
 
     private static async Task RunBasicQueriesAsync(IDataSourceProvider dataSourceProvider)
@@ -123,5 +125,31 @@ public static class DataAccessDemo
 
         var appuserParamsResult = await dataSourceProvider.ExecuteReaderAsync(appuserParams);
         Console.WriteLine($"\n5:  {JsonSerializer.Serialize(appuserParamsResult.Value?.FirstOrDefault())}");
+    }
+
+    private static async Task RunMssqlWithResiliencePolicyAsync(IDataSourceProvider dataSourceProvider)
+    {
+        // Create a basic resilience policy (same as ResilienceDemo)
+        var policy = new BasicResiliencePolicy(maxRetries: 3, perAttemptTimeout: TimeSpan.FromSeconds(1));
+
+        var mssqlParams = new MSSQLSourceParams<Diary>
+        {
+            Query = "SELECT TOP 1 * FROM [HS].[dbo].[Diary]",
+            CommandType = System.Data.CommandType.Text
+        };
+
+        var attempt = 0;
+
+        var result = await policy.ExecuteAsync(async ct =>
+        {
+            attempt++;
+            Console.WriteLine($"[ResilienceDataAccess] Attempt {attempt}");
+
+            // IDataSourceProvider does not take CancellationToken; the policy still enforces per-attempt timeout
+            var response = await dataSourceProvider.ExecuteReaderAsync(mssqlParams).ConfigureAwait(false);
+            return response;
+        });
+
+        Console.WriteLine($"\n[ResilienceDataAccess] Completed after {attempt} attempt(s): {JsonSerializer.Serialize(result.Value)}");
     }
 }
