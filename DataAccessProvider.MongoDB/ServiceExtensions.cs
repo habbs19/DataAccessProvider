@@ -18,7 +18,6 @@ public static class ServiceExtensions
         // Add database source service
         string connectionString = configuration.GetConnectionString(nameof(MongoDBSource)) ?? "";
 
-        // Register necessary services
         service.AddScoped<IDataSource<MongoDBParams>>(sp =>
         {
             var policy = sp.GetService<IResiliencePolicy>();
@@ -40,7 +39,6 @@ public static class ServiceExtensions
         service.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
         service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
 
-        // Register necessary services
         service.AddScoped<IDataSource<MongoDBParams>>(sp =>
         {
             var policy = sp.GetService<IResiliencePolicy>();
@@ -60,14 +58,9 @@ public static class ServiceExtensions
     /// </summary>
     /// <param name="provider">The service provider.</param>
     /// <returns>The service provider.</returns>
-    /// <exception cref="InvalidOperationException">Thrown if IDataSourceFactory is not registered.</exception>
     public static IServiceProvider UseDataAccessProviderMongoDB(this IServiceProvider provider)
     {
         var factory = provider.GetRequiredService<IDataSourceFactory>();
-        if (factory == null)
-        {
-            throw new InvalidOperationException("IDataSourceFactory is not registered. Use AddDataAccessProviderMongoDB");
-        }
         factory.RegisterDataSource<MongoDBParams, MongoDBSource>();
         return provider;
     }

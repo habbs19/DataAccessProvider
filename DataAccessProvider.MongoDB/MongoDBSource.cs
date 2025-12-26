@@ -314,7 +314,11 @@ public sealed class MongoDBSource : BaseSource, IDataSource, IDataSource<MongoDB
                     throw new InvalidOperationException($"Operation type {mongoParams.OperationType} is not supported for ExecuteScalar.");
             }
 
-            mongoParams.SetValue(result!);
+            if (result != null)
+            {
+                mongoParams.SetValue(result);
+            }
+            
             return mongoParams;
         }
 
@@ -346,26 +350,17 @@ public sealed class MongoDBSource : BaseSource, IDataSource, IDataSource<MongoDB
         where TValue : class, new()
         where TBaseDataSourceParams : BaseDataSourceParams<TValue>
     {
-        // Convert to MongoDBParams to access MongoDB-specific properties
-        var mongoParams = new MongoDBParams
-        {
-            CollectionName = (@params as dynamic)?.CollectionName ?? string.Empty,
-            DatabaseName = (@params as dynamic)?.DatabaseName,
-            Filter = (@params as dynamic)?.Filter,
-            Projection = (@params as dynamic)?.Projection,
-            Sort = (@params as dynamic)?.Sort,
-            Skip = (@params as dynamic)?.Skip,
-            Limit = (@params as dynamic)?.Limit,
-            OperationType = (@params as dynamic)?.OperationType ?? MongoOperationType.Find,
-            Pipeline = (@params as dynamic)?.Pipeline
-        };
-        
+        var mongoParams = ConvertToMongoDBParams(@params);
         var result = await ExecuteReader<TValue>(mongoParams).ConfigureAwait(false);
         
         // Copy the result back to the original params
         if (result.Value != null)
         {
-            @params.SetValue((TValue)result.Value);
+            foreach (var item in result.Value)
+            {
+                @params.SetValue(item);
+                break; // Set first item for single result
+            }
         }
         
         return @params;
@@ -381,20 +376,7 @@ public sealed class MongoDBSource : BaseSource, IDataSource, IDataSource<MongoDB
     public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params)
         where TValue : class, new()
     {
-        // Convert to MongoDBParams to access MongoDB-specific properties
-        var mongoParams = new MongoDBParams
-        {
-            CollectionName = (@params as dynamic)?.CollectionName ?? string.Empty,
-            DatabaseName = (@params as dynamic)?.DatabaseName,
-            Filter = (@params as dynamic)?.Filter,
-            Projection = (@params as dynamic)?.Projection,
-            Sort = (@params as dynamic)?.Sort,
-            Skip = (@params as dynamic)?.Skip,
-            Limit = (@params as dynamic)?.Limit,
-            OperationType = (@params as dynamic)?.OperationType ?? MongoOperationType.Find,
-            Pipeline = (@params as dynamic)?.Pipeline
-        };
-        
+        var mongoParams = ConvertToMongoDBParams(@params);
         return await ExecuteReader<TValue>(mongoParams).ConfigureAwait(false);
     }
 
@@ -432,6 +414,76 @@ public sealed class MongoDBSource : BaseSource, IDataSource, IDataSource<MongoDB
     #endregion
 
     #region Helper Methods
+
+    private static MongoDBParams ConvertToMongoDBParams(object @params)
+    {
+        // Try to cast to MongoDBParams first
+        if (@params is MongoDBParams mongoParams)
+        {
+            return mongoParams;
+        }
+
+        // Try to extract properties using reflection for type safety
+        var paramsType = @params.GetType();
+        var mongoDbParams = new MongoDBParams();
+
+        var collectionNameProp = paramsType.GetProperty("CollectionName");
+        if (collectionNameProp != null)
+        {
+            mongoDbParams.CollectionName = collectionNameProp.GetValue(@params) as string ?? string.Empty;
+        }
+
+        var databaseNameProp = paramsType.GetProperty("DatabaseName");
+        if (databaseNameProp != null)
+        {
+            mongoDbParams.DatabaseName = databaseNameProp.GetValue(@params) as string;
+        }
+
+        var filterProp = paramsType.GetProperty("Filter");
+        if (filterProp != null)
+        {
+            mongoDbParams.Filter = filterProp.GetValue(@params) as FilterDefinition<BsonDocument>;
+        }
+
+        var projectionProp = paramsType.GetProperty("Projection");
+        if (projectionProp != null)
+        {
+            mongoDbParams.Projection = projectionProp.GetValue(@params) as ProjectionDefinition<BsonDocument>;
+        }
+
+        var sortProp = paramsType.GetProperty("Sort");
+        if (sortProp != null)
+        {
+            mongoDbParams.Sort = sortProp.GetValue(@params) as SortDefinition<BsonDocument>;
+        }
+
+        var skipProp = paramsType.GetProperty("Skip");
+        if (skipProp != null)
+        {
+            mongoDbParams.Skip = skipProp.GetValue(@params) as int?;
+        }
+
+        var limitProp = paramsType.GetProperty("Limit");
+        if (limitProp != null)
+        {
+            mongoDbParams.Limit = limitProp.GetValue(@params) as int?;
+        }
+
+        var operationTypeProp = paramsType.GetProperty("OperationType");
+        if (operationTypeProp != null)
+        {
+            var opType = operationTypeProp.GetValue(@params);
+            mongoDbParams.OperationType = opType != null ? (MongoOperationType)opType : MongoOperationType.Find;
+        }
+
+        var pipelineProp = paramsType.GetProperty("Pipeline");
+        if (pipelineProp != null)
+        {
+            mongoDbParams.Pipeline = pipelineProp.GetValue(@params) as PipelineDefinition<BsonDocument, BsonDocument>;
+        }
+
+        return mongoDbParams;
+    }
 
     private static Dictionary<string, object> BsonDocumentToDictionary(BsonDocument document)
     {
