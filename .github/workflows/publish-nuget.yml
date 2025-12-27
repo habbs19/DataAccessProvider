@@ -1,0 +1,36 @@
+name: Publish NuGet packages
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+env:
+  NUGET_SOURCE: https://api.nuget.org/v3/index.json
+  ARTIFACTS_DIR: ./artifacts
+
+jobs:
+  pack-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+          dotnet-quality: "preview"
+
+      - name: Restore dependencies
+        run: dotnet restore DataAccessProvider.sln
+
+      - name: Build solution
+        run: dotnet build DataAccessProvider.sln --configuration Release --no-restore
+
+      - name: Pack NuGet packages
+        run: dotnet pack DataAccessProvider.*/*.csproj --configuration Release --no-build --output "${{ env.ARTIFACTS_DIR }}"
+
+      - name: Publish packages to NuGet.org
+        run: dotnet nuget push "${{ env.ARTIFACTS_DIR }}/*.nupkg" --api-key "${{ secrets.NUGET_API_KEY }}" --source "${{ env.NUGET_SOURCE }}" --skip-duplicate
