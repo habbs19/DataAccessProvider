@@ -27,10 +27,7 @@
 		</PackageTags>
 
 		<PackageDescription>
-			This package provides a flexible and generic database abstraction with a dedicated PostgreSQL provider.
-			It supports asynchronous execution of SQL commands, stored procedures, and parameterized queries using PostgreSQL via Npgsql.
-			Designed for extensibility and seamless dependency injection, it fits naturally within repository-pattern architectures.
-			The package enables clean multi-database integration while offering efficient, type-safe data access for .NET applications.
+			This package provides a flexible and generic database abstraction with a dedicated PostgreSQL provider. It supports asynchronous execution of SQL commands, stored procedures, and parameterized queries using PostgreSQL via Npgsql. Designed for extensibility and seamless dependency injection, it fits naturally within repository-pattern architectures. The package enables clean multi-database integration while offering efficient, type-safe data access for .NET applications.
 		</PackageDescription>
 
 		<RepositoryUrl>https://github.com/habbs19/DataAccessProvider</RepositoryUrl>
