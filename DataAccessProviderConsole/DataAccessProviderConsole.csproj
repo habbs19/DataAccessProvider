@@ -19,6 +19,7 @@
     <ProjectReference Include="..\DataAccessProvider.Core\DataAccessProvider.Core.csproj" />
     <ProjectReference Include="..\DataAccessProvider.MSSQL\DataAccessProvider.MSSQL.csproj" />
     <ProjectReference Include="..\DataAccessProvider.MySql\DataAccessProvider.MySql.csproj" />
+    <ProjectReference Include="..\DataAccessProvider.Postgres\DataAccessProvider.Postgres.csproj" />
   </ItemGroup>
 
 </Project>
