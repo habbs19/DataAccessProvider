@@ -134,6 +134,13 @@ var mssqParams2 = new MSSQLSourceParams<Diary>
 };
 var result2 = await dataSourceProvider.ExecuteReaderAsync(mssqParams2);
 
+// Example 3: Execute a query using PostgresSourceParams
+var pgParams = new PostgresSourceParams
+{
+    Query = "SELECT id, title FROM diary LIMIT 1"
+};
+var pgResult = await dataSourceProvider.ExecuteReaderAsync(pgParams);
+
 // Example 3: Execute a query using StaticCodeParams (for static content)
 var codeParams = new StaticCodeParams
 {

@@ -5,11 +5,12 @@ using System.Data.Common;
 
 namespace DataAccessProvider.Postgres;
 
-public sealed class PostgresSource : BaseDatabaseSource<NpgsqlParameter,PostgresSourceParams>,
+public sealed class PostgresSource : BaseDatabaseSource<NpgsqlParameter, PostgresSourceParams>,
     IDataSource,
     IDataSource<PostgresSourceParams>
 {
-    public PostgresSource(string connectionString) : base(connectionString) { }
+    public PostgresSource(string connectionString, IResiliencePolicy? resiliencePolicy = null)
+        : base(connectionString, resiliencePolicy) { }
 
     public override DbConnection GetConnection()
     {
