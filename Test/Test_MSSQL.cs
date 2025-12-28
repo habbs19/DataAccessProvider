@@ -5,60 +5,66 @@ using Moq;
 using System.Data;
 
 namespace Test;
+
 [TestClass]
 public class Test_MSSQL
 {
     private string _testConnectionString = string.Empty;
     private readonly Mock<IDataSourceFactory> _dataSourceFactoryMock;
 
+    public Test_MSSQL()
+    {
+        _dataSourceFactoryMock = new Mock<IDataSourceFactory>(MockBehavior.Strict);
+    }
+
     [TestInitialize]
     public void Setup()
     {
-        // Load the configuration from appsettings.json
         var configuration = new ConfigurationBuilder()
-            .SetBasePath(AppContext.BaseDirectory)  // Set the base path for config file location
+            .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .Build();
 
-        // Retrieve the connection string from appsettings.json
         _testConnectionString = configuration.GetConnectionString("TestConnection");
-
-        // Initialize the MSSQLDatabase with a test connection string
     }
 
-    public Test_MSSQL()
-    {
-        // Mocking the IDataSourceFactory
-        _dataSourceFactoryMock = new Mock<IDataSourceFactory>();
-    }
     [TestMethod]
     public async Task MSSQLProvider()
     {
         // Arrange
         var mssqlParams = new MSSQLSourceParams
         {
-            Query = "INSERT INTO Users (Name) VALUES ('John Doe')",
+            Query = "INSERT INTO Users (Name) VALUES (@Name)",
             CommandType = CommandType.Text,
             Timeout = 30
         };
         mssqlParams.AddParameter("@Name", SqlDbType.NVarChar, "John Doe");
 
-        // Mock the CreateDataSource method to return a mock IDataSource
-        var mockDataSource = new Mock<IDataSource>();
+        var mockDataSource = new Mock<IDataSource>(MockBehavior.Strict);
+
         mockDataSource
             .Setup(ds => ds.ExecuteNonQueryAsync(It.IsAny<MSSQLSourceParams>()))
-            .ReturnsAsync(mssqlParams);  // Simulate the return value
+            .ReturnsAsync((MSSQLSourceParams p) =>
+            {
+                p.AffectedRows = 1;
+                p.SetValue(1);
+                return p;
+            });
 
         _dataSourceFactoryMock
-            .Setup(f => f.CreateDataSource(mssqlParams))
+            .Setup(f => f.CreateDataSource(It.IsAny<MSSQLSourceParams>()))
             .Returns(mockDataSource.Object);
 
+        var dataSource = _dataSourceFactoryMock.Object.CreateDataSource(mssqlParams);
+
         // Act
-        var result = await mockDataSource.Object.ExecuteNonQueryAsync(mssqlParams);
+        var result = await dataSource.ExecuteNonQueryAsync(mssqlParams);
 
         // Assert
-        Assert.AreEqual(mssqlParams, result);
-        Assert.AreEqual(1, result.AffectedRows); // Assuming the query affects 1 row
-    }
+        Assert.AreSame(mssqlParams, result);
+        Assert.AreEqual(1, result.AffectedRows);
 
+        _dataSourceFactoryMock.Verify(f => f.CreateDataSource(mssqlParams), Times.Once);
+        mockDataSource.Verify(ds => ds.ExecuteNonQueryAsync(mssqlParams), Times.Once);
+    }
 }

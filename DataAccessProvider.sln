@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.8.34525.116
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC4ECE48-F970-4848-BE56-B48BA899A1C4}"
 	ProjectSection(SolutionItems) = preProject
@@ -165,6 +165,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{F01F71CD-294A-4516-B198-FC5BA431D655} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{4F3084B1-3D61-43FA-9AFB-A6BE525901C5} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
