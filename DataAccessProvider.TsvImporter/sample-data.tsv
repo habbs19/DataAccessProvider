@@ -1,0 +1,11 @@
+nconst	primaryName	birthYear	deathYear	primaryProfession	knownForTitles
+nm0000001	Fred Astaire	1899	1987	soundtrack,actor,miscellaneous	tt0050419,tt0053137,tt0027125,tt0072308
+nm0000002	Lauren Bacall	1924	2014	actress,soundtrack	tt0038355,tt0117057,tt0037382,tt0071877
+nm0000003	Brigitte Bardot	1934	\N	actress,soundtrack,producer	tt0054452,tt0057345,tt0056404,tt0049189
+nm0000004	John Belushi	1949	1982	actor,soundtrack,writer	tt0080455,tt0078723,tt0077975,tt0072562
+nm0000005	Ingmar Bergman	1918	2007	writer,director,actor	tt0050986,tt0069467,tt0050976,tt0083922
+nm0000006	Ingrid Bergman	1915	1982	actress,soundtrack,producer	tt0034583,tt0038109,tt0077711,tt0036855
+nm0000007	Humphrey Bogart	1899	1957	actor,soundtrack,producer	tt0033870,tt0037382,tt0043265,tt0042192
+nm0000008	Marlon Brando	1924	2004	actor,soundtrack,director	tt0068646,tt0070849,tt0047296,tt0078788
+nm0000009	Richard Burton	1925	1984	actor,soundtrack,producer	tt0057877,tt0059749,tt0087803,tt0061184
+nm0000010	James Cagney	1899	1986	actor,soundtrack,director	tt0042041,tt0031867,tt0035575,tt0029870

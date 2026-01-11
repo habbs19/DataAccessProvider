@@ -277,6 +277,36 @@ public class Example
 }
 ```
 
+## Example Projects
+
+### DataAccessProvider.TsvImporter
+
+The **DataAccessProvider.TsvImporter** is a console application that demonstrates how to use the DataAccessProvider framework to import large datasets into a database. This example reads IMDb TSV datasets and bulk imports them into SQL Server, MySQL, or PostgreSQL.
+
+**Features:**
+- Reads TSV files (including gzip-compressed `.tsv.gz` files)
+- Supports multiple database types (MSSQL, MySQL, PostgreSQL)
+- Batch processing for efficient imports
+- Automatic schema creation
+- Configurable batch sizes and record limits
+- Progress tracking during import
+
+**Location:** `/DataAccessProvider.TsvImporter/`
+
+**Documentation:** See [TsvImporter README](DataAccessProvider.TsvImporter/README.md) for detailed usage instructions.
+
+**Quick Start:**
+```bash
+cd DataAccessProvider.TsvImporter
+dotnet run sample-data.tsv MSSQL 1000
+```
+
+This example project showcases:
+- Real-world usage of DataAccessProvider for bulk data operations
+- How to implement custom data import services
+- Working with different database providers using the same codebase
+- Handling large file processing with streaming and batching
+
 ## Contributions
 
 Contributions are welcome! If you'd like to add support for additional databases or improve the library, feel free to open a pull request.
