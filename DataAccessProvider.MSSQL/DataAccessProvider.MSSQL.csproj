@@ -10,7 +10,7 @@
 
 	  <OutputType>library</OutputType>
 	  <PackageId>DataAccessProvider.MSSQL</PackageId>
-	  <Version>1.3.2</Version>
+	  <Version>1.3.3</Version>
 	  <Authors>Habib Shakibanejad</Authors>
 	  <Company>HSX</Company>
 	  <Title>DataAccessProvider.MSSQL</Title>
