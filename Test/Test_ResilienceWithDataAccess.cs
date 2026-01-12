@@ -1,5 +1,6 @@
 using System.Data;
 using DataAccessProvider.Core.Interfaces;
+using DataAccessProvider.Core.Types;
 using DataAccessProvider.Core.Resilience;
 using DataAccessProvider.MSSQL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,7 +23,7 @@ public class Test_ResilienceWithDataAccess
             CommandType = CommandType.Text,
             Timeout = 30
         };
-        mssqlParams.AddParameter("@Name", SqlDbType.NVarChar, "John Doe");
+        mssqlParams.AddParameter("@Name", DataAccessDbType.String, "John Doe");
 
         var mockDataSource = new Mock<IDataSource>(MockBehavior.Strict);
 
@@ -46,7 +47,7 @@ public class Test_ResilienceWithDataAccess
                     CommandType = mssqlParams.CommandType,
                     Timeout = mssqlParams.Timeout
                 };
-                successfulParams.AddParameter("@Name", SqlDbType.NVarChar, "John Doe");
+                successfulParams.AddParameter("@Name", DataAccessDbType.String, "John Doe");
                 successfulParams.AffectedRows = 1;
 
                 return Task.FromResult(successfulParams);

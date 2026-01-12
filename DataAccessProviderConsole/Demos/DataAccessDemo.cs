@@ -1,11 +1,11 @@
 using DataAccessProvider.Core.DataSource.Params;
 using DataAccessProvider.Core.Interfaces;
 using DataAccessProvider.Core.Resilience;
+using DataAccessProvider.Core.Types;
 using DataAccessProvider.MSSQL;
 using DataAccessProvider.MySql;
 using DataAccessProviderConsole.Models;
 using Microsoft.Extensions.DependencyInjection;
-using MySqlConnector;
 using System.Text.Json;
 
 namespace DataAccessProviderConsole.Demos;
@@ -115,12 +115,12 @@ public static class DataAccessDemo
             Query = "SP_UserEmailStore"
         };
 
-        appuserParams.AddParameter("Operation", MySqlDbType.Int32, 1);
+        appuserParams.AddParameter("Operation", DataAccessDbType.Int32, 1);
 
         var json2 = new { Email = "hs_19@hotmail.com" };
         appuserParams.Parameters.AddParameter(
             "Params",
-            MySqlDbType.JSON,
+            DataAccessDbType.Json,
             JsonSerializer.Serialize(json2));
 
         var appuserParamsResult = await dataSourceProvider.ExecuteReaderAsync(appuserParams);

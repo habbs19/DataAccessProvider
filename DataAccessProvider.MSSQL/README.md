@@ -151,8 +151,8 @@ public class Example
     {
         // For SQL Server
         var parameters = new List<SqlParameter>();
-        parameters.AddParameter("@Id", DbType.Int32, 1);
-        parameters.AddParameter("@Id", DbType.Int32, 2);
+        parameters.AddParameter("@Id", DataAccessDbType.Int32, 1);
+        parameters.AddParameter("@Id", DataAccessDbType.Int32, 2);
 
         // Use parameters with your database command
     }
