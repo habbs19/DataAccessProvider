@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using DataAccessProvider.Core.Types;
+using MySqlConnector;
 using System.Data;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -7,15 +8,15 @@ namespace DataAccessProvider.MySql;
 
 public static class DbParameterExtensions
 {   
-    public static List<MySqlParameter> AddParameter(this List<MySqlParameter> parameters, string parameterName, MySqlDbType dbType,
-        object value, ParameterDirection direction = ParameterDirection.Input, int size = -1)
+    public static List<MySqlParameter> AddParameter(this List<MySqlParameter> parameters, string parameterName, DataAccessDbType dbType,
+        object value, DataAccessParameterDirection direction = DataAccessParameterDirection.Input, int size = -1)
     {
         // Create the appropriate parameter and add it to the list
         var parameter = new MySqlParameter();
         parameter.ParameterName = parameterName;
-        parameter.MySqlDbType = dbType;
+        parameter.MySqlDbType = MapDbType(dbType);
         parameter.Value = value ?? DBNull.Value;
-        parameter.Direction = direction;
+        parameter.Direction = MapDirection(direction);
 
         if (size > 0)
         {
@@ -26,16 +27,16 @@ public static class DbParameterExtensions
         return parameters;
     }
 
-    public static MySQLSourceParams AddParameter(this MySQLSourceParams sourceParams, string parameterName, MySqlDbType dbType,
-       object value, ParameterDirection direction = ParameterDirection.Input, int size = -1)
+    public static MySQLSourceParams AddParameter(this MySQLSourceParams sourceParams, string parameterName, DataAccessDbType dbType,
+       object value, DataAccessParameterDirection direction = DataAccessParameterDirection.Input, int size = -1)
     {
         var parameters = sourceParams.Parameters ?? new List<MySqlParameter>();
         parameters.AddParameter(parameterName, dbType, value, direction, size);
         return sourceParams;
     }
 
-    public static MySQLSourceParams<TValue> AddParameter<TValue>(this MySQLSourceParams<TValue> sourceParams, string parameterName, MySqlDbType dbType,
-      object value, ParameterDirection direction = ParameterDirection.Input, int size = -1) where TValue : class
+    public static MySQLSourceParams<TValue> AddParameter<TValue>(this MySQLSourceParams<TValue> sourceParams, string parameterName, DataAccessDbType dbType,
+      object value, DataAccessParameterDirection direction = DataAccessParameterDirection.Input, int size = -1) where TValue : class
     {
         var parameters = sourceParams.Parameters ?? new List<MySqlParameter>();
         parameters.AddParameter(parameterName, dbType, value, direction, size);
@@ -53,7 +54,7 @@ public static class DbParameterExtensions
     public static MySQLSourceParams AddJSONParams(this MySQLSourceParams sourceParams, int operation, object? json = null!)
     {
         var parameters = sourceParams.Parameters ?? new List<MySqlParameter>();
-        parameters.AddParameter("Operation",MySqlDbType.UInt16, operation);
+        parameters.AddParameter("Operation", DataAccessDbType.UInt16, operation);
 
         var options = new JsonSerializerOptions
         {
@@ -62,7 +63,7 @@ public static class DbParameterExtensions
 
         string? jsonPayload = json == null ? null : JsonSerializer.Serialize(json, options);
 
-        parameters.AddParameter("Params", MySqlDbType.JSON, jsonPayload!);
+        parameters.AddParameter("Params", DataAccessDbType.Json, jsonPayload!);
         return sourceParams;
     }
     /// <summary>
@@ -77,7 +78,7 @@ public static class DbParameterExtensions
     public static MySQLSourceParams<TValue> AddJSONParams<TValue>(this MySQLSourceParams<TValue> sourceParams, int operation, object? json = null!) where TValue : class
     {
         var parameters = sourceParams.Parameters ?? new List<MySqlParameter>();
-        parameters.AddParameter("Operation", MySqlDbType.UInt16, operation);
+        parameters.AddParameter("Operation", DataAccessDbType.UInt16, operation);
         var options = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -85,7 +86,49 @@ public static class DbParameterExtensions
 
         string? jsonPayload = json == null ? null : JsonSerializer.Serialize(json, options);
 
-        parameters.AddParameter("Params", MySqlDbType.JSON, jsonPayload!);
+        parameters.AddParameter("Params", DataAccessDbType.Json, jsonPayload!);
         return sourceParams;
     }
+
+    private static MySqlDbType MapDbType(DataAccessDbType dbType) => dbType switch
+    {
+        DataAccessDbType.AnsiString => MySqlDbType.VarChar,
+        DataAccessDbType.AnsiStringFixedLength => MySqlDbType.String,
+        DataAccessDbType.Binary => MySqlDbType.Blob,
+        DataAccessDbType.Byte => MySqlDbType.UByte,
+        DataAccessDbType.Boolean => MySqlDbType.Bool,
+        DataAccessDbType.Currency => MySqlDbType.Decimal,
+        DataAccessDbType.Date => MySqlDbType.Date,
+        DataAccessDbType.DateTime => MySqlDbType.DateTime,
+        DataAccessDbType.DateTime2 => MySqlDbType.DateTime,
+        DataAccessDbType.DateTimeOffset => MySqlDbType.Timestamp,
+        DataAccessDbType.Decimal => MySqlDbType.Decimal,
+        DataAccessDbType.Double => MySqlDbType.Double,
+        DataAccessDbType.Guid => MySqlDbType.Guid,
+        DataAccessDbType.Int16 => MySqlDbType.Int16,
+        DataAccessDbType.Int32 => MySqlDbType.Int32,
+        DataAccessDbType.Int64 => MySqlDbType.Int64,
+        DataAccessDbType.Json => MySqlDbType.JSON,
+        DataAccessDbType.Object => MySqlDbType.Blob,
+        DataAccessDbType.SByte => MySqlDbType.Byte,
+        DataAccessDbType.Single => MySqlDbType.Float,
+        DataAccessDbType.String => MySqlDbType.VarChar,
+        DataAccessDbType.StringFixedLength => MySqlDbType.String,
+        DataAccessDbType.Time => MySqlDbType.Time,
+        DataAccessDbType.UInt16 => MySqlDbType.UInt16,
+        DataAccessDbType.UInt32 => MySqlDbType.UInt32,
+        DataAccessDbType.UInt64 => MySqlDbType.UInt64,
+        DataAccessDbType.VarNumeric => MySqlDbType.Decimal,
+        DataAccessDbType.Xml => MySqlDbType.Text,
+        _ => throw new ArgumentOutOfRangeException(nameof(dbType), dbType, "Unsupported MySQL data type.")
+    };
+
+    private static ParameterDirection MapDirection(DataAccessParameterDirection direction) => direction switch
+    {
+        DataAccessParameterDirection.Input => ParameterDirection.Input,
+        DataAccessParameterDirection.Output => ParameterDirection.Output,
+        DataAccessParameterDirection.InputOutput => ParameterDirection.InputOutput,
+        DataAccessParameterDirection.ReturnValue => ParameterDirection.ReturnValue,
+        _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unsupported parameter direction.")
+    };
 }

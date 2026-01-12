@@ -1,4 +1,5 @@
 using DataAccessProvider.Core.Interfaces;
+using DataAccessProvider.Core.Types;
 using DataAccessProvider.MSSQL;
 using Microsoft.Extensions.Configuration;
 using Moq;
@@ -38,7 +39,7 @@ public class Test_MSSQL
             CommandType = CommandType.Text,
             Timeout = 30
         };
-        mssqlParams.AddParameter("@Name", SqlDbType.NVarChar, "John Doe");
+        mssqlParams.AddParameter("@Name", DataAccessDbType.String, "John Doe");
 
         var mockDataSource = new Mock<IDataSource>(MockBehavior.Strict);
 
