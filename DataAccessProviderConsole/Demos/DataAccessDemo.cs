@@ -118,7 +118,7 @@ public static class DataAccessDemo
         appuserParams.AddParameter("Operation", DataAccessDbType.Int32, 1);
 
         var json2 = new { Email = "hs_19@hotmail.com" };
-        appuserParams.Parameters.AddParameter(
+        appuserParams.AddParameter(
             "Params",
             DataAccessDbType.Json,
             JsonSerializer.Serialize(json2));

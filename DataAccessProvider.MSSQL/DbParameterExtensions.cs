@@ -1,5 +1,5 @@
 ﻿using DataAccessProvider.Core.Types;
-using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace DataAccessProvider.MSSQL;
 
