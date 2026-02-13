@@ -44,6 +44,18 @@ namespace DataAccessProvider.Core.DataSource
         /// <exception cref="ArgumentException">
         /// Thrown if the data source type specified in <typeparamref name="TBaseDataSourceParams"/> is unsupported.
         /// </exception>
+        public Task<bool> CheckHealthAsync()
+        {
+            throw new NotSupportedException("Use CheckHealthAsync(params) when health validation requires source parameters.");
+        }
+
+        public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
+            where TBaseDataSourceParams : BaseDataSourceParams
+        {
+            IDataSource dataSource = _sourceFactory.CreateDataSource(@params);
+            return dataSource.CheckHealthAsync(@params);
+        }
+
         public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
         {
             IDataSource dataSource = _sourceFactory.CreateDataSource(@params);

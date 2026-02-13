@@ -5,6 +5,22 @@ namespace DataAccessProvider.Core.Interfaces;
 public interface IDataSource
 {
     /// <summary>
+    /// Checks whether the underlying data source connection can be opened successfully.
+    /// </summary>
+    /// <returns>
+    /// <c>true</c> if the connection can be opened; otherwise, <c>false</c>.
+    /// </returns>
+    Task<bool> CheckHealthAsync();
+
+    /// <summary>
+    /// Checks whether the underlying data source is healthy for the provided source parameters.
+    /// </summary>
+    /// <param name="params">The source parameters used to validate health.</param>
+    /// <returns><c>true</c> when healthy; otherwise, <c>false</c>.</returns>
+    Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
+        where TBaseDataSourceParams : BaseDataSourceParams;
+
+    /// <summary>
     /// Executes a query asynchronously, retrieves the result set, and maps it to a list of objects of type <typeparamref name="TValue"/>.
     /// This method uses the provided database parameters to execute the query and map the results into a collection of objects.
     /// </summary>

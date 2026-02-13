@@ -281,6 +281,26 @@ public abstract partial class BaseDatabaseSource<TParameter>
 public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
     where TParameter : DbParameter
 {
+    public async Task<bool> CheckHealthAsync()
+    {
+        try
+        {
+            using var connection = GetConnection();
+            await connection.OpenAsync().ConfigureAwait(false);
+            return connection.State == System.Data.ConnectionState.Open;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
+        where TBaseDataSourceParams : BaseDataSourceParams
+    {
+        return CheckHealthAsync();
+    }
+
     public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
        where TBaseDataSourceParams : BaseDataSourceParams
     {

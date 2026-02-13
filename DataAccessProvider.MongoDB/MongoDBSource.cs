@@ -334,6 +334,47 @@ public sealed class MongoDBSource : BaseSource, IDataSource, IDataSource<MongoDB
 
     #region IDataSource Implementation
 
+    public async Task<bool> CheckHealthAsync()
+    {
+        try
+        {
+            var database = GetDatabase();
+            var command = new BsonDocument("ping", 1);
+            await database.RunCommandAsync<BsonDocument>(command).ConfigureAwait(false);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
+        where TBaseDataSourceParams : BaseDataSourceParams
+    {
+        if (@params is MongoDBParams mongoParams)
+        {
+            return CheckMongoHealthAsync(mongoParams);
+        }
+
+        return Task.FromResult(false);
+    }
+
+    private async Task<bool> CheckMongoHealthAsync(MongoDBParams mongoParams)
+    {
+        try
+        {
+            var database = GetDatabase(mongoParams.DatabaseName);
+            var command = new BsonDocument("ping", 1);
+            await database.RunCommandAsync<BsonDocument>(command).ConfigureAwait(false);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
         where TBaseDataSourceParams : BaseDataSourceParams
     {
