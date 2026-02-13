@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using DataAccessProvider.Core.Interfaces;
+using DataAccessProvider.Core.Types;
 
 namespace DataAccessProvider.Core.Abstractions;
 
@@ -12,7 +13,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
 {
     protected override async Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
+        var sourceParams = @params as BaseDatabaseSourceParams;
         if (sourceParams == null)
         {
             throw new ArgumentException("Invalid source parameters type.");
@@ -27,7 +28,10 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
 
                 if (sourceParams.Parameters != null)
                 {
-                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+                    foreach (var parameter in sourceParams.Parameters)
+                    {
+                        command.Parameters.Add(CreateDbParameter(command, parameter));
+                    }
                 }
 
                 async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
@@ -83,7 +87,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
 
     protected override async Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params)
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
+        var sourceParams = @params as BaseDatabaseSourceParams;
         if (sourceParams == null)
         {
             throw new ArgumentException("Invalid source parameters type.");
@@ -98,7 +102,10 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
 
                 if (sourceParams.Parameters != null)
                 {
-                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+                    foreach (var parameter in sourceParams.Parameters)
+                    {
+                        command.Parameters.Add(CreateDbParameter(command, parameter));
+                    }
                 }
 
                 async Task<BaseDataSourceParams<TValue>> ExecuteCoreAsync(CancellationToken ct)
@@ -133,7 +140,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
 
     protected async override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams @params)
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
+        var sourceParams = @params as BaseDatabaseSourceParams;
         using (var connection = GetConnection())
         {
             using (var command = GetCommand(sourceParams!.Query, connection))
@@ -143,7 +150,10 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
 
                 if (sourceParams.Parameters != null)
                 {
-                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+                    foreach (var parameter in sourceParams.Parameters)
+                    {
+                        command.Parameters.Add(CreateDbParameter(command, parameter));
+                    }
                 }
 
                 async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
@@ -166,7 +176,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
 
     protected async override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams @params)
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
+        var sourceParams = @params as BaseDatabaseSourceParams;
         using (var connection = GetConnection())
         using (var command = GetCommand(sourceParams!.Query, connection))
         {
@@ -175,7 +185,10 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
 
             if (sourceParams.Parameters != null)
             {
-                command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+                foreach (var parameter in sourceParams.Parameters)
+                    {
+                        command.Parameters.Add(CreateDbParameter(command, parameter));
+                    }
             }
 
             async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
@@ -239,6 +252,9 @@ public abstract partial class BaseDatabaseSource<TParameter>
     /// <returns>A <see cref="DbCommand"/> object for executing commands.</returns>
     public abstract DbCommand GetCommand(string query, DbConnection connection);
 
+    protected abstract DbParameter CreateDbParameter(DbCommand command, DataAccessParameter parameter);
+
+
     /// <summary>
     /// Reads the result set from a <see cref="DbDataReader"/> and maps it to a list of dictionaries.
     /// Each dictionary represents a row, with column names as keys and the corresponding values as values.
@@ -301,7 +317,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
         where TBaseDataSourceParams : BaseDataSourceParams<TValue>
         where TValue : class, new()
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter>;
+        var sourceParams = @params as BaseDatabaseSourceParams;
         return (TBaseDataSourceParams)await ExecuteReader<TValue>(sourceParams!);
     }
 
@@ -389,7 +405,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
 
     public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
     {
-        var sourceParams = @params as BaseDatabaseSourceParams<TParameter, TValue>;
+        var sourceParams = @params as BaseDatabaseSourceParams<TValue>;
         if (sourceParams == null)
         {
             throw new ArgumentException("Invalid source parameters type.");
@@ -404,7 +420,10 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
 
                 if (sourceParams.Parameters != null)
                 {
-                    command.Parameters.AddRange(sourceParams.Parameters.ToArray());
+                    foreach (var parameter in sourceParams.Parameters)
+                    {
+                        command.Parameters.Add(CreateDbParameter(command, parameter));
+                    }
                 }
 
                 async Task<BaseDataSourceParams<TValue>> ExecuteCoreAsync(CancellationToken ct)
@@ -583,7 +602,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
 /// </summary>
 /// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
 public abstract partial class BaseDatabaseSource<TParameter, TDatabaseSourceParams> : BaseDatabaseSource<TParameter>, IDataSource<TDatabaseSourceParams>
-    where TDatabaseSourceParams : BaseDatabaseSourceParams<TParameter>
+    where TDatabaseSourceParams : BaseDatabaseSourceParams
     where TParameter : DbParameter
 {
     protected IResiliencePolicy? _resiliencePolicy { get; }

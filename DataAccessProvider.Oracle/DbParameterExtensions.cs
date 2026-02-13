@@ -1,27 +1,26 @@
 ﻿using DataAccessProvider.Core.Types;
 using Oracle.ManagedDataAccess.Client;
-using System.Data;
 
 namespace DataAccessProvider.Oracle;
 
 public static class DbParameterExtensions
 {
-    public static List<OracleParameter> AddParameter(this List<OracleParameter> parameters, string parameterName, DataAccessDbType dbType,
+    public static List<DataAccessParameter> AddParameter(this List<DataAccessParameter> parameters, string parameterName, DataAccessDbType dbType,
         object value, DataAccessParameterDirection direction = DataAccessParameterDirection.Input, int size = -1)
     {
-        // Create the appropriate parameter and add it to the list
-        var parameter = new OracleParameter();
-        parameter.ParameterName = parameterName;
-        parameter.OracleDbType = MapDbType(dbType);
-        parameter.Value = value ?? DBNull.Value;
-        parameter.Size = size;
-        parameter.Direction = MapDirection(direction);
+        parameters.Add(new DataAccessParameter
+        {
+            ParameterName = parameterName,
+            DbType = dbType,
+            Value = value,
+            Direction = direction,
+            Size = size
+        });
 
-        parameters.Add(parameter);
         return parameters;
     }
 
-    private static OracleDbType MapDbType(DataAccessDbType dbType) => dbType switch
+    internal static OracleDbType MapDbType(DataAccessDbType dbType) => dbType switch
     {
         DataAccessDbType.AnsiString => OracleDbType.Varchar2,
         DataAccessDbType.AnsiStringFixedLength => OracleDbType.Char,
@@ -52,14 +51,5 @@ public static class DbParameterExtensions
         DataAccessDbType.VarNumeric => OracleDbType.Decimal,
         DataAccessDbType.Xml => OracleDbType.XmlType,
         _ => throw new ArgumentOutOfRangeException(nameof(dbType), dbType, "Unsupported Oracle data type.")
-    };
-
-    private static ParameterDirection MapDirection(DataAccessParameterDirection direction) => direction switch
-    {
-        DataAccessParameterDirection.Input => ParameterDirection.Input,
-        DataAccessParameterDirection.Output => ParameterDirection.Output,
-        DataAccessParameterDirection.InputOutput => ParameterDirection.InputOutput,
-        DataAccessParameterDirection.ReturnValue => ParameterDirection.ReturnValue,
-        _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unsupported parameter direction.")
     };
 }

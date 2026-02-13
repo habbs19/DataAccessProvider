@@ -1,28 +1,26 @@
 ﻿using DataAccessProvider.Core.Types;
-using Snowflake.Data.Client;
 using Snowflake.Data.Core;
-using System.Data;
 
 namespace DataAccessProvider.Snowflake;
 
 public static class DbParameterExtensions
-{   
-    public static List<SnowflakeDbParameter> AddParameter(this List<SnowflakeDbParameter> parameters, string parameterName, DataAccessDbType dbType,
+{
+    public static List<DataAccessParameter> AddParameter(this List<DataAccessParameter> parameters, string parameterName, DataAccessDbType dbType,
         object value, DataAccessParameterDirection direction = DataAccessParameterDirection.Input, int size = 0)
     {
-        // Create the appropriate parameter and add it to the list
-        var parameter = new SnowflakeDbParameter();
-        parameter.ParameterName = parameterName;
-        parameter.SFDataType = MapDbType(dbType);
-        parameter.Value = value ?? DBNull.Value;
-        parameter.Size = size;
-        parameter.Direction = MapDirection(direction);
+        parameters.Add(new DataAccessParameter
+        {
+            ParameterName = parameterName,
+            DbType = dbType,
+            Value = value,
+            Direction = direction,
+            Size = size
+        });
 
-        parameters.Add(parameter);
         return parameters;
     }
 
-    private static SFDataType MapDbType(DataAccessDbType dbType) => dbType switch
+    internal static SFDataType MapDbType(DataAccessDbType dbType) => dbType switch
     {
         DataAccessDbType.AnsiString => ParseDbType("Text"),
         DataAccessDbType.AnsiStringFixedLength => ParseDbType("Text"),
@@ -57,13 +55,4 @@ public static class DbParameterExtensions
 
     private static SFDataType ParseDbType(string name)
         => Enum.TryParse<SFDataType>(name, ignoreCase: true, out var parsed) ? parsed : default;
-
-    private static ParameterDirection MapDirection(DataAccessParameterDirection direction) => direction switch
-    {
-        DataAccessParameterDirection.Input => ParameterDirection.Input,
-        DataAccessParameterDirection.Output => ParameterDirection.Output,
-        DataAccessParameterDirection.InputOutput => ParameterDirection.InputOutput,
-        DataAccessParameterDirection.ReturnValue => ParameterDirection.ReturnValue,
-        _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unsupported parameter direction.")
-    };
 }
