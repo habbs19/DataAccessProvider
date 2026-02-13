@@ -77,16 +77,6 @@ public static class DataAccessDemo
             FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "Movie.json"),
         };
 
-        var jsonFileParams3 = new JsonFileSourceParams<List<Genre>>
-        {
-            FilePath = Path.Combine(
-                "C:\\Users\\habibs\\source\\repos\\aznV\\aznV.Infrastructure\\TestData",
-                "Genres.json"),
-        };
-
-        var jsonFileParams3Result = await dataSourceProvider.ExecuteReaderAsync(jsonFileParams3);
-        Console.WriteLine($"\n3:  {JsonSerializer.Serialize(jsonFileParams3Result.Value)}");
-
         // dataSourceProviderTyped usage is left here if you want to extend later
         _ = codeParams2;
         _ = mssqParams2;
