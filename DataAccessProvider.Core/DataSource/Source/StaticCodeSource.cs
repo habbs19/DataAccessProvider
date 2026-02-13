@@ -100,6 +100,17 @@ public partial class StaticCodeSource : BaseSource
 
 public partial class StaticCodeSource : IDataSource
 {
+    public Task<bool> CheckHealthAsync()
+    {
+        return Task.FromResult(true);
+    }
+
+    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
+        where TBaseDataSourceParams : BaseDataSourceParams
+    {
+        return Task.FromResult(true);
+    }
+
     public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
     {
         return (TBaseDataSourceParams)await ExecuteNonQuery(@params);

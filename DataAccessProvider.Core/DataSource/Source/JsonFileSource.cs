@@ -116,6 +116,22 @@ public partial class JsonFileSource : BaseSource
 #region JsonFileSource
 public partial class JsonFileSource : IDataSource
 {
+    public Task<bool> CheckHealthAsync()
+    {
+        return Task.FromResult(false);
+    }
+
+    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
+        where TBaseDataSourceParams : BaseDataSourceParams
+    {
+        if (@params is JsonFileSourceParams jsonFileSourceParams)
+        {
+            return Task.FromResult(File.Exists(jsonFileSourceParams.FilePath));
+        }
+
+        return Task.FromResult(false);
+    }
+
     public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
     {
         return (TBaseDataSourceParams)await ExecuteNonQuery(@params);
