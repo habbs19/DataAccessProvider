@@ -9,7 +9,7 @@ using DataAccessProvider.Core.Types;
 namespace DataAccessProvider.Core.Abstractions;
 
 #region ExecuteMethods
-public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
+public abstract partial class BaseDatabaseSource : BaseSource
 {
     protected override async Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
     {
@@ -216,7 +216,7 @@ public abstract partial class BaseDatabaseSource<TParameter> : BaseSource
 /// Represents a base class for database sources, providing common database operations like ExecuteNonQuery, ExecuteReader, and ExecuteScalar.
 /// </summary>
 /// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
-public abstract partial class BaseDatabaseSource<TParameter>
+public abstract partial class BaseDatabaseSource
 {
     /// <summary>
     /// The connection string used for the database connection.
@@ -294,8 +294,7 @@ public abstract partial class BaseDatabaseSource<TParameter>
 /// Represents a base class for database sources, providing common database operations like ExecuteNonQuery, ExecuteReader, and ExecuteScalar.
 /// </summary>
 /// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
-public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
-    where TParameter : DbParameter
+public abstract partial class BaseDatabaseSource : IDataSource
 {
     public async Task<bool> CheckHealthAsync()
     {
@@ -616,14 +615,13 @@ public abstract partial class BaseDatabaseSource<TParameter> : IDataSource
     }
 }
 #endregion BaseDatabaseSource
-#region BaseDatabaseSource<>
+#region BaseDatabaseSource<TDatabaseSourceParams>
 /// <summary>
 /// Represents a base class for database sources, providing common database operations like ExecuteNonQuery, ExecuteReader, and ExecuteScalar.
 /// </summary>
 /// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
-public abstract partial class BaseDatabaseSource<TParameter, TDatabaseSourceParams> : BaseDatabaseSource<TParameter>, IDataSource<TDatabaseSourceParams>
+public abstract partial class BaseDatabaseSource<TDatabaseSourceParams> : BaseDatabaseSource, IDataSource<TDatabaseSourceParams>
     where TDatabaseSourceParams : BaseDatabaseSourceParams
-    where TParameter : DbParameter
 {
     protected IResiliencePolicy? _resiliencePolicy { get; }
 
@@ -649,4 +647,4 @@ public abstract partial class BaseDatabaseSource<TParameter, TDatabaseSourcePara
         return await ExecuteReader<TValue>(@params!);
     }
 }
-#endregion BaseDatabaseSource<>  
+#endregion BaseDatabaseSource<TDatabaseSourceParams>  
