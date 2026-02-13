@@ -6,7 +6,7 @@ using System.Data;
 using System.Data.Common;
 
 namespace DataAccessProvider.Snowflake;
-public sealed class SnowflakeSource : BaseDatabaseSource<SnowflakeDbParameter, SnowflakeSourceParams>,
+public sealed class SnowflakeSource : BaseDatabaseSource<SnowflakeSourceParams>,
     IDataSource,
     IDataSource<SnowflakeSourceParams>
 {

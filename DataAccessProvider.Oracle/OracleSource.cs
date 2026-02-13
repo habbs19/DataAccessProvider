@@ -7,7 +7,7 @@ using System.Data.Common;
 
 namespace DataAccessProvider.Oracle;
 
-public sealed class OracleSource : BaseDatabaseSource<OracleParameter, OracleSourceParams>,
+public sealed class OracleSource : BaseDatabaseSource<OracleSourceParams>,
     IDataSource,
     IDataSource<OracleSourceParams>
 {
