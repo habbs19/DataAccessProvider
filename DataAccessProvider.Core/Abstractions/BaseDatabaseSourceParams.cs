@@ -1,33 +1,32 @@
 ﻿using System.Data;
-using System.Data.Common;
 
 namespace DataAccessProvider.Core.Abstractions;
 
-interface IBaseDatabaseSourceParams<TParameter> where TParameter : DbParameter
+using DataAccessProvider.Core.Types;
+
+interface IBaseDatabaseSourceParams
 {
     public string Query { get; set; }
-    public List<TParameter>? Parameters { get; set; }
+    public List<DataAccessParameter>? Parameters { get; set; }
     public CommandType CommandType { get; set; }
     public int Timeout { get; set; }
     public int AffectedRows { get; set; }
 }
-public abstract class BaseDatabaseSourceParams<TParameter> : BaseDataSourceParams, IBaseDatabaseSourceParams<TParameter>
-    where TParameter : DbParameter
+public abstract class BaseDatabaseSourceParams : BaseDataSourceParams, IBaseDatabaseSourceParams
 {
     public string Query { get; set; } = string.Empty;
-    public List<TParameter>? Parameters { get; set; } = new List<TParameter>();
+    public List<DataAccessParameter>? Parameters { get; set; } = new List<DataAccessParameter>();
     public CommandType CommandType { get; set; } = CommandType.StoredProcedure;
     public int Timeout { get; set; }
     public int AffectedRows { get; set; }
 }
 
 
-public abstract class BaseDatabaseSourceParams<TParameter, TValue> : BaseDataSourceParams<TValue>, IBaseDatabaseSourceParams<TParameter>
-    where TParameter : DbParameter
+public abstract class BaseDatabaseSourceParams<TValue> : BaseDataSourceParams<TValue>, IBaseDatabaseSourceParams
     where TValue : class
 {
     public string Query { get; set; } = string.Empty;
-    public List<TParameter>? Parameters { get; set; } = new List<TParameter>();
+    public List<DataAccessParameter>? Parameters { get; set; } = new List<DataAccessParameter>();
     public CommandType CommandType { get; set; } = CommandType.StoredProcedure;
     public int Timeout { get; set; }
     public int AffectedRows { get; set; }

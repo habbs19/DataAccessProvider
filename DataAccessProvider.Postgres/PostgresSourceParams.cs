@@ -1,8 +1,7 @@
 ﻿using DataAccessProvider.Core.Abstractions;
-using Npgsql;
 
 namespace DataAccessProvider.Postgres;
 
-public class PostgresSourceParams : BaseDatabaseSourceParams<NpgsqlParameter> { }
+public class PostgresSourceParams : BaseDatabaseSourceParams { }
 
-public class PostgresSourceParams<TValue> : BaseDatabaseSourceParams<NpgsqlParameter,TValue> where TValue : class { }
+public class PostgresSourceParams<TValue> : BaseDatabaseSourceParams<TValue> where TValue : class { }
