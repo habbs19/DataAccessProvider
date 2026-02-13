@@ -48,7 +48,7 @@ public class DataSourceFactory : IDataSourceFactory
         var paramType = baseDataSourceParams.GetType();
 
         // Check if there is a registered mapping for the given parameter type
-        if (_dataSourceMappings.TryGetValue(paramType.GetCleanGenericTypeName(), out var dataSourceType))
+        if (TryResolveDataSourceType(paramType, out var dataSourceType))
         {
             using var scope = _serviceProvider.CreateScope();
             var dataSource = scope.ServiceProvider.GetService(dataSourceType);
@@ -68,7 +68,7 @@ public class DataSourceFactory : IDataSourceFactory
         var type = baseDataSourceParams.GetType();
 
         // Check if there is a registered mapping for the given parameter type
-        if (_dataSourceMappings.TryGetValue(type.GetCleanGenericTypeName(), out var dataSourceType))
+        if (TryResolveDataSourceType(type, out var dataSourceType))
         {
             using var scope = _serviceProvider.CreateScope();
             var dataSource = scope.ServiceProvider.GetService(dataSourceType);
@@ -92,7 +92,7 @@ public class DataSourceFactory : IDataSourceFactory
         var paramType = typeof(TBaseDataSourceParams);
 
         // Check if there is a registered mapping for the given parameter type
-        if (_dataSourceMappings.TryGetValue(paramType.GetGenericTypeName(), out var dataSourceType))
+        if (TryResolveDataSourceType(paramType, out var dataSourceType))
         {
             using var scope = _serviceProvider.CreateScope();
             var dataSource = scope.ServiceProvider.GetService(dataSourceType);
@@ -105,5 +105,41 @@ public class DataSourceFactory : IDataSourceFactory
 
         throw new ArgumentException($"Unsupported data source type: {paramType.Name}");
     }
-}
 
+    private bool TryResolveDataSourceType(Type paramType, out Type dataSourceType)
+    {
+        var cleanName = paramType.GetCleanGenericTypeName();
+        var name = paramType.Name;
+        var genericName = paramType.GetGenericTypeName();
+
+        if (_dataSourceMappings.TryGetValue(cleanName, out dataSourceType)
+            || _dataSourceMappings.TryGetValue(name, out dataSourceType)
+            || _dataSourceMappings.TryGetValue(genericName, out dataSourceType))
+        {
+            return true;
+        }
+
+        // Fallback: map by convention (e.g. MSSQLSourceParams -> MSSQLSource) when registered in DI.
+        if (cleanName.EndsWith("Params", StringComparison.Ordinal))
+        {
+            var expectedSourceName = cleanName[..^"Params".Length];
+            var candidate = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .FirstOrDefault(t =>
+                    t.Name == expectedSourceName
+                    && typeof(IDataSource).IsAssignableFrom(t)
+                    && !t.IsInterface
+                    && !t.IsAbstract);
+
+            if (candidate is not null)
+            {
+                _dataSourceMappings[cleanName] = candidate;
+                dataSourceType = candidate;
+                return true;
+            }
+        }
+
+        dataSourceType = default!;
+        return false;
+    }
+}
