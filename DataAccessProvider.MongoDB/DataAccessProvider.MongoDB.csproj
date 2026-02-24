@@ -10,7 +10,7 @@
 
     <OutputType>library</OutputType>
     <PackageId>DataAccessProvider.MongoDB</PackageId>
-    <Version>1.3.2</Version>
+    <Version>1.3.3</Version>
     <Authors>Habib Shakibanejad</Authors>
     <Company>HSX</Company>
     <Title>DataAccessProvider.MongoDB</Title>
@@ -27,9 +27,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="MongoDB.Driver" Version="3.5.2">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="MongoDB.Driver" Version="3.5.2"/>
   </ItemGroup>
 
   <ItemGroup>
