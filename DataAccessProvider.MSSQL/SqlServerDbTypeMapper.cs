@@ -1,4 +1,5 @@
-﻿using DataAccessProvider.Core.Types;
+﻿using DataAccessProvider.Core.Abstractions;
+using DataAccessProvider.Core.Types;
 using System.Data;
 
 namespace DataAccessProvider.MSSQL;

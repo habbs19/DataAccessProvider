@@ -1,6 +1,6 @@
 ﻿using DataAccessProvider.Core.Types;
 
-namespace DataAccessProvider.MySql;
+namespace DataAccessProvider.Core.Abstractions;
 
 internal interface IDataAccessDbTypeMapper
 {

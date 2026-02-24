@@ -12,10 +12,13 @@ namespace Test;
 [TestClass]
 public class Test_DbTypeMapperOwnership
 {
+    private const string DummySqlServerConnectionString = "Server=.;Database=master;";
+    private const string DummyMySqlConnectionString = "Server=localhost;Database=test;";
+
     [TestMethod]
     public void MSSQLSource_CreateDbParameter_UsesProviderMapper()
     {
-        var source = new MSSQLSource("Server=.;Database=master;Trusted_Connection=True;");
+        var source = new MSSQLSource(DummySqlServerConnectionString);
         var parameter = new DataAccessParameter
         {
             ParameterName = "@Name",
@@ -31,7 +34,7 @@ public class Test_DbTypeMapperOwnership
     [TestMethod]
     public void MySQLSource_CreateDbParameter_UsesProviderMapper()
     {
-        var source = new MySQLSource("Server=localhost;User Id=root;Password=test;Database=test;");
+        var source = new MySQLSource(DummyMySqlConnectionString);
         var parameter = new DataAccessParameter
         {
             ParameterName = "@Name",
