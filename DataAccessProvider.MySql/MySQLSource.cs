@@ -28,7 +28,7 @@ public sealed class MySQLSource : BaseDatabaseSource<MySQLSourceParams>,
         return new MySqlParameter
         {
             ParameterName = parameter.ParameterName,
-            MySqlDbType = DbParameterExtensions.MapDbType(parameter.DbType),
+            MySqlDbType = (MySqlDbType)MySQLSourceParams.DbTypeMapper.Map(parameter.DbType),
             Value = parameter.Value ?? DBNull.Value,
             Direction = MapDirection(parameter.Direction),
             Size = parameter.Size
