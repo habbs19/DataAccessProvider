@@ -19,7 +19,7 @@ internal sealed class MySqlDbTypeMapper : IDataAccessDbTypeMapper
         DataAccessDbType.Binary => MySqlDbType.Blob,
         DataAccessDbType.Blob => MySqlDbType.Blob,
         DataAccessDbType.Byte => MySqlDbType.UByte,
-        DataAccessDbType.TinyInt => MySqlDbType.Byte,
+        DataAccessDbType.TinyInt => MySqlDbType.UByte,
         DataAccessDbType.Boolean => MySqlDbType.Bool,
         DataAccessDbType.Currency => MySqlDbType.Decimal,
         DataAccessDbType.Money => MySqlDbType.Decimal,

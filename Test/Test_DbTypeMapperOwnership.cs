@@ -83,7 +83,7 @@ public class Test_DbTypeMapperOwnership
 
         var dbParameter = (MySqlParameter)InvokeCreateDbParameter(source, new MySqlCommand(), parameter);
 
-        Assert.AreEqual(MySqlDbType.Byte, dbParameter.MySqlDbType);
+        Assert.AreEqual(MySqlDbType.UByte, dbParameter.MySqlDbType);
     }
 
     [TestMethod]
