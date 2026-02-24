@@ -31,7 +31,7 @@ public sealed class MSSQLSource : BaseDatabaseSource<MSSQLSourceParams>,
         return new SqlParameter
         {
             ParameterName = parameter.ParameterName,
-            SqlDbType = DbParameterExtensions.MapDbType(parameter.DbType),
+            SqlDbType = (SqlDbType)MSSQLSourceParams.DbTypeMapper.Map(parameter.DbType),
             Value = parameter.Value ?? DBNull.Value,
             Direction = MapDirection(parameter.Direction),
             Size = parameter.Size
