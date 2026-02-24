@@ -28,7 +28,7 @@ public sealed class OracleSource : BaseDatabaseSource<OracleSourceParams>,
         return new OracleParameter
         {
             ParameterName = parameter.ParameterName,
-            OracleDbType = DbParameterExtensions.MapDbType(parameter.DbType),
+            OracleDbType = (OracleDbType)OracleSourceParams.DbTypeMapper.Map(parameter.DbType),
             Value = parameter.Value ?? DBNull.Value,
             Direction = MapDirection(parameter.Direction),
             Size = parameter.Size

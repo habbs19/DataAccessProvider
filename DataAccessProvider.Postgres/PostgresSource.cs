@@ -2,6 +2,7 @@
 using DataAccessProvider.Core.Interfaces;
 using DataAccessProvider.Core.Types;
 using Npgsql;
+using NpgsqlTypes;
 using System.Data;
 using System.Data.Common;
 
@@ -29,7 +30,7 @@ public sealed class PostgresSource : BaseDatabaseSource<PostgresSourceParams>,
         return new NpgsqlParameter
         {
             ParameterName = parameter.ParameterName,
-            NpgsqlDbType = DbParameterExtensions.MapDbType(parameter.DbType),
+            NpgsqlDbType = (NpgsqlDbType)PostgresSourceParams.DbTypeMapper.Map(parameter.DbType),
             Value = parameter.Value ?? DBNull.Value,
             Direction = MapDirection(parameter.Direction),
             Size = parameter.Size
