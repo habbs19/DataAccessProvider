@@ -28,4 +28,13 @@ public static class DbParameterExtensions
         return sourceParams;
     }
 
+    public static MSSQLSourceParams<TValue> AddParameter<TValue>(this MSSQLSourceParams<TValue> sourceParams, string parameterName, DataAccessDbType dbType,
+      object value, DataAccessParameterDirection direction = DataAccessParameterDirection.Input, int size = -1) where TValue : class
+    {
+        var parameters = sourceParams.Parameters ?? new List<DataAccessParameter>();
+        parameters.AddParameter(parameterName, dbType, value, direction, size);
+        sourceParams.Parameters = parameters;
+        return sourceParams;
+    }
+
 }

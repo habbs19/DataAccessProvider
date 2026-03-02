@@ -1,7 +1,7 @@
 using System.Data;
 using DataAccessProvider.Core.Interfaces;
-using DataAccessProvider.Core.Types;
 using DataAccessProvider.Core.Resilience;
+using DataAccessProvider.Core.Types;
 using DataAccessProvider.MSSQL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

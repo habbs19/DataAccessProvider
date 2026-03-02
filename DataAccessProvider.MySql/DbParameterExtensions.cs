@@ -1,5 +1,4 @@
 ﻿using DataAccessProvider.Core.Types;
-using MySqlConnector;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
