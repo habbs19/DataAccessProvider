@@ -2,7 +2,7 @@
 
 namespace DataAccessProvider.Core.Abstractions;
 
-internal interface IDataAccessDbTypeMapper
+public interface IDataAccessDbTypeMapper
 {
     object Map(DataAccessDbType dbType);
 }
