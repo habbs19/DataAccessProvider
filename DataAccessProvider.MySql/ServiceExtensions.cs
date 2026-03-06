@@ -4,6 +4,7 @@ using DataAccessProvider.Core.Interfaces;
 using DataAccessProvider.Core.DataSource;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
+using Microsoft.AspNetCore.Builder;
 
 namespace DataAccessProvider.MySql;
 public static class ServiceExtensions
@@ -64,6 +65,17 @@ public static class ServiceExtensions
         }
         factory.RegisterDataSource<MySQLSourceParams, MySQLSource>();
         return provider;
+    }
+
+    public static IApplicationBuilder UseDataAccessProviderMySql(this IApplicationBuilder app)
+    {
+        var factory = app.ServerFeatures.Get<IDataSourceFactory>();
+        if (factory == null)
+        {
+            throw new InvalidOperationException("IDataSourceFactory is not registered. Use AddDataAccessProviderMySql");
+        }
+        factory.RegisterDataSource<MySQLSourceParams, MySQLSource>();
+        return app;
     }
 }
 
