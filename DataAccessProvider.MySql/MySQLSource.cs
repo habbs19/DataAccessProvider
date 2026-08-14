@@ -9,7 +9,8 @@ namespace DataAccessProvider.MySql;
 
 public sealed class MySQLSource : BaseDatabaseSource<MySQLSourceParams>,
     IDataSource,
-    IDataSource<MySQLSourceParams>
+    IDataSource<MySQLSourceParams>,
+    IDatabaseTransactionProvider<MySQLSourceParams>
 {
     public MySQLSource(string connectionString, IResiliencePolicy? resiliencePolicy = null) : base(connectionString, resiliencePolicy) { }
 
@@ -43,4 +44,16 @@ public sealed class MySQLSource : BaseDatabaseSource<MySQLSourceParams>,
         DataAccessParameterDirection.ReturnValue => ParameterDirection.ReturnValue,
         _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unsupported parameter direction.")
     };
+
+    public Task ExecuteInTransactionAsync(
+        Func<IDatabaseTransaction, CancellationToken, Task> operation,
+        IsolationLevel? isolationLevel = null,
+        CancellationToken cancellationToken = default) =>
+        ExecuteInTransactionCoreAsync(operation, isolationLevel, cancellationToken);
+
+    public Task<TResult> ExecuteInTransactionAsync<TResult>(
+        Func<IDatabaseTransaction, CancellationToken, Task<TResult>> operation,
+        IsolationLevel? isolationLevel = null,
+        CancellationToken cancellationToken = default) =>
+        ExecuteInTransactionCoreAsync(operation, isolationLevel, cancellationToken);
 }

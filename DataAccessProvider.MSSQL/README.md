@@ -130,6 +130,23 @@ var result2 = await dataSourceProvider.ExecuteReaderAsync(mssqlParams2);
 2:  [{"Id":1,"Title":"First Entry","Date":"2022-01-01T00:00:00"}]
 ```
 
+## Managed Transactions
+
+Resolve `IDatabaseTransactionProvider<MSSQLSourceParams>` from the same DI scope and execute atomic work in its callback:
+
+```csharp
+var transactionProvider = serviceProvider
+    .GetRequiredService<IDatabaseTransactionProvider<MSSQLSourceParams>>();
+
+await transactionProvider.ExecuteInTransactionAsync(async (transaction, cancellationToken) =>
+{
+    await transaction.ExecuteNonQueryAsync(firstCommand, cancellationToken);
+    await transaction.ExecuteNonQueryAsync(secondCommand, cancellationToken);
+}, IsolationLevel.ReadCommitted, cancellationToken);
+```
+
+Successful callbacks commit; exceptions and cancellation roll back. Commands share one connection, execute serially, and are not retried by the resilience policy. The callback executor cannot be reused after the callback completes.
+
 ## Registering a Custom Data Source
 
 The **DataAccessProvider** allows you to register your own custom data sources at runtime using the `RegisterDataSource<TParams, TSource>()` method. This enables you to extend the framework by adding support for new data source types, without modifying the existing factory.

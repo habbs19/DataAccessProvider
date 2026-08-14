@@ -10,7 +10,8 @@ namespace DataAccessProvider.Postgres;
 
 public sealed class PostgresSource : BaseDatabaseSource<PostgresSourceParams>,
     IDataSource,
-    IDataSource<PostgresSourceParams>
+    IDataSource<PostgresSourceParams>,
+    IDatabaseTransactionProvider<PostgresSourceParams>
 {
     public PostgresSource(string connectionString, IResiliencePolicy? resiliencePolicy = null)
         : base(connectionString, resiliencePolicy) { }
@@ -45,4 +46,16 @@ public sealed class PostgresSource : BaseDatabaseSource<PostgresSourceParams>,
         DataAccessParameterDirection.ReturnValue => ParameterDirection.ReturnValue,
         _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unsupported parameter direction.")
     };
+
+    public Task ExecuteInTransactionAsync(
+        Func<IDatabaseTransaction, CancellationToken, Task> operation,
+        IsolationLevel? isolationLevel = null,
+        CancellationToken cancellationToken = default) =>
+        ExecuteInTransactionCoreAsync(operation, isolationLevel, cancellationToken);
+
+    public Task<TResult> ExecuteInTransactionAsync<TResult>(
+        Func<IDatabaseTransaction, CancellationToken, Task<TResult>> operation,
+        IsolationLevel? isolationLevel = null,
+        CancellationToken cancellationToken = default) =>
+        ExecuteInTransactionCoreAsync(operation, isolationLevel, cancellationToken);
 }

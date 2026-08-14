@@ -44,7 +44,7 @@ public abstract partial class BaseDatabaseSource : BaseSource
                         int resultCount = 0;
                         do
                         {
-                            resultSet[resultCount] = await ReadResultAsync(reader).ConfigureAwait(false);
+                            resultSet[resultCount] = await ReadResultAsync(reader, ct).ConfigureAwait(false);
                             resultCount++;
                         }
                         while (await reader.NextResultAsync(ct).ConfigureAwait(false));
@@ -113,7 +113,7 @@ public abstract partial class BaseDatabaseSource : BaseSource
                     await connection.OpenAsync(ct).ConfigureAwait(false);
                     using (var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false))
                     {
-                        var result = await MaterializeAsync<TValue>(reader).ConfigureAwait(false);
+                        var result = await MaterializeAsync<TValue>(reader, ct).ConfigureAwait(false);
 
                         if (result.Count == 1)
                         {
@@ -261,7 +261,9 @@ public abstract partial class BaseDatabaseSource
     /// </summary>
     /// <param name="reader">The <see cref="DbDataReader"/> to read from.</param>
     /// <returns>A list of dictionaries where each dictionary represents a row from the result set.</returns>
-    protected async Task<List<Dictionary<string, object>>> ReadResultAsync(DbDataReader reader)
+    protected async Task<List<Dictionary<string, object>>> ReadResultAsync(
+        DbDataReader reader,
+        CancellationToken cancellationToken = default)
     {
         var schema = reader.GetColumnSchema();
         var columns = schema
@@ -271,7 +273,7 @@ public abstract partial class BaseDatabaseSource
 
         var result = new List<Dictionary<string, object>>();
 
-        while (await reader.ReadAsync())
+        while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
         {
             var row = new Dictionary<string, object>(columns.Length);
 
@@ -450,7 +452,7 @@ public abstract partial class BaseDatabaseSource : IDataSource
                     await connection.OpenAsync(ct).ConfigureAwait(false);
                     using (var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false))
                     {
-                        var result = await MaterializeAsync<TValue>(reader).ConfigureAwait(false);
+                        var result = await MaterializeAsync<TValue>(reader, ct).ConfigureAwait(false);
 
                         if (result.Count == 1)
                         {
@@ -475,14 +477,17 @@ public abstract partial class BaseDatabaseSource : IDataSource
         }
     }
 
-    private async Task<List<TValue>> MaterializeAsync<TValue>(DbDataReader reader) where TValue : class, new()
+    private async Task<List<TValue>> MaterializeAsync<TValue>(
+        DbDataReader reader,
+        CancellationToken cancellationToken = default)
+        where TValue : class, new()
     {
         var accessors = TypeAccessorCache<TValue>.GetColumnAccessors(reader);
         var result = new List<TValue>();
 
         if (accessors.Length == 0)
         {
-            while (await reader.ReadAsync())
+            while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
             {
                 result.Add(new TValue());
             }
@@ -490,7 +495,7 @@ public abstract partial class BaseDatabaseSource : IDataSource
             return result;
         }
 
-        while (await reader.ReadAsync())
+        while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
         {
             var item = new TValue();
 

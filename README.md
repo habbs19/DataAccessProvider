@@ -167,6 +167,40 @@ var result4 = await dataSourceProvider.ExecuteNonQueryAsync(jsonFileParams);
 4:  {"Name": "Michael Jackson"}
 ```
 
+## Managed Transactions
+
+SQL Server, PostgreSQL, and MySQL expose a scoped transaction provider in addition to the existing `IDataSourceProvider` API. Resolve the provider for the database parameter family you are using and put every operation that must be atomic inside its callback:
+
+```csharp
+using System.Data;
+using DataAccessProvider.Core.Interfaces;
+
+var transactionProvider = serviceProvider
+    .GetRequiredService<IDatabaseTransactionProvider<MSSQLSourceParams>>();
+
+await transactionProvider.ExecuteInTransactionAsync(
+    async (transaction, cancellationToken) =>
+    {
+        await transaction.ExecuteNonQueryAsync(new MSSQLSourceParams
+        {
+            Query = "UPDATE Accounts SET Balance = Balance - 100 WHERE Id = 1",
+            CommandType = CommandType.Text
+        }, cancellationToken);
+
+        await transaction.ExecuteNonQueryAsync(new MSSQLSourceParams
+        {
+            Query = "UPDATE Accounts SET Balance = Balance + 100 WHERE Id = 2",
+            CommandType = CommandType.Text
+        }, cancellationToken);
+    },
+    isolationLevel: IsolationLevel.ReadCommitted,
+    cancellationToken: cancellationToken);
+```
+
+The callback commits only after it completes successfully. An exception or cancellation causes a rollback, and the connection and transaction are always disposed. Reader, typed-reader, scalar, and non-query operations are supported and all use the same connection and transaction.
+
+Transaction callbacks are local to one provider and their `IDatabaseTransaction` executor must not be retained after the callback. Commands within a callback are serialized. The configured resilience policy is intentionally not applied within a transaction: individual commands and commits are never retried automatically because doing so can duplicate writes or repeat a commit whose server outcome is unknown. Distributed transactions, nested transactions, and savepoints are not supported.
+
 ## Registering a Custom Data Source
 
 The **DataAccessProvider** allows you to register your own custom data sources at runtime using the `RegisterDataSource<TParams, TSource>()` method. This enables you to extend the framework by adding support for new data source types, without modifying the existing factory.

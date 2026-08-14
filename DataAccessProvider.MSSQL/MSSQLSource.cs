@@ -9,7 +9,8 @@ namespace DataAccessProvider.MSSQL;
 
 public sealed class MSSQLSource : BaseDatabaseSource<MSSQLSourceParams>,
     IDataSource,
-    IDataSource<MSSQLSourceParams>
+    IDataSource<MSSQLSourceParams>,
+    IDatabaseTransactionProvider<MSSQLSourceParams>
 {
     public MSSQLSource(string connectionString, IResiliencePolicy? resiliencePolicy = null)
         : base(connectionString, resiliencePolicy)
@@ -46,4 +47,16 @@ public sealed class MSSQLSource : BaseDatabaseSource<MSSQLSourceParams>,
         DataAccessParameterDirection.ReturnValue => ParameterDirection.ReturnValue,
         _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unsupported parameter direction.")
     };
+
+    public Task ExecuteInTransactionAsync(
+        Func<IDatabaseTransaction, CancellationToken, Task> operation,
+        IsolationLevel? isolationLevel = null,
+        CancellationToken cancellationToken = default) =>
+        ExecuteInTransactionCoreAsync(operation, isolationLevel, cancellationToken);
+
+    public Task<TResult> ExecuteInTransactionAsync<TResult>(
+        Func<IDatabaseTransaction, CancellationToken, Task<TResult>> operation,
+        IsolationLevel? isolationLevel = null,
+        CancellationToken cancellationToken = default) =>
+        ExecuteInTransactionCoreAsync(operation, isolationLevel, cancellationToken);
 }

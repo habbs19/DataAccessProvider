@@ -19,17 +19,7 @@ public static class ServiceExtensions
         // Add database source service
         string connectionString = configuration.GetConnectionString(nameof(MySQLSource)) ?? "";
 
-        // Register necessary services
-        service.AddScoped<IDataSource<MySQLSourceParams>>(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new MySQLSource(connectionString, policy);
-        });
-        service.AddScoped(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new MySQLSource(connectionString, policy);
-        });
+        AddMySQLSource(service, connectionString);
 
         return service;
     }
@@ -41,17 +31,7 @@ public static class ServiceExtensions
         service.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
         service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
 
-        // Register necessary services
-        service.AddScoped<IDataSource<MySQLSourceParams>>(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new MySQLSource(connectionString, policy);
-        });
-        service.AddScoped(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new MySQLSource(connectionString, policy);
-        });
+        AddMySQLSource(service, connectionString);
 
         return service;
     }
@@ -76,6 +56,19 @@ public static class ServiceExtensions
         }
         factory.RegisterDataSource<MySQLSourceParams, MySQLSource>();
         return app;
+    }
+
+    private static void AddMySQLSource(IServiceCollection services, string connectionString)
+    {
+        services.AddScoped(sp =>
+        {
+            var policy = sp.GetService<IResiliencePolicy>();
+            return new MySQLSource(connectionString, policy);
+        });
+        services.AddScoped<IDataSource<MySQLSourceParams>>(
+            sp => sp.GetRequiredService<MySQLSource>());
+        services.AddScoped<IDatabaseTransactionProvider<MySQLSourceParams>>(
+            sp => sp.GetRequiredService<MySQLSource>());
     }
 }
 
