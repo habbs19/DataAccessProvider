@@ -67,6 +67,23 @@ var typedParams = new PostgresSourceParams<User>
 var users = await dataSourceProvider.ExecuteReaderAsync(typedParams);
 ```
 
+## Managed Transactions
+
+Resolve `IDatabaseTransactionProvider<PostgresSourceParams>` from the same DI scope and execute atomic work in its callback:
+
+```csharp
+var transactionProvider = serviceProvider
+    .GetRequiredService<IDatabaseTransactionProvider<PostgresSourceParams>>();
+
+await transactionProvider.ExecuteInTransactionAsync(async (transaction, cancellationToken) =>
+{
+    await transaction.ExecuteNonQueryAsync(firstCommand, cancellationToken);
+    await transaction.ExecuteNonQueryAsync(secondCommand, cancellationToken);
+}, IsolationLevel.ReadCommitted, cancellationToken);
+```
+
+Successful callbacks commit; exceptions and cancellation roll back. Commands share one connection, execute serially, and are not retried by the resilience policy. The callback executor cannot be reused after the callback completes.
+
 ## Resilience
 
 If you register an `IResiliencePolicy` (e.g., via `AddDataAccessProviderCore`), the provider will automatically apply retries/timeouts around database calls.

@@ -18,17 +18,7 @@ public static class ServiceExtensions
         // Add database source service
         string connectionString = configuration.GetConnectionString(nameof(MSSQLSource)) ?? "";
 
-        // Register necessary services
-        service.AddScoped<IDataSource<MSSQLSourceParams>>(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new MSSQLSource(connectionString, policy);
-        });
-        service.AddScoped(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new MSSQLSource(connectionString, policy);
-        });
+        AddMSSQLSource(service, connectionString);
 
         return service;
     }
@@ -40,17 +30,7 @@ public static class ServiceExtensions
         service.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
         service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
 
-        // Register necessary services
-        service.AddScoped<IDataSource<MSSQLSourceParams>>(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new MSSQLSource(connectionString, policy);
-        });
-        service.AddScoped(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new MSSQLSource(connectionString, policy);
-        });
+        AddMSSQLSource(service, connectionString);
 
         return service;
     }
@@ -70,6 +50,19 @@ public static class ServiceExtensions
         }
         factory.RegisterDataSource<MSSQLSourceParams, MSSQLSource>();
         return provider;
+    }
+
+    private static void AddMSSQLSource(IServiceCollection services, string connectionString)
+    {
+        services.AddScoped(sp =>
+        {
+            var policy = sp.GetService<IResiliencePolicy>();
+            return new MSSQLSource(connectionString, policy);
+        });
+        services.AddScoped<IDataSource<MSSQLSourceParams>>(
+            sp => sp.GetRequiredService<MSSQLSource>());
+        services.AddScoped<IDatabaseTransactionProvider<MSSQLSourceParams>>(
+            sp => sp.GetRequiredService<MSSQLSource>());
     }
 }
 

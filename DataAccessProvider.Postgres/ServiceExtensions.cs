@@ -16,16 +16,7 @@ public static class ServiceExtensions
 
         string connectionString = configuration.GetConnectionString(nameof(PostgresSource)) ?? string.Empty;
 
-        service.AddScoped<IDataSource<PostgresSourceParams>>(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new PostgresSource(connectionString, policy);
-        });
-        service.AddScoped(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new PostgresSource(connectionString, policy);
-        });
+        AddPostgresSource(service, connectionString);
 
         return service;
     }
@@ -36,16 +27,7 @@ public static class ServiceExtensions
         service.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
         service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
 
-        service.AddScoped<IDataSource<PostgresSourceParams>>(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new PostgresSource(connectionString, policy);
-        });
-        service.AddScoped(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new PostgresSource(connectionString, policy);
-        });
+        AddPostgresSource(service, connectionString);
 
         return service;
     }
@@ -60,5 +42,18 @@ public static class ServiceExtensions
         var factory = provider.GetRequiredService<IDataSourceFactory>();
         factory.RegisterDataSource<PostgresSourceParams, PostgresSource>();
         return provider;
+    }
+
+    private static void AddPostgresSource(IServiceCollection services, string connectionString)
+    {
+        services.AddScoped(sp =>
+        {
+            var policy = sp.GetService<IResiliencePolicy>();
+            return new PostgresSource(connectionString, policy);
+        });
+        services.AddScoped<IDataSource<PostgresSourceParams>>(
+            sp => sp.GetRequiredService<PostgresSource>());
+        services.AddScoped<IDatabaseTransactionProvider<PostgresSourceParams>>(
+            sp => sp.GetRequiredService<PostgresSource>());
     }
 }
