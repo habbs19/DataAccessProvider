@@ -50,6 +50,7 @@ jobs:
             artifacts/validation/*results.json
             artifacts/validation/local-feed/*.nupkg
             artifacts/validation/pack-*.txt
+            artifacts/validation/restore-*.txt
             artifacts/validation/run-*.txt
             artifacts/validation/integration/*/results.json
             artifacts/validation/test-results/*.trx

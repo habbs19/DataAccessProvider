@@ -2,6 +2,10 @@ param([string]$ScratchRoot = (Join-Path $env:TEMP ('dap-implementation-' + [guid
 $ErrorActionPreference = 'Stop'
 $repo = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 New-Item -ItemType Directory -Force -Path $ScratchRoot | Out-Null; $ScratchRoot = (Resolve-Path $ScratchRoot).Path; $feed = Join-Path $ScratchRoot 'local-feed'
+# A scratch directory inside the checkout must behave like an external consumer.
+# Stop MSBuild from importing repository build and central package settings.
+Set-Content (Join-Path $ScratchRoot 'Directory.Build.props') '<Project />' -Encoding utf8
+Set-Content (Join-Path $ScratchRoot 'Directory.Packages.props') '<Project><PropertyGroup><ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally></PropertyGroup></Project>' -Encoding utf8
 New-Item -ItemType Directory -Force -Path $feed | Out-Null
 $specs = @(
     @{Id='Core';Dir='Core';Symbol='CORE'},
@@ -54,7 +58,7 @@ Console.WriteLine("$($p.Id) standalone construction, registration and public API
     Set-Content (Join-Path $case 'Program.cs') $program -Encoding utf8
     $cache = Join-Path $ScratchRoot "cache-$($p.Symbol)"
     & dotnet restore (Join-Path $case 'Consumer.csproj') --configfile (Join-Path $case 'NuGet.Config') --packages $cache 2>&1 | Set-Content (Join-Path $ScratchRoot "restore-$($p.Symbol).txt")
-    if ($LASTEXITCODE) { throw "Consumer restore failed: $($p.Id)" }
+    if ($LASTEXITCODE) { Get-Content (Join-Path $ScratchRoot "restore-$($p.Symbol).txt") | Write-Host; throw "Consumer restore failed: $($p.Id)" }
     & dotnet run --project (Join-Path $case 'Consumer.csproj') -c Release --no-restore 2>&1 | Set-Content (Join-Path $ScratchRoot "run-$($p.Symbol).txt")
     if ($LASTEXITCODE) { throw "Consumer build/run failed: $($p.Id)" }
     Copy-Item (Join-Path $case 'obj/project.assets.json') (Join-Path $ScratchRoot "assets-$($p.Symbol).json")
