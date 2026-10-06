@@ -53,5 +53,6 @@ jobs:
             artifacts/validation/restore-*.txt
             artifacts/validation/run-*.txt
             artifacts/validation/integration/*/results.json
+            artifacts/validation/integration/*/container-start.txt
             artifacts/validation/test-results/*.trx
           if-no-files-found: error

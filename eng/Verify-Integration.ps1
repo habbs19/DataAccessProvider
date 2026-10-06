@@ -22,11 +22,15 @@ foreach($fixture in $fixtures | Where-Object {$_.Symbol -in $Providers}) {
         & dotnet build (Join-Path $case 'Consumer.csproj') -c Release --no-restore 2>&1 | Set-Content (Join-Path $case 'build.txt')
         if($LASTEXITCODE){throw 'Build failed'}
         $existing=& docker ps -a --filter "name=^/$name`$" --format '{{.ID}}';if($existing){throw 'Fixture identity already exists'}
-        $dockerArgs=@('run','-d','--label',"dap.fixture.owner=$owner",'--name',$name,'-p',"127.0.0.1::$($fixture.Port)")
+        $cidFile=Join-Path $case "$owner.cid"
+        $dockerArgs=@('run','-d','--cidfile',$cidFile,'--label',"dap.fixture.owner=$owner",'--name',$name,'-p',"127.0.0.1::$($fixture.Port)")
         foreach($setting in $fixture.Env){$dockerArgs+=@('-e',$setting)};$dockerArgs+=$fixture.Image
         if($symbol -eq 'MONGO'){$dockerArgs+=@('--replSet','dapFixture','--bind_ip_all')}
-        $created=& docker @dockerArgs 2>&1 | Out-String;if($LASTEXITCODE){throw 'Container startup failed'}
-        $container=$created.Trim();if($container -notmatch '^[0-9a-f]{64}$'){throw 'Invalid container identity'}
+        & docker @dockerArgs 2>&1 | Set-Content (Join-Path $case 'container-start.txt')
+        $startupExit=$LASTEXITCODE
+        if(Test-Path -LiteralPath $cidFile){$container=(Get-Content -LiteralPath $cidFile -Raw).Trim()}
+        if($startupExit){Get-Content (Join-Path $case 'container-start.txt') | Write-Host;throw 'Container startup failed'}
+        if($container -notmatch '^[0-9a-f]{64}$'){throw 'Invalid container identity'}
         $inspect=(& docker inspect $container | ConvertFrom-Json)[0]
         if($inspect.Config.Labels.'dap.fixture.owner' -ne $owner -or $inspect.Name -ne "/$name"){throw 'Fixture ownership mismatch'}
         $port=$inspect.NetworkSettings.Ports."$($fixture.Port)/tcp"[0].HostPort
