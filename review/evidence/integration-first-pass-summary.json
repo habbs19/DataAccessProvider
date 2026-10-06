@@ -1,0 +1,9 @@
+{
+  "status": "ran",
+  "image": "postgres:16-alpine",
+  "port": "52549",
+  "container": "cacca640346649e5125618417ddc17a7d6cf2dce1f0052dc66251f513c12bd8b",
+  "exitCode": 0,
+  "imageId": "sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+  "symbol": "POSTGRES"
+}

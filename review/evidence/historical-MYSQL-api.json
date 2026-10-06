@@ -1,0 +1,66 @@
+{
+  "assembly": "C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\historical-api\\bin\\Debug\\net10.0\\DataAccessProvider.MySql.dll",
+  "sha256": "E53C3950A8BA3EBE7BDE983D36EC334D6501E1A8B89B56EBBCB1E44D9EAFB2B7",
+  "api": [
+    {
+      "signature": "DataAccessProvider.MySql.MySQLSourceParams AddJSONParams(DataAccessProvider.MySql.MySQLSourceParams, Int32, System.Object, System.String, System.String)",
+      "parameters": [
+        {
+          "Name": "sourceParams",
+          "IsOptional": false,
+          "defaultValue": "\u003CDBNull\u003E"
+        },
+        {
+          "Name": "operation",
+          "IsOptional": false,
+          "defaultValue": "\u003CDBNull\u003E"
+        },
+        {
+          "Name": "json",
+          "IsOptional": true,
+          "defaultValue": null
+        },
+        {
+          "Name": "operationLabel",
+          "IsOptional": true,
+          "defaultValue": "Operation"
+        },
+        {
+          "Name": "paramsLabel",
+          "IsOptional": true,
+          "defaultValue": "Params"
+        }
+      ]
+    },
+    {
+      "signature": "DataAccessProvider.MySql.MySQLSourceParams\u00601[TValue] AddJSONParams[TValue](DataAccessProvider.MySql.MySQLSourceParams\u00601[TValue], Int32, System.Object, System.String, System.String)",
+      "parameters": [
+        {
+          "Name": "sourceParams",
+          "IsOptional": false,
+          "defaultValue": "\u003CDBNull\u003E"
+        },
+        {
+          "Name": "operation",
+          "IsOptional": false,
+          "defaultValue": "\u003CDBNull\u003E"
+        },
+        {
+          "Name": "json",
+          "IsOptional": true,
+          "defaultValue": null
+        },
+        {
+          "Name": "operationLabel",
+          "IsOptional": true,
+          "defaultValue": "Operation"
+        },
+        {
+          "Name": "paramsLabel",
+          "IsOptional": true,
+          "defaultValue": "Params"
+        }
+      ]
+    }
+  ]
+}

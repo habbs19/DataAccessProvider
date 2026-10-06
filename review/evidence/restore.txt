@@ -1,0 +1,16 @@
+dotnet restore C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.sln --packages C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\packages --source https://api.nuget.org/v3/index.json --force --verbosity minimal
+ExitCode: 0
+  Determining projects to restore...
+C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.MongoDB\DataAccessProvider.MongoDB.csproj : warning NU1902: Package 'SharpCompress' 0.30.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-6c8g-7p36-r338 [C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.sln]
+C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.MongoDB\DataAccessProvider.MongoDB.csproj : warning NU1903: Package 'Snappier' 1.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-pggp-6c3x-2xmx [C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.sln]
+  Restored C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProviderConsole\DataAccessProviderConsole.csproj (in 1.87 sec).
+  Restored C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.Postgres\DataAccessProvider.Postgres.csproj (in 1.87 sec).
+  Restored C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.Core\DataAccessProvider.Core.csproj (in 1.87 sec).
+  Restored C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.MySql\DataAccessProvider.MySql.csproj (in 1.87 sec).
+  Restored C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.MSSQL\DataAccessProvider.MSSQL.csproj (in 1.87 sec).
+  Restored C:\Users\habibs\source\repos\DataAccessProvider\tests\DataAccessProvider.Core.Tests\DataAccessProvider.Core.Tests.csproj (in 1.87 sec).
+  Restored C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.Snowflake\DataAccessProvider.Snowflake.csproj (in 1.92 sec).
+  Restored C:\Users\habibs\source\repos\DataAccessProvider\Test\Test.csproj (in 1.88 sec).
+  Restored C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.Oracle\DataAccessProvider.Oracle.csproj (in 1.88 sec).
+  Restored C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.MongoDB\DataAccessProvider.MongoDB.csproj (in 1.87 sec).
+

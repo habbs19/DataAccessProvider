@@ -1,0 +1,24 @@
+[
+  {
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "symbol": "MYSQL",
+    "origin": "published-minimum",
+    "registration": 1,
+    "restore": 0,
+    "run": 0,
+    "build": 0
+  },
+  {
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "symbol": "MONGO",
+    "origin": "published-minimum",
+    "registration": 1,
+    "restore": 0,
+    "run": 0,
+    "build": 0
+  }
+]

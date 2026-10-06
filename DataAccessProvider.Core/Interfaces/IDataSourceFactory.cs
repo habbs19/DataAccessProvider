@@ -1,4 +1,4 @@
-﻿using DataAccessProvider.Core.Abstractions;
+using DataAccessProvider.Core.Abstractions;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DataAccessProvider.Core.Interfaces;
@@ -11,7 +11,7 @@ public interface IDataSourceFactory
     /// Allows external consumers to add their own custom data source mappings.
     /// </summary>
     /// 
-    public void RegisterDataSource<TParams, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TSource>() 
+    public void RegisterDataSource<TParams, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TSource>()
         where TParams : BaseDataSourceParams
         where TSource : IDataSource;
 
@@ -35,11 +35,11 @@ public interface IDataSourceFactory
     /// The data source instance is resolved from the service provider (<see cref="_serviceProvider"/>), which is expected to have all supported data sources registered.
     /// </remarks>
     IDataSource CreateDataSource(BaseDataSourceParams baseDataSourceParams);
-    IDataSource CreateDataSource<TValue>(BaseDataSourceParams<TValue> baseDataSourceParams) 
+    IDataSource CreateDataSource<TValue>(BaseDataSourceParams<TValue> baseDataSourceParams)
         where TValue : class;
 
     IDataSource<TBaseDataSourceParams> CreateDataSource<TBaseDataSourceParams>() where TBaseDataSourceParams : BaseDataSourceParams;
 
-    IBaseDataSourceParams CreateParams<IBaseDataSourceParams>() 
+    IBaseDataSourceParams CreateParams<IBaseDataSourceParams>()
         where IBaseDataSourceParams : BaseDataSourceParams;
 }

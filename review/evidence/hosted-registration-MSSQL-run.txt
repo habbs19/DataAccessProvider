@@ -1,0 +1,17 @@
+dotnet run --project C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\hosted-registration-MSSQL\Consumer.csproj --no-build --no-restore
+ExitCode: 0
+[
+  {
+    "name": "providerAddRegistersCoreServices",
+    "detail": true
+  },
+  {
+    "name": "factoryWorksWithoutUseViaConvention",
+    "detail": "DataAccessProvider.MSSQL.MSSQLSource"
+  },
+  {
+    "name": "concreteAndInterfaceAreSameScopedInstance",
+    "detail": true
+  }
+]
+

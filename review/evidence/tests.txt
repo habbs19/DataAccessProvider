@@ -1,0 +1,11 @@
+dotnet test C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.sln -c Release --no-build --no-restore --verbosity minimal
+ExitCode: 0
+Test run for C:\Users\habibs\source\repos\DataAccessProvider\Test\bin\Release\net10.0\Test.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+Test run for C:\Users\habibs\source\repos\DataAccessProvider\tests\DataAccessProvider.Core.Tests\bin\Release\net10.0\DataAccessProvider.Core.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    31, Skipped:     0, Total:    31, Duration: 530 ms - DataAccessProvider.Core.Tests.dll (net10.0)
+
+Passed!  - Failed:     0, Passed:    11, Skipped:     0, Total:    11, Duration: 3 s - Test.dll (net10.0)
+

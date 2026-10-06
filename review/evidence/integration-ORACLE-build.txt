@@ -1,0 +1,12 @@
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\integration\ORACLE\Program.cs(78,129): warning CS8604: Possible null reference argument for parameter 'parameters' in 'List<DataAccessParameter> DbParameterExtensions.AddParameter(List<DataAccessParameter> parameters, string parameterName, DataAccessDbType dbType, object value, DataAccessParameterDirection direction = DataAccessParameterDirection.Input, int size = -1)'. [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\integration\ORACLE\Consumer.csproj]
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\integration\ORACLE\Program.cs(88,5): warning CS8604: Possible null reference argument for parameter 'parameters' in 'List<DataAccessParameter> DbParameterExtensions.AddParameter(List<DataAccessParameter> parameters, string parameterName, DataAccessDbType dbType, object value, DataAccessParameterDirection direction = DataAccessParameterDirection.Input, int size = -1)'. [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\integration\ORACLE\Consumer.csproj]
+  Consumer -> C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\integration\ORACLE\bin\Debug\net10.0\Consumer.dll
+
+Build succeeded.
+
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\integration\ORACLE\Program.cs(78,129): warning CS8604: Possible null reference argument for parameter 'parameters' in 'List<DataAccessParameter> DbParameterExtensions.AddParameter(List<DataAccessParameter> parameters, string parameterName, DataAccessDbType dbType, object value, DataAccessParameterDirection direction = DataAccessParameterDirection.Input, int size = -1)'. [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\integration\ORACLE\Consumer.csproj]
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\integration\ORACLE\Program.cs(88,5): warning CS8604: Possible null reference argument for parameter 'parameters' in 'List<DataAccessParameter> DbParameterExtensions.AddParameter(List<DataAccessParameter> parameters, string parameterName, DataAccessDbType dbType, object value, DataAccessParameterDirection direction = DataAccessParameterDirection.Input, int size = -1)'. [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\integration\ORACLE\Consumer.csproj]
+    2 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.32

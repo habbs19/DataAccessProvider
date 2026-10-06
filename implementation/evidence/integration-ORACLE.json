@@ -1,0 +1,35 @@
+[
+  {
+    "name": "health",
+    "status": "passed"
+  },
+  {
+    "name": "parameterized write query scalar and native ownership",
+    "status": "passed"
+  },
+  {
+    "name": "legacy typed paths and reused empty result",
+    "status": "passed"
+  },
+  {
+    "name": "commit rollback cancellation and escaped session",
+    "status": "passed"
+  },
+  {
+    "name": "output parameters after execution and reader disposal",
+    "status": "passed"
+  },
+  {
+    "name": "cancellation timing observation",
+    "status": "observed",
+    "elapsedMs": 6067.0868,
+    "outcome": "OperationCanceledException",
+    "cancellationRequested": true,
+    "healthyAfter": true,
+    "interruptedWithinSixSeconds": false
+  },
+  {
+    "name": "in-flight cancellation and healthy reuse",
+    "status": "passed"
+  }
+]

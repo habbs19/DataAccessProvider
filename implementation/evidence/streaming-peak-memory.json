@@ -1,0 +1,11 @@
+{
+  "rows": 100000,
+  "columns": 9,
+  "textCharsPerColumn": 500,
+  "streamManagedPeakIncrease": 4227088,
+  "bufferManagedPeakIncrease": 829720920,
+  "streamWorkingSetPeakIncrease": 8593408,
+  "bufferWorkingSetPeakIncrease": 846635008,
+  "status": "passed",
+  "gate": "at least 50% reduction in sampled peak managed memory above baseline"
+}

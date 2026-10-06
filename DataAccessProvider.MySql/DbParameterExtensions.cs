@@ -1,4 +1,4 @@
-﻿using DataAccessProvider.Core.Types;
+using DataAccessProvider.Core.Types;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -72,4 +72,18 @@ public static class DbParameterExtensions
         return sourceParams;
     }
 
+    public static MySQLSourceParams AddJSONParams(this MySQLSourceParams sourceParams, int operation, object? json = null, string operationLabel = "Operation", string paramsLabel = "Params")
+    {
+        sourceParams.Parameters ??= [];
+        sourceParams.Parameters.AddParameter(operationLabel, DataAccessDbType.UInt16, operation);
+        sourceParams.Parameters.AddParameter(paramsLabel, DataAccessDbType.Json, json is null ? null! : JsonSerializer.Serialize(json, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull }));
+        return sourceParams;
+    }
+    public static MySQLSourceParams<TValue> AddJSONParams<TValue>(this MySQLSourceParams<TValue> sourceParams, int operation, object? json = null, string operationLabel = "Operation", string paramsLabel = "Params") where TValue : class
+    {
+        sourceParams.Parameters ??= [];
+        sourceParams.Parameters.AddParameter(operationLabel, DataAccessDbType.UInt16, operation);
+        sourceParams.Parameters.AddParameter(paramsLabel, DataAccessDbType.Json, json is null ? null! : JsonSerializer.Serialize(json, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull }));
+        return sourceParams;
+    }
 }

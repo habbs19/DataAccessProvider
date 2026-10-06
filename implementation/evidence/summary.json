@@ -1,0 +1,10 @@
+{
+  "testsPassed": 63,
+  "standaloneConsumersPassed": 7,
+  "completeCSharpExamplesCompiled": 11,
+  "liveDatabaseProvidersPassed": 5,
+  "snowflakeIntegration": "blocked: no disposable account",
+  "nativeAot": "blocked: compiler prerequisite missing",
+  "githubCi": "not yet executed",
+  "oracleCancellation": "about 6.1 seconds; no strict interrupt deadline"
+}

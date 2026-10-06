@@ -1,32 +1,58 @@
 name: CI
-
 on:
   pull_request:
   push:
-    branches:
-      - main
-
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    
-    permissions:
-      contents: read
-    
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "10.0.x"
-
-      - name: Restore dependencies
-        run: dotnet restore DataAccessProvider.sln
-
-      - name: Build solution
-        run: dotnet build DataAccessProvider.sln --configuration Release --no-restore
-
-      - name: Run tests
-        run: dotnet test DataAccessProvider.sln --configuration Release --no-build --no-restore
+          global-json-file: global.json
+      - name: Locked restore
+        run: dotnet restore DataAccessProvider.sln --locked-mode
+        shell: pwsh
+      - name: Build and test
+        shell: pwsh
+        run: |
+          dotnet build DataAccessProvider.sln -c Release --no-restore
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          dotnet test DataAccessProvider.sln -c Release --no-build --no-restore --logger trx --results-directory ./artifacts/validation/test-results
+      - name: Audit resolved dependency graph
+        shell: pwsh
+        run: ./eng/Verify-Audit.ps1 -OutputPath ./artifacts/validation/audit.json
+      - name: Validate published APIs and seven independent package consumers
+        shell: pwsh
+        run: ./eng/Verify-Packages.ps1 -ScratchRoot ./artifacts/validation
+      - name: Compile documentation examples
+        shell: pwsh
+        run: ./eng/Verify-Docs.ps1 -ScratchRoot ./artifacts/validation
+      - name: Disposable database checks
+        if: runner.os == 'Linux'
+        shell: pwsh
+        run: ./eng/Verify-Integration.ps1 -ScratchRoot ./artifacts/validation
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: validation-${{ runner.os }}
+          path: |
+            artifacts/validation/audit.json
+            artifacts/validation/manifest.json
+            artifacts/validation/*results.json
+            artifacts/validation/local-feed/*.nupkg
+            artifacts/validation/pack-*.txt
+            artifacts/validation/restore-*.txt
+            artifacts/validation/run-*.txt
+            artifacts/validation/integration/*/results.json
+            artifacts/validation/integration/*/container-start.txt
+            artifacts/validation/test-results/*.trx
+          if-no-files-found: error

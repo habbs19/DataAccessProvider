@@ -1,0 +1,5 @@
+dotnet restore C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-POSTGRES\Consumer.csproj --configfile C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-POSTGRES\NuGet.Config --packages C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\published-consumer-cache --force --verbosity minimal
+ExitCode: 0
+  Determining projects to restore...
+  Restored C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-POSTGRES\Consumer.csproj (in 2.7 sec).
+

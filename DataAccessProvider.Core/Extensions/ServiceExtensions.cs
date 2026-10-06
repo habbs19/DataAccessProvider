@@ -1,4 +1,4 @@
-﻿using DataAccessProvider.Core.DataSource.Source;
+using DataAccessProvider.Core.DataSource.Source;
 using DataAccessProvider.Core.DataSource;
 using DataAccessProvider.Core.Interfaces;
 using DataAccessProvider.Core.Resilience;
@@ -7,29 +7,24 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace DataAccessProvider.Core.Extensions;
+
 public static class ServiceExtensions
 {
-    public static IServiceCollection AddDataAccessProviderCore(this IServiceCollection service, IConfiguration configuration)
+    public static IServiceCollection AddDataAccessProviderCore(this IServiceCollection services)
     {
-        service.TryAddScoped<IDataSourceProvider, DataSourceProvider>();
-        service.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
-        service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
-
-        // Bind resilience options from configuration (section: "DataAccessProvider:Resilience")
-        var resilienceOptions = new ResilienceOptions();
-        configuration
-            .GetSection("DataAccessProvider:Resilience")
-            .Bind(resilienceOptions);
-
-        service.TryAddSingleton<IResiliencePolicy>(_ =>
-            new BasicResiliencePolicy(
-                maxRetries: resilienceOptions.MaxRetries,
-                perAttemptTimeout: TimeSpan.FromSeconds(resilienceOptions.PerAttemptTimeoutSeconds)));
-
-        service.AddScoped<JsonFileSource>();
-        service.AddScoped<StaticCodeSource>();
-
-        return service;
+        services.TryAddSingleton<DataSourceRegistry>();
+        services.TryAddScoped<IDataSourceFactory, DataSourceFactory>();
+        services.TryAddScoped<IDataSourceProvider, DataSourceProvider>();
+        services.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
+        services.TryAddScoped<JsonFileSource>(); services.TryAddScoped<StaticCodeSource>();
+        services.TryAddSingleton<JsonFileClient>();
+        return services;
+    }
+    public static IServiceCollection AddDataAccessProviderCore(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddDataAccessProviderCore();
+        var options = new ResilienceOptions(); configuration.GetSection("DataAccessProvider:Resilience").Bind(options);
+        services.TryAddSingleton<IResiliencePolicy>(_ => new BasicResiliencePolicy(options.MaxRetries, TimeSpan.FromSeconds(options.PerAttemptTimeoutSeconds)));
+        return services;
     }
 }
-

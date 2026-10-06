@@ -1,4 +1,4 @@
-﻿using DataAccessProvider.Core.Abstractions;
+using DataAccessProvider.Core.Abstractions;
 using DataAccessProvider.Core.Interfaces;
 using DataAccessProvider.Core.Types;
 using Oracle.ManagedDataAccess.Client;
@@ -9,9 +9,10 @@ namespace DataAccessProvider.Oracle;
 
 public sealed class OracleSource : BaseDatabaseSource<OracleSourceParams>,
     IDataSource,
-    IDataSource<OracleSourceParams>
+    IDataSource<OracleSourceParams>, IDatabaseTransactionProvider<OracleSourceParams>
 {
     public OracleSource(string connectionString) : base(connectionString) { }
+    public OracleSource(string connectionString, IResiliencePolicy? policy) : base(connectionString, policy) { }
 
     public override DbConnection GetConnection()
     {
@@ -25,17 +26,16 @@ public sealed class OracleSource : BaseDatabaseSource<OracleSourceParams>,
 
     protected override DbParameter CreateDbParameter(DbCommand command, DataAccessParameter parameter)
     {
-        return new OracleParameter
+        var result = new OracleParameter
         {
             ParameterName = parameter.ParameterName,
             OracleDbType = (OracleDbType)OracleSourceParams.DbTypeMapper.Map(parameter.DbType),
             Value = parameter.Value ?? DBNull.Value,
-            Direction = MapDirection(parameter.Direction),
-            Size = parameter.Size
-        };
+            Direction = MapDirection(parameter.Direction)
+        }; if (parameter.Size >= 0) result.Size = parameter.Size; return result;
     }
 
-    private static ParameterDirection MapDirection(DataAccessParameterDirection direction) => direction switch
+    protected override object? ReadParameterValue(DbParameter parameter) => parameter.Value is global::Oracle.ManagedDataAccess.Types.OracleDecimal value ? (value.IsNull ? null : value.Value) : base.ReadParameterValue(parameter); private static ParameterDirection MapDirection(DataAccessParameterDirection direction) => direction switch
     {
         DataAccessParameterDirection.Input => ParameterDirection.Input,
         DataAccessParameterDirection.Output => ParameterDirection.Output,
@@ -43,4 +43,15 @@ public sealed class OracleSource : BaseDatabaseSource<OracleSourceParams>,
         DataAccessParameterDirection.ReturnValue => ParameterDirection.ReturnValue,
         _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unsupported parameter direction.")
     };
+    public Task ExecuteInTransactionAsync(
+            Func<IDatabaseTransaction, CancellationToken, Task> operation,
+            IsolationLevel? isolationLevel = null,
+            CancellationToken cancellationToken = default) =>
+            ExecuteInTransactionCoreAsync(operation, isolationLevel, cancellationToken);
+
+    public Task<TResult> ExecuteInTransactionAsync<TResult>(
+        Func<IDatabaseTransaction, CancellationToken, Task<TResult>> operation,
+        IsolationLevel? isolationLevel = null,
+        CancellationToken cancellationToken = default) =>
+        ExecuteInTransactionCoreAsync(operation, isolationLevel, cancellationToken);
 }

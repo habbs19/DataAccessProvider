@@ -1,0 +1,5 @@
+dotnet restore C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\api\published-MSSQL\Consumer.csproj --configfile C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\api\published-MSSQL\NuGet.Config --packages C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\published-consumer-cache --verbosity minimal
+ExitCode: 0
+  Determining projects to restore...
+  Restored C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\api\published-MSSQL\Consumer.csproj (in 1.16 sec).
+

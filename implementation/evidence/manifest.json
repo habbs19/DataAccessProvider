@@ -1,0 +1,327 @@
+{
+  "snowflakeIntegration": "blocked: account required",
+  "utc": "2026-10-06T02:03:07.1749679Z",
+  "packages": [
+    {
+      "file": "DataAccessProvider.Core.1.4.0.nupkg",
+      "dependencies": [
+        {
+          "framework": "net10.0",
+          "packages": [
+            {
+              "exclude": "Build,Analyzers",
+              "version": "10.0.1",
+              "id": "Microsoft.Extensions.Configuration.Abstractions"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "10.0.1",
+              "id": "Microsoft.Extensions.Configuration.Binder"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "10.0.1",
+              "id": "Microsoft.Extensions.DependencyInjection"
+            }
+          ]
+        }
+      ],
+      "repository": "https://github.com/habbs19/DataAccessProvider",
+      "assets": [
+        "_rels/.rels",
+        "DataAccessProvider.Core.nuspec",
+        "README.md",
+        "lib/net10.0/DataAccessProvider.Core.dll",
+        "[Content_Types].xml",
+        "package/services/metadata/core-properties/nuget.psmdcp"
+      ],
+      "id": "DataAccessProvider.Core",
+      "sha256": "39F38A5EDCAD8512E9BB6C9D41DB27A507F4D11899F33592EFDA6C24953C3012",
+      "version": "1.4.0"
+    },
+    {
+      "file": "DataAccessProvider.MongoDB.1.4.0.nupkg",
+      "dependencies": [
+        {
+          "framework": "net10.0",
+          "packages": [
+            {
+              "exclude": "Build,Analyzers",
+              "version": "1.4.0",
+              "id": "DataAccessProvider.Core"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "10.0.1",
+              "id": "Microsoft.Extensions.Configuration.Abstractions"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "10.0.1",
+              "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "3.12.0",
+              "id": "MongoDB.Driver"
+            }
+          ]
+        }
+      ],
+      "repository": "https://github.com/habbs19/DataAccessProvider",
+      "assets": [
+        "_rels/.rels",
+        "DataAccessProvider.MongoDB.nuspec",
+        "README.md",
+        "lib/net10.0/DataAccessProvider.MongoDB.dll",
+        "[Content_Types].xml",
+        "package/services/metadata/core-properties/nuget.psmdcp"
+      ],
+      "id": "DataAccessProvider.MongoDB",
+      "sha256": "1A65B1764512F22AEF9C55CDA0A3BF012F6F78A30988682B9C243837DD1C2E5C",
+      "version": "1.4.0"
+    },
+    {
+      "file": "DataAccessProvider.MSSQL.1.4.0.nupkg",
+      "dependencies": [
+        {
+          "framework": "net10.0",
+          "packages": [
+            {
+              "exclude": "Build,Analyzers",
+              "version": "1.4.0",
+              "id": "DataAccessProvider.Core"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "6.1.3",
+              "id": "Microsoft.Data.SqlClient"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "10.0.1",
+              "id": "Microsoft.Extensions.Configuration.Abstractions"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "10.0.1",
+              "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+            }
+          ]
+        }
+      ],
+      "repository": "https://github.com/habbs19/DataAccessProvider",
+      "assets": [
+        "_rels/.rels",
+        "DataAccessProvider.MSSQL.nuspec",
+        "README.md",
+        "lib/net10.0/DataAccessProvider.MSSQL.dll",
+        "[Content_Types].xml",
+        "package/services/metadata/core-properties/nuget.psmdcp"
+      ],
+      "id": "DataAccessProvider.MSSQL",
+      "sha256": "3312369C10948B6E32D29FCA92CA2BDD50CEA80D175553A7992B7404244EE9BF",
+      "version": "1.4.0"
+    },
+    {
+      "file": "DataAccessProvider.MySql.1.4.0.nupkg",
+      "dependencies": [
+        {
+          "framework": "net10.0",
+          "packages": [
+            {
+              "exclude": "Build,Analyzers",
+              "version": "1.4.0",
+              "id": "DataAccessProvider.Core"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "2.3.9",
+              "id": "Microsoft.AspNetCore.Http.Abstractions"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "10.0.1",
+              "id": "Microsoft.Extensions.Configuration.Abstractions"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "10.0.1",
+              "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "2.5.0",
+              "id": "MySqlConnector"
+            }
+          ]
+        }
+      ],
+      "repository": "https://github.com/habbs19/DataAccessProvider",
+      "assets": [
+        "_rels/.rels",
+        "DataAccessProvider.MySql.nuspec",
+        "README.md",
+        "lib/net10.0/DataAccessProvider.MySql.dll",
+        "[Content_Types].xml",
+        "package/services/metadata/core-properties/nuget.psmdcp"
+      ],
+      "id": "DataAccessProvider.MySql",
+      "sha256": "9D3E7C7596ADDEB0B29F91BDA1A58BE336D16C94095F724B348C257F43E31195",
+      "version": "1.4.0"
+    },
+    {
+      "file": "DataAccessProvider.Oracle.1.4.0.nupkg",
+      "dependencies": [
+        {
+          "framework": "net10.0",
+          "packages": [
+            {
+              "exclude": "Build,Analyzers",
+              "version": "1.4.0",
+              "id": "DataAccessProvider.Core"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "23.26.0",
+              "id": "Oracle.ManagedDataAccess.Core"
+            }
+          ]
+        }
+      ],
+      "repository": "https://github.com/habbs19/DataAccessProvider",
+      "assets": [
+        "_rels/.rels",
+        "DataAccessProvider.Oracle.nuspec",
+        "README.md",
+        "lib/net10.0/DataAccessProvider.Oracle.dll",
+        "[Content_Types].xml",
+        "package/services/metadata/core-properties/nuget.psmdcp"
+      ],
+      "id": "DataAccessProvider.Oracle",
+      "sha256": "E6CB308E8DC576CBEB8B4067AC00B9E7DBC1E7FCD347EDC13F8731C691039D44",
+      "version": "1.4.0"
+    },
+    {
+      "file": "DataAccessProvider.PostgreSql.1.4.0.nupkg",
+      "dependencies": [
+        {
+          "framework": "net10.0",
+          "packages": [
+            {
+              "exclude": "Build,Analyzers",
+              "version": "1.4.0",
+              "id": "DataAccessProvider.Core"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "10.0.1",
+              "id": "Microsoft.Extensions.Configuration.Abstractions"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "10.0.1",
+              "id": "Npgsql"
+            }
+          ]
+        }
+      ],
+      "repository": "https://github.com/habbs19/DataAccessProvider",
+      "assets": [
+        "_rels/.rels",
+        "DataAccessProvider.PostgreSql.nuspec",
+        "README.md",
+        "lib/net10.0/DataAccessProvider.Postgres.dll",
+        "[Content_Types].xml",
+        "package/services/metadata/core-properties/nuget.psmdcp"
+      ],
+      "id": "DataAccessProvider.PostgreSql",
+      "sha256": "8E65E2130136196A0FE419F35A25152DB345CEDF5D021DC0830A7C4A0A548DCC",
+      "version": "1.4.0"
+    },
+    {
+      "file": "DataAccessProvider.Snowflake.1.4.0.nupkg",
+      "dependencies": [
+        {
+          "framework": "net10.0",
+          "packages": [
+            {
+              "exclude": "Build,Analyzers",
+              "version": "1.4.0",
+              "id": "DataAccessProvider.Core"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "4.0.3.8",
+              "id": "AWSSDK.Core"
+            },
+            {
+              "exclude": "Build,Analyzers",
+              "version": "5.3.0",
+              "id": "Snowflake.Data"
+            }
+          ]
+        }
+      ],
+      "repository": "https://github.com/habbs19/DataAccessProvider",
+      "assets": [
+        "_rels/.rels",
+        "DataAccessProvider.Snowflake.nuspec",
+        "README.md",
+        "lib/net10.0/DataAccessProvider.Snowflake.dll",
+        "[Content_Types].xml",
+        "package/services/metadata/core-properties/nuget.psmdcp"
+      ],
+      "id": "DataAccessProvider.Snowflake",
+      "sha256": "50B798FA4203E3456BE507B9E5A69BDA8768611094E69F337689277129534BC8",
+      "version": "1.4.0"
+    }
+  ],
+  "dirty": true,
+  "packageConsumers": [
+    {
+      "provider": "Core",
+      "status": "passed",
+      "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-CORE",
+      "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-CORE\\Consumer.csproj"
+    },
+    {
+      "provider": "MSSQL",
+      "status": "passed",
+      "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-MSSQL",
+      "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-MSSQL\\Consumer.csproj"
+    },
+    {
+      "provider": "MySql",
+      "status": "passed",
+      "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-MYSQL",
+      "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-MYSQL\\Consumer.csproj"
+    },
+    {
+      "provider": "PostgreSql",
+      "status": "passed",
+      "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-POSTGRES",
+      "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-POSTGRES\\Consumer.csproj"
+    },
+    {
+      "provider": "MongoDB",
+      "status": "passed",
+      "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-MONGO",
+      "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-MONGO\\Consumer.csproj"
+    },
+    {
+      "provider": "Oracle",
+      "status": "passed",
+      "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-ORACLE",
+      "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-ORACLE\\Consumer.csproj"
+    },
+    {
+      "provider": "Snowflake",
+      "status": "passed",
+      "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-SNOWFLAKE",
+      "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-SNOWFLAKE\\Consumer.csproj"
+    }
+  ],
+  "sdk": "10.0.400",
+  "sourceCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8"
+}

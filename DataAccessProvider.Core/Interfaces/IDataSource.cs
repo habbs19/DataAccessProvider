@@ -1,4 +1,4 @@
-﻿using DataAccessProvider.Core.Abstractions;
+using DataAccessProvider.Core.Abstractions;
 namespace DataAccessProvider.Core.Interfaces;
 
 #region IDataSource
@@ -47,8 +47,8 @@ public interface IDataSource
     /// This method automatically maps each row from the result set to an object of type <typeparamref name="TValue"/> by matching the column names
     /// with the property names of <typeparamref name="TValue"/>. Ensure that <typeparamref name="TValue"/> has a parameterless constructor and writable properties.
     /// </remarks>
-    Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue,TBaseDataSourceParams>(TBaseDataSourceParams @params) 
-        where TBaseDataSourceParams : BaseDataSourceParams<TValue> 
+    Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams @params)
+        where TBaseDataSourceParams : BaseDataSourceParams<TValue>
         where TValue : class, new();
 
     Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params)
@@ -73,10 +73,10 @@ public interface IDataSource
     /// This method is designed for read operations (e.g., SELECT queries) where data needs to be retrieved from the data source. 
     /// The result is typically processed and stored in the provided parameters.
     /// </remarks>
-    Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) 
+    Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
         where TBaseDataSourceParams : BaseDataSourceParams;
 
-  
+
 
     /// <summary>
     /// Executes a non-query command asynchronously, such as INSERT, UPDATE, or DELETE, based on the provided data source parameters.
@@ -97,7 +97,7 @@ public interface IDataSource
     /// This method is intended for non-query operations such as INSERT, UPDATE, DELETE, or any command that modifies the data 
     /// without returning a result set.
     /// </remarks>
-    Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) 
+    Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
         where TBaseDataSourceParams : BaseDataSourceParams;
 
     /// <summary>
@@ -118,13 +118,14 @@ public interface IDataSource
     /// <remarks>
     /// This method is typically used for aggregate functions or queries where a single value (such as COUNT, SUM, or an ID) is expected.
     /// </remarks>
-    Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) 
+    Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
         where TBaseDataSourceParams : BaseDataSourceParams;
 }
 #endregion IDataSource
 
 #region IDataSource<>
-public interface IDataSource<TBaseDataSourceParams> 
+[Obsolete("Migrate to the 1.4 client, command and result API before 2.0; see docs/migration.md.", DiagnosticId = "DAP001")]
+public interface IDataSource<TBaseDataSourceParams>
     where TBaseDataSourceParams : BaseDataSourceParams
 {
     /// <summary>

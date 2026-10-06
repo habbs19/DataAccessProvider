@@ -1,0 +1,14 @@
+dotnet build C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-MYSQL\Consumer.csproj --no-restore -p:ExtraProbeConstants=REGISTRATION --verbosity minimal
+ExitCode: 1
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-MYSQL\Consumer.csproj : warning NU1603: DataAccessProvider.MySql 1.3.4 depends on DataAccessProvider.Core (>= 1.3.6) but DataAccessProvider.Core 1.3.6 was not found. DataAccessProvider.Core 1.3.7 was resolved instead.
+CSC : error CS1705: Assembly 'DataAccessProvider.MySql' with identity 'DataAccessProvider.MySql, Version=1.3.4.0, Culture=neutral, PublicKeyToken=null' uses 'Microsoft.Extensions.DependencyInjection.Abstractions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' which has a higher version than referenced assembly 'Microsoft.Extensions.DependencyInjection.Abstractions' with identity 'Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-MYSQL\Consumer.csproj]
+
+Build FAILED.
+
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-MYSQL\Consumer.csproj : warning NU1603: DataAccessProvider.MySql 1.3.4 depends on DataAccessProvider.Core (>= 1.3.6) but DataAccessProvider.Core 1.3.6 was not found. DataAccessProvider.Core 1.3.7 was resolved instead.
+CSC : error CS1705: Assembly 'DataAccessProvider.MySql' with identity 'DataAccessProvider.MySql, Version=1.3.4.0, Culture=neutral, PublicKeyToken=null' uses 'Microsoft.Extensions.DependencyInjection.Abstractions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' which has a higher version than referenced assembly 'Microsoft.Extensions.DependencyInjection.Abstractions' with identity 'Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-MYSQL\Consumer.csproj]
+    1 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:02.88
+

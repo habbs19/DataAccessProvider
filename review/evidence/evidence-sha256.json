@@ -1,0 +1,1617 @@
+[
+  {
+    "name": "all-documentation-checks.json",
+    "sha256": "3578D06F898142736E1189D0099FCE9AD4A595C3E0604AD8B8CA71BA658DC91B",
+    "bytes": 11516
+  },
+  {
+    "name": "api-local-MONGO-build.txt",
+    "sha256": "D308E36CBC497F9D0D98520CD473E984BFF0F4C3A6A39C6EE5EA0CE6F90BFEAF",
+    "bytes": 1340
+  },
+  {
+    "name": "api-local-MONGO-restore.txt",
+    "sha256": "58869073EF44E7341FB027716B0E652BC27F6DC181DCA4CD93BD8AF00D05F5CF",
+    "bytes": 1010
+  },
+  {
+    "name": "api-local-MONGO-run.txt",
+    "sha256": "4EAFDBF5C5694821FDCEF663DB7DDC2D4AF565624044473F95D0C6BB44D274FB",
+    "bytes": 28689
+  },
+  {
+    "name": "api-local-MSSQL-build.txt",
+    "sha256": "019FF065E37F8951AA19E626DF494646F29EA19B83BD8DD2F73425EB31A13991",
+    "bytes": 374
+  },
+  {
+    "name": "api-local-MSSQL-restore.txt",
+    "sha256": "4C5D82A76DED9FB3B6654E5C3EA7671E989498691C2CD9D549EAE255B68657B4",
+    "bytes": 528
+  },
+  {
+    "name": "api-local-MSSQL-run.txt",
+    "sha256": "657B68997832C9958659C00257536D27FFE9B01C44FB41A82C21907342EDA1FF",
+    "bytes": 26931
+  },
+  {
+    "name": "api-local-MYSQL-build.txt",
+    "sha256": "0CD4CE16FC2155E24BEA9E7EB71F11048230F053D7D05BA988D05BBB8A468155",
+    "bytes": 374
+  },
+  {
+    "name": "api-local-MYSQL-restore.txt",
+    "sha256": "5B560D335ECEAFFD8E5A0DC785AD56E5F5F2E0919EA09BCA227DE24466F9DFFB",
+    "bytes": 528
+  },
+  {
+    "name": "api-local-MYSQL-run.txt",
+    "sha256": "CF1682CA688BB9E05DC61903E4BC0D8BB13AFA5722F0486254C687CE0C09530D",
+    "bytes": 27381
+  },
+  {
+    "name": "api-local-ORACLE-build.txt",
+    "sha256": "AF401138F0771E9B2F70EAE07D99DA5861CA3ADB4705B79C5A9FF71167DDA700",
+    "bytes": 376
+  },
+  {
+    "name": "api-local-ORACLE-restore.txt",
+    "sha256": "BD9DA178DA9C3DEE38F1A5517477572A6A1B9B5BF771B59F04683BCA46BBEC79",
+    "bytes": 531
+  },
+  {
+    "name": "api-local-ORACLE-run.txt",
+    "sha256": "6C328C90960306DFBF5CEB3B6BC74D1066D2274A5792952D34972E327950B696",
+    "bytes": 25030
+  },
+  {
+    "name": "api-local-POSTGRES-build.txt",
+    "sha256": "89A3EFF695BBA242DDFA331950BF14D860011D6201B2E3B3CE6F57107EDF2B2B",
+    "bytes": 380
+  },
+  {
+    "name": "api-local-POSTGRES-restore.txt",
+    "sha256": "ADCD04922651F5B4CEDC6B04DE9042EBD05183AD838C58400100F38E9396B295",
+    "bytes": 535
+  },
+  {
+    "name": "api-local-POSTGRES-run.txt",
+    "sha256": "7A10B2DCED95BBA7DB7A748027777F036043AE68AB95F9723B5CCFE275025489",
+    "bytes": 26396
+  },
+  {
+    "name": "api-local-SNOWFLAKE-build.txt",
+    "sha256": "45F35494A1E1494BB5A17CB8E4EAE936A0F16B807CFD5E00FA897A5F069A635C",
+    "bytes": 382
+  },
+  {
+    "name": "api-local-SNOWFLAKE-restore.txt",
+    "sha256": "0A3C7816A24FC90C6E30A35B3C049B8F24AE0DF88DB7C8480E7F5DD3D8E1B2B4",
+    "bytes": 540
+  },
+  {
+    "name": "api-local-SNOWFLAKE-run.txt",
+    "sha256": "2AEEC06C50E129956B8C2B04044BFF1434E8EAA6579D2468FCCD9D73FAC68E57",
+    "bytes": 25051
+  },
+  {
+    "name": "api-published-MONGO-build.txt",
+    "sha256": "8D55941AB2CDFEAA580CB4474D244EE80C0A39FE4F487034DFAB18DF882F8302",
+    "bytes": 1972
+  },
+  {
+    "name": "api-published-MONGO-restore.txt",
+    "sha256": "C6E3C98BA08411007DDE6BDAB2D9256C02645D7EC95193757A146E618976FEA2",
+    "bytes": 1338
+  },
+  {
+    "name": "api-published-MONGO-run.txt",
+    "sha256": "AC1C412733ECA0961F299E59E9AC096180AD6838BD148B37754615E75285607E",
+    "bytes": 28693
+  },
+  {
+    "name": "api-published-MSSQL-build.txt",
+    "sha256": "454ED0B435DD7E4FCAA3593B959A0AFE139427A1AF384C41F9C55D2F8156D028",
+    "bytes": 382
+  },
+  {
+    "name": "api-published-MSSQL-restore.txt",
+    "sha256": "01413C8650AE2D50D7F347F4DDB6575B2A39EF33AE8BAACBE82853CD0A3A81AD",
+    "bytes": 544
+  },
+  {
+    "name": "api-published-MSSQL-run.txt",
+    "sha256": "E295BA229FDAABBAEF257039ABD57C075F2C72A424BE69C3D94FFED548E99AA0",
+    "bytes": 26935
+  },
+  {
+    "name": "api-published-MYSQL-build.txt",
+    "sha256": "371383E3224C78A3DC51335253C37BA0BFCC8DCA16C6B35B15AD0D74229D705E",
+    "bytes": 988
+  },
+  {
+    "name": "api-published-MYSQL-restore.txt",
+    "sha256": "CA0AE8125DEDB49866DF98A98ABC20FD9094DCF48D7FC170AA6AE83CDA06DF59",
+    "bytes": 844
+  },
+  {
+    "name": "api-published-MYSQL-run.txt",
+    "sha256": "30D9983CF7EC4FAA80916B4A65BF36FB59AAAC27AF98C16BC195253028326851",
+    "bytes": 26808
+  },
+  {
+    "name": "api-published-POSTGRES-build.txt",
+    "sha256": "04BC41FAF23963A5A2F6355F6AF8D43F65C26AAE1FE1DAF4FD77D261804BC8CA",
+    "bytes": 388
+  },
+  {
+    "name": "api-published-POSTGRES-restore.txt",
+    "sha256": "D5D63B375F5E46491040B21D162CB747D12284614A0EA0F73178A9992EFFA9AC",
+    "bytes": 551
+  },
+  {
+    "name": "api-published-POSTGRES-run.txt",
+    "sha256": "DB73ABDED5F3430DB7213850EA03EAB9FB594DBD56244EA607B400D289E845FA",
+    "bytes": 26400
+  },
+  {
+    "name": "Build-EvidenceIndex.ps1",
+    "sha256": "EC9C25D4887521B6BFDE19B24F6780A7997E67EA5EDE414C16EE41FE291EBA01",
+    "bytes": 5027
+  },
+  {
+    "name": "build.txt",
+    "sha256": "E308AD831E92F8B6F7C6E8496A20A023F4C4C3E298ABF8B7E713DE4AA8ED9C8B",
+    "bytes": 13363
+  },
+  {
+    "name": "Compile-AllDocExamples.ps1",
+    "sha256": "B35BE0AD560CB764EBDBE0FE849D396668B87B7661FFE49E221DC409D277EDFF",
+    "bytes": 5712
+  },
+  {
+    "name": "configuration-audit.json",
+    "sha256": "1E1DE890B9BEFC0862761197066078B9A361FE587BCEF3B872F7D6BEDD2E034C",
+    "bytes": 786
+  },
+  {
+    "name": "consumer-matrix.json",
+    "sha256": "497FF8091DD2A94FDDAA0270DE97D8FA7340EA61CC8114E6DB3485809A14936C",
+    "bytes": 2949
+  },
+  {
+    "name": "ConsumerProbe.cs",
+    "sha256": "C207EBD571B0C575552925B54D7E15C3C25046AD5E7236E60D566823CCA8A7B0",
+    "bytes": 4604
+  },
+  {
+    "name": "core-registration-verbatim-build.txt",
+    "sha256": "8D372B848396A77B8DBA6142DF7413E07EBB1E43EB8764CBEF3D33AE61819241",
+    "bytes": 806
+  },
+  {
+    "name": "core-registration-verbatim-restore.txt",
+    "sha256": "364963F6A0FC3FF0982A842BAF34D94E14FC7C89CDCD751E82C1C471BEE313CF",
+    "bytes": 484
+  },
+  {
+    "name": "core-registration-verbatim.cs.txt",
+    "sha256": "58DABE36B6AA5A08EDE5829EC18C7D4BD27761F079EB26BF8F0A36F2271BE95F",
+    "bytes": 328
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-10-build.txt",
+    "sha256": "FE79860AD3372CB093A1602C0DC7C804B19331ECBEF9E9A03E990C800A5742B6",
+    "bytes": 4793
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-10-excerpt.cs.txt",
+    "sha256": "5AAC2968BEDCBFD4BB9E53158B1FF65F38985CAB3B9A23724F5997A2BC801063",
+    "bytes": 648
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-11-build.txt",
+    "sha256": "C63F285CBA0CF5BE0F133E7C75031BA991A0BADA55EC47E4BDD8654BFC6715B6",
+    "bytes": 6406
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-11-excerpt.cs.txt",
+    "sha256": "A262FFB9F31CCCF119078C3577821A3C71E92F3736531873E4F5E49B240FD953",
+    "bytes": 512
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-3-build.txt",
+    "sha256": "93EFFFE0F8BEDEA1F89D4969859FA379EF1E875D0C464990A72DBED5B1A4C8EA",
+    "bytes": 6920
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-3-excerpt.cs.txt",
+    "sha256": "271E7E631F594A58958C5FEAD8E932B5F2127DBA599C225098B43A88D14CEF8F",
+    "bytes": 357
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-4-build.txt",
+    "sha256": "9DD222A4AD981CC8785BF733678A03251142092E0C02055E9EAA7289F8C70FCF",
+    "bytes": 2372
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-4-excerpt.cs.txt",
+    "sha256": "FBC613E4385740B6C8F9E329EEB9541604496C713A21FD94D25E75315E3E9417",
+    "bytes": 107
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-5-build.txt",
+    "sha256": "9D7045D0707519F711C3E252895C56B77786C6ADE9B73B8CBAA846773A14EDF4",
+    "bytes": 5449
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-5-excerpt.cs.txt",
+    "sha256": "E9A7E11129676B7B3C4A93441FB89527F0F34133F11873C55F671EC7874EA39F",
+    "bytes": 1078
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-7-build.txt",
+    "sha256": "44F1C3D0BB8EF548146B465A9C9E76D988C87C8BC456A1CCB52B8A30CC828D5E",
+    "bytes": 1773
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-7-excerpt.cs.txt",
+    "sha256": "6699262643D845E500C8602FEA19C60CCBCDB6BC71CEAAF446058D43CD6F4C85",
+    "bytes": 131
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-8-build.txt",
+    "sha256": "868BE0A62552D2A5E044924519514596BC7549C392EE9ACAAE88375CB24C5DF4",
+    "bytes": 3623
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-8-excerpt.cs.txt",
+    "sha256": "F36F3044ADC35D971167D72F7C95D3F3EF0B50622665F2C83B453C3975F049BB",
+    "bytes": 855
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-9-build.txt",
+    "sha256": "5BA1A9CF0B4BF242AC3CF0362B04C5664DDD8A80CAE72532531E84ECFF68B813",
+    "bytes": 5447
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-9-excerpt.cs.txt",
+    "sha256": "99E3D0DA5DEEE1B6355133F3602214021919382C06CF3E18F994203182DAE478",
+    "bytes": 192
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-2-build.txt",
+    "sha256": "4A2541BBFD21D9329D0CE80D3F3765EADC19574523209CB8EE2FA5A9B4A18F0B",
+    "bytes": 3333
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-2-excerpt.cs.txt",
+    "sha256": "92A1A63DED629F5D8B6A4BC8747B154E97075DC5C5EB2D43D4CDEA421E237F5A",
+    "bytes": 315
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-3-build.txt",
+    "sha256": "5D58A845B25680EB083558F31B7C68AA2ED26F99007999D22102E7BDE0BB3D9A",
+    "bytes": 4837
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-3-excerpt.cs.txt",
+    "sha256": "97EA210A600F021DD194941B35744E6071F16D9E2A3BA947A838189A8A290D9F",
+    "bytes": 813
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-4-build.txt",
+    "sha256": "5A20845BA4FE05BFC582E68F5A1A33D5E731D92DEC73E68B3FA70B3930F1BCF1",
+    "bytes": 4837
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-4-excerpt.cs.txt",
+    "sha256": "5924880701706ECEDD13C0960C476739C1CD882844BC47BDF205B2729B78EE20",
+    "bytes": 695
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-5-build.txt",
+    "sha256": "979C28E989CD385242CFFFFADA9D7D7C2569D1DE061FFFB7451D8C49F8B0608B",
+    "bytes": 4837
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-5-excerpt.cs.txt",
+    "sha256": "E59E4DA6BA4908278DAEC40B8B3415D7EA122C4E2F2AD5A6752A6858FD7BEDAD",
+    "bytes": 694
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-6-build.txt",
+    "sha256": "740F563485DC19AE553F4CBF152F1802764967BB65795F9144896A2705471AA7",
+    "bytes": 4837
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-6-excerpt.cs.txt",
+    "sha256": "AC62C5048EB733E42D412B85F2F3866B14536C621C33A31FC23556D12B66F8EA",
+    "bytes": 562
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-7-build.txt",
+    "sha256": "3AE9A802326737F8EB2A6D8EC29E3BCA9AD7F161EA41C3664662129D9EC5AB9A",
+    "bytes": 4837
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-7-excerpt.cs.txt",
+    "sha256": "2D8E3ED2A5D3D21BB8DB3830522FD6EDDF3AAD5BB6390CB0309D582682D24044",
+    "bytes": 255
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-8-build.txt",
+    "sha256": "5E6560B25EC4B20BDF1CB2FA52C97B82EC47B51FA48C352A16C25B94E2625EEC",
+    "bytes": 4837
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-8-excerpt.cs.txt",
+    "sha256": "C5866A2EC6EE794C3D7B6A0E80099BBEAC0B655A7E207328DA5AD0C264FE692D",
+    "bytes": 503
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-9-build.txt",
+    "sha256": "5FA98ACB6BC0DD398D5AEF02B4ED2FC82BBDD941C4B2444547AE74CB3CF1DF55",
+    "bytes": 4837
+  },
+  {
+    "name": "DataAccessProvider-MongoDB-README-md-fence-9-excerpt.cs.txt",
+    "sha256": "9C89384420072A705B4715BA5A67ACC3668F9C965A979C59D05081B2399209CD",
+    "bytes": 472
+  },
+  {
+    "name": "DataAccessProvider-MSSQL-README-md-fence-1-build.txt",
+    "sha256": "E7A810059F25EB20CED3D7F82A898034595B5AE0D0AD3416309466F568B35F76",
+    "bytes": 4442
+  },
+  {
+    "name": "DataAccessProvider-MSSQL-README-md-fence-1-excerpt.cs.txt",
+    "sha256": "5E7C6008D70FBC02A037D7EB5BA78A66A88DC7D3AF1C28DD4CFC19BBFAF4ECC3",
+    "bytes": 166
+  },
+  {
+    "name": "DataAccessProvider-MSSQL-README-md-fence-3-build.txt",
+    "sha256": "22AC030120F3C5763DFEE50091345AC3572746A1CFB291F7E8595F54ADCF8974",
+    "bytes": 5475
+  },
+  {
+    "name": "DataAccessProvider-MSSQL-README-md-fence-3-excerpt.cs.txt",
+    "sha256": "0C725BFFDCE5E550F3600807ADBB9A6FD9B1FC331613803AFFB5CFD58E5E4FCC",
+    "bytes": 622
+  },
+  {
+    "name": "DataAccessProvider-MSSQL-README-md-fence-5-build.txt",
+    "sha256": "AF5CF35CBF11ADCE781D1016FCEC20C6B9A4FA9C9D725DA4BB3F94FEB7E660AC",
+    "bytes": 4039
+  },
+  {
+    "name": "DataAccessProvider-MSSQL-README-md-fence-5-excerpt.cs.txt",
+    "sha256": "08BB510F118D1192859A37198331BF7D938A51C75B6D1EA226ED048B55037F78",
+    "bytes": 425
+  },
+  {
+    "name": "DataAccessProvider-MSSQL-README-md-fence-6-build.txt",
+    "sha256": "6EA219411249C95CC7368B1C02BC4467365981114D8198988EC62C92FE520230",
+    "bytes": 4364
+  },
+  {
+    "name": "DataAccessProvider-MSSQL-README-md-fence-6-excerpt.cs.txt",
+    "sha256": "61CBE977225272BC1323EB3572A96E588C65B69949C3EE5F1163A0DB9B574D20",
+    "bytes": 348
+  },
+  {
+    "name": "DataAccessProvider-MySql-README-md-fence-1-build.txt",
+    "sha256": "E6085CFBD456BCD980089AC4A8945C004436640D0F91D0F4744E93D6D01CDA9A",
+    "bytes": 5588
+  },
+  {
+    "name": "DataAccessProvider-MySql-README-md-fence-1-excerpt.cs.txt",
+    "sha256": "295CAD0DA99A5FB325ADB109696AFF9811555614B24F15ECDBD2B55BA4647FCC",
+    "bytes": 178
+  },
+  {
+    "name": "DataAccessProvider-MySql-README-md-fence-3-build.txt",
+    "sha256": "7B64928D0BE12CD7BF1D50CEF322278F29F0FA22FF090653DE6ED51D8EADAFDB",
+    "bytes": 5475
+  },
+  {
+    "name": "DataAccessProvider-MySql-README-md-fence-3-excerpt.cs.txt",
+    "sha256": "09241818E9AC60FAA49E1789654700E792B23C26C5273E36A6B9A3DC73E71332",
+    "bytes": 618
+  },
+  {
+    "name": "DataAccessProvider-MySql-README-md-fence-5-build.txt",
+    "sha256": "9256D74A18277A7CBA3F389EF8DFFED7A73F3C1B608985367CB6E18FCABA2326",
+    "bytes": 4039
+  },
+  {
+    "name": "DataAccessProvider-MySql-README-md-fence-5-excerpt.cs.txt",
+    "sha256": "7A49F171DC31DACB5591A9CBF63A3298B1F2A079D8D4BD78B6A7B1BF369F1DC7",
+    "bytes": 425
+  },
+  {
+    "name": "DataAccessProvider-MySql-README-md-fence-6-build.txt",
+    "sha256": "8A7B403D20B79DE5413D10ED75FAB92CAD20E538152F32062650028C83FA5D22",
+    "bytes": 6406
+  },
+  {
+    "name": "DataAccessProvider-MySql-README-md-fence-6-excerpt.cs.txt",
+    "sha256": "A262FFB9F31CCCF119078C3577821A3C71E92F3736531873E4F5E49B240FD953",
+    "bytes": 512
+  },
+  {
+    "name": "DataAccessProvider-Postgres-README-md-fence-2-build.txt",
+    "sha256": "2DB626B1B6899AB8F84B2F6381D514EA7E03E88AB0DD5017DCA059BFAFC40468",
+    "bytes": 3347
+  },
+  {
+    "name": "DataAccessProvider-Postgres-README-md-fence-2-excerpt.cs.txt",
+    "sha256": "14B7ECA0AC9C1A61ABBD40430FDD3DE0E1172216C87066A418F11F9494192335",
+    "bytes": 226
+  },
+  {
+    "name": "DataAccessProvider-Postgres-README-md-fence-3-build.txt",
+    "sha256": "28D39D6AD431C5ED4D6FEE76A8C9CD1600FED552EBE5099D8B6B03D15C452CB2",
+    "bytes": 4881
+  },
+  {
+    "name": "DataAccessProvider-Postgres-README-md-fence-3-excerpt.cs.txt",
+    "sha256": "5D00AC7D91FEE4207EF55F7D3A6666617A5D9C6C434BA6CF9041ED829ECEBA3C",
+    "bytes": 121
+  },
+  {
+    "name": "DataAccessProvider-Postgres-README-md-fence-4-build.txt",
+    "sha256": "0007F09D6EFC842F4175438E7719AC1E9D9681F226375978382B87C6BB16BE90",
+    "bytes": 5816
+  },
+  {
+    "name": "DataAccessProvider-Postgres-README-md-fence-4-excerpt.cs.txt",
+    "sha256": "E562602E6503964BD7261DA79AC01E937453F8B3644C9C2C37B4658F17EBC69C",
+    "bytes": 353
+  },
+  {
+    "name": "DataAccessProvider-Postgres-README-md-fence-5-build.txt",
+    "sha256": "C7ED680348992DCE2832C3E1E4719477422954A0410F64E3E5A0FB1D62A6E5E4",
+    "bytes": 5888
+  },
+  {
+    "name": "DataAccessProvider-Postgres-README-md-fence-5-excerpt.cs.txt",
+    "sha256": "4A76B453B05051EB72E54DDE33ECCDE176AF9B19C80D3BD96CC87E91D2181C1F",
+    "bytes": 217
+  },
+  {
+    "name": "DataAccessProvider-Postgres-README-md-fence-6-build.txt",
+    "sha256": "E820E7F6AB74F0B1BCE3063EF734BED74259DC436CB12A684BA03920313D60B4",
+    "bytes": 4093
+  },
+  {
+    "name": "DataAccessProvider-Postgres-README-md-fence-6-excerpt.cs.txt",
+    "sha256": "809CD61AA0D682D8128FDB256792C8517FDE3E91681D85914ACD95A771E3252E",
+    "bytes": 428
+  },
+  {
+    "name": "database-images.json",
+    "sha256": "3D465AC4B64E4DBC885FB860F1A1FBA4025C3A7417564ECD169391325A6B7A5F",
+    "bytes": 1892
+  },
+  {
+    "name": "dependency-audit.json",
+    "sha256": "8952C2492C672E8229E5DA60BEEB4B442B55FE067CD4362A9A11A1A7317B1CA4",
+    "bytes": 2383
+  },
+  {
+    "name": "dependency-map.json",
+    "sha256": "0DC5E6ECAE988330436B1317670D46273D41E63CAD726C145A950D2961B7FC3B",
+    "bytes": 122527
+  },
+  {
+    "name": "docs-DataAccessProvider-MongoDB-README-md-registration-build.txt",
+    "sha256": "D6B9BE35A84E49A2F5C089401EBF7D82B24F1F2FE14D56A881E214FE90F596DD",
+    "bytes": 1574
+  },
+  {
+    "name": "docs-DataAccessProvider-MongoDB-README-md-registration-excerpt.cs.txt",
+    "sha256": "92A1A63DED629F5D8B6A4BC8747B154E97075DC5C5EB2D43D4CDEA421E237F5A",
+    "bytes": 315
+  },
+  {
+    "name": "docs-DataAccessProvider-MongoDB-README-md-registration-restore.txt",
+    "sha256": "D0394A0E9D21C298EF4AEBA343C6AD0EFF2AED9D3BB5547DA5517A24A572BD2F",
+    "bytes": 1203
+  },
+  {
+    "name": "docs-DataAccessProvider-MSSQL-README-md-registration-build.txt",
+    "sha256": "12EFE3C08EC0CF6AA1420C6CA27B300657BEFD63A2DE5846B5CF5BE6025806A0",
+    "bytes": 1419
+  },
+  {
+    "name": "docs-DataAccessProvider-MSSQL-README-md-registration-excerpt.cs.txt",
+    "sha256": "5E7C6008D70FBC02A037D7EB5BA78A66A88DC7D3AF1C28DD4CFC19BBFAF4ECC3",
+    "bytes": 166
+  },
+  {
+    "name": "docs-DataAccessProvider-MSSQL-README-md-registration-restore.txt",
+    "sha256": "6E7B5871C0D01304367183DA6CA3D4A018DCCA1367241A5B6BF7CBFE3B44373A",
+    "bytes": 639
+  },
+  {
+    "name": "docs-DataAccessProvider-MySql-README-md-registration-build.txt",
+    "sha256": "81C23FEFAA0829C4AC5391584FABBEDE1193B498F5A8C3745595004FCFECF1E6",
+    "bytes": 2567
+  },
+  {
+    "name": "docs-DataAccessProvider-MySql-README-md-registration-excerpt.cs.txt",
+    "sha256": "295CAD0DA99A5FB325ADB109696AFF9811555614B24F15ECDBD2B55BA4647FCC",
+    "bytes": 178
+  },
+  {
+    "name": "docs-DataAccessProvider-MySql-README-md-registration-restore.txt",
+    "sha256": "C9FD210F00F203B5CA2E2D12DEA61E5204C2EC31612F2383583BF0673108B529",
+    "bytes": 637
+  },
+  {
+    "name": "docs-DataAccessProvider-Postgres-README-md-registration-build.txt",
+    "sha256": "41D1BBD80EECBB483DB86790D8740E72F5ECBFCDBBA8F50F1A1F7C7C2AAD61C9",
+    "bytes": 454
+  },
+  {
+    "name": "docs-DataAccessProvider-Postgres-README-md-registration-excerpt.cs.txt",
+    "sha256": "14B7ECA0AC9C1A61ABBD40430FDD3DE0E1172216C87066A418F11F9494192335",
+    "bytes": 226
+  },
+  {
+    "name": "docs-DataAccessProvider-Postgres-README-md-registration-restore.txt",
+    "sha256": "E711EE9C51367DA491516E23C53A2CF2801F93B921EE49AAFC38A18EB895B5A4",
+    "bytes": 648
+  },
+  {
+    "name": "documentation-checks.json",
+    "sha256": "BA90FB1C07230AE11F0D17217707DD95297CECC13D63CF9F4C754F6AA046AA97",
+    "bytes": 595
+  },
+  {
+    "name": "evaluated-baseline.json",
+    "sha256": "CAC94742A58E1BE3A7BF85641CCB107DB3F779ABE334B9060A8315D69BA62F60",
+    "bytes": 34556
+  },
+  {
+    "name": "example-checks.json",
+    "sha256": "ABFD3404E4483C876B8CD37D6BA0F4439BEBC51D213BBEC8B19B1B199BACB7A6",
+    "bytes": 1181
+  },
+  {
+    "name": "experiment-MONGO-build.txt",
+    "sha256": "A5AF4C8A7C2259A837A659DFAB27E40FDDE67FE23B729CDE62DD2220FA27E356",
+    "bytes": 1229
+  },
+  {
+    "name": "experiment-MONGO-restore.txt",
+    "sha256": "80ECF774613AD7FEB49DCD7ED5E0D159629F18794C416CED30F265FFB021B79D",
+    "bytes": 678
+  },
+  {
+    "name": "experiment-MONGO-results.json",
+    "sha256": "8E3D5B2A02B2CCA50DC43AD927B6FDC5E1F5877D04F97AA487BDED6BF4695D7C",
+    "bytes": 28592
+  },
+  {
+    "name": "experiment-MSSQL-build.txt",
+    "sha256": "140001C7CE692A56F5ABD8D4D2C1DFA9EF1BADB91FCFD07EEBA54A9A0C36E91C",
+    "bytes": 223
+  },
+  {
+    "name": "experiment-MSSQL-restore.txt",
+    "sha256": "582156DECEA88EA050605BCE04397B04861BAA17754FACE312C52552A6BBA032",
+    "bytes": 176
+  },
+  {
+    "name": "experiment-MSSQL-results.json",
+    "sha256": "55A2F12A9B07A4813E97C4941F4798503080BB8ACF0EC90EE1E72618C68B1E47",
+    "bytes": 26834
+  },
+  {
+    "name": "experiment-MYSQL-build.txt",
+    "sha256": "FDA7F62F3376A287AEA5361CE51BF1096B82246C75A9DE9C05D36F84A4084B95",
+    "bytes": 223
+  },
+  {
+    "name": "experiment-MYSQL-restore.txt",
+    "sha256": "7B5D8D439B80956A3ED63284DDEDA00692B43C41E41C0940CB332367081C0D8B",
+    "bytes": 176
+  },
+  {
+    "name": "experiment-MYSQL-results.json",
+    "sha256": "F07DB64F035289234509C701A8F8F1D70712B9793D34857588698C54575F422F",
+    "bytes": 27284
+  },
+  {
+    "name": "experiment-ORACLE-build.txt",
+    "sha256": "B8D833B9777A603305AB5710BCC73AF9E1C17912178CD02D7406646F18F7907E",
+    "bytes": 224
+  },
+  {
+    "name": "experiment-ORACLE-restore.txt",
+    "sha256": "D4D0DA55A621943BEE1CB933F1168546B242EA546979258C69502F7C62B252EC",
+    "bytes": 177
+  },
+  {
+    "name": "experiment-ORACLE-results.json",
+    "sha256": "EFA684D37584EF2558D2212A606CFFC182B22C36A5B16129DFEB38845E16AD3D",
+    "bytes": 24869
+  },
+  {
+    "name": "experiment-SNOWFLAKE-build.txt",
+    "sha256": "31DBDDB8D70AD8863FAD0FC26F6B7D8C732D7C096A91DA320AB46CA32D8CB8AE",
+    "bytes": 227
+  },
+  {
+    "name": "experiment-SNOWFLAKE-restore.txt",
+    "sha256": "18B5E89E498136AC2EF6EFB48C2EAEB90B1A3FD369358D28ADB2E044585DA4CE",
+    "bytes": 180
+  },
+  {
+    "name": "experiment-SNOWFLAKE-results.json",
+    "sha256": "A7ACC5EF32C947C47274D55D91AC21D3E5DF18247C89CF6F7A963A672439498E",
+    "bytes": 24887
+  },
+  {
+    "name": "experimental-Core.nuspec.xml",
+    "sha256": "D4CA9A289EE259D67829B7BD74DED7945A1E1DED193A7BC28C6A7AB5D9B8C596",
+    "bytes": 1386
+  },
+  {
+    "name": "fixture-cleanup.json",
+    "sha256": "3A3B79C51661B1A9A9470B29EB53A2F4110B92FCAD6B7BEBCB906F4402354066",
+    "bytes": 99
+  },
+  {
+    "name": "historical-MYSQL-api.json",
+    "sha256": "3B0AD148873A7BF9C5BAAF11F70046512EBB8CDEFB1F4C19561D80930671F810",
+    "bytes": 2025
+  },
+  {
+    "name": "historical-MYSQL-build.txt",
+    "sha256": "B301641F1D2F3CC491BEFD8DD9889E02AFEFC307B5E96F247BA1026C986DB547",
+    "bytes": 808
+  },
+  {
+    "name": "historical-MYSQL-declared-commit-source.cs.txt",
+    "sha256": "3413DEDADB143F4DCFADD767D374E15F234C3C321838B4A33A1456ED2D616C3D",
+    "bytes": 3270
+  },
+  {
+    "name": "historical-MYSQL-restore.txt",
+    "sha256": "789182ECAA7A0B86BFDA720DB1C4367F9694FDF79D7DC73B26E0E0FA4F7366E0",
+    "bytes": 460
+  },
+  {
+    "name": "hosted-registration-MONGO-build.txt",
+    "sha256": "73A60EBBA4FA0DEEA085A4403FB84E0CD18804F9D2A644D32E18EDDDEEA13A15",
+    "bytes": 1274
+  },
+  {
+    "name": "hosted-registration-MONGO-restore.txt",
+    "sha256": "ED1B84E409F557F2340AD09FC8A6EAC892040A08D63804945264E8DD2F3C207C",
+    "bytes": 1002
+  },
+  {
+    "name": "hosted-registration-MONGO-run.txt",
+    "sha256": "CBE3E4EEAEB3C608C59A7FD2F7E2ABBFDD1999B08F280A2936C8D32E4D392EE7",
+    "bytes": 1122
+  },
+  {
+    "name": "hosted-registration-MONGO.cs.txt",
+    "sha256": "5D13B8060BC9163E1A164C6253D99B29D238188A7755DAD521DA16A38D5F8D2E",
+    "bytes": 3070
+  },
+  {
+    "name": "hosted-registration-MSSQL-build.txt",
+    "sha256": "50BB3702BF8C7C424C306D4367294C215B974E08B90BBF0EF1AE79A943424283",
+    "bytes": 412
+  },
+  {
+    "name": "hosted-registration-MSSQL-restore.txt",
+    "sha256": "B3DDAFDADCD6293F81099489A59714AA832238027D28EDD6377C146109193475",
+    "bytes": 482
+  },
+  {
+    "name": "hosted-registration-MSSQL-run.txt",
+    "sha256": "E8DCF082B7BAF98B6A266441AEAA025C785E1677AB22BD8FA3DE798DE26FC3B7",
+    "bytes": 470
+  },
+  {
+    "name": "hosted-registration-MSSQL.cs.txt",
+    "sha256": "89B29FD0F1C0225F25830E2225D464EDC34842FF362DB9CFEA767C1451796A70",
+    "bytes": 2701
+  },
+  {
+    "name": "hosted-registration-MYSQL-build.txt",
+    "sha256": "25BD7CDCA8B818AB431A2E14832AE4A66A221111C14D602E91A80DBE617C3843",
+    "bytes": 412
+  },
+  {
+    "name": "hosted-registration-MYSQL-restore.txt",
+    "sha256": "04AC7C1B56C850D1F4C6CDEB03F65188366F088E8A9CF7702F01F18916C311C4",
+    "bytes": 482
+  },
+  {
+    "name": "hosted-registration-MYSQL-run.txt",
+    "sha256": "3D468E7D63EF7FBD7470DAB6AB52130642485223ED918390551C005BC857F0F9",
+    "bytes": 632
+  },
+  {
+    "name": "hosted-registration-MYSQL.cs.txt",
+    "sha256": "89B29FD0F1C0225F25830E2225D464EDC34842FF362DB9CFEA767C1451796A70",
+    "bytes": 2701
+  },
+  {
+    "name": "hosted-registration-POSTGRES-build.txt",
+    "sha256": "E0D3FCEEDA8BDF6FCD76C7B9CEF2BFD8F8928CCEDA7BCE364960D8AA375DBD00",
+    "bytes": 418
+  },
+  {
+    "name": "hosted-registration-POSTGRES-restore.txt",
+    "sha256": "4520BD640EC37F14CB8258D999D00CCD897785C70A290D83A7640561B18DE23A",
+    "bytes": 488
+  },
+  {
+    "name": "hosted-registration-POSTGRES-run.txt",
+    "sha256": "FE9A1FEE196916CBD5E5CB9C193938EB83C57CEFD601B60B28EBDFE7733E391D",
+    "bytes": 479
+  },
+  {
+    "name": "hosted-registration-POSTGRES.cs.txt",
+    "sha256": "89B29FD0F1C0225F25830E2225D464EDC34842FF362DB9CFEA767C1451796A70",
+    "bytes": 2701
+  },
+  {
+    "name": "HostedRegistrationProbe.cs",
+    "sha256": "5D13B8060BC9163E1A164C6253D99B29D238188A7755DAD521DA16A38D5F8D2E",
+    "bytes": 3070
+  },
+  {
+    "name": "Inspect-ApiAndDocs.ps1",
+    "sha256": "8717B7D3E018E149C3CCC154FF651B95BF6B4821F3279F7C27C0B919BA8089F2",
+    "bytes": 5536
+  },
+  {
+    "name": "integration-first-pass-summary.json",
+    "sha256": "99AD41C8CDF989D423DE16F13B1732DFBB9D85C341ABD43812D9D3F89A0C872E",
+    "bytes": 295
+  },
+  {
+    "name": "integration-MONGO-build.txt",
+    "sha256": "0A52CE48F240091B56F3521D4C8EB87D553B887410BD0F910334191364E9FA28",
+    "bytes": 1189
+  },
+  {
+    "name": "integration-MONGO-fixture.json",
+    "sha256": "5F5DD6AC2F627BD62FC78C76E4A09A6A621702D350348723B010E14C8CF75EC8",
+    "bytes": 283
+  },
+  {
+    "name": "integration-MONGO-restore.txt",
+    "sha256": "9F7B66F6014B365988FA24A7C8521070623F7C932B9639B7032866B0B4B9F5BA",
+    "bytes": 568
+  },
+  {
+    "name": "integration-MONGO-results.json",
+    "sha256": "8BDD8A13DE09D5E75FD5B332B0EF60EE176F0ACEF0A79B89571FD73DDA043FBE",
+    "bytes": 1476
+  },
+  {
+    "name": "integration-MSSQL-build.txt",
+    "sha256": "64F6EDA3630075DEB78C3571187A9D373372282642FD5755B7CDBB8933D23BF1",
+    "bytes": 215
+  },
+  {
+    "name": "integration-MSSQL-fixture.json",
+    "sha256": "B8EE2ED6DC65B2466A77CC182D6E56E34544BC390EFFF08E50AE0237BBBAC556",
+    "bytes": 327
+  },
+  {
+    "name": "integration-MSSQL-initial-cancellation-observation.json",
+    "sha256": "A1D0699CAD14220D96DC47572E6938A5906B8978BBC4957C4AE544F335E24C3E",
+    "bytes": 12662
+  },
+  {
+    "name": "integration-MSSQL-restore.txt",
+    "sha256": "2AD9967F2280D0195AD457A92FE6A353A8492625846632386DF6DFC446EFE4BC",
+    "bytes": 82
+  },
+  {
+    "name": "integration-MSSQL-results.json",
+    "sha256": "30B7165921B1931091AEAE20E70D74EC6AAE5F997CA00A67CBA257CD9DFB438E",
+    "bytes": 8013
+  },
+  {
+    "name": "integration-MYSQL-build.txt",
+    "sha256": "6282753F90C1027BDFE8EACDA957E99CA48ACE64344A9C56F7F383B48107A2C9",
+    "bytes": 215
+  },
+  {
+    "name": "integration-MYSQL-fixture.json",
+    "sha256": "991998C4599D57D2B92B4BC3E1AE422BE8E432035DC10B268E225234F04A5067",
+    "bytes": 286
+  },
+  {
+    "name": "integration-MYSQL-restore.txt",
+    "sha256": "2AD9967F2280D0195AD457A92FE6A353A8492625846632386DF6DFC446EFE4BC",
+    "bytes": 82
+  },
+  {
+    "name": "integration-MYSQL-results.json",
+    "sha256": "1F640B52C9CA7D586AA0DE54451A1DCC0C6A0AE857F87C4E3EE0976D9A6CFBE4",
+    "bytes": 5800
+  },
+  {
+    "name": "integration-ORACLE-build.txt",
+    "sha256": "1CB5EBA28D26DED952170EE72EECD6FF26723909A6156D51EE98AD9580E71380",
+    "bytes": 2410
+  },
+  {
+    "name": "integration-ORACLE-container.txt",
+    "sha256": "3274127CF9AA21EAB99CE49F35F0D0974EA7C24C132D020688C9030AF181EBBF",
+    "bytes": 216
+  },
+  {
+    "name": "integration-ORACLE-default-size-first.json",
+    "sha256": "19D29F78A4277D140D0B26219CBBC7DA7DE796CEB2B2EF1B2243E13218B26528",
+    "bytes": 1308
+  },
+  {
+    "name": "integration-ORACLE-fixture.json",
+    "sha256": "C67A8D14B2BAE30D6AAFF7C5C6CFC228E9AE41B1385BE0F53020C0C1B8B4B1E0",
+    "bytes": 330
+  },
+  {
+    "name": "integration-ORACLE-initial-startup.txt",
+    "sha256": "A9F8315201F410B7221FFF955C8FF721670F1E6228DAF8E92D3700869F7F50EC",
+    "bytes": 3395
+  },
+  {
+    "name": "integration-ORACLE-restore.txt",
+    "sha256": "2AD9967F2280D0195AD457A92FE6A353A8492625846632386DF6DFC446EFE4BC",
+    "bytes": 82
+  },
+  {
+    "name": "integration-ORACLE-results.json",
+    "sha256": "CC4CCB65060C6052AB6C526113089BAF2D9AC03810EAF816E799B575274CE26C",
+    "bytes": 5676
+  },
+  {
+    "name": "integration-POSTGRES-build.txt",
+    "sha256": "E72E4671B903718F1B9D847B3B90E932339D7A4B5DEF9F74179D24B40DDD72A5",
+    "bytes": 218
+  },
+  {
+    "name": "integration-POSTGRES-fixture.json",
+    "sha256": "203B93F0C5CD6B2542671A331CF1854D98F83D16F9BE8208EDE61C16F91AFC70",
+    "bytes": 295
+  },
+  {
+    "name": "integration-POSTGRES-initial-probe-build.txt",
+    "sha256": "EAAA8881165BD302ABBD1E11ACDA0091AD2730CE6137457C2E0630CBDD42C194",
+    "bytes": 2439
+  },
+  {
+    "name": "integration-POSTGRES-restore.txt",
+    "sha256": "2AD9967F2280D0195AD457A92FE6A353A8492625846632386DF6DFC446EFE4BC",
+    "bytes": 82
+  },
+  {
+    "name": "integration-POSTGRES-results.json",
+    "sha256": "35113187244AB675D799C8C3DD6B3FC3500856BE8D07B6863139C8937C1B6656",
+    "bytes": 5946
+  },
+  {
+    "name": "integration-summary.json",
+    "sha256": "075A8856A61BF3C7DF57722C86A9F83A5339BEC54F3BFC64EF1ABA371290DF36",
+    "bytes": 1621
+  },
+  {
+    "name": "IntegrationProbe.cs",
+    "sha256": "4303493DCC3925C6E37C7C8BA9D5A1E6264D034AE5C3D1854AB2BAB88B00981D",
+    "bytes": 12640
+  },
+  {
+    "name": "local-DataAccessProvider.Core-1.3.7.nuspec.xml",
+    "sha256": "B18CEB23E9489FD23A95A0CD48ABA6FC0419CDF0C92EE2AA724387DFFBDB5BD6",
+    "bytes": 1362
+  },
+  {
+    "name": "local-DataAccessProvider.MongoDB-1.3.3.nuspec.xml",
+    "sha256": "0A2D617C5774506EF21682548341B145CAF67696574EC44B7982ECD820F7B78E",
+    "bytes": 1441
+  },
+  {
+    "name": "local-DataAccessProvider.MSSQL-1.3.7.nuspec.xml",
+    "sha256": "FC71E44F33FDF67D5EBABFAD3CA83360DA7FDC17DA15239E74DAA1292B4126E8",
+    "bytes": 1524
+  },
+  {
+    "name": "local-DataAccessProvider.MySql-1.3.4.nuspec.xml",
+    "sha256": "868EB0FE1D677A8243DE24BD34D2A43B1AB93E1E36A3E0864C959A376A19D36D",
+    "bytes": 1624
+  },
+  {
+    "name": "local-DataAccessProvider.Oracle-1.0.0.nuspec.xml",
+    "sha256": "28123ACFA061DF21A9FD5611716B8FE0CCABE5C12885774DFE5028A0B3AF65C6",
+    "bytes": 707
+  },
+  {
+    "name": "local-DataAccessProvider.PostgreSql-1.3.4.nuspec.xml",
+    "sha256": "5D25E1CB724013B94549EFD0D695C8511E12C1444B3A185A31AADE6F5BE15441",
+    "bytes": 1584
+  },
+  {
+    "name": "local-DataAccessProvider.Snowflake-1.0.0.nuspec.xml",
+    "sha256": "58F6F3B56BDA39B879E59CBC64EF182E0F9B557C2A1AFD9FA4689389D9F8C961",
+    "bytes": 781
+  },
+  {
+    "name": "local-MONGO-assets.json",
+    "sha256": "80F9C1EB34928FD9C5A4440FD1330FB296337E5DD364672637CE49DA52A2EFC2",
+    "bytes": 37761
+  },
+  {
+    "name": "local-MONGO-build.txt",
+    "sha256": "2E538099ABBCD763167D715C60DA826897827CF6A50C69CDB7BC109C1719755A",
+    "bytes": 1376
+  },
+  {
+    "name": "local-MONGO-registration.txt",
+    "sha256": "10D4707BBFAAB856CA14E4183F108AD7EA76BD55C0CFE9160E21D8321BB6AD19",
+    "bytes": 2030
+  },
+  {
+    "name": "local-MONGO-restore.txt",
+    "sha256": "931304418F3CAF6D155E52C1C788D2355553AB60901EA1D3DBB4ABA3BE775F6D",
+    "bytes": 1048
+  },
+  {
+    "name": "local-MONGO-run.txt",
+    "sha256": "35A6F331EBC10954A9083B67557F8DE7AF908A4B6DB798DE7A1C68AB2B8DF551",
+    "bytes": 4183
+  },
+  {
+    "name": "local-MSSQL-assets.json",
+    "sha256": "E08D383F18251423D665DF131C3D6E9C03635FBBD329043B8E83A2F9D57F3479",
+    "bytes": 88812
+  },
+  {
+    "name": "local-MSSQL-build.txt",
+    "sha256": "4FA6485B463130DE2CD16027BD46F43E0F1716413FE3529C529D646062BB952E",
+    "bytes": 386
+  },
+  {
+    "name": "local-MSSQL-registration.txt",
+    "sha256": "402A17E3065BEE56ADDBBC32558222DAE8A946A6FDF42306B171E4BC23B08D7A",
+    "bytes": 1556
+  },
+  {
+    "name": "local-MSSQL-restore.txt",
+    "sha256": "D58724A6AD692F45CFBB9DD21AE2BEEE6818DB8DE89A5B6357EB9F5D7D24E075",
+    "bytes": 553
+  },
+  {
+    "name": "local-MSSQL-run.txt",
+    "sha256": "93EDE9BAE2A9F513076660562A40E7BD9B1F9CB9FAE94105D79D6DDD18CFC949",
+    "bytes": 4239
+  },
+  {
+    "name": "local-MYSQL-assets.json",
+    "sha256": "CF263F101A82BB4F8EA612D97286AABBA4A1142221D7102721261A2F8C2478CA",
+    "bytes": 43551
+  },
+  {
+    "name": "local-MYSQL-build.txt",
+    "sha256": "3010E4E27E6008AC1E455EC4BDC0FD9A8DB102F870B610C65D7599A406E9DBFD",
+    "bytes": 386
+  },
+  {
+    "name": "local-MYSQL-registration.txt",
+    "sha256": "0A8FA424393D4ADA580FF372E327389EF94122BB49700285823A4CCDDFE24B37",
+    "bytes": 1556
+  },
+  {
+    "name": "local-MYSQL-restore.txt",
+    "sha256": "743F23C5103323745A7D0BD244EA3E328F149C5004D2CFF0CCE1D0C941A925D7",
+    "bytes": 554
+  },
+  {
+    "name": "local-MYSQL-run.txt",
+    "sha256": "4759584523288AEBF23ABB88F5E1ACDA56D2C1028E760D59C5B1B17B199EDFDC",
+    "bytes": 4231
+  },
+  {
+    "name": "local-ORACLE-assets.json",
+    "sha256": "3759B6E7D5B3EADF7707F0F1B533E5ECAA742ED792648AE3B13D3465781C06D5",
+    "bytes": 48082
+  },
+  {
+    "name": "local-ORACLE-build.txt",
+    "sha256": "4ABC728733F782DD6513E1663C11B5BD467CD5DF01D46BFA69D3C7A0E200A018",
+    "bytes": 388
+  },
+  {
+    "name": "local-ORACLE-restore.txt",
+    "sha256": "E758D16FFF9ADD4C97D96832D8649C61240F59066A967695C36E64934A86FCBD",
+    "bytes": 556
+  },
+  {
+    "name": "local-ORACLE-run.txt",
+    "sha256": "EDBDA87A1FE4BFF61A7F136BF08348C911984DEDC318CAF22B8F289AA63ED3E6",
+    "bytes": 3845
+  },
+  {
+    "name": "local-POSTGRES-assets.json",
+    "sha256": "831AEB441F60D2C934476EFCA15E49808BD6109369E50C6C974A5452589947B2",
+    "bytes": 40657
+  },
+  {
+    "name": "local-POSTGRES-build.txt",
+    "sha256": "71136440D3F7632616FDBA872BE838AC65E9E01F37762DD2621E9F79A3C41996",
+    "bytes": 392
+  },
+  {
+    "name": "local-POSTGRES-registration-run.txt",
+    "sha256": "1064D84D7A7C54ABAA4F09C9E150AB1649926BC459AFD61AA804FEC729799C99",
+    "bytes": 26296
+  },
+  {
+    "name": "local-POSTGRES-registration.txt",
+    "sha256": "2FA7FB1A1863C6D335B45E383522C9AF934F97F946F1E283AE0FF637E62CA31D",
+    "bytes": 222
+  },
+  {
+    "name": "local-POSTGRES-restore.txt",
+    "sha256": "4E8A40E3D23826B9BA9C01F6053EED1908ACB92A832349326D9B9562AC479A85",
+    "bytes": 563
+  },
+  {
+    "name": "local-POSTGRES-run.txt",
+    "sha256": "1A9293A719D56821A900BB51390D15C9155C6855FCA99F05FA7151740702C1A7",
+    "bytes": 26402
+  },
+  {
+    "name": "local-SNOWFLAKE-assets.json",
+    "sha256": "D18751BDAB9E1940C206FB0DEF2D6738BB7E7DC00DA2428FC77E06A815B37B18",
+    "bytes": 91481
+  },
+  {
+    "name": "local-SNOWFLAKE-build.txt",
+    "sha256": "EB7DAA6F8D8E9BBF7101EB36F797CBD9602CF989E63FF94FE72F56DDA028B611",
+    "bytes": 394
+  },
+  {
+    "name": "local-SNOWFLAKE-restore.txt",
+    "sha256": "C5FD38416123C7F50C6ED271E7B76B50F5918B2571E260792AF6C0904836AABC",
+    "bytes": 566
+  },
+  {
+    "name": "local-SNOWFLAKE-run.txt",
+    "sha256": "75CCEF75F20D7024995B7B1A6CDD4D58A6FD43FB8E98473FD59385E6E9BE0FD7",
+    "bytes": 3875
+  },
+  {
+    "name": "mapping-measurement-baseline.json",
+    "sha256": "90607A08792C0B1EBF001ED3CFEC0F41D554CAC5978A123EC1E43696171520E8",
+    "bytes": 531
+  },
+  {
+    "name": "metadata-experiment.json",
+    "sha256": "BDB82E2CB555E75BFA5693C4FF9374DE6A471CC21B99279ED89D245D31966144",
+    "bytes": 435
+  },
+  {
+    "name": "oracle-image-manifest.json",
+    "sha256": "8574DC8535D564F39210AC341D2BE4E0DA5D5E39CBF757D69CBF85DBA8EFBCA8",
+    "bytes": 768
+  },
+  {
+    "name": "oracle-pull-progress.json",
+    "sha256": "DE61301904225922C423CA9B5794EA756B9C1F3C85AEDA95F5377F0B5CF42DB2",
+    "bytes": 85
+  },
+  {
+    "name": "pack-CORE.txt",
+    "sha256": "54A238939F92B730AFAA5326644088B6CAAE65C1C07D8665DC0F42FBC2C94B41",
+    "bytes": 573
+  },
+  {
+    "name": "pack-MONGO.txt",
+    "sha256": "17970F59331FD426D80E4A8DA14B9E1C7C3E3C6830D6545E549A67ED9A17FBAB",
+    "bytes": 911
+  },
+  {
+    "name": "pack-MSSQL.txt",
+    "sha256": "31D39839A64A0FC897AB91184632036A81A4775CA2FD687B65A87D2EADE77716",
+    "bytes": 407
+  },
+  {
+    "name": "pack-MYSQL.txt",
+    "sha256": "17A9665B69D9EB62D86DBB9DF43B5EFA912A26A456A303713098120CA247FA01",
+    "bytes": 407
+  },
+  {
+    "name": "pack-ORACLE.txt",
+    "sha256": "62EA63CB47B8AA876B87E8448E0B417BEE1E316FC3B5554C8B7A645ACED0D7D8",
+    "bytes": 581
+  },
+  {
+    "name": "pack-POSTGRES.txt",
+    "sha256": "3B61E8BCD3B33134FCE3B138934DCC1F456C3CC720E0EB7A3B706828F15174FC",
+    "bytes": 418
+  },
+  {
+    "name": "pack-SNOWFLAKE.txt",
+    "sha256": "55CA8C0E1729CF464D23C388D32709D06E8E0D69408332FEBE366C69F8EECA96",
+    "bytes": 593
+  },
+  {
+    "name": "package-comparison.json",
+    "sha256": "3E35C944CF42D792C456153AB87E6153CBB96F0D3B6394D0E2A95366EBDB1ED5",
+    "bytes": 2327
+  },
+  {
+    "name": "package-inventory.json",
+    "sha256": "ECA443C9CE2450A3143B8ED9F700CF7E7B821F017737105ED07EA622AF72E967",
+    "bytes": 14486
+  },
+  {
+    "name": "postgres-corrected-query-and-transaction-build.txt",
+    "sha256": "E4AEF22201A585A24D9F652E8CD1AFAEB3DBCB6EBFB336DF3C771F6653BA980E",
+    "bytes": 1078
+  },
+  {
+    "name": "postgres-corrected-query-and-transaction-restore.txt",
+    "sha256": "255A8D53CC04EB254742A76FD37DFB7783A93C66A9D64D20409605EFC22D8FFF",
+    "bytes": 512
+  },
+  {
+    "name": "postgres-corrected-query-and-transaction.cs.txt",
+    "sha256": "8A64DAAE986CCE2C414E1277F394555034548AE08EC5845F2899818BC9DD8103",
+    "bytes": 1345
+  },
+  {
+    "name": "postgres-query-verbatim-build.txt",
+    "sha256": "33953A1B4879311BA1FACB9D0DC98E7D3045C775123BD14DD364636CB7314D3E",
+    "bytes": 1123
+  },
+  {
+    "name": "postgres-query-verbatim-restore.txt",
+    "sha256": "95C95F6F906DE35F421A937126F451BF006D39B7D728935BFDE925C074740EBE",
+    "bytes": 478
+  },
+  {
+    "name": "postgres-query-verbatim.cs.txt",
+    "sha256": "63210080C350DE545D0203D6069085A86BF946237368027B05D92EB465DE6470",
+    "bytes": 563
+  },
+  {
+    "name": "postgres-typed-verbatim-build.txt",
+    "sha256": "A7AD71327FAF44213340B1F5A33A55A0F8D9E6AD14B99FDC258D4E5F7265A59D",
+    "bytes": 1205
+  },
+  {
+    "name": "postgres-typed-verbatim-restore.txt",
+    "sha256": "BE926CE507BCC140F21A48CD63640961B367F4707B8C87FDD084629920DCE23D",
+    "bytes": 478
+  },
+  {
+    "name": "postgres-typed-verbatim.cs.txt",
+    "sha256": "FB17B4B14D73FA167711ADC705E56887CA60E1D9D38B797FC00A00AB7D84E436",
+    "bytes": 379
+  },
+  {
+    "name": "public-api-comparison.json",
+    "sha256": "B8EEF02B6540D4BE82228A7C8509783341CF7254C3CB04335C21DC6D1F25A799",
+    "bytes": 1161
+  },
+  {
+    "name": "public-api.json",
+    "sha256": "D03D2D370F7471A97702A3DD591B0408583BA1813DBFC10D357608A871549668",
+    "bytes": 281983
+  },
+  {
+    "name": "public-driver-types.json",
+    "sha256": "C53581889255EC4F824DCD868DE6B2E4988F646F1CD9374EDC15EE628AE85BE8",
+    "bytes": 7989
+  },
+  {
+    "name": "published-DataAccessProvider.Core-1.3.6.nuspec.xml",
+    "sha256": "D551FF23FD9ED4BFEBA6564F4632C1DB1B901C66999F9F7B5930F5876B9B02D8",
+    "bytes": 1362
+  },
+  {
+    "name": "published-DataAccessProvider.Core-1.3.7.nuspec.xml",
+    "sha256": "110252C7C8B9FB53528D3BFD3F265951F0FCFF15C1FE72F38E1C40A06489A5C9",
+    "bytes": 1346
+  },
+  {
+    "name": "published-DataAccessProvider.MongoDB-1.3.3.nuspec.xml",
+    "sha256": "198D88A16C98A2ABA14BB0F6565AE0E95188AC794D3F4117EF80595B21B3B0E1",
+    "bytes": 1421
+  },
+  {
+    "name": "published-DataAccessProvider.MSSQL-1.3.7.nuspec.xml",
+    "sha256": "1DFAFAA3F3DEEA9D4A4AC55F147F9C0D5A24F714C2B8ACFED10152D551423780",
+    "bytes": 1504
+  },
+  {
+    "name": "published-DataAccessProvider.MySql-1.3.4.nuspec.xml",
+    "sha256": "44327B375AE14B19F6159049425BA91796ADD49E749F3A7BDC2EA0641C612186",
+    "bytes": 1624
+  },
+  {
+    "name": "published-DataAccessProvider.PostgreSql-1.3.4.nuspec.xml",
+    "sha256": "6E062D36E4BA7E3C2FFEE914B2C8CBD376D755C5D754BF0379DC45F42A242C0F",
+    "bytes": 1563
+  },
+  {
+    "name": "published-minimum-Core-package.json",
+    "sha256": "2B620D214B79733A0B6CE2875DEE57C5211ADDA2C554C980E656813BEC9E78CB",
+    "bytes": 439
+  },
+  {
+    "name": "published-minimum-matrix.json",
+    "sha256": "66746725959847456BB643D9F2A6596AED4FE441A9B1BB53CC66C1ADD1D56CA6",
+    "bytes": 435
+  },
+  {
+    "name": "published-minimum-MONGO-assets.json",
+    "sha256": "B4886EF29ECE83D199885157BD5C81CF952F7E18AB5C8C93C67B9F541229351D",
+    "bytes": 37815
+  },
+  {
+    "name": "published-minimum-MONGO-build.txt",
+    "sha256": "882030A502D0F1E163D8FFFE49035911C9A43D56F960AC3B8BC67FC69AEEE1A1",
+    "bytes": 1269
+  },
+  {
+    "name": "published-minimum-MONGO-registration.txt",
+    "sha256": "F5064DDF03DC42979889C8D49CD18002D2547908B3D2D9C998E1565421B95B28",
+    "bytes": 1923
+  },
+  {
+    "name": "published-minimum-MONGO-restore.txt",
+    "sha256": "BDDB770CDD26EAFA262234A18E35DF307EFB1D7A038B4BE6F6BCE5389C0F20A9",
+    "bytes": 702
+  },
+  {
+    "name": "published-minimum-MONGO-run.txt",
+    "sha256": "0BC76E7DA3A098596D5984015425C6F1BD1DDCAA76A4ADDFD0985ED0D7AB5E3F",
+    "bytes": 4089
+  },
+  {
+    "name": "published-minimum-MYSQL-assets.json",
+    "sha256": "52A9A7BA1F7186CF38890D859A0E040CF50D5DDA0E89647DE3ED6CDC700C76F2",
+    "bytes": 43605
+  },
+  {
+    "name": "published-minimum-MYSQL-build.txt",
+    "sha256": "898BB62A84D97BBF65F874616714CFC1CF2FFCDBC5774D97760C1D9966FE6869",
+    "bytes": 231
+  },
+  {
+    "name": "published-minimum-MYSQL-registration.txt",
+    "sha256": "8EC9507ECBB9C76F52AFFB89FF80DE5BB2F97C5C298A29E89D19A5D856260D9B",
+    "bytes": 1377
+  },
+  {
+    "name": "published-minimum-MYSQL-restore.txt",
+    "sha256": "6C7D37CEF2E29792A6C23CCBF7EC7FCBA35A4232AF068216E38CBBFC17D4714F",
+    "bytes": 183
+  },
+  {
+    "name": "published-minimum-MYSQL-run.txt",
+    "sha256": "B09A51C162B54CCF3F1B65306AF89DA234360B6F0EC099210BCB2D6656396101",
+    "bytes": 4137
+  },
+  {
+    "name": "published-MONGO-assets.json",
+    "sha256": "443C58F02F01435A9C45FA34FF985D3E977B7D984B1B898B84F68CB6A8E20357",
+    "bytes": 37815
+  },
+  {
+    "name": "published-MONGO-build.txt",
+    "sha256": "52E2E82BBC2177C4C1B1CAEB29781D54FEC19D5D86A657E620E4F0D9B75D8E46",
+    "bytes": 2020
+  },
+  {
+    "name": "published-MONGO-registration.txt",
+    "sha256": "F92E14DDCE757748833EDA1CEEA24F301E57873644BE75CA7ECD678FB3DBDCB0",
+    "bytes": 2686
+  },
+  {
+    "name": "published-MONGO-restore.txt",
+    "sha256": "C55E6CA65C8C1EE18FB9F62ECBC6F2FC59D7FDF426E5428589F3928CA7D85111",
+    "bytes": 1382
+  },
+  {
+    "name": "published-MONGO-run.txt",
+    "sha256": "94444C5F8AA5E37B172308B3DC3DCBD79400E41F159F7E3DB5A2CA11E9171942",
+    "bytes": 4211
+  },
+  {
+    "name": "published-MSSQL-assets.json",
+    "sha256": "80B9C56DA91252C97603EFFB85C30A320722A83E554D61DF1CFD569493789F49",
+    "bytes": 88866
+  },
+  {
+    "name": "published-MSSQL-build.txt",
+    "sha256": "65B2483658E2F5EA58109E34C88D6FB8D52E0D479CC39EC8B927DA9BC110FB39",
+    "bytes": 394
+  },
+  {
+    "name": "published-MSSQL-registration.txt",
+    "sha256": "9EE3D78425624B6554CB05DB2F42E80C4CD8EC6116D121065974BCBE91204E79",
+    "bytes": 1568
+  },
+  {
+    "name": "published-MSSQL-restore.txt",
+    "sha256": "381ADEA4B618F4C9644CA344FD8963509836621CA34DCB1D5C01D2864DD56DD5",
+    "bytes": 570
+  },
+  {
+    "name": "published-MSSQL-run.txt",
+    "sha256": "26604780A4BA1E74ABDB17B362FC18228031D6A925C3E760A59D3B5CC1FF6382",
+    "bytes": 4267
+  },
+  {
+    "name": "published-MYSQL-assets.json",
+    "sha256": "323127F89488C10653C8D4C51B2D7E75AE68C0822CA430DADCFC1BB66CD01FF3",
+    "bytes": 43605
+  },
+  {
+    "name": "published-MYSQL-build.txt",
+    "sha256": "6B7AA6C73B17C63668764D7F1B8382CEB1D66DA0075F93139E95872F1A1283B7",
+    "bytes": 1012
+  },
+  {
+    "name": "published-MYSQL-registration.txt",
+    "sha256": "E5F20198F0A905ED393BC627CD9061A96A38012F03EF3F73E0C460063DA49D36",
+    "bytes": 2184
+  },
+  {
+    "name": "published-MYSQL-restore.txt",
+    "sha256": "6CC586BE06D45B8CFC4727F425CA3C69F09809A8A9F33091CE180B24B20A74BD",
+    "bytes": 878
+  },
+  {
+    "name": "published-MYSQL-run.txt",
+    "sha256": "F8D7D254F9CD55EDD6CA2E9B0CC518DF7AB60E773FE8A90099048BD3DBF8F26A",
+    "bytes": 4259
+  },
+  {
+    "name": "published-POSTGRES-assets.json",
+    "sha256": "86126D3A530DDCBD2E78DB2D78315F55FAC0F62B4CDC58BE4FCF86CB564ADBD4",
+    "bytes": 40711
+  },
+  {
+    "name": "published-POSTGRES-build.txt",
+    "sha256": "D87CC999ECCF1C73F1FAF30B628FD282714FE52EFEDF37F747826824B4723DBD",
+    "bytes": 400
+  },
+  {
+    "name": "published-POSTGRES-registration-run.txt",
+    "sha256": "1064D84D7A7C54ABAA4F09C9E150AB1649926BC459AFD61AA804FEC729799C99",
+    "bytes": 26296
+  },
+  {
+    "name": "published-POSTGRES-registration.txt",
+    "sha256": "88319DFBAFF4C78A503D61ABBECF7BF0BF9C8CDA197C21A877C1911D1DA1538D",
+    "bytes": 226
+  },
+  {
+    "name": "published-POSTGRES-restore.txt",
+    "sha256": "B1835F5CFAEF404DE05310BFE7640EF4CA6C5C108835336AD803ADA0C3F4CCB0",
+    "bytes": 578
+  },
+  {
+    "name": "published-POSTGRES-run.txt",
+    "sha256": "F81BE16ACC67CBA65474DB7E5ED8F82CDB8D2E3414B89FBAE06014B30599F931",
+    "bytes": 26406
+  },
+  {
+    "name": "published-versions.json",
+    "sha256": "02DCACBD42461CE53E25470FADAAECB7FEEAE8C327BC65A80EE80BD8E3BD07A9",
+    "bytes": 1940
+  },
+  {
+    "name": "PublishedMySqlApiProbe.cs",
+    "sha256": "D63D1F28D2BB128DE61570C25C53CAD28A0D406E845CA68F425E97BC59A7B4A4",
+    "bytes": 656
+  },
+  {
+    "name": "README-md-fence-1-build.txt",
+    "sha256": "DB68432CAFF3CAEEA62A4D6D2BECB3F787072F389645FF7A10BD9863F25989F8",
+    "bytes": 2132
+  },
+  {
+    "name": "README-md-fence-1-excerpt.cs.txt",
+    "sha256": "FBC613E4385740B6C8F9E329EEB9541604496C713A21FD94D25E75315E3E9417",
+    "bytes": 107
+  },
+  {
+    "name": "README-md-fence-10-build.txt",
+    "sha256": "79FDC50B6947BB58CAE11A6C30B6508A7CE6E0B74B6DF33900901BDF32C0D3C3",
+    "bytes": 5878
+  },
+  {
+    "name": "README-md-fence-10-excerpt.cs.txt",
+    "sha256": "A262FFB9F31CCCF119078C3577821A3C71E92F3736531873E4F5E49B240FD953",
+    "bytes": 512
+  },
+  {
+    "name": "README-md-fence-3-build.txt",
+    "sha256": "82E05D1F7F761AAA69ED075A3FAECAA4B649F289B581FBB630E9FF0BD3F44FD4",
+    "bytes": 4825
+  },
+  {
+    "name": "README-md-fence-3-excerpt.cs.txt",
+    "sha256": "A2D715A6B9FD35811B37922D1D30630A05BAC35FCFF8C51B4920EF9C8E15D1DA",
+    "bytes": 1308
+  },
+  {
+    "name": "README-md-fence-5-build.txt",
+    "sha256": "1DB3356810263CE8CA7BFC4B31F188CC4541D649CA210660FE41F19180DC025E",
+    "bytes": 4911
+  },
+  {
+    "name": "README-md-fence-5-excerpt.cs.txt",
+    "sha256": "44E20837363A2051B431C0B5FA3770DC9128F5EFF8257C06B09DFF2A3094D5B6",
+    "bytes": 855
+  },
+  {
+    "name": "README-md-fence-6-build.txt",
+    "sha256": "2E219ECA05CF37C51AF4EAA93E78304F77FB471018574D8F9F51A3F984E96E85",
+    "bytes": 1629
+  },
+  {
+    "name": "README-md-fence-6-excerpt.cs.txt",
+    "sha256": "6699262643D845E500C8602FEA19C60CCBCDB6BC71CEAAF446058D43CD6F4C85",
+    "bytes": 131
+  },
+  {
+    "name": "README-md-fence-7-build.txt",
+    "sha256": "E09FA568628BF5F3E56551E781FEA13471D7CA4CC2EE7D8D84822CEE28C4135A",
+    "bytes": 3287
+  },
+  {
+    "name": "README-md-fence-7-excerpt.cs.txt",
+    "sha256": "F36F3044ADC35D971167D72F7C95D3F3EF0B50622665F2C83B453C3975F049BB",
+    "bytes": 855
+  },
+  {
+    "name": "README-md-fence-8-build.txt",
+    "sha256": "77569E8ACFFDFD0D81C62F2F4E6FB7FBFABFB665D32C93D39E3118600101FBA2",
+    "bytes": 4823
+  },
+  {
+    "name": "README-md-fence-8-excerpt.cs.txt",
+    "sha256": "99E3D0DA5DEEE1B6355133F3602214021919382C06CF3E18F994203182DAE478",
+    "bytes": 192
+  },
+  {
+    "name": "README-md-fence-9-build.txt",
+    "sha256": "8633C6CCE75B77E2B765EDB5D7E2C99D75024A2F497E95E9BD56DC5A0FECBE3A",
+    "bytes": 4243
+  },
+  {
+    "name": "README-md-fence-9-excerpt.cs.txt",
+    "sha256": "5AAC2968BEDCBFD4BB9E53158B1FF65F38985CAB3B9A23724F5997A2BC801063",
+    "bytes": 648
+  },
+  {
+    "name": "README.md",
+    "sha256": "FBECBA20F2BC1A34EACE5DEF84264E60D5E37F4C9E8930275D48F897BBE2B8C6",
+    "bytes": 14669
+  },
+  {
+    "name": "reproduction-build.txt",
+    "sha256": "6F7F41EB690505907065E26DA08AE372AE81C6EC2F2EA856DED228BD527E36CA",
+    "bytes": 4329
+  },
+  {
+    "name": "reproduction-restore.txt",
+    "sha256": "2AD9967F2280D0195AD457A92FE6A353A8492625846632386DF6DFC446EFE4BC",
+    "bytes": 82
+  },
+  {
+    "name": "reproduction-results.json",
+    "sha256": "6566249ACE08E4E7595323B40E831B5AD4A87DE8C4255A91358716C48BFE7FEF",
+    "bytes": 3228
+  },
+  {
+    "name": "ReproductionProbe.cs",
+    "sha256": "DEE667D9D73CF7A588F6BDFBA52873732790119B936F001212F8AC5F4C42E578",
+    "bytes": 15882
+  },
+  {
+    "name": "restore.txt",
+    "sha256": "48747CE18875AD642975C1810BA55874DDC1A2C4E84ACFD392A9807206EA271F",
+    "bytes": 2260
+  },
+  {
+    "name": "review-validation.json",
+    "sha256": "A1E274FDB59804CCFA22A8B190233818E0AF28E6A163C30AC60BB77A6660760C",
+    "bytes": 303
+  },
+  {
+    "name": "root-registration-verbatim-build.txt",
+    "sha256": "AA3777C3EFB425DB2D2512DD8848097CF41BBE217D8E42C92877B7E5C38EF071",
+    "bytes": 806
+  },
+  {
+    "name": "root-registration-verbatim-restore.txt",
+    "sha256": "3F156264EDB1F0FB3739A79FC6C7F1A9DF77C48E7FB494E6E546EBEDA9FA409B",
+    "bytes": 484
+  },
+  {
+    "name": "root-registration-verbatim.cs.txt",
+    "sha256": "58DABE36B6AA5A08EDE5829EC18C7D4BD27761F079EB26BF8F0A36F2271BE95F",
+    "bytes": 328
+  },
+  {
+    "name": "Run-ExampleChecks.ps1",
+    "sha256": "111D21CD8AC2866DAF16276E0D408751C76F93E0EEC88A189FF9A84CAED7D408",
+    "bytes": 5662
+  },
+  {
+    "name": "Run-HistoricalApiCheck.ps1",
+    "sha256": "F009D2EAE02FCDB88F78B443D7BDF1A5D3273DBC146EF3C900D7D6F2E57AB6B4",
+    "bytes": 1547
+  },
+  {
+    "name": "Run-Integration.ps1",
+    "sha256": "F54A0CD87B4D95A8D3BA05277D92A365C966680A7352A246D474EB56FD763BE1",
+    "bytes": 5218
+  },
+  {
+    "name": "Run-MetadataExperiment.ps1",
+    "sha256": "CC80DB07D2DDD8226027DA823B7B12344F031FF8D6DCEA1C146EDCDABBC93B86",
+    "bytes": 3154
+  },
+  {
+    "name": "Run-PackageVerification.ps1",
+    "sha256": "11FEBFB4B71333657E9432111FDD2CDB73D85E28CA1CD1749E6ED82CEA484886",
+    "bytes": 8861
+  },
+  {
+    "name": "Run-PublishedMinimumCheck.ps1",
+    "sha256": "485B5676C12216FDFA94E35DFD74F44894BCB5F488FDC8ED95F89AB80DF922C2",
+    "bytes": 3739
+  },
+  {
+    "name": "Run-Reproductions.ps1",
+    "sha256": "F36FB23037C83D4033D4E332623AADB52B6DF934DF908A33B31B64CFD224EF60",
+    "bytes": 1614
+  },
+  {
+    "name": "sdk.txt",
+    "sha256": "E85FB60BD11686E216D750ECC65597AB9F7F3C017C95BB5A2CE7C95526F1FF73",
+    "bytes": 1588
+  },
+  {
+    "name": "source-manifest.json",
+    "sha256": "44A61965CFE74F84BFA9A68F7828A40B7FCEFA8ADDE5D3272316FC73A8A4FA21",
+    "bytes": 17632
+  },
+  {
+    "name": "tests.txt",
+    "sha256": "09C7DF32A7E9A8E68993F068C8AC925A5DA7722B13091DB64942BE144A699CB2",
+    "bytes": 814
+  },
+  {
+    "name": "Validate-Review.ps1",
+    "sha256": "03771FE9520BCAE9E58DAB2E816D01A30DCBCB9988690C02AC85CE01E4621759",
+    "bytes": 3591
+  },
+  {
+    "name": "verification-matrix.json",
+    "sha256": "CBC0A8A5466B5A6213139B3DA298AB8B82CD3C0E9A673A501941CDAD0C233856",
+    "bytes": 46660
+  }
+]

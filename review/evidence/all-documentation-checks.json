@@ -1,0 +1,363 @@
+[
+  {
+    "line": 89,
+    "build": 1,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "failed",
+    "source": "README.md",
+    "name": "README-md-fence-1"
+  },
+  {
+    "line": 119,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "README.md",
+    "name": "README-md-fence-3"
+  },
+  {
+    "name": "README-md-fence-4",
+    "status": "not applicable",
+    "reason": "Displayed result output, not executable C#",
+    "source": "README.md",
+    "line": 160
+  },
+  {
+    "line": 174,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "README.md",
+    "name": "README-md-fence-5"
+  },
+  {
+    "line": 210,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "README.md",
+    "name": "README-md-fence-6"
+  },
+  {
+    "line": 220,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "README.md",
+    "name": "README-md-fence-7"
+  },
+  {
+    "line": 258,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "README.md",
+    "name": "README-md-fence-8"
+  },
+  {
+    "line": 268,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "README.md",
+    "name": "README-md-fence-9"
+  },
+  {
+    "line": 295,
+    "build": 1,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "failed",
+    "source": "README.md",
+    "name": "README-md-fence-10"
+  },
+  {
+    "line": 144,
+    "build": 1,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "failed",
+    "source": "DataAccessProvider.Core/README.md",
+    "name": "DataAccessProvider-Core-README-md-fence-3"
+  },
+  {
+    "line": 160,
+    "build": 1,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "failed",
+    "source": "DataAccessProvider.Core/README.md",
+    "name": "DataAccessProvider-Core-README-md-fence-4"
+  },
+  {
+    "line": 173,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.Core/README.md",
+    "name": "DataAccessProvider-Core-README-md-fence-5"
+  },
+  {
+    "name": "DataAccessProvider-Core-README-md-fence-6",
+    "status": "not applicable",
+    "reason": "Displayed result output, not executable C#",
+    "source": "DataAccessProvider.Core/README.md",
+    "line": 207
+  },
+  {
+    "line": 223,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.Core/README.md",
+    "name": "DataAccessProvider-Core-README-md-fence-7"
+  },
+  {
+    "line": 233,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.Core/README.md",
+    "name": "DataAccessProvider-Core-README-md-fence-8"
+  },
+  {
+    "line": 271,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.Core/README.md",
+    "name": "DataAccessProvider-Core-README-md-fence-9"
+  },
+  {
+    "line": 281,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.Core/README.md",
+    "name": "DataAccessProvider-Core-README-md-fence-10"
+  },
+  {
+    "line": 308,
+    "build": 1,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "failed",
+    "source": "DataAccessProvider.Core/README.md",
+    "name": "DataAccessProvider-Core-README-md-fence-11"
+  },
+  {
+    "line": 78,
+    "build": 1,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "failed",
+    "source": "DataAccessProvider.MSSQL/README.md",
+    "name": "DataAccessProvider-MSSQL-README-md-fence-1"
+  },
+  {
+    "line": 107,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MSSQL/README.md",
+    "name": "DataAccessProvider-MSSQL-README-md-fence-3"
+  },
+  {
+    "name": "DataAccessProvider-MSSQL-README-md-fence-4",
+    "status": "not applicable",
+    "reason": "Displayed result output, not executable C#",
+    "source": "DataAccessProvider.MSSQL/README.md",
+    "line": 127
+  },
+  {
+    "line": 137,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MSSQL/README.md",
+    "name": "DataAccessProvider-MSSQL-README-md-fence-5"
+  },
+  {
+    "line": 164,
+    "build": 1,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "failed",
+    "source": "DataAccessProvider.MSSQL/README.md",
+    "name": "DataAccessProvider-MSSQL-README-md-fence-6"
+  },
+  {
+    "line": 78,
+    "build": 1,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "failed",
+    "source": "DataAccessProvider.MySql/README.md",
+    "name": "DataAccessProvider-MySql-README-md-fence-1"
+  },
+  {
+    "line": 109,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MySql/README.md",
+    "name": "DataAccessProvider-MySql-README-md-fence-3"
+  },
+  {
+    "name": "DataAccessProvider-MySql-README-md-fence-4",
+    "status": "not applicable",
+    "reason": "Displayed result output, not executable C#",
+    "source": "DataAccessProvider.MySql/README.md",
+    "line": 129
+  },
+  {
+    "line": 139,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MySql/README.md",
+    "name": "DataAccessProvider-MySql-README-md-fence-5"
+  },
+  {
+    "line": 166,
+    "build": 1,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "failed",
+    "source": "DataAccessProvider.MySql/README.md",
+    "name": "DataAccessProvider-MySql-README-md-fence-6"
+  },
+  {
+    "line": 25,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.Postgres/README.md",
+    "name": "DataAccessProvider-Postgres-README-md-fence-2"
+  },
+  {
+    "line": 36,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.Postgres/README.md",
+    "name": "DataAccessProvider-Postgres-README-md-fence-3"
+  },
+  {
+    "line": 42,
+    "build": 1,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "failed",
+    "source": "DataAccessProvider.Postgres/README.md",
+    "name": "DataAccessProvider-Postgres-README-md-fence-4"
+  },
+  {
+    "line": 59,
+    "build": 1,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "failed",
+    "source": "DataAccessProvider.Postgres/README.md",
+    "name": "DataAccessProvider-Postgres-README-md-fence-5"
+  },
+  {
+    "line": 74,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.Postgres/README.md",
+    "name": "DataAccessProvider-Postgres-README-md-fence-6"
+  },
+  {
+    "line": 34,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "name": "DataAccessProvider-MongoDB-README-md-fence-2"
+  },
+  {
+    "line": 49,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "name": "DataAccessProvider-MongoDB-README-md-fence-3"
+  },
+  {
+    "line": 79,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "name": "DataAccessProvider-MongoDB-README-md-fence-4"
+  },
+  {
+    "line": 105,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "name": "DataAccessProvider-MongoDB-README-md-fence-5"
+  },
+  {
+    "line": 129,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "name": "DataAccessProvider-MongoDB-README-md-fence-6"
+  },
+  {
+    "line": 151,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "name": "DataAccessProvider-MongoDB-README-md-fence-7"
+  },
+  {
+    "line": 163,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "name": "DataAccessProvider-MongoDB-README-md-fence-8"
+  },
+  {
+    "line": 183,
+    "build": 0,
+    "restore": 0,
+    "scaffold": "Hosted, four provider packages, no execution; not an isolated consumer test",
+    "status": "passed",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "name": "DataAccessProvider-MongoDB-README-md-fence-9"
+  }
+]

@@ -1,0 +1,5 @@
+dotnet pack C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.Oracle\DataAccessProvider.Oracle.csproj -c Release --no-build --no-restore --output C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\local-feed
+ExitCode: 0
+  The package DataAccessProvider.Oracle.1.0.0 is missing a readme. Go to https://aka.ms/nuget/authoring-best-practices/readme to learn why package readmes are important.
+  Successfully created package 'C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\local-feed\DataAccessProvider.Oracle.1.0.0.nupkg'.
+

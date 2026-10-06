@@ -1,216 +1,60 @@
-﻿using DataAccessProvider.Core.Abstractions;
+using DataAccessProvider.Core.Abstractions;
 using DataAccessProvider.Core.DataSource.Params;
 using DataAccessProvider.Core.Interfaces;
 using System.Text.Json;
-
 namespace DataAccessProvider.Core.DataSource.Source;
 
-#region Props
-public partial class JsonFileSource : BaseSource
+public partial class JsonFileSource : BaseSource, IDataSource, ICancellableDataSource, IDataSource<JsonFileSourceParams>
 {
-    private static readonly string ExceptionMessage = $"The provided parameter is not of type JsonFileSourceParams.";
-    private void CheckFileExists(string filePath)
+    private readonly JsonFileClient _files = new();
+    protected override Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams p) => Read(p, CancellationToken.None);
+    private async Task<BaseDataSourceParams> Read(BaseDataSourceParams p, CancellationToken ct)
     {
-        if (!File.Exists(filePath))
-        {
-            throw new FileNotFoundException($"File not found at {filePath}");
-        }
+        if (p is not JsonFileSourceParams request) throw new ArgumentException("Expected JsonFileSourceParams.", nameof(p));
+        request.SetValue(await _files.ReadTextAsync(request.FilePath, request.Encoding, ct)); return request;
     }
-    
-    protected async override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams @params)
+    protected override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams p) => Write(p, CancellationToken.None);
+    private async Task<BaseDataSourceParams> Write(BaseDataSourceParams p, CancellationToken ct)
     {
-        JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
-        CheckFileExists(jsonFileSourceParams!.FilePath);
-        try
-        {
-            // Write content to the file (overwriting any existing content)
-            await File.WriteAllTextAsync(jsonFileSourceParams!.FilePath, jsonFileSourceParams.Content,jsonFileSourceParams.Encoding);
-
-            // Set the value to the number of bytes written
-            jsonFileSourceParams.SetValue(jsonFileSourceParams.Content.Length);
-            return jsonFileSourceParams;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"Error writing to file at {jsonFileSourceParams!.FilePath}: {ex.Message}", ex);
-        }
+        if (p is not JsonFileSourceParams request) throw new ArgumentException("Expected JsonFileSourceParams.", nameof(p));
+        var result = await _files.WriteTextAsync(request.FilePath, request.Content, FileWriteMode.ExistingOnly, request.Encoding, ct);
+        request.SetValue(checked((int)result.BytesWritten)); return request;
     }
-
-    protected async override Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
+    protected override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams p) => Scalar(p, CancellationToken.None);
+    private async Task<BaseDataSourceParams> Scalar(BaseDataSourceParams p, CancellationToken ct)
     {
-        JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
-        CheckFileExists(jsonFileSourceParams!.FilePath);
-
-        string content = string.Empty;
-       
-        try
-        {
-            // Read file content
-            content = await File.ReadAllTextAsync(jsonFileSourceParams.FilePath,jsonFileSourceParams.Encoding);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"Error reading file at {jsonFileSourceParams!.FilePath}: {ex.Message}", ex);
-        }
-        // Set the result in parameters
-        jsonFileSourceParams.SetValue(content);
-        return jsonFileSourceParams;
+        if (p is not JsonFileSourceParams request) throw new ArgumentException("Expected JsonFileSourceParams.", nameof(p));
+        request.SetValue(await _files.GetLengthAsync(request.FilePath, ct)); return request;
     }
-
-
-
-    protected async override Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params)
+    protected override Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams p)
+        => ExecuteReaderAsync<TValue>(p,CancellationToken.None);
+    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams p,CancellationToken ct) where TValue:class,new()
     {
-        JsonFileSourceParams<TValue>? jsonFileSourceParams = @params as JsonFileSourceParams<TValue>;
-        CheckFileExists(jsonFileSourceParams!.FilePath);
-        try
-        {
-            // Read file content
-            string content = await File.ReadAllTextAsync(jsonFileSourceParams!.FilePath,jsonFileSourceParams.Encoding);
-            var result = JsonSerializer.Deserialize<TValue>(content,jsonFileSourceParams.SerializerOptions)!;
-
-            // Set the result in parameters
-            jsonFileSourceParams.SetValue(result);
-            return jsonFileSourceParams;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"Error reading file at {jsonFileSourceParams!.FilePath}: {ex.Message}", ex);
-        }
-
+        if (p is not JsonFileSourceParams request) throw new ArgumentException("Expected JsonFileSourceParams.", nameof(p));
+        return await ReadTyped(new JsonFileSourceParams<TValue> { FilePath = request.FilePath, Encoding = request.Encoding, SerializerOptions = request.SerializerOptions }, ct);
     }
-
-    protected async override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams @params)
+    private async Task<BaseDataSourceParams<TValue>> ReadTyped<TValue>(BaseDataSourceParams<TValue> p, CancellationToken ct) where TValue : class, new()
     {
-        // Cast the params to JsonFileSourceParams
-        JsonFileSourceParams? jsonFileSourceParams = @params as JsonFileSourceParams;
-
-        if (jsonFileSourceParams == null)
-        {
-            throw new ArgumentException(ExceptionMessage);
-        }
-        CheckFileExists(jsonFileSourceParams!.FilePath);
-
-        try
-        {
-            // Get the file information
-            var fileInfo = new FileInfo(jsonFileSourceParams.FilePath);
-
-            // Get the size of the file in bytes (scalar value)
-            long fileSizeInBytes = fileInfo.Length;
-
-            // Set the scalar result (file size in bytes) as the result
-            jsonFileSourceParams.SetValue(fileSizeInBytes);
-
-            await Task.CompletedTask;
-            // Return the modified params with the result
-            return (BaseDataSourceParams)(object)jsonFileSourceParams;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"Error accessing file at {jsonFileSourceParams.FilePath}: {ex.Message}", ex);
-        }
+        if (p is not JsonFileSourceParams<TValue> request) throw new ArgumentException("Expected typed JsonFileSourceParams.", nameof(p));
+        var content = await _files.ReadTextAsync(request.FilePath, request.Encoding, ct);
+        var value = JsonSerializer.Deserialize<TValue>(content, request.SerializerOptions);
+        request.SetValue(value is null ? [] : [value]); return request;
     }
+    public Task<bool> CheckHealthAsync<TParams>(TParams p, CancellationToken ct) where TParams : BaseDataSourceParams { ct.ThrowIfCancellationRequested(); return CheckHealthAsync(p); }
+    public Task<bool> CheckHealthAsync() => Task.FromResult(false);
+    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => Task.FromResult(p is JsonFileSourceParams request && File.Exists(request.FilePath));
+    public Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => ExecuteReaderAsync(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await Read(p, ct);
+    public Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => ExecuteNonQueryAsync(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await Write(p, ct);
+    public Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => ExecuteScalarAsync(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await Scalar(p, ct);
+    public Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams p) where TValue : class, new() where TBaseDataSourceParams : BaseDataSourceParams<TValue> => ExecuteReaderAsync<TValue, TBaseDataSourceParams>(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TValue : class, new() where TBaseDataSourceParams : BaseDataSourceParams<TValue> => (TBaseDataSourceParams)await ReadTyped(p, ct);
+    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> p) where TValue : class, new() => ReadTyped(p, CancellationToken.None);
+    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> p, CancellationToken ct) where TValue : class, new() => ReadTyped(p, ct);
+    public async Task<JsonFileSourceParams> ExecuteReaderAsync(JsonFileSourceParams p) => (JsonFileSourceParams)await Read(p, CancellationToken.None);
+    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(JsonFileSourceParams p) where TValue : class, new() => ExecuteReader<TValue>(p);
+    public async Task<JsonFileSourceParams> ExecuteNonQueryAsync(JsonFileSourceParams p) => (JsonFileSourceParams)await Write(p, CancellationToken.None);
+    public async Task<JsonFileSourceParams> ExecuteScalarAsync(JsonFileSourceParams p) => (JsonFileSourceParams)await Scalar(p, CancellationToken.None);
 }
-#endregion Props
-#region JsonFileSource
-public partial class JsonFileSource : IDataSource
-{
-    public Task<bool> CheckHealthAsync()
-    {
-        return Task.FromResult(false);
-    }
-
-    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        if (@params is JsonFileSourceParams jsonFileSourceParams)
-        {
-            return Task.FromResult(File.Exists(jsonFileSourceParams.FilePath));
-        }
-
-        return Task.FromResult(false);
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)await ExecuteNonQuery(@params);
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TBaseDataSourceParams : BaseDataSourceParams<TValue>
-        where TValue : class, new()
-    {
-        var sourceParams = @params as BaseDataSourceParams;
-        return (TBaseDataSourceParams)await ExecuteReader<TValue>(sourceParams!);
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)await ExecuteReader(@params);
-    }
-
-    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
-    {
-        JsonFileSourceParams<TValue>? jsonFileSourceParams = @params as JsonFileSourceParams<TValue>;
-        CheckFileExists(jsonFileSourceParams!.FilePath);
-        try
-        {
-            // Read file content
-            string content = await File.ReadAllTextAsync(jsonFileSourceParams!.FilePath, jsonFileSourceParams.Encoding);
-
-            var result = JsonSerializer.Deserialize<TValue>(content, jsonFileSourceParams.SerializerOptions)!;
-
-            jsonFileSourceParams.SetValue(result);
-            return jsonFileSourceParams;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"Error reading file at {jsonFileSourceParams!.FilePath}: {ex.Message}", ex);
-        }
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)await ExecuteScalar(@params);
-    }
-}
-#endregion JsonFileSource
-#region JsonFileSource<>
-/// <summary>
-/// Represents a data source for reading and writing JSON files.
-/// </summary>
-public partial class JsonFileSource : IDataSource<JsonFileSourceParams>
-{
-    /// <summary>
-    /// Writes the content provided in <paramref name="params"/> to a JSON file.
-    /// </summary>
-    /// <param name="params">The parameters including file path and content to write.</param>
-    /// <returns>The parameters with an updated value of written bytes.</returns>
-    public async Task<JsonFileSourceParams> ExecuteNonQueryAsync(JsonFileSourceParams @params)
-    {
-        return (JsonFileSourceParams)await ExecuteNonQuery(@params);
-    }
-
-    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(JsonFileSourceParams @params) where TValue : class, new()
-    {
-        return await ExecuteReader<TValue>(@params);
-    }
-
-    public async Task<JsonFileSourceParams> ExecuteReaderAsync(JsonFileSourceParams @params)
-    {
-        return (JsonFileSourceParams)await ExecuteReader(@params);
-    }
-
-    /// <summary>
-    /// Executes a scalar operation and returns a single value.
-    /// </summary>
-    /// <param name="params">The parameters for the operation.</param>
-    /// <returns>The parameters after the scalar operation.</returns>
-    public async Task<JsonFileSourceParams> ExecuteScalarAsync(JsonFileSourceParams @params)
-    {
-        var sourceParams = @params as BaseDataSourceParams;
-        return (JsonFileSourceParams)await ExecuteScalar(sourceParams);
-    }
-}
-#endregion JsonFileSource<>

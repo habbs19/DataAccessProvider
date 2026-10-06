@@ -1,0 +1,60 @@
+[
+  {
+    "name": "health",
+    "status": "completed",
+    "detail": true
+  },
+  {
+    "name": "insertTwoDocuments",
+    "status": "completed",
+    "detail": 2
+  },
+  {
+    "name": "untypedRead",
+    "status": "exception",
+    "error": "ArgumentNullException",
+    "message": "Value cannot be null. (Parameter \u0027projection\u0027)"
+  },
+  {
+    "name": "untypedReadWithProjectionAndSort",
+    "status": "completed",
+    "detail": [
+      {
+        "_id": 1,
+        "Name": "one"
+      },
+      {
+        "_id": 2,
+        "Name": "two"
+      }
+    ]
+  },
+  {
+    "name": "scalarCount",
+    "status": "completed",
+    "detail": 2
+  },
+  {
+    "name": "typedReadFromUntypedParams",
+    "status": "exception",
+    "error": "ArgumentNullException",
+    "message": "Value cannot be null. (Parameter \u0027projection\u0027)"
+  },
+  {
+    "name": "typedReadWithProjectionAndSort",
+    "status": "exception",
+    "error": "InvalidCastException",
+    "message": "Unable to cast object of type \u0027DataAccessProvider.MongoDB.MongoDBParams\u0027 to type \u0027DataAccessProvider.Core.Abstractions.BaseDataSourceParams\u00601[Row]\u0027."
+  },
+  {
+    "name": "typedReadFromTypedParams",
+    "status": "exception",
+    "error": "ArgumentNullException",
+    "message": "Value cannot be null. (Parameter \u0027projection\u0027)"
+  },
+  {
+    "name": "typedFilterDropped",
+    "status": "completed",
+    "detail": true
+  }
+]

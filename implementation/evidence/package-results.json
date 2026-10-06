@@ -1,0 +1,44 @@
+[
+  {
+    "provider": "Core",
+    "status": "passed",
+    "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-CORE",
+    "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-CORE\\Consumer.csproj"
+  },
+  {
+    "provider": "MSSQL",
+    "status": "passed",
+    "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-MSSQL",
+    "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-MSSQL\\Consumer.csproj"
+  },
+  {
+    "provider": "MySql",
+    "status": "passed",
+    "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-MYSQL",
+    "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-MYSQL\\Consumer.csproj"
+  },
+  {
+    "provider": "PostgreSql",
+    "status": "passed",
+    "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-POSTGRES",
+    "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-POSTGRES\\Consumer.csproj"
+  },
+  {
+    "provider": "MongoDB",
+    "status": "passed",
+    "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-MONGO",
+    "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-MONGO\\Consumer.csproj"
+  },
+  {
+    "provider": "Oracle",
+    "status": "passed",
+    "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-ORACLE",
+    "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-ORACLE\\Consumer.csproj"
+  },
+  {
+    "provider": "Snowflake",
+    "status": "passed",
+    "cache": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\cache-SNOWFLAKE",
+    "project": "C:\\Users\\habibs\\AppData\\Local\\Temp\\dap-implementation-1.4.0-verified\\consumers\\local-SNOWFLAKE\\Consumer.csproj"
+  }
+]

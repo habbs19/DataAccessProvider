@@ -1,10 +1,5 @@
-﻿using DataAccessProviderConsole.Demos;
+using DataAccessProviderConsole.Demos;
 using DataAccessProviderConsole.Setup;
-using Microsoft.Extensions.DependencyInjection;
-
-var serviceProvider = ServiceConfiguration.ConfigureServices();
-
-ServiceConfiguration.ConfigureProviders(serviceProvider);
-
-await ResilienceDemo.RunAsync();
-await DataAccessDemo.RunAsync(serviceProvider);
+await using var host = ServiceConfiguration.ConfigureServices();
+Console.WriteLine("DataAccessProvider 1.4: use the modern clients and one selected provider package.");
+if (args.Contains("--database")) await DataAccessDemo.RunAsync(host);

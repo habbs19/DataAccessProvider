@@ -1,0 +1,7 @@
+Expanding oracle data
+/home/oracle
+Starting Oracle Net Listener.
+Oracle Net Listener started.
+Starting Oracle Database instance FREE.
+Oracle Database instance FREE started.
+Pluggable Database FREEPDB1 opened.

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "document CRUD and counts",
+    "status": "passed"
+  },
+  {
+    "name": "legacy default find and typed filters",
+    "status": "passed"
+  },
+  {
+    "name": "cancel before execution and native cursor cleanup",
+    "status": "passed"
+  },
+  {
+    "name": "native MongoDB session commit and abort",
+    "status": "passed"
+  },
+  {
+    "name": "owned and borrowed MongoDB client disposal",
+    "status": "passed"
+  }
+]

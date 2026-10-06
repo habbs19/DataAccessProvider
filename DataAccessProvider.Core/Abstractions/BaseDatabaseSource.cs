@@ -1,655 +1,136 @@
-﻿using System.Data.Common;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text.Json;
+using System.Data;
+using System.Data.Common;
 using DataAccessProvider.Core.Interfaces;
 using DataAccessProvider.Core.Types;
 
 namespace DataAccessProvider.Core.Abstractions;
 
-#region ExecuteMethods
-public abstract partial class BaseDatabaseSource : BaseSource
+[Obsolete("Migrate to the 1.4 client, command and result API before 2.0; see docs/migration.md.", DiagnosticId = "DAP001")]
+
+public abstract partial class BaseDatabaseSource : BaseSource, IDataSource, ICancellableDataSource
 {
-    protected override async Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
-    {
-        var sourceParams = @params as BaseDatabaseSourceParams;
-        if (sourceParams == null)
-        {
-            throw new ArgumentException("Invalid source parameters type.");
-        }
-
-        using (var connection = GetConnection())
-        {
-            using (var command = GetCommand(sourceParams!.Query, connection))
-            {
-                command.CommandTimeout = sourceParams.Timeout;
-                command.CommandType = sourceParams.CommandType;
-
-                if (sourceParams.Parameters != null)
-                {
-                    foreach (var parameter in sourceParams.Parameters)
-                    {
-                        command.Parameters.Add(CreateDbParameter(command, parameter));
-                    }
-                }
-
-                async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
-                {
-                    var resultSet = new Dictionary<int, List<Dictionary<string, object>>>();
-
-                    await connection.OpenAsync(ct).ConfigureAwait(false);
-                    using (var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false))
-                    {
-                        int resultCount = 0;
-                        do
-                        {
-                            resultSet[resultCount] = await ReadResultAsync(reader, ct).ConfigureAwait(false);
-                            resultCount++;
-                        }
-                        while (await reader.NextResultAsync(ct).ConfigureAwait(false));
-                    }
-
-                    if (resultSet.Count == 1)
-                    {
-                        var firstResultSet = resultSet[0];
-
-                        if (firstResultSet.Count == 1)
-                        {
-                            sourceParams.SetValue(firstResultSet[0]);
-                        }
-                        else if (firstResultSet.Count == 0)
-                        {
-                            sourceParams.SetValue(new Dictionary<string, object>());
-                        }
-                        else
-                        {
-                            sourceParams.SetValue(firstResultSet);
-                        }
-                    }
-                    else if (resultSet.Count > 1)
-                    {
-                        sourceParams.SetValue(resultSet);
-                    }
-
-                    return sourceParams;
-                }
-
-                if (_resiliencePolicy == null)
-                {
-                    return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
-                }
-
-                return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
-            }
-        }
-    }
-
-    protected override async Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params)
-    {
-        var sourceParams = @params as BaseDatabaseSourceParams;
-        if (sourceParams == null)
-        {
-            throw new ArgumentException("Invalid source parameters type.");
-        }
-
-        using (var connection = GetConnection())
-        {
-            using (var command = GetCommand(sourceParams!.Query, connection))
-            {
-                command.CommandTimeout = sourceParams.Timeout;
-                command.CommandType = sourceParams.CommandType;
-
-                if (sourceParams.Parameters != null)
-                {
-                    foreach (var parameter in sourceParams.Parameters)
-                    {
-                        command.Parameters.Add(CreateDbParameter(command, parameter));
-                    }
-                }
-
-                async Task<BaseDataSourceParams<TValue>> ExecuteCoreAsync(CancellationToken ct)
-                {
-                    await connection.OpenAsync(ct).ConfigureAwait(false);
-                    using (var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false))
-                    {
-                        var result = await MaterializeAsync<TValue>(reader, ct).ConfigureAwait(false);
-
-                        if (result.Count == 1)
-                        {
-                            sourceParams.SetValue(result[0]);
-                        }
-                        else if (result.Count > 1)
-                        {
-                            sourceParams.SetValue(result);
-                        }
-
-                        return (BaseDataSourceParams<TValue>)(object)sourceParams;
-                    }
-                }
-
-                if (_resiliencePolicy == null)
-                {
-                    return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
-                }
-
-                return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
-            }
-        }
-    }
-
-    protected async override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams @params)
-    {
-        var sourceParams = @params as BaseDatabaseSourceParams;
-        using (var connection = GetConnection())
-        {
-            using (var command = GetCommand(sourceParams!.Query, connection))
-            {
-                command.CommandTimeout = sourceParams.Timeout;
-                command.CommandType = sourceParams.CommandType;
-
-                if (sourceParams.Parameters != null)
-                {
-                    foreach (var parameter in sourceParams.Parameters)
-                    {
-                        command.Parameters.Add(CreateDbParameter(command, parameter));
-                    }
-                }
-
-                async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
-                {
-                    await connection!.OpenAsync(ct).ConfigureAwait(false);
-                    var result = await command!.ExecuteScalarAsync(ct).ConfigureAwait(false);
-                    sourceParams?.SetValue(result!);
-                    return sourceParams!;
-                }
-
-                if (_resiliencePolicy == null)
-                {
-                    return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
-                }
-
-                return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
-            }
-        }
-    }
-
-    protected async override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams @params)
-    {
-        var sourceParams = @params as BaseDatabaseSourceParams;
-        using (var connection = GetConnection())
-        using (var command = GetCommand(sourceParams!.Query, connection))
-        {
-            command.CommandTimeout = sourceParams.Timeout;
-            command.CommandType = sourceParams.CommandType;
-
-            if (sourceParams.Parameters != null)
-            {
-                foreach (var parameter in sourceParams.Parameters)
-                    {
-                        command.Parameters.Add(CreateDbParameter(command, parameter));
-                    }
-            }
-
-            async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
-            {
-                await connection.OpenAsync(ct).ConfigureAwait(false);
-                var affectedRows = await command.ExecuteNonQueryAsync(ct).ConfigureAwait(false);
-                sourceParams.SetValue(affectedRows);
-                sourceParams.AffectedRows = affectedRows;
-                return sourceParams;
-            }
-
-            if (_resiliencePolicy == null)
-            {
-                return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
-            }
-
-            return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
-        }
-    }
-}
-
-#endregion ExecuteMethods
-#region Props
-/// <summary>
-/// Represents a base class for database sources, providing common database operations like ExecuteNonQuery, ExecuteReader, and ExecuteScalar.
-/// </summary>
-/// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
-public abstract partial class BaseDatabaseSource
-{
-    /// <summary>
-    /// The connection string used for the database connection.
-    /// </summary>
     protected string _connectionString { get; }
     protected IResiliencePolicy? _resiliencePolicy { get; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="BaseDatabase{TDataSourceType, TDbParameter}"/> class.
-    /// </summary>
-    /// <param name="connectionString">The database connection string.</param>
     public BaseDatabaseSource(string connectionString, IResiliencePolicy? resiliencePolicy = null)
-    {
-        _connectionString = connectionString;
-        _resiliencePolicy = resiliencePolicy;
-    }
-
-    /// <summary>
-    /// Gets a new instance of a database connection. Must be implemented in derived classes.
-    /// </summary>
-    /// <returns>A <see cref="DbConnection"/> specific to the database.</returns>
-    public virtual DbConnection GetConnection()
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// Creates and returns a new command object for executing queries.
-    /// Must be implemented in derived classes.
-    /// </summary>
-    /// <param name="query">The SQL query or command text.</param>
-    /// <param name="connection">The open database connection.</param>
-    /// <returns>A <see cref="DbCommand"/> object for executing commands.</returns>
+    { _connectionString = connectionString; _resiliencePolicy = resiliencePolicy; }
+    public virtual DbConnection GetConnection() => throw new NotImplementedException();
     public abstract DbCommand GetCommand(string query, DbConnection connection);
-
     protected abstract DbParameter CreateDbParameter(DbCommand command, DataAccessParameter parameter);
-
-
-    /// <summary>
-    /// Reads the result set from a <see cref="DbDataReader"/> and maps it to a list of dictionaries.
-    /// Each dictionary represents a row, with column names as keys and the corresponding values as values.
-    /// </summary>
-    /// <param name="reader">The <see cref="DbDataReader"/> to read from.</param>
-    /// <returns>A list of dictionaries where each dictionary represents a row from the result set.</returns>
-    protected async Task<List<Dictionary<string, object>>> ReadResultAsync(
-        DbDataReader reader,
-        CancellationToken cancellationToken = default)
+    protected virtual object? ReadParameterValue(DbParameter parameter) => parameter.Value is DBNull ? null : parameter.Value;
+    internal object? ReadOutputValue(DbParameter parameter) => ReadParameterValue(parameter);
+    internal DbParameter BuildParameter(DbCommand command, DataAccessParameter parameter)
     {
-        var schema = reader.GetColumnSchema();
-        var columns = schema
-            .Where(column => column.ColumnOrdinal.HasValue && !string.IsNullOrEmpty(column.ColumnName))
-            .Select(column => (Name: column.ColumnName!, Ordinal: column.ColumnOrdinal!.Value))
-            .ToArray();
-
+        var native = CreateDbParameter(command, parameter);
+        if (parameter.Precision.HasValue) native.Precision = parameter.Precision.Value;
+        if (parameter.Scale.HasValue) native.Scale = parameter.Scale.Value;
+        return native;
+    }
+    private sealed class LegacyProvider;
+    private DatabaseClient<LegacyProvider> Client => new(new SourceProvider<LegacyProvider>(this));
+    private static DatabaseCommand Definition(IBaseDatabaseSourceParams p) => new(p.Query, p.CommandType,
+        p.Timeout == 0 ? Timeout.InfiniteTimeSpan : TimeSpan.FromSeconds(p.Timeout),
+        p.Parameters?.Select(x => new DatabaseParameter(x.ParameterName, x.DbType, x.Value, x.Direction,
+            x.Size == -1 ? null : x.Size, x.Precision, x.Scale)), p.RetrySafety);
+    private async Task<TValue> RunLegacy<TValue>(IBaseDatabaseSourceParams p, Func<CancellationToken, Task<TValue>> action, CancellationToken ct)
+    {
+        ct.ThrowIfCancellationRequested();
+        if (_resiliencePolicy is null || p.RetrySafety == RetrySafety.None) return await action(ct).ConfigureAwait(false);
+        return await _resiliencePolicy.ExecuteAsync(action, ct).ConfigureAwait(false);
+    }
+    private static void CopyOutputs(IBaseDatabaseSourceParams request, IReadOnlyDictionary<string, object?> outputs, object? returnValue)
+    {
+        foreach (var parameter in request.Parameters ?? [])
+        {
+            if (parameter.Direction == DataAccessParameterDirection.ReturnValue) parameter.Value = returnValue;
+            else if (parameter.Direction != DataAccessParameterDirection.Input && outputs.TryGetValue(parameter.ParameterName, out var value)) parameter.Value = value;
+        }
+    }
+    protected override Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams p) => ExecuteRaw(p, CancellationToken.None);
+    private async Task<BaseDataSourceParams> ExecuteRaw(BaseDataSourceParams p, CancellationToken ct)
+    {
+        if (p is not BaseDatabaseSourceParams request) throw new ArgumentException("Invalid database parameters.", nameof(p));
+        var result = await RunLegacy(request, token => Client.QueryMultipleLegacyAsync(Definition(request), token), ct).ConfigureAwait(false);
+        var sets = result.ResultSets.Select(rows => rows.Select(row => row.ToDictionary(x => x.Key, x => x.Value!)).ToList()).ToArray();
+        request.SetValue(sets.Length == 1 ? sets[0].Count switch { 0 => (object)new Dictionary<string, object>(), 1 => sets[0][0], _ => sets[0] }
+            : sets.Select((rows, index) => (rows, index)).ToDictionary(x => x.index, x => x.rows));
+        CopyOutputs(request, result.Outputs, result.ReturnValue);
+        return request;
+    }
+    protected override Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams p)
+        => ExecuteTypedFromUntyped<TValue>(p, CancellationToken.None);
+    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams p, CancellationToken ct) where TValue : class, new()
+        => ExecuteTypedFromUntyped<TValue>(p, ct);
+    private async Task<BaseDataSourceParams<TValue>> ExecuteTypedFromUntyped<TValue>(BaseDataSourceParams p, CancellationToken ct) where TValue : class, new()
+    {
+        if (p is not BaseDatabaseSourceParams request) throw new ArgumentException("Invalid database parameters.", nameof(p));
+        var result = await RunLegacy(request, token => Client.QueryLegacyAsync<TValue>(Definition(request), token), ct).ConfigureAwait(false);
+        request.SetValue(result.Rows.ToList()); CopyOutputs(request, result.Outputs, result.ReturnValue);
+        var typed = new TypedResult<TValue> { Query = request.Query, CommandType = request.CommandType, Timeout = request.Timeout, Parameters = request.Parameters };
+        typed.SetValue(result.Rows.ToList()); return typed;
+    }
+    private sealed class TypedResult<TValue> : BaseDatabaseSourceParams<TValue> where TValue : class;
+    private async Task<BaseDataSourceParams<TValue>> ExecuteTyped<TValue>(BaseDataSourceParams<TValue> p, CancellationToken ct) where TValue : class, new()
+    {
+        if (p is not BaseDatabaseSourceParams<TValue> request) throw new ArgumentException("Invalid database parameters.", nameof(p));
+        var result = await RunLegacy(request, token => Client.QueryLegacyAsync<TValue>(Definition(request), token), ct).ConfigureAwait(false);
+        request.SetValue(result.Rows.ToList()); CopyOutputs(request, result.Outputs, result.ReturnValue); return request;
+    }
+    protected override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams p) => ExecuteWrite(p, CancellationToken.None);
+    private async Task<BaseDataSourceParams> ExecuteWrite(BaseDataSourceParams p, CancellationToken ct)
+    {
+        if (p is not BaseDatabaseSourceParams request) throw new ArgumentException("Invalid database parameters.", nameof(p));
+        var result = await RunLegacy(request, token => Client.ExecuteAsync(Definition(request), token), ct).ConfigureAwait(false);
+        request.AffectedRows = result.AffectedRows; request.SetValue(result.AffectedRows);
+        CopyOutputs(request, result.Outputs, result.ReturnValue); return request;
+    }
+    protected override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams p) => ExecuteScalarCore(p, CancellationToken.None);
+    private async Task<BaseDataSourceParams> ExecuteScalarCore(BaseDataSourceParams p, CancellationToken ct)
+    {
+        if (p is not BaseDatabaseSourceParams request) throw new ArgumentException("Invalid database parameters.", nameof(p));
+        var result = await RunLegacy(request, token => Client.ScalarAsync<object>(Definition(request), token), ct).ConfigureAwait(false);
+        request.SetValue(result.State == ScalarState.Null ? DBNull.Value : result.Value!);
+        CopyOutputs(request, result.Outputs, result.ReturnValue); return request;
+    }
+    protected async Task<List<Dictionary<string, object>>> ReadResultAsync(DbDataReader reader, CancellationToken cancellationToken = default)
+    {
         var result = new List<Dictionary<string, object>>();
-
         while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
         {
-            var row = new Dictionary<string, object>(columns.Length);
-
-            foreach (var (name, ordinal) in columns)
-            {
-                object? value = reader.IsDBNull(ordinal) ? null : reader.GetValue(ordinal);
-                row[name] = value!;
-            }
-
+            var row = new Dictionary<string, object>();
+            for (var i = 0; i < reader.FieldCount; i++) row[reader.GetName(i)] = reader.IsDBNull(i) ? null! : reader.GetValue(i);
             result.Add(row);
         }
-
         return result;
     }
-}
-
-#endregion 
-#region BaseDatabaseSource
-/// <summary>
-/// Represents a base class for database sources, providing common database operations like ExecuteNonQuery, ExecuteReader, and ExecuteScalar.
-/// </summary>
-/// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
-public abstract partial class BaseDatabaseSource : IDataSource
-{
-    public async Task<bool> CheckHealthAsync()
+    private async Task<List<TValue>> MaterializeAsync<TValue>(DbDataReader reader, CancellationToken cancellationToken = default) where TValue : class, new()
     {
-        try
-        {
-            using var connection = GetConnection();
-            await connection.OpenAsync().ConfigureAwait(false);
-            return connection.State == System.Data.ConnectionState.Open;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return CheckHealthAsync();
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
-       where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)await ExecuteScalar(@params);   
-    }
-    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
-       where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)(object)await ExecuteReader(@params);
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)(object)await ExecuteNonQuery(@params);
-    }
-    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TBaseDataSourceParams : BaseDataSourceParams<TValue>
-        where TValue : class, new()
-    {
-        var sourceParams = @params as BaseDatabaseSourceParams;
-        return (TBaseDataSourceParams)await ExecuteReader<TValue>(sourceParams!);
-    }
-
-    private object? GetPropertyValue<TValue>(PropertyInfo property, object? value) where TValue : class, new()
-    {
-        var targetType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
-
-        if (value == null || value == DBNull.Value)
-            return null;
-
-        if (targetType.IsInstanceOfType(value))
-            return value;
-
-        try
-        {
-            return targetType switch
-            {
-                Type t when t.IsEnum => value switch
-                {
-                    null => default, // or throw if enums are required
-
-                    // Direct string input
-                    string s => Enum.Parse(t, s, ignoreCase: true),
-
-                    // JSON string value
-                    JsonElement je when je.ValueKind == JsonValueKind.String
-                        => Enum.Parse(t, je.GetString() ?? string.Empty, ignoreCase: true),
-
-                    // JSON number value
-                    JsonElement je when je.ValueKind == JsonValueKind.Number
-                        => Enum.ToObject(t, je.GetInt32()),
-
-                    // Already the correct underlying type (int, byte, etc.)
-                    int i => Enum.ToObject(t, i),
-                    long l => Enum.ToObject(t, l),
-
-                    // Fallback - try to convert to string and parse
-                    _ => Enum.Parse(t, value.ToString() ?? string.Empty, ignoreCase: true)
-                },
-
-                Type t when t == typeof(bool) =>
-                    value is string strVal ? (strVal == "1" || strVal.Equals("true", StringComparison.OrdinalIgnoreCase)) : Convert.ToBoolean(value),
-
-                Type t when t == typeof(DateTime) =>
-                    Convert.ToDateTime(value),
-
-                Type t when t == typeof(Guid) =>
-                    value switch
-                    {
-                        string g => Guid.Parse(g),
-                        byte[] b => new Guid(b),
-                        _ => throw new InvalidCastException($"Cannot convert {value.GetType()} to Guid")
-                    },
-
-                Type t when t == typeof(TimeSpan) =>
-                    value switch
-                    {
-                        string tsStr => TimeSpan.Parse(tsStr),
-                        long ticks => TimeSpan.FromTicks(ticks),
-                        _ => throw new InvalidCastException($"Cannot convert {value.GetType()} to TimeSpan")
-                    },
-
-                Type t when t == typeof(byte[]) =>
-                    (byte[])value,
-
-                Type t when t.IsPrimitive || t == typeof(decimal) =>
-                    Convert.ChangeType(value, t),
-
-                Type t when t == typeof(string) =>
-                    value.ToString(),                
-
-                _ => Convert.ChangeType(value, targetType),
-            };
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException(
-                $"Error setting property '{property.Name}' on type '{typeof(TValue).Name}' with value '{value ?? "null"}' ({value?.GetType().Name ?? "null"}).",
-                ex
-            );
-        }
-    }
-
-
-
-    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
-    {
-        var sourceParams = @params as BaseDatabaseSourceParams<TValue>;
-        if (sourceParams == null)
-        {
-            throw new ArgumentException("Invalid source parameters type.");
-        }
-
-        using (var connection = GetConnection())
-        {
-            using (var command = GetCommand(sourceParams!.Query, connection))
-            {
-                command.CommandTimeout = sourceParams.Timeout;
-                command.CommandType = sourceParams.CommandType;
-
-                if (sourceParams.Parameters != null)
-                {
-                    foreach (var parameter in sourceParams.Parameters)
-                    {
-                        command.Parameters.Add(CreateDbParameter(command, parameter));
-                    }
-                }
-
-                async Task<BaseDataSourceParams<TValue>> ExecuteCoreAsync(CancellationToken ct)
-                {
-                    await connection.OpenAsync(ct).ConfigureAwait(false);
-                    using (var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false))
-                    {
-                        var result = await MaterializeAsync<TValue>(reader, ct).ConfigureAwait(false);
-
-                        if (result.Count == 1)
-                        {
-                            sourceParams.SetValue(result[0]);
-                        }
-                        else if (result.Count > 1)
-                        {
-                            sourceParams.SetValue(result);
-                        }
-
-                        return (BaseDataSourceParams<TValue>)(object)sourceParams;
-                    }
-                }
-
-                if (_resiliencePolicy == null)
-                {
-                    return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
-                }
-
-                return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
-            }
-        }
-    }
-
-    private async Task<List<TValue>> MaterializeAsync<TValue>(
-        DbDataReader reader,
-        CancellationToken cancellationToken = default)
-        where TValue : class, new()
-    {
-        var accessors = TypeAccessorCache<TValue>.GetColumnAccessors(reader);
-        var result = new List<TValue>();
-
-        if (accessors.Length == 0)
-        {
-            while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
-            {
-                result.Add(new TValue());
-            }
-
-            return result;
-        }
-
-        while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
-        {
-            var item = new TValue();
-
-            foreach (var accessor in accessors)
-            {
-                object? rawValue = reader.IsDBNull(accessor.Ordinal) ? null : reader.GetValue(accessor.Ordinal);
-
-                if (rawValue == null)
-                {
-                    if (accessor.AllowNullAssignments)
-                    {
-                        accessor.Assign(item, null);
-                    }
-
-                    continue;
-                }
-
-                var converted = GetPropertyValue<TValue>(accessor.Property, rawValue);
-
-                if (converted == null)
-                {
-                    if (accessor.AllowNullAssignments)
-                    {
-                        accessor.Assign(item, null);
-                    }
-
-                    continue;
-                }
-
-                accessor.Assign(item, converted);
-            }
-
-            result.Add(item);
-        }
-
+        var map = RowMapper<TValue>.Create(reader, false); var result = new List<TValue>();
+        while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false)) result.Add(map(reader));
         return result;
     }
-
-    private static class TypeAccessorCache<T>
-        where T : class, new()
-    {
-        private static readonly PropertyAccessor[] _writableProperties = typeof(T)
-            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-            .Where(p => p.CanWrite)
-            .Select(p => new PropertyAccessor(p))
-            .ToArray();
-
-        private static readonly Dictionary<string, PropertyAccessor> _lookup = _writableProperties
-            .GroupBy(p => p.Property.Name, StringComparer.OrdinalIgnoreCase)
-            .ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
-
-        public static PropertyColumnAccessor<T>[] GetColumnAccessors(DbDataReader reader)
-        {
-            var matched = new List<PropertyColumnAccessor<T>>(_writableProperties.Length);
-
-            for (var ordinal = 0; ordinal < reader.FieldCount; ordinal++)
-            {
-                var columnName = reader.GetName(ordinal);
-                if (string.IsNullOrWhiteSpace(columnName))
-                {
-                    continue;
-                }
-
-                if (_lookup.TryGetValue(columnName, out var accessor))
-                {
-                    matched.Add(new PropertyColumnAccessor<T>(accessor.Property, accessor.Setter, ordinal));
-                }
-            }
-
-            return matched.ToArray();
-        }
-
-        private sealed class PropertyAccessor
-        {
-            public PropertyAccessor(PropertyInfo property)
-            {
-                Property = property;
-                Setter = CreateSetter(property);
-            }
-
-            public PropertyInfo Property { get; }
-
-            public Action<T, object?> Setter { get; }
-
-            private static Action<T, object?> CreateSetter(PropertyInfo property)
-            {
-                var target = Expression.Parameter(typeof(T), "target");
-                var value = Expression.Parameter(typeof(object), "value");
-
-                var convertedValue = Expression.Condition(
-                    Expression.Equal(value, Expression.Constant(null)),
-                    Expression.Default(property.PropertyType),
-                    Expression.Convert(value, property.PropertyType));
-
-                var body = Expression.Assign(Expression.Property(target, property), convertedValue);
-
-                return Expression.Lambda<Action<T, object?>>(body, target, value).Compile();
-            }
-        }
-    }
-
-    private readonly struct PropertyColumnAccessor<T>
-        where T : class
-    {
-        private readonly Action<T, object?> _setter;
-
-        public PropertyColumnAccessor(PropertyInfo property, Action<T, object?> setter, int ordinal)
-        {
-            Property = property;
-            _setter = setter;
-            Ordinal = ordinal;
-            AllowNullAssignments = !property.PropertyType.IsValueType || Nullable.GetUnderlyingType(property.PropertyType) != null;
-        }
-
-        public PropertyInfo Property { get; }
-
-        public int Ordinal { get; }
-
-        public bool AllowNullAssignments { get; }
-
-        public void Assign(T target, object? value) => _setter(target, value);
-    }
+    public Task<bool> CheckHealthAsync() => CheckHealthAsync(CancellationToken.None);
+    public async Task<bool> CheckHealthAsync(CancellationToken cancellationToken)
+        => (await Client.CheckHealthAsync(cancellationToken).ConfigureAwait(false)).Healthy;
+    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => CheckHealthAsync();
+    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TBaseDataSourceParams : BaseDataSourceParams => CheckHealthAsync(ct);
+    public Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => ExecuteReaderAsync(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await ExecuteRaw(p, ct).ConfigureAwait(false);
+    public Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => ExecuteNonQueryAsync(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await ExecuteWrite(p, ct).ConfigureAwait(false);
+    public Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => ExecuteScalarAsync(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await ExecuteScalarCore(p, ct).ConfigureAwait(false);
+    public Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams p) where TValue : class, new() where TBaseDataSourceParams : BaseDataSourceParams<TValue> => ExecuteReaderAsync<TValue, TBaseDataSourceParams>(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TValue : class, new() where TBaseDataSourceParams : BaseDataSourceParams<TValue> => (TBaseDataSourceParams)await ExecuteTyped<TValue>(p, ct).ConfigureAwait(false);
+    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> p) where TValue : class, new() => ExecuteTyped<TValue>(p, CancellationToken.None);
+    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> p, CancellationToken ct) where TValue : class, new() => ExecuteTyped<TValue>(p, ct);
 }
-#endregion BaseDatabaseSource
-#region BaseDatabaseSource<TDatabaseSourceParams>
-/// <summary>
-/// Represents a base class for database sources, providing common database operations like ExecuteNonQuery, ExecuteReader, and ExecuteScalar.
-/// </summary>
-/// <typeparam name="TDatabaseSourceParams">The type of the database source parameters.</typeparam>
-public abstract partial class BaseDatabaseSource<TDatabaseSourceParams> : BaseDatabaseSource, IDataSource<TDatabaseSourceParams>
-    where TDatabaseSourceParams : BaseDatabaseSourceParams
+[Obsolete("Migrate to the 1.4 client, command and result API before 2.0; see docs/migration.md.", DiagnosticId = "DAP001")]
+public abstract partial class BaseDatabaseSource<TDatabaseSourceParams> : BaseDatabaseSource, IDataSource<TDatabaseSourceParams> where TDatabaseSourceParams : BaseDatabaseSourceParams
 {
-    protected IResiliencePolicy? _resiliencePolicy { get; }
-
-    protected BaseDatabaseSource(string connectionString, IResiliencePolicy? resiliencePolicy = null) : base(connectionString)
-    {
-        _resiliencePolicy = resiliencePolicy;
-    }
-
-    public async Task<TDatabaseSourceParams> ExecuteNonQueryAsync(TDatabaseSourceParams @params)
-    {
-        return (TDatabaseSourceParams)(object)await ExecuteNonQuery(@params);
-    }
-    public async Task<TDatabaseSourceParams> ExecuteReaderAsync(TDatabaseSourceParams @params)
-    {
-        return (TDatabaseSourceParams)(object)await ExecuteReader(@params);
-    }
-    public async Task<TDatabaseSourceParams> ExecuteScalarAsync(TDatabaseSourceParams @params)
-    {
-        return (TDatabaseSourceParams)(object)await ExecuteScalar(@params);       
-    }
-    async Task<BaseDataSourceParams<TValue>> IDataSource<TDatabaseSourceParams>.ExecuteReaderAsync<TValue>(TDatabaseSourceParams @params)
-    {
-        return await ExecuteReader<TValue>(@params!);
-    }
+    protected new IResiliencePolicy? _resiliencePolicy => base._resiliencePolicy;
+    protected BaseDatabaseSource(string connectionString, IResiliencePolicy? resiliencePolicy = null) : base(connectionString, resiliencePolicy) { }
+    public Task<TDatabaseSourceParams> ExecuteNonQueryAsync(TDatabaseSourceParams p) => ExecuteNonQueryAsync<TDatabaseSourceParams>(p);
+    public Task<TDatabaseSourceParams> ExecuteReaderAsync(TDatabaseSourceParams p) => ExecuteReaderAsync<TDatabaseSourceParams>(p);
+    public Task<TDatabaseSourceParams> ExecuteScalarAsync(TDatabaseSourceParams p) => ExecuteScalarAsync<TDatabaseSourceParams>(p);
+    Task<BaseDataSourceParams<TValue>> IDataSource<TDatabaseSourceParams>.ExecuteReaderAsync<TValue>(TDatabaseSourceParams p) => ExecuteReader<TValue>(p);
 }
-#endregion BaseDatabaseSource<TDatabaseSourceParams>  

@@ -1,52 +1,56 @@
-name: Publish NuGet packages
-
+name: Publish validated NuGet artifacts
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - "v*"
-
-env:
-  NUGET_SOURCE: https://api.nuget.org/v3/index.json
-  ARTIFACTS_DIR: ./artifacts
-
+    inputs:
+      validation_run:
+        description: Successful CI run ID for this exact commit
+        required: true
+permissions:
+  contents: read
+  actions: read
 jobs:
-  pack-and-publish:
+  publish:
     runs-on: ubuntu-latest
     environment: production
-
     permissions:
       contents: read
+      actions: read
       id-token: write
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "10.0.x"
-
-      - name: Restore dependencies
-        run: dotnet restore DataAccessProvider.sln
-
-      - name: Build solution
-        run: dotnet build DataAccessProvider.sln --configuration Release --no-restore
-
-      - name: Pack NuGet packages
+          global-json-file: global.json
+      - name: Verify successful exact-commit CI run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ inputs.validation_run }}
+        shell: pwsh
         run: |
-          dotnet pack DataAccessProvider.Core/DataAccessProvider.Core.csproj --configuration Release --no-build --output "${{ env.ARTIFACTS_DIR }}"
-          dotnet pack DataAccessProvider.MSSQL/DataAccessProvider.MSSQL.csproj --configuration Release --no-build --output "${{ env.ARTIFACTS_DIR }}"
-          dotnet pack DataAccessProvider.MySql/DataAccessProvider.MySql.csproj --configuration Release --no-build --output "${{ env.ARTIFACTS_DIR }}"
-          dotnet pack DataAccessProvider.Postgres/DataAccessProvider.Postgres.csproj --configuration Release --no-build --output "${{ env.ARTIFACTS_DIR }}"
-          dotnet pack DataAccessProvider.MongoDB/DataAccessProvider.MongoDB.csproj --configuration Release --no-build --output "${{ env.ARTIFACTS_DIR }}"
-
-      - name: Log in to NuGet.org with trusted publishing
+          $run = gh api "repos/${{ github.repository }}/actions/runs/$env:RUN_ID" | ConvertFrom-Json
+          if ($LASTEXITCODE -or $run.conclusion -ne 'success' -or $run.head_sha -ne '${{ github.sha }}' -or $run.path -ne '.github/workflows/ci.yml' -or $run.event -eq 'pull_request') { throw 'Release requires successful trusted exact-commit CI' }
+      - uses: actions/download-artifact@v4
+        with:
+          name: validation-Linux
+          path: validated
+          run-id: ${{ inputs.validation_run }}
+          github-token: ${{ github.token }}
+      - name: Verify artifacts and unpublished versions
+        shell: pwsh
+        run: ./eng/Verify-Release.ps1 -ArtifactRoot ./validated -ExpectedCommit '${{ github.sha }}'
+      - name: Log in to NuGet.org
         id: nuget-login
         uses: NuGet/login@v1
         with:
           user: ${{ vars.NUGET_USER }}
-
-      - name: Publish packages to NuGet.org
-        run: dotnet nuget push "${{ env.ARTIFACTS_DIR }}/*.nupkg" --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" --source "${{ env.NUGET_SOURCE }}" --skip-duplicate
+      - name: Publish the six ready packages
+        shell: pwsh
+        env:
+          NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
+        run: |
+          # Snowflake remains excluded until account-backed readiness is recorded.
+          $manifest = Get-Content ./validated/manifest.json -Raw | ConvertFrom-Json
+          foreach ($package in $manifest.packages | Where-Object { $_.id -ne 'DataAccessProvider.Snowflake' }) {
+            dotnet nuget push "./validated/local-feed/$($package.file)" --api-key $env:NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+            if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          }

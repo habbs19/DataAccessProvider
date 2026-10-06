@@ -1,0 +1,4322 @@
+[
+  {
+    "consumer": "local-MONGO-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.MongoDB",
+        "version": "1.3.3",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.MongoDB.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.MongoDB.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.3.7",
+            "requested": "1.3.7",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "3.5.2",
+            "requested": "3.5.2",
+            "id": "MongoDB.Driver"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DnsClient",
+        "version": "1.6.1",
+        "compile": [
+          "lib/net5.0/DnsClient.dll"
+        ],
+        "runtime": [
+          "lib/net5.0/DnsClient.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging.Abstractions",
+        "version": "2.0.0",
+        "compile": [
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "MongoDB.Bson",
+        "version": "3.5.2",
+        "compile": [
+          "lib/net6.0/MongoDB.Bson.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/MongoDB.Bson.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "MongoDB.Driver",
+        "version": "3.5.2",
+        "compile": [
+          "lib/net6.0/MongoDB.Driver.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/MongoDB.Driver.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.6.1",
+            "requested": "1.6.1",
+            "id": "DnsClient"
+          },
+          {
+            "resolved": "2.0.0",
+            "requested": "2.0.0",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          },
+          {
+            "resolved": "3.5.2",
+            "requested": "3.5.2",
+            "id": "MongoDB.Bson"
+          },
+          {
+            "resolved": "0.30.1",
+            "requested": "0.30.1",
+            "id": "SharpCompress"
+          },
+          {
+            "resolved": "1.0.0",
+            "requested": "1.0.0",
+            "id": "Snappier"
+          },
+          {
+            "resolved": "0.7.3",
+            "requested": "0.7.3",
+            "id": "ZstdSharp.Port"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "SharpCompress",
+        "version": "0.30.1",
+        "compile": [
+          "lib/net5.0/SharpCompress.dll"
+        ],
+        "runtime": [
+          "lib/net5.0/SharpCompress.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Snappier",
+        "version": "1.0.0",
+        "compile": [
+          "lib/net5.0/Snappier.dll"
+        ],
+        "runtime": [
+          "lib/net5.0/Snappier.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "ZstdSharp.Port",
+        "version": "0.7.3",
+        "compile": [
+          "lib/net7.0/ZstdSharp.dll"
+        ],
+        "runtime": [
+          "lib/net7.0/ZstdSharp.dll"
+        ],
+        "dependencies": []
+      }
+    ]
+  },
+  {
+    "consumer": "local-MSSQL-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "Azure.Core",
+        "version": "1.47.1",
+        "compile": [
+          "lib/net8.0/Azure.Core.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Azure.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "8.0.0",
+            "requested": "8.0.0",
+            "id": "Microsoft.Bcl.AsyncInterfaces"
+          },
+          {
+            "resolved": "1.5.1",
+            "requested": "1.5.1",
+            "id": "System.ClientModel"
+          },
+          {
+            "resolved": "8.0.1",
+            "requested": "8.0.1",
+            "id": "System.Memory.Data"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Azure.Identity",
+        "version": "1.14.2",
+        "compile": [
+          "lib/net8.0/Azure.Identity.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Azure.Identity.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.47.1",
+            "requested": "1.46.1",
+            "id": "Azure.Core"
+          },
+          {
+            "resolved": "4.73.1",
+            "requested": "4.73.1",
+            "id": "Microsoft.Identity.Client"
+          },
+          {
+            "resolved": "4.73.1",
+            "requested": "4.73.1",
+            "id": "Microsoft.Identity.Client.Extensions.Msal"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.MSSQL",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.MSSQL.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.MSSQL.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.3.7",
+            "requested": "1.3.7",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "6.1.3",
+            "requested": "6.1.3",
+            "id": "Microsoft.Data.SqlClient"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Bcl.AsyncInterfaces",
+        "version": "8.0.0",
+        "compile": [
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Bcl.Cryptography",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/Microsoft.Bcl.Cryptography.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Bcl.Cryptography.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "runtime",
+            "path": "runtimes/unix/lib/net9.0/Microsoft.Data.SqlClient.dll",
+            "rid": "unix"
+          },
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net9.0/Microsoft.Data.SqlClient.dll",
+            "rid": "win"
+          }
+        ],
+        "id": "Microsoft.Data.SqlClient",
+        "version": "6.1.3",
+        "compile": [
+          "ref/net9.0/Microsoft.Data.SqlClient.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Data.SqlClient.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.47.1",
+            "requested": "1.47.1",
+            "id": "Azure.Core"
+          },
+          {
+            "resolved": "1.14.2",
+            "requested": "1.14.2",
+            "id": "Azure.Identity"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Bcl.Cryptography"
+          },
+          {
+            "resolved": "6.0.2",
+            "requested": "6.0.2",
+            "id": "Microsoft.Data.SqlClient.SNI.runtime"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Caching.Memory"
+          },
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.JsonWebTokens"
+          },
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Protocols.OpenIdConnect"
+          },
+          {
+            "resolved": "1.0.0",
+            "requested": "1.0.0",
+            "id": "Microsoft.SqlServer.Server"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "System.Configuration.ConfigurationManager"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "System.Security.Cryptography.Pkcs"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "native",
+            "path": "runtimes/win-arm64/native/Microsoft.Data.SqlClient.SNI.dll",
+            "rid": "win-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/win-x64/native/Microsoft.Data.SqlClient.SNI.dll",
+            "rid": "win-x64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/win-x86/native/Microsoft.Data.SqlClient.SNI.dll",
+            "rid": "win-x86"
+          }
+        ],
+        "id": "Microsoft.Data.SqlClient.SNI.runtime",
+        "version": "6.0.2",
+        "compile": [
+          null
+        ],
+        "runtime": [
+          null
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Caching.Abstractions",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/_._"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.Caching.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Caching.Memory",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/_._"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.Caching.Memory.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Caching.Abstractions"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Options"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.DependencyInjection.Abstractions",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging.Abstractions",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Options",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/_._"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.Options.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Identity.Client",
+        "version": "4.73.1",
+        "compile": [
+          "lib/net8.0/Microsoft.Identity.Client.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.Identity.Client.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "6.35.0",
+            "id": "Microsoft.IdentityModel.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Identity.Client.Extensions.Msal",
+        "version": "4.73.1",
+        "compile": [
+          "lib/net8.0/Microsoft.Identity.Client.Extensions.Msal.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.Identity.Client.Extensions.Msal.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "4.73.1",
+            "requested": "4.73.1",
+            "id": "Microsoft.Identity.Client"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "4.5.0",
+            "id": "System.Security.Cryptography.ProtectedData"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Abstractions",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.JsonWebTokens",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Tokens"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Logging",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.Logging.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.Logging.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Protocols",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.Protocols.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.Protocols.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Tokens"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Protocols.OpenIdConnect",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Protocols"
+          },
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "System.IdentityModel.Tokens.Jwt"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Tokens",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.Tokens.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.Tokens.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Logging"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.SqlServer.Server",
+        "version": "1.0.0",
+        "compile": [
+          "lib/netstandard2.0/Microsoft.SqlServer.Server.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Microsoft.SqlServer.Server.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.ClientModel",
+        "version": "1.5.1",
+        "compile": [
+          "lib/net8.0/System.ClientModel.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.ClientModel.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.4",
+            "requested": "8.0.3",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          },
+          {
+            "resolved": "8.0.1",
+            "requested": "8.0.1",
+            "id": "System.Memory.Data"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.Configuration.ConfigurationManager",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/_._"
+        ],
+        "runtime": [
+          "lib/net9.0/System.Configuration.ConfigurationManager.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "System.Diagnostics.EventLog"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "System.Security.Cryptography.ProtectedData"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net9.0/System.Diagnostics.EventLog.Messages.dll",
+            "rid": "win"
+          },
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net9.0/System.Diagnostics.EventLog.dll",
+            "rid": "win"
+          }
+        ],
+        "id": "System.Diagnostics.EventLog",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/_._"
+        ],
+        "runtime": [
+          "lib/net9.0/System.Diagnostics.EventLog.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.IdentityModel.Tokens.Jwt",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/System.IdentityModel.Tokens.Jwt.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.IdentityModel.Tokens.Jwt.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.JsonWebTokens"
+          },
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Tokens"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.Memory.Data",
+        "version": "8.0.1",
+        "compile": [
+          "lib/net8.0/System.Memory.Data.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.Memory.Data.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net9.0/System.Security.Cryptography.Pkcs.dll",
+            "rid": "win"
+          }
+        ],
+        "id": "System.Security.Cryptography.Pkcs",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/System.Security.Cryptography.Pkcs.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/System.Security.Cryptography.Pkcs.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.Security.Cryptography.ProtectedData",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/System.Security.Cryptography.ProtectedData.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/System.Security.Cryptography.ProtectedData.dll"
+        ],
+        "dependencies": []
+      }
+    ]
+  },
+  {
+    "consumer": "local-MYSQL-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.MySql",
+        "version": "1.3.4",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.MySql.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.MySql.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.3.7",
+            "requested": "1.3.7",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "2.3.9",
+            "requested": "2.3.9",
+            "id": "Microsoft.AspNetCore.Http.Abstractions"
+          },
+          {
+            "resolved": "2.5.0",
+            "requested": "2.5.0",
+            "id": "MySqlConnector"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.AspNetCore.Http.Abstractions",
+        "version": "2.3.9",
+        "compile": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "2.3.0",
+            "requested": "2.3.0",
+            "id": "Microsoft.AspNetCore.Http.Features"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.AspNetCore.Http.Features",
+        "version": "2.3.0",
+        "compile": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "8.0.0",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.DependencyInjection.Abstractions",
+        "version": "8.0.2",
+        "compile": [
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging.Abstractions",
+        "version": "8.0.2",
+        "compile": [
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "8.0.2",
+            "requested": "8.0.2",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "MySqlConnector",
+        "version": "2.5.0",
+        "compile": [
+          "lib/net10.0/MySqlConnector.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/MySqlConnector.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "8.0.2",
+            "requested": "8.0.2",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          },
+          {
+            "resolved": "8.0.2",
+            "requested": "8.0.2",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "consumer": "local-ORACLE-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Oracle",
+        "version": "1.0.0",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Oracle.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Oracle.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.3.7",
+            "requested": "1.3.7",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "23.26.0",
+            "requested": "23.26.0",
+            "id": "Oracle.ManagedDataAccess.Core"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Oracle.ManagedDataAccess.Core",
+        "version": "23.26.0",
+        "compile": [
+          "lib/net8.0/Oracle.ManagedDataAccess.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Oracle.ManagedDataAccess.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "8.0.0",
+            "requested": "8.0.0",
+            "id": "System.Diagnostics.PerformanceCounter"
+          },
+          {
+            "resolved": "8.0.2",
+            "requested": "8.0.2",
+            "id": "System.DirectoryServices.Protocols"
+          },
+          {
+            "resolved": "8.0.1",
+            "requested": "8.0.1",
+            "id": "System.Security.Cryptography.Pkcs"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.Configuration.ConfigurationManager",
+        "version": "8.0.0",
+        "compile": [
+          "lib/net8.0/System.Configuration.ConfigurationManager.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.Configuration.ConfigurationManager.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "8.0.0",
+            "requested": "8.0.0",
+            "id": "System.Diagnostics.EventLog"
+          },
+          {
+            "resolved": "8.0.0",
+            "requested": "8.0.0",
+            "id": "System.Security.Cryptography.ProtectedData"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll",
+            "rid": "win"
+          },
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll",
+            "rid": "win"
+          }
+        ],
+        "id": "System.Diagnostics.EventLog",
+        "version": "8.0.0",
+        "compile": [
+          "lib/net8.0/System.Diagnostics.EventLog.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.Diagnostics.EventLog.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net8.0/System.Diagnostics.PerformanceCounter.dll",
+            "rid": "win"
+          }
+        ],
+        "id": "System.Diagnostics.PerformanceCounter",
+        "version": "8.0.0",
+        "compile": [
+          "lib/net8.0/System.Diagnostics.PerformanceCounter.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.Diagnostics.PerformanceCounter.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "8.0.0",
+            "requested": "8.0.0",
+            "id": "System.Configuration.ConfigurationManager"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "runtime",
+            "path": "runtimes/linux/lib/net8.0/System.DirectoryServices.Protocols.dll",
+            "rid": "linux"
+          },
+          {
+            "type": "runtime",
+            "path": "runtimes/osx/lib/net8.0/System.DirectoryServices.Protocols.dll",
+            "rid": "osx"
+          },
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net8.0/System.DirectoryServices.Protocols.dll",
+            "rid": "win"
+          }
+        ],
+        "id": "System.DirectoryServices.Protocols",
+        "version": "8.0.2",
+        "compile": [
+          "lib/net8.0/System.DirectoryServices.Protocols.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.DirectoryServices.Protocols.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll",
+            "rid": "win"
+          }
+        ],
+        "id": "System.Security.Cryptography.Pkcs",
+        "version": "8.0.1",
+        "compile": [
+          "lib/net8.0/System.Security.Cryptography.Pkcs.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.Security.Cryptography.Pkcs.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.Security.Cryptography.ProtectedData",
+        "version": "8.0.0",
+        "compile": [
+          "lib/net8.0/System.Security.Cryptography.ProtectedData.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.Security.Cryptography.ProtectedData.dll"
+        ],
+        "dependencies": []
+      }
+    ]
+  },
+  {
+    "consumer": "local-POSTGRES-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.PostgreSql",
+        "version": "1.3.4",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Postgres.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Postgres.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.3.7",
+            "requested": "1.3.7",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Npgsql"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.DependencyInjection.Abstractions",
+        "version": "10.0.0",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging.Abstractions",
+        "version": "10.0.0",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.0",
+            "requested": "10.0.0",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Npgsql",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Npgsql.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Npgsql.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.0",
+            "requested": "10.0.0",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "consumer": "local-SNOWFLAKE-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "Apache.Arrow",
+        "version": "14.0.2",
+        "compile": [
+          "lib/net6.0/Apache.Arrow.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/Apache.Arrow.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "AWSSDK.Core",
+        "version": "4.0.3.8",
+        "compile": [
+          "lib/net8.0/AWSSDK.Core.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/AWSSDK.Core.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "AWSSDK.S3",
+        "version": "4.0.4",
+        "compile": [
+          "lib/net8.0/AWSSDK.S3.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/AWSSDK.S3.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "4.0.3.8",
+            "requested": "[4.0.0.14, 5.0.0)",
+            "id": "AWSSDK.Core"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Azure.Core",
+        "version": "1.25.0",
+        "compile": [
+          "lib/net5.0/Azure.Core.dll"
+        ],
+        "runtime": [
+          "lib/net5.0/Azure.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "6.0.0",
+            "requested": "1.1.1",
+            "id": "Microsoft.Bcl.AsyncInterfaces"
+          },
+          {
+            "resolved": "1.0.2",
+            "requested": "1.0.2",
+            "id": "System.Memory.Data"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Azure.Storage.Blobs",
+        "version": "12.13.0",
+        "compile": [
+          "lib/netstandard2.1/Azure.Storage.Blobs.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.1/Azure.Storage.Blobs.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "12.12.0",
+            "requested": "12.12.0",
+            "id": "Azure.Storage.Common"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Azure.Storage.Common",
+        "version": "12.12.0",
+        "compile": [
+          "lib/netstandard2.0/Azure.Storage.Common.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Azure.Storage.Common.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.25.0",
+            "requested": "1.25.0",
+            "id": "Azure.Core"
+          },
+          {
+            "resolved": "6.0.0",
+            "requested": "6.0.0",
+            "id": "System.IO.Hashing"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "BouncyCastle.Cryptography",
+        "version": "2.3.1",
+        "compile": [
+          "lib/net6.0/BouncyCastle.Cryptography.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/BouncyCastle.Cryptography.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Snowflake",
+        "version": "1.0.0",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Snowflake.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Snowflake.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "4.0.3.8",
+            "requested": "4.0.3.8",
+            "id": "AWSSDK.Core"
+          },
+          {
+            "resolved": "1.3.7",
+            "requested": "1.3.7",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "5.3.0",
+            "requested": "5.3.0",
+            "id": "Snowflake.Data"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Google.Api.Gax",
+        "version": "4.8.0",
+        "compile": [
+          "lib/netstandard2.0/Google.Api.Gax.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Google.Api.Gax.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "6.0.0",
+            "requested": "6.0.0",
+            "id": "Microsoft.Bcl.AsyncInterfaces"
+          },
+          {
+            "resolved": "13.0.3",
+            "requested": "13.0.3",
+            "id": "Newtonsoft.Json"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Google.Api.Gax.Rest",
+        "version": "4.8.0",
+        "compile": [
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "4.8.0",
+            "requested": "4.8.0",
+            "id": "Google.Api.Gax"
+          },
+          {
+            "resolved": "1.67.0",
+            "requested": "[1.67.0, 2.0.0)",
+            "id": "Google.Apis.Auth"
+          },
+          {
+            "resolved": "9.0.5",
+            "requested": "6.0.0",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Google.Apis",
+        "version": "1.67.0",
+        "compile": [
+          "lib/net6.0/Google.Apis.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/Google.Apis.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.67.0",
+            "requested": "1.67.0",
+            "id": "Google.Apis.Core"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Google.Apis.Auth",
+        "version": "1.67.0",
+        "compile": [
+          "lib/net6.0/Google.Apis.Auth.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/Google.Apis.Auth.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.67.0",
+            "requested": "1.67.0",
+            "id": "Google.Apis"
+          },
+          {
+            "resolved": "1.67.0",
+            "requested": "1.67.0",
+            "id": "Google.Apis.Core"
+          },
+          {
+            "resolved": "7.0.2",
+            "requested": "7.0.2",
+            "id": "System.Management"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Google.Apis.Core",
+        "version": "1.67.0",
+        "compile": [
+          "lib/net6.0/Google.Apis.Core.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/Google.Apis.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "13.0.3",
+            "requested": "13.0.3",
+            "id": "Newtonsoft.Json"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Google.Apis.Storage.v1",
+        "version": "1.67.0.3365",
+        "compile": [
+          "lib/net6.0/Google.Apis.Storage.v1.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/Google.Apis.Storage.v1.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.67.0",
+            "requested": "1.67.0",
+            "id": "Google.Apis"
+          },
+          {
+            "resolved": "1.67.0",
+            "requested": "1.67.0",
+            "id": "Google.Apis.Auth"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Google.Cloud.Storage.V1",
+        "version": "4.10.0",
+        "compile": [
+          "lib/netstandard2.0/Google.Cloud.Storage.V1.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Google.Cloud.Storage.V1.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "4.8.0",
+            "requested": "[4.8.0, 5.0.0)",
+            "id": "Google.Api.Gax.Rest"
+          },
+          {
+            "resolved": "1.67.0.3365",
+            "requested": "[1.67.0.3365, 2.0.0)",
+            "id": "Google.Apis.Storage.v1"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Bcl.AsyncInterfaces",
+        "version": "6.0.0",
+        "compile": [
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.DependencyInjection",
+        "version": "9.0.5",
+        "compile": [
+          "lib/net9.0/Microsoft.Extensions.DependencyInjection.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.DependencyInjection.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.5",
+            "requested": "9.0.5",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.DependencyInjection.Abstractions",
+        "version": "9.0.5",
+        "compile": [
+          "lib/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging",
+        "version": "9.0.5",
+        "compile": [
+          "lib/net9.0/Microsoft.Extensions.Logging.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.Logging.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.5",
+            "requested": "9.0.5",
+            "id": "Microsoft.Extensions.DependencyInjection"
+          },
+          {
+            "resolved": "9.0.5",
+            "requested": "9.0.5",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          },
+          {
+            "resolved": "9.0.5",
+            "requested": "9.0.5",
+            "id": "Microsoft.Extensions.Options"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging.Abstractions",
+        "version": "9.0.5",
+        "compile": [
+          "lib/net9.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.5",
+            "requested": "9.0.5",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Options",
+        "version": "9.0.5",
+        "compile": [
+          "lib/net9.0/Microsoft.Extensions.Options.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.Options.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.5",
+            "requested": "9.0.5",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "9.0.5",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Abstractions",
+        "version": "6.34.0",
+        "compile": [
+          "lib/net6.0/Microsoft.IdentityModel.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/Microsoft.IdentityModel.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.JsonWebTokens",
+        "version": "6.34.0",
+        "compile": [
+          "lib/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "6.34.0",
+            "requested": "6.34.0",
+            "id": "Microsoft.IdentityModel.Tokens"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Logging",
+        "version": "6.34.0",
+        "compile": [
+          "lib/net6.0/Microsoft.IdentityModel.Logging.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/Microsoft.IdentityModel.Logging.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "6.34.0",
+            "requested": "6.34.0",
+            "id": "Microsoft.IdentityModel.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Tokens",
+        "version": "6.34.0",
+        "compile": [
+          "lib/net6.0/Microsoft.IdentityModel.Tokens.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/Microsoft.IdentityModel.Tokens.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "6.34.0",
+            "requested": "6.34.0",
+            "id": "Microsoft.IdentityModel.Logging"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "native",
+            "path": "runtimes/android-arm/native/libMono.Unix.so",
+            "rid": "android-arm"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/android-arm64/native/libMono.Unix.so",
+            "rid": "android-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/android-x64/native/libMono.Unix.so",
+            "rid": "android-x64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/android-x86/native/libMono.Unix.so",
+            "rid": "android-x86"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/ios-arm/native/libMono.Unix.a",
+            "rid": "ios-arm"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/ios-arm64/native/libMono.Unix.a",
+            "rid": "ios-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/ios-armv7s/native/libMono.Unix.a",
+            "rid": "ios-armv7s"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/iossimulator-arm64/native/libMono.Unix.a",
+            "rid": "iossimulator-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/iossimulator-x64/native/libMono.Unix.a",
+            "rid": "iossimulator-x64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/linux-arm/native/libMono.Unix.so",
+            "rid": "linux-arm"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/linux-arm64/native/libMono.Unix.so",
+            "rid": "linux-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/linux-x64/native/libMono.Unix.so",
+            "rid": "linux-x64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/maccatalyst-arm64/native/libMono.Unix.a",
+            "rid": "maccatalyst-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/maccatalyst-x64/native/libMono.Unix.a",
+            "rid": "maccatalyst-x64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/osx-arm64/native/libMono.Unix.dylib",
+            "rid": "osx-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/osx-x64/native/libMono.Unix.dylib",
+            "rid": "osx-x64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/tvos-arm64/native/libMono.Unix.a",
+            "rid": "tvos-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/tvossimulator-x64/native/libMono.Unix.a",
+            "rid": "tvossimulator-x64"
+          }
+        ],
+        "id": "Mono.Unix",
+        "version": "7.1.0-final.1.21458.1",
+        "compile": [
+          "lib/net6.0/Mono.Unix.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/Mono.Unix.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Newtonsoft.Json",
+        "version": "13.0.3",
+        "compile": [
+          "lib/net6.0/Newtonsoft.Json.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/Newtonsoft.Json.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "native",
+            "path": "runtimes/linux-arm64/native/libsf_mini_core.so",
+            "rid": "linux-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/linux-musl-arm64/native/libsf_mini_core.so",
+            "rid": "linux-musl-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/linux-musl-x64/native/libsf_mini_core.so",
+            "rid": "linux-musl-x64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/linux-x64/native/libsf_mini_core.so",
+            "rid": "linux-x64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/osx-arm64/native/libsf_mini_core.dylib",
+            "rid": "osx-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/osx-x64/native/libsf_mini_core.dylib",
+            "rid": "osx-x64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/win-arm64/native/sf_mini_core.dll",
+            "rid": "win-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/win-x64/native/sf_mini_core.dll",
+            "rid": "win-x64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/win-x86/native/sf_mini_core.dll",
+            "rid": "win-x86"
+          }
+        ],
+        "id": "Snowflake.Data",
+        "version": "5.3.0",
+        "compile": [
+          "lib/net8.0/Snowflake.Data.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Snowflake.Data.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "4.0.4",
+            "requested": "4.0.4",
+            "id": "AWSSDK.S3"
+          },
+          {
+            "resolved": "14.0.2",
+            "requested": "14.0.2",
+            "id": "Apache.Arrow"
+          },
+          {
+            "resolved": "12.13.0",
+            "requested": "12.13.0",
+            "id": "Azure.Storage.Blobs"
+          },
+          {
+            "resolved": "12.12.0",
+            "requested": "12.12.0",
+            "id": "Azure.Storage.Common"
+          },
+          {
+            "resolved": "2.3.1",
+            "requested": "2.3.1",
+            "id": "BouncyCastle.Cryptography"
+          },
+          {
+            "resolved": "4.10.0",
+            "requested": "4.10.0",
+            "id": "Google.Cloud.Storage.V1"
+          },
+          {
+            "resolved": "9.0.5",
+            "requested": "9.0.5",
+            "id": "Microsoft.Extensions.Logging"
+          },
+          {
+            "resolved": "7.1.0-final.1.21458.1",
+            "requested": "7.1.0-final.1.21458.1",
+            "id": "Mono.Unix"
+          },
+          {
+            "resolved": "13.0.3",
+            "requested": "13.0.3",
+            "id": "Newtonsoft.Json"
+          },
+          {
+            "resolved": "6.34.0",
+            "requested": "6.34.0",
+            "id": "System.IdentityModel.Tokens.Jwt"
+          },
+          {
+            "resolved": "0.17.0",
+            "requested": "0.17.0",
+            "id": "Tomlyn.Signed"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.CodeDom",
+        "version": "7.0.0",
+        "compile": [
+          "lib/net7.0/System.CodeDom.dll"
+        ],
+        "runtime": [
+          "lib/net7.0/System.CodeDom.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.IdentityModel.Tokens.Jwt",
+        "version": "6.34.0",
+        "compile": [
+          "lib/net6.0/System.IdentityModel.Tokens.Jwt.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/System.IdentityModel.Tokens.Jwt.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "6.34.0",
+            "requested": "6.34.0",
+            "id": "Microsoft.IdentityModel.JsonWebTokens"
+          },
+          {
+            "resolved": "6.34.0",
+            "requested": "6.34.0",
+            "id": "Microsoft.IdentityModel.Tokens"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.IO.Hashing",
+        "version": "6.0.0",
+        "compile": [
+          "lib/net6.0/System.IO.Hashing.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/System.IO.Hashing.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net7.0/System.Management.dll",
+            "rid": "win"
+          }
+        ],
+        "id": "System.Management",
+        "version": "7.0.2",
+        "compile": [
+          "lib/net7.0/System.Management.dll"
+        ],
+        "runtime": [
+          "lib/net7.0/System.Management.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.0.0",
+            "requested": "7.0.0",
+            "id": "System.CodeDom"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.Memory.Data",
+        "version": "1.0.2",
+        "compile": [
+          "lib/netstandard2.0/System.Memory.Data.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/System.Memory.Data.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Tomlyn.Signed",
+        "version": "0.17.0",
+        "compile": [
+          "lib/net7.0/Tomlyn.Signed.dll"
+        ],
+        "runtime": [
+          "lib/net7.0/Tomlyn.Signed.dll"
+        ],
+        "dependencies": []
+      }
+    ]
+  },
+  {
+    "consumer": "published-minimum-MONGO-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.6",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.MongoDB",
+        "version": "1.3.3",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.MongoDB.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.MongoDB.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.3.6",
+            "requested": "1.3.6",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "3.5.2",
+            "requested": "3.5.2",
+            "id": "MongoDB.Driver"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DnsClient",
+        "version": "1.6.1",
+        "compile": [
+          "lib/net5.0/DnsClient.dll"
+        ],
+        "runtime": [
+          "lib/net5.0/DnsClient.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging.Abstractions",
+        "version": "2.0.0",
+        "compile": [
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "MongoDB.Bson",
+        "version": "3.5.2",
+        "compile": [
+          "lib/net6.0/MongoDB.Bson.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/MongoDB.Bson.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "MongoDB.Driver",
+        "version": "3.5.2",
+        "compile": [
+          "lib/net6.0/MongoDB.Driver.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/MongoDB.Driver.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.6.1",
+            "requested": "1.6.1",
+            "id": "DnsClient"
+          },
+          {
+            "resolved": "2.0.0",
+            "requested": "2.0.0",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          },
+          {
+            "resolved": "3.5.2",
+            "requested": "3.5.2",
+            "id": "MongoDB.Bson"
+          },
+          {
+            "resolved": "0.30.1",
+            "requested": "0.30.1",
+            "id": "SharpCompress"
+          },
+          {
+            "resolved": "1.0.0",
+            "requested": "1.0.0",
+            "id": "Snappier"
+          },
+          {
+            "resolved": "0.7.3",
+            "requested": "0.7.3",
+            "id": "ZstdSharp.Port"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "SharpCompress",
+        "version": "0.30.1",
+        "compile": [
+          "lib/net5.0/SharpCompress.dll"
+        ],
+        "runtime": [
+          "lib/net5.0/SharpCompress.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Snappier",
+        "version": "1.0.0",
+        "compile": [
+          "lib/net5.0/Snappier.dll"
+        ],
+        "runtime": [
+          "lib/net5.0/Snappier.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "ZstdSharp.Port",
+        "version": "0.7.3",
+        "compile": [
+          "lib/net7.0/ZstdSharp.dll"
+        ],
+        "runtime": [
+          "lib/net7.0/ZstdSharp.dll"
+        ],
+        "dependencies": []
+      }
+    ]
+  },
+  {
+    "consumer": "published-minimum-MYSQL-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.6",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.MySql",
+        "version": "1.3.4",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.MySql.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.MySql.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.3.6",
+            "requested": "1.3.6",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "2.3.9",
+            "requested": "2.3.9",
+            "id": "Microsoft.AspNetCore.Http.Abstractions"
+          },
+          {
+            "resolved": "2.5.0",
+            "requested": "2.5.0",
+            "id": "MySqlConnector"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.AspNetCore.Http.Abstractions",
+        "version": "2.3.9",
+        "compile": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "2.3.0",
+            "requested": "2.3.0",
+            "id": "Microsoft.AspNetCore.Http.Features"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.AspNetCore.Http.Features",
+        "version": "2.3.0",
+        "compile": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "8.0.0",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.DependencyInjection.Abstractions",
+        "version": "8.0.2",
+        "compile": [
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging.Abstractions",
+        "version": "8.0.2",
+        "compile": [
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "8.0.2",
+            "requested": "8.0.2",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "MySqlConnector",
+        "version": "2.5.0",
+        "compile": [
+          "lib/net10.0/MySqlConnector.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/MySqlConnector.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "8.0.2",
+            "requested": "8.0.2",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          },
+          {
+            "resolved": "8.0.2",
+            "requested": "8.0.2",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "consumer": "published-MONGO-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.MongoDB",
+        "version": "1.3.3",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.MongoDB.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.MongoDB.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.3.7",
+            "requested": "1.3.6",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "3.5.2",
+            "requested": "3.5.2",
+            "id": "MongoDB.Driver"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DnsClient",
+        "version": "1.6.1",
+        "compile": [
+          "lib/net5.0/DnsClient.dll"
+        ],
+        "runtime": [
+          "lib/net5.0/DnsClient.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging.Abstractions",
+        "version": "2.0.0",
+        "compile": [
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "MongoDB.Bson",
+        "version": "3.5.2",
+        "compile": [
+          "lib/net6.0/MongoDB.Bson.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/MongoDB.Bson.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "MongoDB.Driver",
+        "version": "3.5.2",
+        "compile": [
+          "lib/net6.0/MongoDB.Driver.dll"
+        ],
+        "runtime": [
+          "lib/net6.0/MongoDB.Driver.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.6.1",
+            "requested": "1.6.1",
+            "id": "DnsClient"
+          },
+          {
+            "resolved": "2.0.0",
+            "requested": "2.0.0",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          },
+          {
+            "resolved": "3.5.2",
+            "requested": "3.5.2",
+            "id": "MongoDB.Bson"
+          },
+          {
+            "resolved": "0.30.1",
+            "requested": "0.30.1",
+            "id": "SharpCompress"
+          },
+          {
+            "resolved": "1.0.0",
+            "requested": "1.0.0",
+            "id": "Snappier"
+          },
+          {
+            "resolved": "0.7.3",
+            "requested": "0.7.3",
+            "id": "ZstdSharp.Port"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "SharpCompress",
+        "version": "0.30.1",
+        "compile": [
+          "lib/net5.0/SharpCompress.dll"
+        ],
+        "runtime": [
+          "lib/net5.0/SharpCompress.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Snappier",
+        "version": "1.0.0",
+        "compile": [
+          "lib/net5.0/Snappier.dll"
+        ],
+        "runtime": [
+          "lib/net5.0/Snappier.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "ZstdSharp.Port",
+        "version": "0.7.3",
+        "compile": [
+          "lib/net7.0/ZstdSharp.dll"
+        ],
+        "runtime": [
+          "lib/net7.0/ZstdSharp.dll"
+        ],
+        "dependencies": []
+      }
+    ]
+  },
+  {
+    "consumer": "published-MSSQL-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "Azure.Core",
+        "version": "1.47.1",
+        "compile": [
+          "lib/net8.0/Azure.Core.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Azure.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "8.0.0",
+            "requested": "8.0.0",
+            "id": "Microsoft.Bcl.AsyncInterfaces"
+          },
+          {
+            "resolved": "1.5.1",
+            "requested": "1.5.1",
+            "id": "System.ClientModel"
+          },
+          {
+            "resolved": "8.0.1",
+            "requested": "8.0.1",
+            "id": "System.Memory.Data"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Azure.Identity",
+        "version": "1.14.2",
+        "compile": [
+          "lib/net8.0/Azure.Identity.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Azure.Identity.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.47.1",
+            "requested": "1.46.1",
+            "id": "Azure.Core"
+          },
+          {
+            "resolved": "4.73.1",
+            "requested": "4.73.1",
+            "id": "Microsoft.Identity.Client"
+          },
+          {
+            "resolved": "4.73.1",
+            "requested": "4.73.1",
+            "id": "Microsoft.Identity.Client.Extensions.Msal"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.MSSQL",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.MSSQL.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.MSSQL.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.3.7",
+            "requested": "1.3.7",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "6.1.3",
+            "requested": "6.1.3",
+            "id": "Microsoft.Data.SqlClient"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Bcl.AsyncInterfaces",
+        "version": "8.0.0",
+        "compile": [
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Bcl.Cryptography",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/Microsoft.Bcl.Cryptography.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Bcl.Cryptography.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "runtime",
+            "path": "runtimes/unix/lib/net9.0/Microsoft.Data.SqlClient.dll",
+            "rid": "unix"
+          },
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net9.0/Microsoft.Data.SqlClient.dll",
+            "rid": "win"
+          }
+        ],
+        "id": "Microsoft.Data.SqlClient",
+        "version": "6.1.3",
+        "compile": [
+          "ref/net9.0/Microsoft.Data.SqlClient.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Data.SqlClient.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.47.1",
+            "requested": "1.47.1",
+            "id": "Azure.Core"
+          },
+          {
+            "resolved": "1.14.2",
+            "requested": "1.14.2",
+            "id": "Azure.Identity"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Bcl.Cryptography"
+          },
+          {
+            "resolved": "6.0.2",
+            "requested": "6.0.2",
+            "id": "Microsoft.Data.SqlClient.SNI.runtime"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Caching.Memory"
+          },
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.JsonWebTokens"
+          },
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Protocols.OpenIdConnect"
+          },
+          {
+            "resolved": "1.0.0",
+            "requested": "1.0.0",
+            "id": "Microsoft.SqlServer.Server"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "System.Configuration.ConfigurationManager"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "System.Security.Cryptography.Pkcs"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "native",
+            "path": "runtimes/win-arm64/native/Microsoft.Data.SqlClient.SNI.dll",
+            "rid": "win-arm64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/win-x64/native/Microsoft.Data.SqlClient.SNI.dll",
+            "rid": "win-x64"
+          },
+          {
+            "type": "native",
+            "path": "runtimes/win-x86/native/Microsoft.Data.SqlClient.SNI.dll",
+            "rid": "win-x86"
+          }
+        ],
+        "id": "Microsoft.Data.SqlClient.SNI.runtime",
+        "version": "6.0.2",
+        "compile": [
+          null
+        ],
+        "runtime": [
+          null
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Caching.Abstractions",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/_._"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.Caching.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Caching.Memory",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/_._"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.Caching.Memory.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Caching.Abstractions"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Options"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.DependencyInjection.Abstractions",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging.Abstractions",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Options",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/_._"
+        ],
+        "runtime": [
+          "lib/net9.0/Microsoft.Extensions.Options.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "9.0.4",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Identity.Client",
+        "version": "4.73.1",
+        "compile": [
+          "lib/net8.0/Microsoft.Identity.Client.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.Identity.Client.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "6.35.0",
+            "id": "Microsoft.IdentityModel.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Identity.Client.Extensions.Msal",
+        "version": "4.73.1",
+        "compile": [
+          "lib/net8.0/Microsoft.Identity.Client.Extensions.Msal.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.Identity.Client.Extensions.Msal.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "4.73.1",
+            "requested": "4.73.1",
+            "id": "Microsoft.Identity.Client"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "4.5.0",
+            "id": "System.Security.Cryptography.ProtectedData"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Abstractions",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.JsonWebTokens",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Tokens"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Logging",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.Logging.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.Logging.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Protocols",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.Protocols.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.Protocols.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Tokens"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Protocols.OpenIdConnect",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Protocols"
+          },
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "System.IdentityModel.Tokens.Jwt"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.IdentityModel.Tokens",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/Microsoft.IdentityModel.Tokens.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.IdentityModel.Tokens.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Logging"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.SqlServer.Server",
+        "version": "1.0.0",
+        "compile": [
+          "lib/netstandard2.0/Microsoft.SqlServer.Server.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Microsoft.SqlServer.Server.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.ClientModel",
+        "version": "1.5.1",
+        "compile": [
+          "lib/net8.0/System.ClientModel.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.ClientModel.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.4",
+            "requested": "8.0.3",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          },
+          {
+            "resolved": "8.0.1",
+            "requested": "8.0.1",
+            "id": "System.Memory.Data"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.Configuration.ConfigurationManager",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/_._"
+        ],
+        "runtime": [
+          "lib/net9.0/System.Configuration.ConfigurationManager.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "System.Diagnostics.EventLog"
+          },
+          {
+            "resolved": "9.0.4",
+            "requested": "9.0.4",
+            "id": "System.Security.Cryptography.ProtectedData"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net9.0/System.Diagnostics.EventLog.Messages.dll",
+            "rid": "win"
+          },
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net9.0/System.Diagnostics.EventLog.dll",
+            "rid": "win"
+          }
+        ],
+        "id": "System.Diagnostics.EventLog",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/_._"
+        ],
+        "runtime": [
+          "lib/net9.0/System.Diagnostics.EventLog.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.IdentityModel.Tokens.Jwt",
+        "version": "7.7.1",
+        "compile": [
+          "lib/net8.0/System.IdentityModel.Tokens.Jwt.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.IdentityModel.Tokens.Jwt.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.JsonWebTokens"
+          },
+          {
+            "resolved": "7.7.1",
+            "requested": "7.7.1",
+            "id": "Microsoft.IdentityModel.Tokens"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.Memory.Data",
+        "version": "8.0.1",
+        "compile": [
+          "lib/net8.0/System.Memory.Data.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/System.Memory.Data.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [
+          {
+            "type": "runtime",
+            "path": "runtimes/win/lib/net9.0/System.Security.Cryptography.Pkcs.dll",
+            "rid": "win"
+          }
+        ],
+        "id": "System.Security.Cryptography.Pkcs",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/System.Security.Cryptography.Pkcs.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/System.Security.Cryptography.Pkcs.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "System.Security.Cryptography.ProtectedData",
+        "version": "9.0.4",
+        "compile": [
+          "lib/net9.0/System.Security.Cryptography.ProtectedData.dll"
+        ],
+        "runtime": [
+          "lib/net9.0/System.Security.Cryptography.ProtectedData.dll"
+        ],
+        "dependencies": []
+      }
+    ]
+  },
+  {
+    "consumer": "published-MYSQL-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.MySql",
+        "version": "1.3.4",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.MySql.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.MySql.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.3.7",
+            "requested": "1.3.6",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "2.3.9",
+            "requested": "2.3.9",
+            "id": "Microsoft.AspNetCore.Http.Abstractions"
+          },
+          {
+            "resolved": "2.5.0",
+            "requested": "2.5.0",
+            "id": "MySqlConnector"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.AspNetCore.Http.Abstractions",
+        "version": "2.3.9",
+        "compile": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "2.3.0",
+            "requested": "2.3.0",
+            "id": "Microsoft.AspNetCore.Http.Features"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.AspNetCore.Http.Features",
+        "version": "2.3.0",
+        "compile": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll"
+        ],
+        "runtime": [
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "8.0.0",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.DependencyInjection.Abstractions",
+        "version": "8.0.2",
+        "compile": [
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging.Abstractions",
+        "version": "8.0.2",
+        "compile": [
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "8.0.2",
+            "requested": "8.0.2",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "MySqlConnector",
+        "version": "2.5.0",
+        "compile": [
+          "lib/net10.0/MySqlConnector.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/MySqlConnector.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "8.0.2",
+            "requested": "8.0.2",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          },
+          {
+            "resolved": "8.0.2",
+            "requested": "8.0.2",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "consumer": "published-POSTGRES-assets",
+    "framework": "net10.0",
+    "libraries": [
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.Core",
+        "version": "1.3.7",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Core.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Binder"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "DataAccessProvider.PostgreSql",
+        "version": "1.3.4",
+        "compile": [
+          "lib/net10.0/DataAccessProvider.Postgres.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/DataAccessProvider.Postgres.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "1.3.7",
+            "requested": "1.3.7",
+            "id": "DataAccessProvider.Core"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Npgsql"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Abstractions",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Primitives"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Configuration.Binder",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Configuration.Binder.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration"
+          },
+          {
+            "resolved": "10.0.1",
+            "requested": "10.0.1",
+            "id": "Microsoft.Extensions.Configuration.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.DependencyInjection.Abstractions",
+        "version": "10.0.0",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Logging.Abstractions",
+        "version": "10.0.0",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Logging.Abstractions.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.0",
+            "requested": "10.0.0",
+            "id": "Microsoft.Extensions.DependencyInjection.Abstractions"
+          }
+        ]
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Microsoft.Extensions.Primitives",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Microsoft.Extensions.Primitives.dll"
+        ],
+        "dependencies": []
+      },
+      {
+        "runtimeTargets": [],
+        "id": "Npgsql",
+        "version": "10.0.1",
+        "compile": [
+          "lib/net10.0/Npgsql.dll"
+        ],
+        "runtime": [
+          "lib/net10.0/Npgsql.dll"
+        ],
+        "dependencies": [
+          {
+            "resolved": "10.0.0",
+            "requested": "10.0.0",
+            "id": "Microsoft.Extensions.Logging.Abstractions"
+          }
+        ]
+      }
+    ]
+  }
+]

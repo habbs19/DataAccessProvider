@@ -1,0 +1,51 @@
+using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
+using DataAccessProvider.Core.Interfaces;
+#if MSSQL
+using DataAccessProvider.MSSQL;
+using Source=DataAccessProvider.MSSQL.MSSQLSource;
+using Params=DataAccessProvider.MSSQL.MSSQLSourceParams;
+#elif MYSQL
+using Microsoft.AspNetCore.Builder;
+using DataAccessProvider.MySql;
+using Source=DataAccessProvider.MySql.MySQLSource;
+using Params=DataAccessProvider.MySql.MySQLSourceParams;
+#elif POSTGRES
+using DataAccessProvider.Postgres;
+using Source=DataAccessProvider.Postgres.PostgresSource;
+using Params=DataAccessProvider.Postgres.PostgresSourceParams;
+#else
+using DataAccessProvider.MongoDB;
+using Source=DataAccessProvider.MongoDB.MongoDBSource;
+using Params=DataAccessProvider.MongoDB.MongoDBParams;
+#endif
+
+// No database operations: construction and registration only.
+var services=new ServiceCollection();
+#if MSSQL
+services.AddDataAccessProviderMSSQL("Server=localhost,1;Database=unused;Integrated Security=true");
+#elif MYSQL
+services.AddDataAccessProviderMySql("Server=localhost;Port=1;Database=unused;User ID=unused");
+#elif POSTGRES
+services.AddDataAccessProviderPostgres("Host=localhost;Port=1;Database=unused;Username=unused");
+#else
+services.AddDataAccessProviderMongoDB("mongodb://localhost:1/unused?serverSelectionTimeoutMS=1");
+#endif
+using var root=services.BuildServiceProvider(new ServiceProviderOptions {ValidateScopes=true});
+using var scope=root.CreateScope();
+var factory=scope.ServiceProvider.GetRequiredService<IDataSourceFactory>();
+var results=new List<object>();
+results.Add(new {name="providerAddRegistersCoreServices",detail=scope.ServiceProvider.GetRequiredService<IDataSourceProvider>() is not null});
+try {results.Add(new {name="factoryWorksWithoutUseViaConvention",detail=factory.CreateDataSource(new Params()).GetType().FullName});}
+catch(Exception ex){results.Add(new {name="factoryWorksWithoutUseViaConvention",detail=ex.GetType().Name+": "+ex.Message});}
+results.Add(new {name="concreteAndInterfaceAreSameScopedInstance",detail=ReferenceEquals(scope.ServiceProvider.GetRequiredService<Source>(),scope.ServiceProvider.GetRequiredService<IDataSource<Params>>())});
+#if MONGO
+root.UseDataAccessProviderMongoDB();
+results.Add(new {name="factoryWorksAfterUse",detail=factory.CreateDataSource(new Params()).GetType().FullName});
+#endif
+#if MYSQL
+try {new ApplicationBuilder(root).UseDataAccessProviderMySql();results.Add(new {name="applicationBuilderUse",detail="completed"});}
+catch(Exception ex){results.Add(new {name="applicationBuilderUse",detail=ex.GetType().Name+": "+ex.Message});}
+#endif
+Console.WriteLine(JsonSerializer.Serialize(results,new JsonSerializerOptions {WriteIndented=true}));
+

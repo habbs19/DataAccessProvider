@@ -1,0 +1,30 @@
+[
+  {
+    "name": "health",
+    "status": "passed"
+  },
+  {
+    "name": "parameterized write query scalar and native ownership",
+    "status": "passed"
+  },
+  {
+    "name": "legacy typed paths and reused empty result",
+    "status": "passed"
+  },
+  {
+    "name": "commit rollback cancellation and escaped session",
+    "status": "passed"
+  },
+  {
+    "name": "output parameters after execution and reader disposal",
+    "status": "passed"
+  },
+  {
+    "name": "ordered multiple sets and strict duplicate rejection",
+    "status": "passed"
+  },
+  {
+    "name": "in-flight cancellation and healthy reuse",
+    "status": "passed"
+  }
+]

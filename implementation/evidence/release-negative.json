@@ -1,0 +1,5 @@
+{
+  "test": "Reject dirty candidate",
+  "reason": "Release requires clean, exact-commit validated artifacts",
+  "status": "passed"
+}

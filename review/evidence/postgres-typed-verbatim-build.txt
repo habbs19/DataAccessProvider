@@ -1,0 +1,12 @@
+dotnet build C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\postgres-typed-verbatim\Consumer.csproj --no-restore --verbosity minimal
+ExitCode: 1
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\postgres-typed-verbatim\Program.cs(10,38): error CS0310: 'User' must be a non-abstract type with a public parameterless constructor in order to use it as parameter 'TValue' in the generic type or method 'IDataSource.ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue>)' [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\postgres-typed-verbatim\Consumer.csproj]
+
+Build FAILED.
+
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\postgres-typed-verbatim\Program.cs(10,38): error CS0310: 'User' must be a non-abstract type with a public parameterless constructor in order to use it as parameter 'TValue' in the generic type or method 'IDataSource.ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue>)' [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\postgres-typed-verbatim\Consumer.csproj]
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:01.77
+

@@ -1,0 +1,9 @@
+{
+  "port": "54591",
+  "container": "ca7f0b0c306d0e48add0d21c6b528fb2bb0bfb6448bff4701d8961a166a6380f",
+  "exitCode": 0,
+  "symbol": "MYSQL",
+  "imageId": "sha256:66aec17cd21a956029b83f083b813073859e8355dc1a00e55df6ba02f0e32345",
+  "status": "ran",
+  "image": "mysql:latest"
+}

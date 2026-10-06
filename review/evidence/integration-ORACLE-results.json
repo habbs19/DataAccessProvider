@@ -1,0 +1,86 @@
+[
+  {
+    "name": "health",
+    "status": "completed",
+    "detail": true
+  },
+  {
+    "name": "parameterizedInsert",
+    "status": "exception",
+    "error": "ArgumentOutOfRangeException",
+    "message": "Specified argument was out of the range of valid values.",
+    "stack": "   at Oracle.ManagedDataAccess.Client.OracleParameter.set_Size(Int32 value)\r\n   at DataAccessProvider.Oracle.OracleSource.CreateDbParameter(DbCommand command, DataAccessParameter parameter)\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.ExecuteNonQuery(BaseDataSourceParams params)\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource\u00601.ExecuteNonQueryAsync(TDatabaseSourceParams params)\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eb__5\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\ORACLE\\Program.cs:line 82\r\n--- End of stack trace from previous location ---\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eg__Test|0\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\ORACLE\\Program.cs:line 37"
+  },
+  {
+    "name": "parameterizedInsertWithExplicitSizes",
+    "status": "completed",
+    "detail": 1
+  },
+  {
+    "name": "scalarCount",
+    "status": "completed",
+    "detail": 1
+  },
+  {
+    "name": "untypedRead",
+    "status": "completed",
+    "detail": {
+      "ID": 1,
+      "NAME": "\u0027; DROP TABLE probe; --"
+    }
+  },
+  {
+    "name": "typedRead",
+    "status": "completed",
+    "detail": [
+      {
+        "Id": 1,
+        "Name": "\u0027; DROP TABLE probe; --"
+      }
+    ]
+  },
+  {
+    "name": "reusedTypedEmptyRead",
+    "status": "completed",
+    "detail": [
+      {
+        "Id": 1,
+        "Name": "\u0027; DROP TABLE probe; --"
+      }
+    ]
+  },
+  {
+    "name": "explicitTypedOverload",
+    "status": "exception",
+    "error": "ArgumentException",
+    "message": "Invalid source parameters type.",
+    "stack": "   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.ExecuteReader[TValue](BaseDataSourceParams params)\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.ExecuteReaderAsync[TValue,TBaseDataSourceParams](TBaseDataSourceParams params)\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eb__11\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\ORACLE\\Program.cs:line 98\r\n--- End of stack trace from previous location ---\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eg__Test|0\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\ORACLE\\Program.cs:line 37"
+  },
+  {
+    "name": "typedSourceInterfaceOverload",
+    "status": "exception",
+    "error": "InvalidCastException",
+    "message": "Unable to cast object of type \u0027DataAccessProvider.Oracle.OracleSourceParams\u0027 to type \u0027DataAccessProvider.Core.Abstractions.BaseDataSourceParams\u00601[Row]\u0027.",
+    "stack": "   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.\u003C\u003Ec__DisplayClass1_0\u00601.\u003C\u003CExecuteReader\u003Eg__ExecuteCoreAsync|0\u003Ed.MoveNext()\r\n--- End of stack trace from previous location ---\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.ExecuteReader[TValue](BaseDataSourceParams params)\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource\u00601.DataAccessProvider.Core.Interfaces.IDataSource\u003CTDatabaseSourceParams\u003E.ExecuteReaderAsync[TValue](TDatabaseSourceParams params)\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eb__12\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\ORACLE\\Program.cs:line 99\r\n--- End of stack trace from previous location ---\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eg__Test|0\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\ORACLE\\Program.cs:line 37"
+  },
+  {
+    "name": "anonymousBlockOutput",
+    "status": "exception",
+    "error": "ArgumentOutOfRangeException",
+    "message": "Specified argument was out of the range of valid values.",
+    "stack": "   at Oracle.ManagedDataAccess.Client.OracleParameter.set_Size(Int32 value)\r\n   at DataAccessProvider.Oracle.OracleSource.CreateDbParameter(DbCommand command, DataAccessParameter parameter)\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.ExecuteNonQuery(BaseDataSourceParams params)\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource\u00601.ExecuteNonQueryAsync(TDatabaseSourceParams params)\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eb__13\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\ORACLE\\Program.cs:line 107\r\n--- End of stack trace from previous location ---\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eg__Test|0\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\ORACLE\\Program.cs:line 37"
+  },
+  {
+    "name": "anonymousBlockOutputWithExplicitSize",
+    "status": "completed",
+    "detail": [
+      {
+        "ParameterName": "out",
+        "DbType": 24,
+        "Value": 0,
+        "Direction": 1,
+        "Size": 0
+      }
+    ]
+  }
+]
