@@ -1,89 +1,25 @@
-﻿# DataAccessProvider.Postgres
+# DataAccessProvider.PostgreSql
 
-A PostgreSQL provider for the DataAccessProvider framework, built on top of the Npgsql driver. It offers async operations, parameterized queries, resilience support, and easy DI registration.
+.NET 10 provider. Install only DataAccessProvider.PostgreSql; Core, the driver and DI implementation flow transitively. Version 1.4.0 is an unpublished local candidate. Pack the repository libraries to a local feed for candidate consumption; published releases use NuGet.org.
 
-## Installation
+Construction does not connect. Obtain real credentials securely from application configuration; placeholder values below demonstrate registration only.
 
-```bash
-dotnet add package DataAccessProvider.Postgres
-```
+~~~csharp
+using DataAccessProvider.Core;
+using DataAccessProvider.Postgres;
+using Microsoft.Extensions.DependencyInjection;
 
-## Configuration
+await using var direct = new PostgreSqlClient("Host=localhost;Database=example;Username=example;Password=placeholder");
+var services = new ServiceCollection().AddDataAccessProviderPostgres("Host=localhost;Database=example;Username=example;Password=placeholder");
+await using var host = services.BuildServiceProvider(new ServiceProviderOptions { ValidateScopes = true, ValidateOnBuild = true });
+await using var scope = host.CreateAsyncScope();
+var client = scope.ServiceProvider.GetRequiredService<IDatabaseClient<PostgreSql>>();
+~~~
 
-Add a connection string named `PostgresSource` to your `appsettings.json`:
+Add completes registration; no Use call is necessary. Constructor-created clients are caller-owned. Host clients belong to their application scope. Use tokens for ordinary operations and dispose native commands/readers/cursors created in advanced callbacks.
 
-```json
-{
-  "ConnectionStrings": {
-    "PostgresSource": "Host=localhost;Port=5432;Database=mydb;Username=myuser;Password=mypassword"
-  }
-}
-```
+Relational commands default to Text, a cooperative 30-second timeout and no wrapper retries. Query results always contain a collection. Output values are available after reader closure. Driver-supported transactions serialize commands and never replay ambiguous commits. MongoDB offers typed CRUD/expressions and driver-managed retryable writes; it is not a SQL command facade.
 
-## Dependency Injection
+Oracle modern commands bind by name. Variable-width outputs require capacity. Snowflake requires text CALL and does not promise ADO.NET output parameters; account-backed integration remains pending. Advanced provider types remain transitive and accessible through native callbacks.
 
-```csharp
-// In Startup.cs or Program.cs
-services.AddDataAccessProviderCore(configuration);
-services.AddDataAccessProviderPostgres(configuration);
-
-// After building the provider
-serviceProvider.UseDataAccessProviderPostgres();
-```
-
-You can also register the provider with a raw connection string:
-
-```csharp
-services.AddDataAccessProviderPostgres("Host=localhost;Port=5432;Database=mydb;Username=myuser;Password=mypassword");
-```
-
-## Usage
-
-```csharp
-var dataSourceProvider = serviceProvider.GetRequiredService<IDataSourceProvider>();
-
-var queryParams = new PostgresSourceParams
-{
-    Query = "SELECT id, name FROM users WHERE id = @id",
-    Parameters = new List<NpgsqlParameter>
-    {
-        new("@id", 1)
-    }
-};
-
-var result = await dataSourceProvider.ExecuteReaderAsync(queryParams);
-```
-
-### Typed Results
-
-```csharp
-public record User(int Id, string Name);
-
-var typedParams = new PostgresSourceParams<User>
-{
-    Query = "SELECT id, name FROM users"
-};
-
-var users = await dataSourceProvider.ExecuteReaderAsync(typedParams);
-```
-
-## Managed Transactions
-
-Resolve `IDatabaseTransactionProvider<PostgresSourceParams>` from the same DI scope and execute atomic work in its callback:
-
-```csharp
-var transactionProvider = serviceProvider
-    .GetRequiredService<IDatabaseTransactionProvider<PostgresSourceParams>>();
-
-await transactionProvider.ExecuteInTransactionAsync(async (transaction, cancellationToken) =>
-{
-    await transaction.ExecuteNonQueryAsync(firstCommand, cancellationToken);
-    await transaction.ExecuteNonQueryAsync(secondCommand, cancellationToken);
-}, IsolationLevel.ReadCommitted, cancellationToken);
-```
-
-Successful callbacks commit; exceptions and cancellation roll back. Commands share one connection, execute serially, and are not retried by the resilience policy. The callback executor cannot be reused after the callback completes.
-
-## Resilience
-
-If you register an `IResiliencePolicy` (e.g., via `AddDataAccessProviderCore`), the provider will automatically apply retries/timeouts around database calls.
+Legacy source/parameter APIs remain compatibility adapters during 1.4. See the repository README and docs/migration.md for queries, commands, procedures, transactions, cancellation, advanced access and 2.0 migration.

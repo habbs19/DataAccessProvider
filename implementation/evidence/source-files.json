@@ -1,0 +1,646 @@
+[
+  {
+    "sha256": "406AC54B6D57FDCFF6D99EE11EB183546FE78B7BD10BA8B0CC0D9AFEA95B3B80",
+    "path": "DataAccessProvider.Core/Abstractions/BaseDatabaseSource.cs"
+  },
+  {
+    "sha256": "1A8F155CDB589227A9BFC4427B7A3BC1C0AE90F316895AC6E70E2A3DFC5F1D2F",
+    "path": "DataAccessProvider.Core/Abstractions/BaseDatabaseSource.Transactions.cs"
+  },
+  {
+    "sha256": "57E9AF7B46D040917E2D1B772D73BE0F1D2059723DA9BF2E7897E91805CE3922",
+    "path": "DataAccessProvider.Core/Abstractions/BaseDatabaseSourceParams.cs"
+  },
+  {
+    "sha256": "C28604FBE849AC7A6B190D254611F8D855053EBC26C4DC8650ECF7B7390909CA",
+    "path": "DataAccessProvider.Core/Abstractions/BaseDataSourceParams.cs"
+  },
+  {
+    "sha256": "D0DA766BE4C9FEB23D1645A02DDB104D02EB9C2A63FAC458D88606629731055F",
+    "path": "DataAccessProvider.Core/Abstractions/BaseFileSourceParams.cs"
+  },
+  {
+    "sha256": "95455D3659C377C6060E2383ADF2CA81522420DD7D7EE7774A49E0980993DC68",
+    "path": "DataAccessProvider.Core/Abstractions/BaseSource.cs"
+  },
+  {
+    "sha256": "15918AB71C593BD699952604DD5B40B04CD16B5CE0FF71EAB3A4A2A4E7A017E8",
+    "path": "DataAccessProvider.Core/Abstractions/IDataAccessDbTypeMapper.cs"
+  },
+  {
+    "sha256": "285488E2DF3DDEF5EEC9982E0A805B056D498CD3B67082E3A240CCF8D378DC01",
+    "path": "DataAccessProvider.Core/DataAccessProvider.Core.csproj"
+  },
+  {
+    "sha256": "3B9874378A6B002C0EA5829E07637F2FDB4B9E2A6A5F476B3DEA77BC1C5B00AA",
+    "path": "DataAccessProvider.Core/DataSource/DataSourceFactory.cs"
+  },
+  {
+    "sha256": "27AE9736E8B7258A4692FF26038B0B01D7F5BD74D1DBBB8690E9D401FCBA4814",
+    "path": "DataAccessProvider.Core/DataSource/DataSourceProvidercs.cs"
+  },
+  {
+    "sha256": "F6CA76FF238E0EACAAEEE8DEAF3288B6527A388547E88DB4913DD8F823A81A16",
+    "path": "DataAccessProvider.Core/DataSource/Params/JsonFileSourceParams.cs"
+  },
+  {
+    "sha256": "130B7B43DD542F7F1A826E323220A7BE2DD7541B69D2CA4B1FA40D116690EDE1",
+    "path": "DataAccessProvider.Core/DataSource/Params/StaticCodeParams.cs"
+  },
+  {
+    "sha256": "0B5F6CE0C0DF8CE7F127524AA4926E5DF9AC745FE6671E20A5636A62B8772CBB",
+    "path": "DataAccessProvider.Core/DataSource/Source/JsonFileSource.cs"
+  },
+  {
+    "sha256": "0378E7EDF0C57327D730BCA2395489BFF202E8BE97169454348AA75CC9D81F87",
+    "path": "DataAccessProvider.Core/DataSource/Source/StaticCodeSource.cs"
+  },
+  {
+    "sha256": "F3C79909BD9F0B034C873F577CBACBD5562E6047305ED83323677BC1D24B4925",
+    "path": "DataAccessProvider.Core/Extensions/CancellationExtensions.cs"
+  },
+  {
+    "sha256": "75E5C3F4DAF4C9D0023AD7C73DD89E44499FEFC84B44A41EB0E7A3BCA0D90F16",
+    "path": "DataAccessProvider.Core/Extensions/DictionaryExtensions.cs"
+  },
+  {
+    "sha256": "4987F55A3749E96028D97F08AEC49EEF4C516546616CC231D3C933CD50E50ABF",
+    "path": "DataAccessProvider.Core/Extensions/GenericTypeExtensions.cs"
+  },
+  {
+    "sha256": "4C829782EF4E087A90165A61A5747E327AEE10C41ECA38B09A6A84C4F0049F2D",
+    "path": "DataAccessProvider.Core/Extensions/ObjectExtensions.cs"
+  },
+  {
+    "sha256": "1F354AA896B6E848C770C0E99286720B4B86D095B70388A0F2A33396A212BF7A",
+    "path": "DataAccessProvider.Core/Extensions/ServiceExtensions.cs"
+  },
+  {
+    "sha256": "D63AE8A35644583BD694889D099FDC33AC5DF5C04DE31C14D44945A1CC24A637",
+    "path": "DataAccessProvider.Core/Interfaces/ICancellableDataSource.cs"
+  },
+  {
+    "sha256": "4A41F60F40CA1C0C10A486CB1FC980733804E471BC894A061B5F87AE79864809",
+    "path": "DataAccessProvider.Core/Interfaces/IDatabaseTransaction.cs"
+  },
+  {
+    "sha256": "8DDE383747A8CB3B4C2C2B4E036F646B82316E1B2F311B21A8634A4C49C888B4",
+    "path": "DataAccessProvider.Core/Interfaces/IDataSource.cs"
+  },
+  {
+    "sha256": "E07AE53B30759BAAF125FC76244C2908EA2D6117B7F7C3A40630894ED767FF05",
+    "path": "DataAccessProvider.Core/Interfaces/IDataSourceFactory.cs"
+  },
+  {
+    "sha256": "0204BC51CA51BF00DA6D307F7A54E48B1CAE5DDB9F67E02F789FD0FA985280F1",
+    "path": "DataAccessProvider.Core/Interfaces/IDataSourceProvider.cs"
+  },
+  {
+    "sha256": "08F7A84A61F46BA9FDAB05DF610E2546644F18E0D9F48F6F0850572B76FC600A",
+    "path": "DataAccessProvider.Core/Interfaces/IResiliencePolicy.cs"
+  },
+  {
+    "sha256": "8570D4549756C24776030F08EAB5EA560FF0E816123A534734B120C56B7D6A66",
+    "path": "DataAccessProvider.Core/Modern/Contracts.cs"
+  },
+  {
+    "sha256": "3C984D92C8D51CE409FCA89A048C6FC7AA2C9E1F3116400EBEC0A102C6405A28",
+    "path": "DataAccessProvider.Core/Modern/DataAccessDiagnostics.cs"
+  },
+  {
+    "sha256": "E1F68B1679D94DDF62EC41E310078B7D762CC2CDD7202595E8EDA551FE8AFF0A",
+    "path": "DataAccessProvider.Core/Modern/DatabaseClient.cs"
+  },
+  {
+    "sha256": "269D7465EBF0F26D0FB511FB018E4AD78E859340CA4C1F8131B31BB41819CA15",
+    "path": "DataAccessProvider.Core/Modern/Documents.cs"
+  },
+  {
+    "sha256": "5D999F05569C36BB67DB8917F7DA0FB2668342BB907CB6797A83C26FC267FAC9",
+    "path": "DataAccessProvider.Core/Modern/ProviderRegistration.cs"
+  },
+  {
+    "sha256": "1033A364887EC2557E0550D17E7EFEFF8220DFA2A62182DBBEDFA279458A4E18",
+    "path": "DataAccessProvider.Core/Modern/RowMapper.cs"
+  },
+  {
+    "sha256": "15DDA1BADE85E6800B19EE9F0475BA8F541A71E6653EACEF0A24C6FABA77A97E",
+    "path": "DataAccessProvider.Core/Modern/SourceProvider.cs"
+  },
+  {
+    "sha256": "960C64E15F5CD776ADACFE30A0BDF59BDA86F943E34EAC561D2081FFAD547CD9",
+    "path": "DataAccessProvider.Core/Modern/ValueSources.cs"
+  },
+  {
+    "sha256": "8C1AD3163B780B0DF5502C70C3FE01D70E1A71C3E31D712EDF19DDD85CB8026B",
+    "path": "DataAccessProvider.Core/packages.lock.json"
+  },
+  {
+    "sha256": "D1E532582C02A2004E734FE650DC641CECC3A108C998C3933AEA78CE7FEE61C0",
+    "path": "DataAccessProvider.Core/Properties/AssemblyInfo.cs"
+  },
+  {
+    "sha256": "CAE7C47059ECAF7AE500CC249EC0907493082D3AECA348D94E54A61120E06682",
+    "path": "DataAccessProvider.Core/README.md"
+  },
+  {
+    "sha256": "CE53257E230B08024F06A2E5FF0832B36978ED881C3B9DBE4384AC81D314D2E2",
+    "path": "DataAccessProvider.Core/Resilience/BasicResiliencePolicy.cs"
+  },
+  {
+    "sha256": "2B16C68C7C080910ADA366A91BD2AB317D18051775F0E289F0553ECFED0ADD8D",
+    "path": "DataAccessProvider.Core/Resilience/ResilienceOptions.cs"
+  },
+  {
+    "sha256": "70E9F2BDFE8B7524D50175ADEFC58E0E7F63BD8C18C5F2A0360232BA18ED6AA6",
+    "path": "DataAccessProvider.Core/Types/DataAccessDbType.cs"
+  },
+  {
+    "sha256": "6CCDA4BF23625CF450F5C27BB2176B00A47F964DECA00D1AA5CB0BE3117B522D",
+    "path": "DataAccessProvider.Core/Types/DataAccessParameter.cs"
+  },
+  {
+    "sha256": "1AFA9DD6B29450AFFA81A169E9B619A42BF2044B2F09096C1EF91147E90B76B5",
+    "path": "DataAccessProvider.Core/Types/DataAccessParameterDirection.cs"
+  },
+  {
+    "sha256": "D314714CC7D936EE922D212647A3FD1290FBF77285DD4D4C0BD04D1435449F8A",
+    "path": "DataAccessProvider.Core/Types/DatabaseTransactionException.cs"
+  },
+  {
+    "sha256": "B9779578BFD6972559E6DB87F664D25DC142A8671BDD7DAAABEE4988A85DB8BA",
+    "path": "DataAccessProvider.Core/Types/DataSourceType.cs"
+  },
+  {
+    "sha256": "6273012DECCF5E65E184297558904C4EC038B680298C82E3EB721FA1BBCA14CC",
+    "path": "DataAccessProvider.MongoDB/DataAccessProvider.MongoDB.csproj"
+  },
+  {
+    "sha256": "1D37B230A7D1B862838839392950A4D981629CC6F0A68E2198EACFBCC8306559",
+    "path": "DataAccessProvider.MongoDB/MongoDBParams.cs"
+  },
+  {
+    "sha256": "2D1DD914FCB880CF6D85122DF07CB88284E99B491AEE625E612D1D1CB30A98CF",
+    "path": "DataAccessProvider.MongoDB/MongoDBSource.cs"
+  },
+  {
+    "sha256": "C3568C60411AE466DC6E15D640BB9938CF52859AF0789E980F1BA9CCAEE69FDD",
+    "path": "DataAccessProvider.MongoDB/MongoDocumentClient.cs"
+  },
+  {
+    "sha256": "FF399D2DB48FCBC2BDC522F6366CB181FFB2F33B6A8D1C847ECEF179563D30B8",
+    "path": "DataAccessProvider.MongoDB/packages.lock.json"
+  },
+  {
+    "sha256": "4BA6A9680995C0A15C8E7009923BE717D74300A4261E9830C0096B49B016B91A",
+    "path": "DataAccessProvider.MongoDB/README.md"
+  },
+  {
+    "sha256": "7C52BA9BF8F86DF0E3F1E6DF64CA21D90B4B3507F98A10897ED972E5FBE699CB",
+    "path": "DataAccessProvider.MongoDB/ServiceExtensions.cs"
+  },
+  {
+    "sha256": "7DC8369FB6401BB35D431F79591175002AECB7EE0D4092048AB3CBA7630CDBC1",
+    "path": "DataAccessProvider.MSSQL/Client.cs"
+  },
+  {
+    "sha256": "C68064B62160D4F12F56998A70B691BB6C9532AB4E6AECDC985EBD05CEC51A04",
+    "path": "DataAccessProvider.MSSQL/DataAccessProvider.MSSQL.csproj"
+  },
+  {
+    "sha256": "F82F54920C77608F39B89A55EF2434238AAD474F54F2DF1001DCA8AC8A16ED1A",
+    "path": "DataAccessProvider.MSSQL/DbParameterExtensions.cs"
+  },
+  {
+    "sha256": "7A74A2C2B6DFE00FBA9DCC03DEC50E7ED9606B52D5C75F2715A401690470C067",
+    "path": "DataAccessProvider.MSSQL/MSSQLSource.cs"
+  },
+  {
+    "sha256": "71AA1BCD92006D2B4CF7F4AAEFE45B799346F92F7B087E3108B39C6C3B194101",
+    "path": "DataAccessProvider.MSSQL/MSSQLSourceParams.cs"
+  },
+  {
+    "sha256": "349C17A56B8596CC67DDA52D67A49060DF46CA37DB08291E8F2066B2AC52F14F",
+    "path": "DataAccessProvider.MSSQL/NativeProvider.cs"
+  },
+  {
+    "sha256": "7530D9FE399EF3EA3E1825447C33801136D222C59C4896E77279FBB2C47DFF72",
+    "path": "DataAccessProvider.MSSQL/packages.lock.json"
+  },
+  {
+    "sha256": "4D23C43601028A022F90CFEA034719FDF76198DEA5B03CD8DD8A4063946431C8",
+    "path": "DataAccessProvider.MSSQL/README.md"
+  },
+  {
+    "sha256": "5429C0C935215D559F6D903A10D9598F3DDB839C8CE336849E8A1E263E331D34",
+    "path": "DataAccessProvider.MSSQL/ServiceExtensions.cs"
+  },
+  {
+    "sha256": "D3133A775E2885FF50DEA259A2722B24C90B71058F4F31A425039A242B690415",
+    "path": "DataAccessProvider.MSSQL/SqlServerDbTypeMapper.cs"
+  },
+  {
+    "sha256": "2546F148A48CCB797E2635BCA7073F97DD74389542C6D9298A352DC5E8A3196A",
+    "path": "DataAccessProvider.MySql/Client.cs"
+  },
+  {
+    "sha256": "FA3E55F1457CC587246E7A53496D9E0A02A3B6708743FD8A717D978C912606C0",
+    "path": "DataAccessProvider.MySql/DataAccessProvider.MySql.csproj"
+  },
+  {
+    "sha256": "2FC650471DDEEC745B5B869DEE4E26DC292E3334879245C5902B955E9BE9A2DB",
+    "path": "DataAccessProvider.MySql/DbParameterExtensions.cs"
+  },
+  {
+    "sha256": "FA1ADE51414CACA80CCA37EDF7782806E2DA8D401E13787EEA85008B572BA6BD",
+    "path": "DataAccessProvider.MySql/MySqlDbTypeMapper.cs"
+  },
+  {
+    "sha256": "6B9C23A1DFDE1351FD2DE768F15E2EC54B1A1D6202C50557D7D3883C9C79F3E1",
+    "path": "DataAccessProvider.MySql/MySQLSource.cs"
+  },
+  {
+    "sha256": "9D6D0385A03E134C574F4CC22E66500C271B3A5F670947BA430266A99E46E4FF",
+    "path": "DataAccessProvider.MySql/MySQLSourceParams.cs"
+  },
+  {
+    "sha256": "A7ECD9ABD430AEB4525BB0F4B3875A1D3E7D31F3E22A4620D16FF3A5309EC7E5",
+    "path": "DataAccessProvider.MySql/NativeProvider.cs"
+  },
+  {
+    "sha256": "4A6E6749216B401B8817481FD90D1F23F6B26A91F33F474F095CAAB6D1A47F35",
+    "path": "DataAccessProvider.MySql/packages.lock.json"
+  },
+  {
+    "sha256": "654D6773FB764A3FDBD72FC967A4BF2A7F967C0D23B3F841FC2C4E4F0482FC6C",
+    "path": "DataAccessProvider.MySql/README.md"
+  },
+  {
+    "sha256": "FB8090F646ABF3EE54F1EB258DF1BD749BBBE29A5C0845BAD94F2424BBCA53F9",
+    "path": "DataAccessProvider.MySql/ServiceExtensions.cs"
+  },
+  {
+    "sha256": "E191F901776F0FF1B85FB95322B57C7E113E4DD16CA098F63E03F373C160561D",
+    "path": "DataAccessProvider.Oracle/Client.cs"
+  },
+  {
+    "sha256": "98AF532D0701DE578C917086054FEC6514AE79B25190BBB766527906369D3E2F",
+    "path": "DataAccessProvider.Oracle/DataAccessProvider.Oracle.csproj"
+  },
+  {
+    "sha256": "4B80E7D55D673E5E7C16B2E08F40B9DDF214094C322647AD69424077D87A7E65",
+    "path": "DataAccessProvider.Oracle/DbParameterExtensions.cs"
+  },
+  {
+    "sha256": "8B51F70DA8E3EDF4685355C497600788E879758E04128F0B74197EDD8915D6CC",
+    "path": "DataAccessProvider.Oracle/NativeProvider.cs"
+  },
+  {
+    "sha256": "D5676A09B16CCC6269C10AE3842BD794D8A505D4C1E58908902150AAE66F4FC6",
+    "path": "DataAccessProvider.Oracle/OracleDbTypeMapper.cs"
+  },
+  {
+    "sha256": "D2861FCE45DE79F2A15C36AF6B27CBD86460E73BAF801153BB343B10A02F3836",
+    "path": "DataAccessProvider.Oracle/OracleSource.cs"
+  },
+  {
+    "sha256": "3AE2B9D39F79F4C75855D029B2F66564A31FF7837EE37C9C75C29ECE2D3D05BF",
+    "path": "DataAccessProvider.Oracle/OracleSourceParams.cs"
+  },
+  {
+    "sha256": "0015E33FD82AA82E1E2BDD003D3E6C38A7789B18FFC72932BEA66893B38C4F1A",
+    "path": "DataAccessProvider.Oracle/packages.lock.json"
+  },
+  {
+    "sha256": "6108B11142015991A82F86AAD4CBDBE888E3A51F84B7A17E7DF9F5FD28EABC29",
+    "path": "DataAccessProvider.Oracle/README.md"
+  },
+  {
+    "sha256": "7A4591695707EB8B56B1987AE81B1D1D2F1710BEFDA776CEC93987F50ACFEEFD",
+    "path": "DataAccessProvider.Oracle/ServiceExtensions.cs"
+  },
+  {
+    "sha256": "3F793633BBB2E1C47C97CB571F8EB7A3B42034431A6049337476B4D81EA5AB28",
+    "path": "DataAccessProvider.Postgres/Client.cs"
+  },
+  {
+    "sha256": "A5BB54A5330394AA796794EA571E29E095220B5CEE2A5EDF38D0E07A5CB3AE5E",
+    "path": "DataAccessProvider.Postgres/DataAccessProvider.Postgres.csproj"
+  },
+  {
+    "sha256": "5BB88C1C6514FC4B96A6FF01F933E3AC288F4AAB40570F7E8539FDF48272C651",
+    "path": "DataAccessProvider.Postgres/DbParameterExtensions.cs"
+  },
+  {
+    "sha256": "35695FD003F29C5B6DCDB34FFA46D73923D8311061E317BE07DB8BE1F0DD3F0A",
+    "path": "DataAccessProvider.Postgres/NativeProvider.cs"
+  },
+  {
+    "sha256": "5AF834A353E5944DDF7BB17E6231FA61A8B84315203FCB45C8B487AAF7183BBD",
+    "path": "DataAccessProvider.Postgres/packages.lock.json"
+  },
+  {
+    "sha256": "44E422B8842F4A2AA085A1F9113CD7A5527D0CC44F07C03E281791692D5C36A5",
+    "path": "DataAccessProvider.Postgres/PostgresDbTypeMapper.cs"
+  },
+  {
+    "sha256": "67368E1066AC23A47DBBEFBC4CF1AF8A855DE81B49B4A289A10FC804449FD73D",
+    "path": "DataAccessProvider.Postgres/PostgresSource.cs"
+  },
+  {
+    "sha256": "2353C8C6DFF2D91624F0A0A9022033154BEB88F9133E5E2AEA8EF34CE38E3312",
+    "path": "DataAccessProvider.Postgres/PostgresSourceParams.cs"
+  },
+  {
+    "sha256": "91C09A2C355910CEAB4E0CB41A8EF1BC06BC5155F9ECAE7BF802142ECDC97C36",
+    "path": "DataAccessProvider.Postgres/README.md"
+  },
+  {
+    "sha256": "7DCECA9FE23D9E51BFB4FB26260A85B54489712CA8F8976E43C9120FF9D8CA55",
+    "path": "DataAccessProvider.Postgres/ServiceExtensions.cs"
+  },
+  {
+    "sha256": "CA4ADBB5442D26E408A1AC963C7ED91C898F12B9345DB69B8272AE14D64F51B0",
+    "path": "DataAccessProvider.Snowflake/Client.cs"
+  },
+  {
+    "sha256": "79FBE5E35472D38BEE2C348F39994C26643F3FD97D0674FC0F414F02CFCC7534",
+    "path": "DataAccessProvider.Snowflake/DataAccessProvider.Snowflake.csproj"
+  },
+  {
+    "sha256": "7DDF905010BD5859783F077E9753392FE1FEBCB137B561699375E0130CFE9F66",
+    "path": "DataAccessProvider.Snowflake/DbParameterExtensions.cs"
+  },
+  {
+    "sha256": "F5092E4032E9173D4C9339F050FC6524587FE448A9FE90EC76C5A9F7EEA84BB6",
+    "path": "DataAccessProvider.Snowflake/NativeProvider.cs"
+  },
+  {
+    "sha256": "94AB2694FB791A1B33D5EC0B24595FA9148815F62394A517CD287A2BF34B5E28",
+    "path": "DataAccessProvider.Snowflake/packages.lock.json"
+  },
+  {
+    "sha256": "58A19180B8FB5D077ABA9C9572632397E24592720BDAF27A02A7DA5D6A8B0619",
+    "path": "DataAccessProvider.Snowflake/README.md"
+  },
+  {
+    "sha256": "CF250819F46CFA123D51427DAC3BC5846A6A0FB277916285AACEED5E0CBCD1A3",
+    "path": "DataAccessProvider.Snowflake/ServiceExtensions.cs"
+  },
+  {
+    "sha256": "7F40C928C382445E1EEDDCE9F9CFB96DF5E2ECC35D863E66F7ED1EFA05144E81",
+    "path": "DataAccessProvider.Snowflake/SnowflakeSource.cs"
+  },
+  {
+    "sha256": "0AA07FA866F22A4D94AF8F0F6824A2648F9F104CD87BD4F4B040F481F379626C",
+    "path": "DataAccessProvider.Snowflake/SnowflakeSourceParams.cs"
+  },
+  {
+    "sha256": "2BEAF7F318DB7A49962F2951E165DF3BD188B67E6E4608538E138B5104F6AFA1",
+    "path": "DataAccessProviderConsole/Classes/Movie.cs"
+  },
+  {
+    "sha256": "6C50392CEEE602CF0052A4140FE058DCCB59CF9048101A227CCA36F79362A7BA",
+    "path": "DataAccessProviderConsole/DataAccessProviderConsole.csproj"
+  },
+  {
+    "sha256": "482DB903EF99744190297EB62A7DA2474660A37944B3F95F3E893DB0EA2B99B4",
+    "path": "DataAccessProviderConsole/Demos/DataAccessDemo.cs"
+  },
+  {
+    "sha256": "70318853DD4927AC9DA4770E8D0613CCFDF508CC0BD23A3DD8A9B01D348E79F3",
+    "path": "DataAccessProviderConsole/Demos/ResilienceDemo.cs"
+  },
+  {
+    "sha256": "C55EC1FB8ECE0C17739E83345CD77F00DC097D1B0392892AA5E7E1BE4B9A9ECD",
+    "path": "DataAccessProviderConsole/Models/AppUser.cs"
+  },
+  {
+    "sha256": "5FE33CC6DAAF0717BB7165C6F8330072AB8AEE1B32982BBFE77B91993FB55A5D",
+    "path": "DataAccessProviderConsole/Models/Diary.cs"
+  },
+  {
+    "sha256": "91B87F4E0337DC9C7BDA2AEA8F99515127B54BF84C7A7EB27D7E55EDA3C50D7A",
+    "path": "DataAccessProviderConsole/Models/Genre.cs"
+  },
+  {
+    "sha256": "E21F7D6B192BFFEE89C16BFF5FFF81DE5855A5F249236A36C9E5A1BB3658713F",
+    "path": "DataAccessProviderConsole/Models/IdentityUser.cs"
+  },
+  {
+    "sha256": "0A22717B3BF9B7F815F9618ED7C4E9C93619DCD6406D5A8A40DB251C29D5032D",
+    "path": "DataAccessProviderConsole/Models/MemberGroupEnum.cs"
+  },
+  {
+    "sha256": "1AB9E16E90BA10822D9F2F07C8C351CD52D39EA09FD3AE75458B81FB287A500B",
+    "path": "DataAccessProviderConsole/packages.lock.json"
+  },
+  {
+    "sha256": "8FFEA509A46AF532290E3C825FC5376CD92C5AF3F866474130B1533A64885714",
+    "path": "DataAccessProviderConsole/Program.cs"
+  },
+  {
+    "sha256": "48476D3054B507895383182E3668A87E6B033934300C68738043045FAEA4CFFE",
+    "path": "DataAccessProviderConsole/Setup/ServiceConfiguration.cs"
+  },
+  {
+    "sha256": "F1F2DFE5E739191FECD77BD935078E523F47E1F6FEC6786F72F36CEAE303E30E",
+    "path": "Directory.Build.props"
+  },
+  {
+    "sha256": "2DC9E1F1681E439800CCBDFE254B51ED56EE11B88051D67375FF3FF1F38E3EF3",
+    "path": "Directory.Packages.props"
+  },
+  {
+    "sha256": "49A05ADA7CAF4B449A766EFDAEFC1E84B25454EECE9BB62602EDE660706E3256",
+    "path": "docs/implementation.md"
+  },
+  {
+    "sha256": "7D58909A2D2AE78B93602BBF3BC01A1ABCB7656AE6F99A749FA157E7AB796BA9",
+    "path": "docs/migration.md"
+  },
+  {
+    "sha256": "F14FA4253BA59CEE7AC42A6E1B42741DEF9B82CF7881F1A5D0E8FD9D24811523",
+    "path": "eng/Check-LegacyUsage.ps1"
+  },
+  {
+    "sha256": "FFDBF30A6C9F6A3EE77DEBD8CAA9DBE724C0BA7E8DB7065F804E71532101E5AB",
+    "path": "eng/IntegrationProbe.cs"
+  },
+  {
+    "sha256": "803039D20805F96BA27B2D48089722AF50D6028FC4C87DAFB7B3D8A0153A4A0C",
+    "path": "eng/MappingBenchmark.cs"
+  },
+  {
+    "sha256": "AD97A71DACB84BA0818D9A982DEC268BB96F80A0BE5A7069363E4EDBF12E2520",
+    "path": "eng/PeakMemoryProbe.cs"
+  },
+  {
+    "sha256": "332F04CFDE4FD1E71099AB5DE6EFA6672C8CEC2513EBBFD0D159E6EF7FEBAEFC",
+    "path": "eng/SnowflakeProbe.cs"
+  },
+  {
+    "sha256": "B3E511089664185C1121D50C6E0125B19384369304A0D85F5286DADA3B4DB2DB",
+    "path": "eng/Verify-Audit.ps1"
+  },
+  {
+    "sha256": "AB06E23E8ADA5352017E1CA66C56A17AB6F3F7A0DCAC949AF42B1EAE84FE058D",
+    "path": "eng/Verify-Deployment.ps1"
+  },
+  {
+    "sha256": "76101A29792B802BF02387EE3C515626602645E4BB7496E2BA9240B6970CCDB4",
+    "path": "eng/Verify-Docs.ps1"
+  },
+  {
+    "sha256": "69FA8828D95648B0951AD70FC445CFF7D13BAB0C6C34B16658E5E6F9CB3A41E1",
+    "path": "eng/Verify-Integration.ps1"
+  },
+  {
+    "sha256": "DCF0F96FBBA90C9CCAF25CB0DFBC3623B750A1854C3A7ED28181A33EBDEFB176",
+    "path": "eng/Verify-Packages.ps1"
+  },
+  {
+    "sha256": "B577CC91062A192C62A75EE02AA5AF08E8A3AC768DAB46B51BD3F6343BB018AF",
+    "path": "eng/Verify-Release.ps1"
+  },
+  {
+    "sha256": "D1E06DD58128A2EF176B2637C3CB48F932775B4237BF9DD5B8075311C8F691E3",
+    "path": "global.json"
+  },
+  {
+    "sha256": "1254B02D8B588F7643B464D08F1D8351EC93B4FAFD9948691946FCAD6C14A592",
+    "path": "README.md"
+  },
+  {
+    "sha256": "EC9C25D4887521B6BFDE19B24F6780A7997E67EA5EDE414C16EE41FE291EBA01",
+    "path": "review/evidence/Build-EvidenceIndex.ps1"
+  },
+  {
+    "sha256": "B35BE0AD560CB764EBDBE0FE849D396668B87B7661FFE49E221DC409D277EDFF",
+    "path": "review/evidence/Compile-AllDocExamples.ps1"
+  },
+  {
+    "sha256": "C207EBD571B0C575552925B54D7E15C3C25046AD5E7236E60D566823CCA8A7B0",
+    "path": "review/evidence/ConsumerProbe.cs"
+  },
+  {
+    "sha256": "5D13B8060BC9163E1A164C6253D99B29D238188A7755DAD521DA16A38D5F8D2E",
+    "path": "review/evidence/HostedRegistrationProbe.cs"
+  },
+  {
+    "sha256": "8717B7D3E018E149C3CCC154FF651B95BF6B4821F3279F7C27C0B919BA8089F2",
+    "path": "review/evidence/Inspect-ApiAndDocs.ps1"
+  },
+  {
+    "sha256": "4303493DCC3925C6E37C7C8BA9D5A1E6264D034AE5C3D1854AB2BAB88B00981D",
+    "path": "review/evidence/IntegrationProbe.cs"
+  },
+  {
+    "sha256": "D63D1F28D2BB128DE61570C25C53CAD28A0D406E845CA68F425E97BC59A7B4A4",
+    "path": "review/evidence/PublishedMySqlApiProbe.cs"
+  },
+  {
+    "sha256": "FBECBA20F2BC1A34EACE5DEF84264E60D5E37F4C9E8930275D48F897BBE2B8C6",
+    "path": "review/evidence/README.md"
+  },
+  {
+    "sha256": "DEE667D9D73CF7A588F6BDFBA52873732790119B936F001212F8AC5F4C42E578",
+    "path": "review/evidence/ReproductionProbe.cs"
+  },
+  {
+    "sha256": "111D21CD8AC2866DAF16276E0D408751C76F93E0EEC88A189FF9A84CAED7D408",
+    "path": "review/evidence/Run-ExampleChecks.ps1"
+  },
+  {
+    "sha256": "F009D2EAE02FCDB88F78B443D7BDF1A5D3273DBC146EF3C900D7D6F2E57AB6B4",
+    "path": "review/evidence/Run-HistoricalApiCheck.ps1"
+  },
+  {
+    "sha256": "F54A0CD87B4D95A8D3BA05277D92A365C966680A7352A246D474EB56FD763BE1",
+    "path": "review/evidence/Run-Integration.ps1"
+  },
+  {
+    "sha256": "CC80DB07D2DDD8226027DA823B7B12344F031FF8D6DCEA1C146EDCDABBC93B86",
+    "path": "review/evidence/Run-MetadataExperiment.ps1"
+  },
+  {
+    "sha256": "11FEBFB4B71333657E9432111FDD2CDB73D85E28CA1CD1749E6ED82CEA484886",
+    "path": "review/evidence/Run-PackageVerification.ps1"
+  },
+  {
+    "sha256": "485B5676C12216FDFA94E35DFD74F44894BCB5F488FDC8ED95F89AB80DF922C2",
+    "path": "review/evidence/Run-PublishedMinimumCheck.ps1"
+  },
+  {
+    "sha256": "F36FB23037C83D4033D4E332623AADB52B6DF934DF908A33B31B64CFD224EF60",
+    "path": "review/evidence/Run-Reproductions.ps1"
+  },
+  {
+    "sha256": "03771FE9520BCAE9E58DAB2E816D01A30DCBCB9988690C02AC85CE01E4621759",
+    "path": "review/evidence/Validate-Review.ps1"
+  },
+  {
+    "sha256": "45BB644258F700C545BCC35851E6769D43D74BC521FC70640E6B9208E44C7857",
+    "path": "Test/GlobalUsings.cs"
+  },
+  {
+    "sha256": "F9DFED20164E51FAF8B9225DBF45FFB1046CB7BDCD107D72110B1FEB5E3EA921",
+    "path": "Test/packages.lock.json"
+  },
+  {
+    "sha256": "ABC87AD4A71EF983265709FD80C709255F93CC723176AE8CEC67DBDFC812E4D5",
+    "path": "Test/Test_DbTypeMapperOwnership.cs"
+  },
+  {
+    "sha256": "8880E914661262B5D3ADB7F0CCCD74C41D38335D29A3E2037949820351776C94",
+    "path": "Test/Test_MSSQL.cs"
+  },
+  {
+    "sha256": "89D864E4D552E452F64D425FF94915AC0B3F72A9C49D61891AB5706D92512E8D",
+    "path": "Test/Test_ResilienceWithDataAccess.cs"
+  },
+  {
+    "sha256": "7761A80F503A9552806C74F3D67AAB0D55F2B8F3299E9D645B8B853D0178C8B5",
+    "path": "Test/Test_TransactionRegistrations.cs"
+  },
+  {
+    "sha256": "1DA964B9781931A55CA4D17C681019333C07AA2D720483473E4A73EFF6C1C651",
+    "path": "Test/Test.csproj"
+  },
+  {
+    "sha256": "CF0973FDCBDAF2255B9B2D391CCD9BA3801916116F594F58E24AC7FC305F724D",
+    "path": "tests/DataAccessProvider.Core.Tests/BaseDataSourceParamsTests.cs"
+  },
+  {
+    "sha256": "E0A9C0253BB758197AA1F481CE43A115E85F68CDCE92CEF7806DF94FA87DE0E1",
+    "path": "tests/DataAccessProvider.Core.Tests/DataAccessProvider.Core.Tests.csproj"
+  },
+  {
+    "sha256": "71C96709F9B35C75ED82C8573E08475FD418D1ECD7B812511536BBDC985E0459",
+    "path": "tests/DataAccessProvider.Core.Tests/DatabaseTransactionTests.cs"
+  },
+  {
+    "sha256": "E5F504B5E1D886EB60872D4255A7E4250FE9AE608804850DF8266B99C8BE153D",
+    "path": "tests/DataAccessProvider.Core.Tests/DataSourceFactoryTests.cs"
+  },
+  {
+    "sha256": "6BA0B23EC0B4DB4151D6CA984572AB0D90DFB23AF1E024236DBE1ECE26D9CE78",
+    "path": "tests/DataAccessProvider.Core.Tests/DataSourceProviderTests.cs"
+  },
+  {
+    "sha256": "F006E57ED1A5B38955BADB20C52802393287EB620DEBF7D34D4CD51969B6C0FB",
+    "path": "tests/DataAccessProvider.Core.Tests/GlobalUsings.cs"
+  },
+  {
+    "sha256": "1795F709DC3020DAD4D8447CF53E0FC73EDE4E3D0D663F8E62C1C11E16097460",
+    "path": "tests/DataAccessProvider.Core.Tests/ModernExecutionTests.cs"
+  },
+  {
+    "sha256": "AAFE15474277767470BEA9EFF5DDCDF50A9095C04FF871155B366EC377499295",
+    "path": "tests/DataAccessProvider.Core.Tests/ObjectExtensionsTests.cs"
+  },
+  {
+    "sha256": "918FF10D451D86D1787D8732A035C3DA27BCB1CB320EB985CDFC137AF17EA2E7",
+    "path": "tests/DataAccessProvider.Core.Tests/packages.lock.json"
+  }
+]

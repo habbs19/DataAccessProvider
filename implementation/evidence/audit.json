@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "parameters": "--vulnerable --include-transitive",
+  "sources": [
+    "https://api.nuget.org/v3/index.json",
+    "C:/Program Files (x86)/Microsoft SDKs/NuGetPackages/"
+  ],
+  "projects": [
+    {
+      "path": "C:/Users/habibs/source/repos/DataAccessProvider/Test/Test.csproj"
+    },
+    {
+      "path": "C:/Users/habibs/source/repos/DataAccessProvider/DataAccessProviderConsole/DataAccessProviderConsole.csproj"
+    },
+    {
+      "path": "C:/Users/habibs/source/repos/DataAccessProvider/DataAccessProvider.Core/DataAccessProvider.Core.csproj"
+    },
+    {
+      "path": "C:/Users/habibs/source/repos/DataAccessProvider/DataAccessProvider.MySql/DataAccessProvider.MySql.csproj"
+    },
+    {
+      "path": "C:/Users/habibs/source/repos/DataAccessProvider/DataAccessProvider.Oracle/DataAccessProvider.Oracle.csproj"
+    },
+    {
+      "path": "C:/Users/habibs/source/repos/DataAccessProvider/DataAccessProvider.MSSQL/DataAccessProvider.MSSQL.csproj"
+    },
+    {
+      "path": "C:/Users/habibs/source/repos/DataAccessProvider/DataAccessProvider.Postgres/DataAccessProvider.Postgres.csproj"
+    },
+    {
+      "path": "C:/Users/habibs/source/repos/DataAccessProvider/DataAccessProvider.MongoDB/DataAccessProvider.MongoDB.csproj"
+    },
+    {
+      "path": "C:/Users/habibs/source/repos/DataAccessProvider/DataAccessProvider.Snowflake/DataAccessProvider.Snowflake.csproj"
+    },
+    {
+      "path": "C:/Users/habibs/source/repos/DataAccessProvider/tests/DataAccessProvider.Core.Tests/DataAccessProvider.Core.Tests.csproj"
+    }
+  ]
+}

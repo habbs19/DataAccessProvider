@@ -120,7 +120,7 @@ public abstract partial class BaseDatabaseSource
         {
             resultSet[resultCount++] = await ReadResultAsync(reader, cancellationToken).ConfigureAwait(false);
         }
-        while (await reader.NextResultAsync(cancellationToken).ConfigureAwait(false));
+        while (await reader.NextResultAsync(cancellationToken).ConfigureAwait(false)); await reader.CloseAsync().ConfigureAwait(false);
 
         if (resultSet.Count == 1)
         {
@@ -137,7 +137,7 @@ public abstract partial class BaseDatabaseSource
             sourceParams.SetValue(resultSet);
         }
 
-        return sourceParams;
+        CopyTransactionOutputs(sourceParams, command); return sourceParams;
     }
 
     private async Task<TSourceParams> ExecuteTransactionReaderAsync<TValue, TSourceParams>(
@@ -150,18 +150,11 @@ public abstract partial class BaseDatabaseSource
     {
         await using var command = CreateTransactionCommand(sourceParams, connection, transaction);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false);
-        var result = await MaterializeAsync<TValue>(reader, cancellationToken).ConfigureAwait(false);
+        var result = await MaterializeAsync<TValue>(reader, cancellationToken).ConfigureAwait(false); await reader.CloseAsync().ConfigureAwait(false);
 
-        if (result.Count == 1)
-        {
-            sourceParams.SetValue(result[0]);
-        }
-        else if (result.Count > 1)
-        {
-            sourceParams.SetValue(result);
-        }
+        sourceParams.SetValue(result);
 
-        return sourceParams;
+        CopyTransactionOutputs(sourceParams, command); return sourceParams;
     }
 
     private async Task<BaseDatabaseSourceParams> ExecuteTransactionNonQueryAsync(
@@ -174,7 +167,7 @@ public abstract partial class BaseDatabaseSource
         var affectedRows = await command.ExecuteNonQueryAsync(cancellationToken).ConfigureAwait(false);
         sourceParams.SetValue(affectedRows);
         sourceParams.AffectedRows = affectedRows;
-        return sourceParams;
+        CopyTransactionOutputs(sourceParams, command); return sourceParams;
     }
 
     private async Task<BaseDatabaseSourceParams> ExecuteTransactionScalarAsync(
@@ -186,17 +179,17 @@ public abstract partial class BaseDatabaseSource
         await using var command = CreateTransactionCommand(sourceParams, connection, transaction);
         var result = await command.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false);
         sourceParams.SetValue(result!);
-        return sourceParams;
+        CopyTransactionOutputs(sourceParams, command); return sourceParams;
     }
 
+    private void CopyTransactionOutputs(IBaseDatabaseSourceParams request, DbCommand command) { for (int i = 0; i < (request.Parameters?.Count ?? 0); i++) { var p = request.Parameters![i]; if (p.Direction != DataAccessParameterDirection.Input) p.Value = ReadParameterValue((DbParameter)command.Parameters[i]); } }
     private DbCommand CreateTransactionCommand(
         BaseDatabaseSourceParams sourceParams,
         DbConnection connection,
         DbTransaction transaction)
     {
         var command = GetCommand(sourceParams.Query, connection);
-        ConfigureTransactionCommand(command, sourceParams.CommandType, sourceParams.Timeout, sourceParams.Parameters, transaction);
-        return command;
+        try { ConfigureTransactionCommand(command, sourceParams.CommandType, sourceParams.Timeout, sourceParams.Parameters, transaction); return command; } catch { command.Dispose(); throw; }
     }
 
     private DbCommand CreateTransactionCommand<TValue>(
@@ -206,8 +199,7 @@ public abstract partial class BaseDatabaseSource
         where TValue : class
     {
         var command = GetCommand(sourceParams.Query, connection);
-        ConfigureTransactionCommand(command, sourceParams.CommandType, sourceParams.Timeout, sourceParams.Parameters, transaction);
-        return command;
+        try { ConfigureTransactionCommand(command, sourceParams.CommandType, sourceParams.Timeout, sourceParams.Parameters, transaction); return command; } catch { command.Dispose(); throw; }
     }
 
     private void ConfigureTransactionCommand(
@@ -228,7 +220,7 @@ public abstract partial class BaseDatabaseSource
 
         foreach (var parameter in parameters)
         {
-            command.Parameters.Add(CreateDbParameter(command, parameter));
+            command.Parameters.Add(BuildParameter(command, parameter));
         }
     }
 
@@ -303,8 +295,8 @@ public abstract partial class BaseDatabaseSource
             _commandGate.Release();
         }
 
-        private async Task<TResult> ExecuteSerializedAsync<TParams, TResult>(
-            TParams @params,
+        private async Task<TResult> ExecuteSerializedAsync<TDatabaseSourceParams, TResult>(
+            TDatabaseSourceParams @params,
             Func<CancellationToken, Task<TResult>> operation,
             CancellationToken cancellationToken)
         {

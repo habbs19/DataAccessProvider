@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 
 namespace DataAccessProvider.Core.Abstractions;
 
@@ -11,7 +11,9 @@ interface IBaseDatabaseSourceParams
     public CommandType CommandType { get; set; }
     public int Timeout { get; set; }
     public int AffectedRows { get; set; }
+    public DataAccessProvider.Core.RetrySafety RetrySafety { get; set; }
 }
+[Obsolete("Migrate to the 1.4 client, command and result API before 2.0; see docs/migration.md.", DiagnosticId = "DAP001")]
 public abstract class BaseDatabaseSourceParams : BaseDataSourceParams, IBaseDatabaseSourceParams
 {
     public string Query { get; set; } = string.Empty;
@@ -19,7 +21,11 @@ public abstract class BaseDatabaseSourceParams : BaseDataSourceParams, IBaseData
     public CommandType CommandType { get; set; } = CommandType.StoredProcedure;
     public int Timeout { get; set; }
     public int AffectedRows { get; set; }
+    public DataAccessProvider.Core.RetrySafety RetrySafety { get; set; }
 }
+
+
+[Obsolete("Migrate to the 1.4 client, command and result API before 2.0; see docs/migration.md.", DiagnosticId = "DAP001")]
 
 
 public abstract class BaseDatabaseSourceParams<TValue> : BaseDataSourceParams<TValue>, IBaseDatabaseSourceParams
@@ -30,4 +36,5 @@ public abstract class BaseDatabaseSourceParams<TValue> : BaseDataSourceParams<TV
     public CommandType CommandType { get; set; } = CommandType.StoredProcedure;
     public int Timeout { get; set; }
     public int AffectedRows { get; set; }
+    public DataAccessProvider.Core.RetrySafety RetrySafety { get; set; }
 }

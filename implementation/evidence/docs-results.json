@@ -1,0 +1,57 @@
+[
+  {
+    "file": "README.md",
+    "status": "passed",
+    "fence": 0
+  },
+  {
+    "file": "README.md",
+    "status": "passed",
+    "fence": 1
+  },
+  {
+    "file": "docs/migration.md",
+    "status": "passed",
+    "fence": 0
+  },
+  {
+    "file": "docs/migration.md",
+    "status": "passed",
+    "fence": 1
+  },
+  {
+    "file": "DataAccessProvider.Core/README.md",
+    "status": "passed",
+    "fence": 0
+  },
+  {
+    "file": "DataAccessProvider.MySql/README.md",
+    "status": "passed",
+    "fence": 0
+  },
+  {
+    "file": "DataAccessProvider.Snowflake/README.md",
+    "status": "passed",
+    "fence": 0
+  },
+  {
+    "file": "DataAccessProvider.MSSQL/README.md",
+    "status": "passed",
+    "fence": 0
+  },
+  {
+    "file": "DataAccessProvider.MongoDB/README.md",
+    "status": "passed",
+    "fence": 0
+  },
+  {
+    "file": "DataAccessProvider.Oracle/README.md",
+    "status": "passed",
+    "fence": 0
+  },
+  {
+    "file": "DataAccessProvider.Postgres/README.md",
+    "status": "passed",
+    "fence": 0
+  }
+]

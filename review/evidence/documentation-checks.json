@@ -1,0 +1,22 @@
+[
+  {
+    "case": "DataAccessProvider-MSSQL-README-md-registration",
+    "source": "DataAccessProvider.MSSQL\\README.md",
+    "build": 1
+  },
+  {
+    "case": "DataAccessProvider-MySql-README-md-registration",
+    "source": "DataAccessProvider.MySql\\README.md",
+    "build": 1
+  },
+  {
+    "case": "DataAccessProvider-Postgres-README-md-registration",
+    "source": "DataAccessProvider.Postgres\\README.md",
+    "build": 0
+  },
+  {
+    "case": "DataAccessProvider-MongoDB-README-md-registration",
+    "source": "DataAccessProvider.MongoDB\\README.md",
+    "build": 0
+  }
+]

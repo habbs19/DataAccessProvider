@@ -1,0 +1,12 @@
+dotnet build C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\core-registration-verbatim\Consumer.csproj --no-restore --verbosity minimal
+ExitCode: 1
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\core-registration-verbatim\Program.cs(4,50): error CS1002: ; expected [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\core-registration-verbatim\Consumer.csproj]
+
+Build FAILED.
+
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\core-registration-verbatim\Program.cs(4,50): error CS1002: ; expected [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\core-registration-verbatim\Consumer.csproj]
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:02.73
+

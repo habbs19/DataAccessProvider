@@ -1,0 +1,29 @@
+[
+  {
+    "name": "mappingMeasurement",
+    "detail": {
+      "rows": 1,
+      "repetitions": 5,
+      "elapsedMs": 0.1278,
+      "allocatedBytes": 7840
+    }
+  },
+  {
+    "name": "mappingMeasurement",
+    "detail": {
+      "rows": 1000,
+      "repetitions": 5,
+      "elapsedMs": 8.9461,
+      "allocatedBytes": 329720
+    }
+  },
+  {
+    "name": "mappingMeasurement",
+    "detail": {
+      "rows": 10000,
+      "repetitions": 5,
+      "elapsedMs": 40.3403,
+      "allocatedBytes": 3719000
+    }
+  }
+]

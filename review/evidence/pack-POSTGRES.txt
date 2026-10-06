@@ -1,0 +1,4 @@
+dotnet pack C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.Postgres\DataAccessProvider.Postgres.csproj -c Release --no-build --no-restore --output C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\local-feed
+ExitCode: 0
+  Successfully created package 'C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\local-feed\DataAccessProvider.PostgreSql.1.3.4.nupkg'.
+

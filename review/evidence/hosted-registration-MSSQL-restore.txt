@@ -1,0 +1,5 @@
+dotnet restore C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\hosted-registration-MSSQL\Consumer.csproj --configfile C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\examples\hosted-registration-MSSQL\NuGet.Config --packages C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\local-consumer-cache --verbosity minimal
+ExitCode: 0
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+

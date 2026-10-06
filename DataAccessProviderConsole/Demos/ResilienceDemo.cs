@@ -21,7 +21,7 @@ public static class ResilienceDemo
 
             if (currentAttempt <= failUntilAttempt)
             {
-                throw new InvalidOperationException($"Simulated transient failure on attempt {currentAttempt}");
+                throw new SimulatedTransientFailure();
             }
 
             return currentAttempt;
@@ -39,4 +39,5 @@ public static class ResilienceDemo
             return Interlocked.Increment(ref _attempt);
         }
     }
+    private sealed class SimulatedTransientFailure : System.Data.Common.DbException { public override bool IsTransient => true; }
 }

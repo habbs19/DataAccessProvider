@@ -1,4 +1,4 @@
-﻿using DataAccessProvider.Core.Abstractions;
+using DataAccessProvider.Core.Abstractions;
 using DataAccessProvider.Core.Interfaces;
 using DataAccessProvider.Core.Types;
 using Snowflake.Data.Client;
@@ -6,11 +6,13 @@ using System.Data;
 using System.Data.Common;
 
 namespace DataAccessProvider.Snowflake;
+
 public sealed class SnowflakeSource : BaseDatabaseSource<SnowflakeSourceParams>,
     IDataSource,
-    IDataSource<SnowflakeSourceParams>
+    IDataSource<SnowflakeSourceParams>, IDatabaseTransactionProvider<SnowflakeSourceParams>
 {
     public SnowflakeSource(string connectionString) : base(connectionString) { }
+    public SnowflakeSource(string connectionString, IResiliencePolicy? policy) : base(connectionString, policy) { }
 
     public override DbConnection GetConnection()
     {
@@ -42,4 +44,15 @@ public sealed class SnowflakeSource : BaseDatabaseSource<SnowflakeSourceParams>,
         DataAccessParameterDirection.ReturnValue => ParameterDirection.ReturnValue,
         _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unsupported parameter direction.")
     };
+    public Task ExecuteInTransactionAsync(
+            Func<IDatabaseTransaction, CancellationToken, Task> operation,
+            IsolationLevel? isolationLevel = null,
+            CancellationToken cancellationToken = default) =>
+            ExecuteInTransactionCoreAsync(operation, isolationLevel, cancellationToken);
+
+    public Task<TResult> ExecuteInTransactionAsync<TResult>(
+        Func<IDatabaseTransaction, CancellationToken, Task<TResult>> operation,
+        IsolationLevel? isolationLevel = null,
+        CancellationToken cancellationToken = default) =>
+        ExecuteInTransactionCoreAsync(operation, isolationLevel, cancellationToken);
 }

@@ -1,0 +1,7 @@
+{
+  "probe": "NativeAOT publish",
+  "reason": "vswhere found no installed Visual C++ x64/x86 compiler component",
+  "checked": "2026-10-05",
+  "runtime": "win-x64",
+  "status": "blocked"
+}

@@ -1,0 +1,6 @@
+using DataAccessProvider.Core.Extensions; using Microsoft.Extensions.DependencyInjection; using Microsoft.Extensions.Configuration;
+class Example { void Run(IServiceCollection services,IConfiguration configuration) {
+    // Add connection strings for each database type
+    services.AddDataAccessProvider(configuration)
+
+} }

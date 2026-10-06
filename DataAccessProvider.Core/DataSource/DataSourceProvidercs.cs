@@ -1,16 +1,34 @@
-﻿using DataAccessProvider.Core.Abstractions;
+using DataAccessProvider.Core.Abstractions;
 using DataAccessProvider.Core.Interfaces;
 
 namespace DataAccessProvider.Core.DataSource
 {
 
-#region DataSourceProvider
+    #region DataSourceProvider
     /// <summary>
     /// Provides methods to interact with different data sources using a factory to create appropriate sources (e.g., MSSQL, PostgreSQL).
     /// </summary>
-    public class DataSourceProvider : IDataSourceProvider
+    [Obsolete("Migrate to the 1.4 client, command and result API before 2.0; see docs/migration.md.", DiagnosticId = "DAP001")]
+    public class DataSourceProvider : IDataSourceProvider, ICancellableDataSource
     {
         private readonly IDataSourceFactory _sourceFactory;
+
+        private static ICancellableDataSource Cancellable(IDataSource source) => source as ICancellableDataSource
+            ?? throw new NotSupportedException("This custom source must implement ICancellableDataSource to accept cancellation.");
+        public Task<TParams> ExecuteReaderAsync<TParams>(TParams p, CancellationToken ct) where TParams : BaseDataSourceParams
+            => Cancellable(_sourceFactory.CreateDataSource(p)).ExecuteReaderAsync(p, ct);
+        public Task<TParams> ExecuteScalarAsync<TParams>(TParams p, CancellationToken ct) where TParams : BaseDataSourceParams
+            => Cancellable(_sourceFactory.CreateDataSource(p)).ExecuteScalarAsync(p, ct);
+        public Task<TParams> ExecuteNonQueryAsync<TParams>(TParams p, CancellationToken ct) where TParams : BaseDataSourceParams
+            => Cancellable(_sourceFactory.CreateDataSource(p)).ExecuteNonQueryAsync(p, ct);
+        public Task<TParams> ExecuteReaderAsync<T, TParams>(TParams p, CancellationToken ct) where T : class, new() where TParams : BaseDataSourceParams<T>
+            => Cancellable(_sourceFactory.CreateDataSource(p)).ExecuteReaderAsync<T, TParams>(p, ct);
+        public Task<BaseDataSourceParams<T>> ExecuteReaderAsync<T>(BaseDataSourceParams<T> p, CancellationToken ct) where T : class, new()
+            => Cancellable(_sourceFactory.CreateDataSource(p)).ExecuteReaderAsync(p, ct);
+        public Task<BaseDataSourceParams<T>> ExecuteReaderAsync<T>(BaseDataSourceParams p, CancellationToken ct) where T : class, new()
+            => Cancellable(_sourceFactory.CreateDataSource(p)).ExecuteReaderAsync<T>(p, ct);
+        public Task<bool> CheckHealthAsync<TParams>(TParams p, CancellationToken ct) where TParams : BaseDataSourceParams
+            => Cancellable(_sourceFactory.CreateDataSource(p)).CheckHealthAsync(p, ct);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataSourceProvider"/> class.
@@ -74,7 +92,7 @@ namespace DataAccessProvider.Core.DataSource
             where TValue : class, new()
         {
             IDataSource dataSource = _sourceFactory.CreateDataSource<TValue>(@params);
-            return await dataSource.ExecuteReaderAsync<TValue,TBaseDataSourceParams>(@params);
+            return await dataSource.ExecuteReaderAsync<TValue, TBaseDataSourceParams>(@params);
         }
 
         /// <summary>
@@ -107,16 +125,25 @@ namespace DataAccessProvider.Core.DataSource
             return await dataSource.ExecuteScalarAsync<TBaseDataSourceParams>(@params);
         }
     }
-#endregion DataSourceProvider
-# region DataSourceProvider<>
+    #endregion DataSourceProvider
+    #region DataSourceProvider<>
 
     /// <summary>
     /// Generic data source provider class for executing commands against various data sources.
     /// </summary>
     /// <typeparam name="TBaseDataSourceParams">The type of base data source parameters.</typeparam>
-    public class DataSourceProvider<TBaseDataSourceParams> : IDataSourceProvider<TBaseDataSourceParams> where TBaseDataSourceParams : BaseDataSourceParams
+    [Obsolete("Migrate to the 1.4 client, command and result API before 2.0; see docs/migration.md.", DiagnosticId = "DAP001")]
+    public class DataSourceProvider<TBaseDataSourceParams> : IDataSourceProvider<TBaseDataSourceParams>, ICancellableDataSource where TBaseDataSourceParams : BaseDataSourceParams
     {
         private readonly IDataSourceFactory _sourceFactory;
+        private ICancellableDataSource Cancellable => new DataSourceProvider(_sourceFactory);
+        Task<TParams> ICancellableDataSource.ExecuteReaderAsync<TParams>(TParams p,CancellationToken ct) => Cancellable.ExecuteReaderAsync(p,ct);
+        Task<TParams> ICancellableDataSource.ExecuteScalarAsync<TParams>(TParams p,CancellationToken ct) => Cancellable.ExecuteScalarAsync(p,ct);
+        Task<TParams> ICancellableDataSource.ExecuteNonQueryAsync<TParams>(TParams p,CancellationToken ct) => Cancellable.ExecuteNonQueryAsync(p,ct);
+        Task<TParams> ICancellableDataSource.ExecuteReaderAsync<T,TParams>(TParams p,CancellationToken ct) => Cancellable.ExecuteReaderAsync<T,TParams>(p,ct);
+        Task<BaseDataSourceParams<T>> ICancellableDataSource.ExecuteReaderAsync<T>(BaseDataSourceParams<T> p,CancellationToken ct) => Cancellable.ExecuteReaderAsync(p,ct);
+        Task<BaseDataSourceParams<T>> ICancellableDataSource.ExecuteReaderAsync<T>(BaseDataSourceParams p,CancellationToken ct) => Cancellable.ExecuteReaderAsync<T>(p,ct);
+        Task<bool> ICancellableDataSource.CheckHealthAsync<TParams>(TParams p,CancellationToken ct) => Cancellable.CheckHealthAsync(p,ct);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataSourceProvider{TBaseDataSourceParams}"/> class.

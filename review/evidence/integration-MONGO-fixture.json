@@ -1,0 +1,9 @@
+{
+  "image": "mongo:8.0",
+  "port": "59006",
+  "symbol": "MONGO",
+  "status": "ran",
+  "imageId": "sha256:d0d926f94df099bff534b7ee5b5986458131a22489dfff8664509af0c1e2ca9c",
+  "container": "aa592da96ddab9090d02a6720c042a488e1b153081040d286273c5a96a4f7b30",
+  "exitCode": 0
+}

@@ -1,0 +1,14 @@
+{
+  "sha256": "A904AD07B582247E07B345F7E4406CE43A730B119FA661268E4D38C7C62B129A",
+  "origin": "published historical minimum",
+  "files": [
+    "_rels/.rels",
+    "DataAccessProvider.Core.nuspec",
+    "lib/net10.0/DataAccessProvider.Core.dll",
+    "README.md",
+    "[Content_Types].xml",
+    "package/services/metadata/core-properties/394c9fb80f144bf5821c66628ef0a540.psmdcp",
+    ".signature.p7s"
+  ],
+  "version": "1.3.6"
+}

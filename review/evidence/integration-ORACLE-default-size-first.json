@@ -1,0 +1,51 @@
+[
+  {
+    "name": "health",
+    "status": "completed",
+    "detail": true
+  },
+  {
+    "name": "parameterizedInsert",
+    "status": "exception",
+    "error": "ArgumentOutOfRangeException",
+    "message": "Specified argument was out of the range of valid values."
+  },
+  {
+    "name": "scalarCount",
+    "status": "completed",
+    "detail": 0
+  },
+  {
+    "name": "untypedRead",
+    "status": "completed",
+    "detail": {}
+  },
+  {
+    "name": "typedRead",
+    "status": "completed",
+    "detail": null
+  },
+  {
+    "name": "reusedTypedEmptyRead",
+    "status": "completed",
+    "detail": null
+  },
+  {
+    "name": "explicitTypedOverload",
+    "status": "exception",
+    "error": "ArgumentException",
+    "message": "Invalid source parameters type."
+  },
+  {
+    "name": "typedSourceInterfaceOverload",
+    "status": "exception",
+    "error": "InvalidCastException",
+    "message": "Unable to cast object of type \u0027DataAccessProvider.Oracle.OracleSourceParams\u0027 to type \u0027DataAccessProvider.Core.Abstractions.BaseDataSourceParams\u00601[Row]\u0027."
+  },
+  {
+    "name": "anonymousBlockOutput",
+    "status": "exception",
+    "error": "ArgumentOutOfRangeException",
+    "message": "Specified argument was out of the range of valid values."
+  }
+]

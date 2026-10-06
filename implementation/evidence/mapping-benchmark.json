@@ -1,0 +1,182 @@
+[
+  {
+    "rows": 1,
+    "columns": 1,
+    "mode": "buffered",
+    "medianMs": 0.0384,
+    "allocatedBytes": 488,
+    "retainedBytes": 0,
+    "samples": [
+      0.0288,
+      0.0339,
+      0.0384,
+      0.0597,
+      0.0734
+    ]
+  },
+  {
+    "rows": 1,
+    "columns": 1,
+    "mode": "streaming prototype",
+    "medianMs": 0.0263,
+    "allocatedBytes": 400,
+    "retainedBytes": 0,
+    "samples": [
+      0.0187,
+      0.019,
+      0.0263,
+      0.0279,
+      0.032
+    ]
+  },
+  {
+    "rows": 1,
+    "columns": 8,
+    "mode": "buffered",
+    "medianMs": 0.0338,
+    "allocatedBytes": 488,
+    "retainedBytes": 0,
+    "samples": [
+      0.0231,
+      0.0311,
+      0.0338,
+      0.0383,
+      0.0393
+    ]
+  },
+  {
+    "rows": 1,
+    "columns": 8,
+    "mode": "streaming prototype",
+    "medianMs": 0.0327,
+    "allocatedBytes": 400,
+    "retainedBytes": 0,
+    "samples": [
+      0.0175,
+      0.029,
+      0.0327,
+      0.0359,
+      0.0374
+    ]
+  },
+  {
+    "rows": 1000,
+    "columns": 1,
+    "mode": "buffered",
+    "medianMs": 0.5525,
+    "allocatedBytes": 120896,
+    "retainedBytes": 87928,
+    "samples": [
+      0.5269,
+      0.5373,
+      0.5525,
+      0.5856,
+      0.7346
+    ]
+  },
+  {
+    "rows": 1000,
+    "columns": 1,
+    "mode": "streaming prototype",
+    "medianMs": 0.7037,
+    "allocatedBytes": 104296,
+    "retainedBytes": 0,
+    "samples": [
+      0.6022,
+      0.6318,
+      0.7037,
+      0.7846,
+      18.7151
+    ]
+  },
+  {
+    "rows": 1000,
+    "columns": 8,
+    "mode": "buffered",
+    "medianMs": 3.0067,
+    "allocatedBytes": 120896,
+    "retainedBytes": 87608,
+    "samples": [
+      2.5945,
+      2.7656,
+      3.0067,
+      3.2959,
+      4.0006
+    ]
+  },
+  {
+    "rows": 1000,
+    "columns": 8,
+    "mode": "streaming prototype",
+    "medianMs": 3.1738,
+    "allocatedBytes": 104296,
+    "retainedBytes": 0,
+    "samples": [
+      2.7493,
+      3.0779,
+      3.1738,
+      3.5394,
+      3.6248
+    ]
+  },
+  {
+    "rows": 100000,
+    "columns": 1,
+    "mode": "buffered",
+    "medianMs": 51.4922,
+    "allocatedBytes": 12497832,
+    "retainedBytes": 9048104,
+    "samples": [
+      47.4448,
+      49.0492,
+      51.4922,
+      61.6295,
+      108.2051
+    ]
+  },
+  {
+    "rows": 100000,
+    "columns": 1,
+    "mode": "streaming prototype",
+    "medianMs": 37.3389,
+    "allocatedBytes": 10400296,
+    "retainedBytes": 0,
+    "samples": [
+      31.7006,
+      35.9524,
+      37.3389,
+      42.3175,
+      42.515
+    ]
+  },
+  {
+    "rows": 100000,
+    "columns": 8,
+    "mode": "buffered",
+    "medianMs": 114.2602,
+    "allocatedBytes": 12497832,
+    "retainedBytes": 9009520,
+    "samples": [
+      109.9647,
+      114.0953,
+      114.2602,
+      122.8033,
+      150.3272
+    ]
+  },
+  {
+    "rows": 100000,
+    "columns": 8,
+    "mode": "streaming prototype",
+    "medianMs": 120.9148,
+    "allocatedBytes": 10400296,
+    "retainedBytes": 0,
+    "samples": [
+      101.1629,
+      119.2146,
+      120.9148,
+      121.708,
+      126.13
+    ]
+  }
+]

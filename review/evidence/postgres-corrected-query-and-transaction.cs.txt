@@ -1,0 +1,22 @@
+using System.Data;
+using DataAccessProvider.Core.Interfaces;
+using DataAccessProvider.Core.Types;
+using DataAccessProvider.Postgres;
+using Microsoft.Extensions.DependencyInjection;
+var services=new ServiceCollection();
+services.AddDataAccessProviderPostgres("Host=localhost;Port=1;Database=unused;Username=unused");
+using var root=services.BuildServiceProvider();
+root.UseDataAccessProviderPostgres();
+using var scope=root.CreateScope();
+var source=scope.ServiceProvider.GetRequiredService<PostgresSource>();
+var p=new PostgresSourceParams<User> {
+ Query="SELECT id, name FROM users WHERE id=@id",CommandType=CommandType.Text,Timeout=30,
+ Parameters=new List<DataAccessParameter>{new(){ParameterName="@id",DbType=DataAccessDbType.Int32,Value=1}}
+};
+// Compilation only; database operations are in the separate disposable fixture.
+if(false) {
+ await source.ExecuteReaderAsync<User>(p);
+ await source.ExecuteScalarAsync(new PostgresSourceParams {Query="SELECT COUNT(*) FROM users",CommandType=CommandType.Text,Timeout=30});
+ await source.ExecuteInTransactionAsync(async(tx,ct)=>await tx.ExecuteNonQueryAsync(new PostgresSourceParams {Query="DELETE FROM users WHERE id=-1",CommandType=CommandType.Text,Timeout=30},ct),cancellationToken:CancellationToken.None);
+}
+public sealed class User {public int Id {get;set;} public string? Name {get;set;} }

@@ -1,0 +1,99 @@
+[
+  {
+    "sourceVersion": "1.3.7",
+    "latestStable": "1.3.7",
+    "id": "DataAccessProvider.Core",
+    "status": "available",
+    "versions": [
+      "1.2.0",
+      "1.2.1",
+      "1.2.2",
+      "1.2.3",
+      "1.2.4",
+      "1.2.5",
+      "1.2.6",
+      "1.2.7",
+      "1.2.8",
+      "1.3.0",
+      "1.3.1",
+      "1.3.2",
+      "1.3.3",
+      "1.3.4",
+      "1.3.6",
+      "1.3.7"
+    ]
+  },
+  {
+    "sourceVersion": "1.3.7",
+    "latestStable": "1.3.7",
+    "id": "DataAccessProvider.MSSQL",
+    "status": "available",
+    "versions": [
+      "1.2.0",
+      "1.2.1",
+      "1.3.0",
+      "1.3.1",
+      "1.3.2",
+      "1.3.3",
+      "1.3.4",
+      "1.3.5",
+      "1.3.6",
+      "1.3.7"
+    ]
+  },
+  {
+    "sourceVersion": "1.3.4",
+    "latestStable": "1.3.4",
+    "id": "DataAccessProvider.MySql",
+    "status": "available",
+    "versions": [
+      "1.2.0",
+      "1.2.1",
+      "1.2.2",
+      "1.2.3",
+      "1.2.4",
+      "1.2.5",
+      "1.2.6",
+      "1.2.7",
+      "1.2.8",
+      "1.3.0",
+      "1.3.1",
+      "1.3.2",
+      "1.3.3",
+      "1.3.4"
+    ]
+  },
+  {
+    "sourceVersion": "1.3.4",
+    "latestStable": "1.3.4",
+    "id": "DataAccessProvider.PostgreSql",
+    "status": "available",
+    "versions": [
+      "1.3.2",
+      "1.3.3",
+      "1.3.4"
+    ]
+  },
+  {
+    "sourceVersion": "1.3.3",
+    "latestStable": "1.3.3",
+    "id": "DataAccessProvider.MongoDB",
+    "status": "available",
+    "versions": [
+      "1.3.2",
+      "1.3.3"
+    ]
+  },
+  {
+    "sourceVersion": "1.0.0",
+    "error": "Response status code does not indicate success: 404 (Not Found).",
+    "id": "DataAccessProvider.Oracle",
+    "status": "unavailable"
+  },
+  {
+    "sourceVersion": "1.0.0",
+    "error": "Response status code does not indicate success: 404 (Not Found).",
+    "id": "DataAccessProvider.Snowflake",
+    "status": "unavailable"
+  }
+]

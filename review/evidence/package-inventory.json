@@ -1,0 +1,450 @@
+[
+  {
+    "packageSha256": "5A23CA877F0BDAA06A56C5B4A8C487A7E152AAB83986B71E36BA3373E015642F",
+    "entryHashes": {
+      "README.md": "63b8a795ed0812cd95ea8378bf0d11b27b4a88e9e5832a3d44d9256659355c60",
+      "lib/net10.0/DataAccessProvider.Core.dll": "6430122e55f6a73806427e06a4039da5abe5902d1feefff4f349abbfc8f0967c"
+    },
+    "id": "DataAccessProvider.Core",
+    "repositoryCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.Core.nuspec",
+      "README.md",
+      "lib/net10.0/DataAccessProvider.Core.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/nuget.psmdcp"
+    ],
+    "version": "1.3.7",
+    "origin": "local",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "Microsoft.Extensions.Configuration.Binder",
+            "exclude": "Build,Analyzers",
+            "version": "10.0.1"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  },
+  {
+    "packageSha256": "32615A78EE70591DB3A9F7780D2E5EBAC670A5669685DA637101756EA5BD949E",
+    "entryHashes": {
+      "README.md": "0a26c06138f4b78ede6964a92cb89c771587d90ef6dad1725434630214551dbd",
+      "lib/net10.0/DataAccessProvider.Core.dll": "a57f2c7488c7ebf56b9fcef0c93dd5ac8aa149d6057fd406f949cd4594685bc0"
+    },
+    "id": "DataAccessProvider.Core",
+    "repositoryCommit": "4544886ef75204e54ce564f3e7d46a32d6be3fb7",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.Core.nuspec",
+      "README.md",
+      "lib/net10.0/DataAccessProvider.Core.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/nuget.psmdcp",
+      ".signature.p7s"
+    ],
+    "version": "1.3.7",
+    "origin": "published",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "Microsoft.Extensions.Configuration.Binder",
+            "exclude": "Build,Analyzers",
+            "version": "10.0.1"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  },
+  {
+    "packageSha256": "82BA1FEC25983D0DB4F16BD27690FC19651143C887198AFD2195FC9164293D51",
+    "entryHashes": {
+      "README.md": "04f6528cb8f211dd7d678c90a4ee4a9c34b181fb649de8068a6049ca16df2f3a",
+      "lib/net10.0/DataAccessProvider.MSSQL.dll": "26a361d983e785b20dc8440f2510122ed401c8e301d9d6fd245ddc35df9b0030"
+    },
+    "id": "DataAccessProvider.MSSQL",
+    "repositoryCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.MSSQL.nuspec",
+      "README.md",
+      "lib/net10.0/DataAccessProvider.MSSQL.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/nuget.psmdcp"
+    ],
+    "version": "1.3.7",
+    "origin": "local",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "DataAccessProvider.Core",
+            "exclude": "Build,Analyzers",
+            "version": "1.3.7"
+          },
+          {
+            "id": "Microsoft.Data.SqlClient",
+            "exclude": "Build,Analyzers",
+            "version": "6.1.3"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  },
+  {
+    "packageSha256": "066BB1AB1713818E053D92ADEEF894444843B653410C0B784C58FD5C9D210CCF",
+    "entryHashes": {
+      "README.md": "cee137f8a931ca5e839bc13d9c5e3a5a070c5e76ab553cb5431127c0a5f284a3",
+      "lib/net10.0/DataAccessProvider.MSSQL.dll": "4cb847409db915e19ebe2620c161b18c6503e3f282a5c848123c36d237ce98c2"
+    },
+    "id": "DataAccessProvider.MSSQL",
+    "repositoryCommit": "4544886ef75204e54ce564f3e7d46a32d6be3fb7",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.MSSQL.nuspec",
+      "README.md",
+      "lib/net10.0/DataAccessProvider.MSSQL.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/nuget.psmdcp",
+      ".signature.p7s"
+    ],
+    "version": "1.3.7",
+    "origin": "published",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "DataAccessProvider.Core",
+            "exclude": "Build,Analyzers",
+            "version": "1.3.7"
+          },
+          {
+            "id": "Microsoft.Data.SqlClient",
+            "exclude": "Build,Analyzers",
+            "version": "6.1.3"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  },
+  {
+    "packageSha256": "7FDE763CCC82772D2C05B53CC19B26581E67CD2451C608FDDA0F400093FB86E9",
+    "entryHashes": {
+      "README.md": "e292bacfcbdbb53835d4fb436d0a0d90ee31a1f65936ae39f9a9021b695564d9",
+      "lib/net10.0/DataAccessProvider.MySql.dll": "9648d8ed70be66b985d76a83ff2420250012656b5cf8ccc5dcd3e1eb7ff94b59"
+    },
+    "id": "DataAccessProvider.MySql",
+    "repositoryCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.MySql.nuspec",
+      "README.md",
+      "lib/net10.0/DataAccessProvider.MySql.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/nuget.psmdcp"
+    ],
+    "version": "1.3.4",
+    "origin": "local",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "DataAccessProvider.Core",
+            "exclude": "Build,Analyzers",
+            "version": "1.3.7"
+          },
+          {
+            "id": "Microsoft.AspNetCore.Http.Abstractions",
+            "exclude": "Build,Analyzers",
+            "version": "2.3.9"
+          },
+          {
+            "id": "MySqlConnector",
+            "exclude": "Build,Analyzers",
+            "version": "2.5.0"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  },
+  {
+    "packageSha256": "023AAC89B8D0B9A9A73D7B53876E120A1876E578E70248F33832DCF877284146",
+    "entryHashes": {
+      "README.md": "c714ae9947dd2258721c8cf77ab8ba7b6a70fa4da8d4b3322d1881712e24aba7",
+      "lib/net10.0/DataAccessProvider.MySql.dll": "e53c3950a8ba3ebe7bde983d36ec334d6501e1a8b89b56ebbcb1e44d9eafb2b7"
+    },
+    "id": "DataAccessProvider.MySql",
+    "repositoryCommit": "41273661c05a6a96be19e7cf8657254cfd6720cb",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.MySql.nuspec",
+      "README.md",
+      "lib/net10.0/DataAccessProvider.MySql.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/9afd0a8485e9460cb7ee718e973ba767.psmdcp",
+      ".signature.p7s"
+    ],
+    "version": "1.3.4",
+    "origin": "published",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "DataAccessProvider.Core",
+            "exclude": "Build,Analyzers",
+            "version": "1.3.6"
+          },
+          {
+            "id": "Microsoft.AspNetCore.Http.Abstractions",
+            "exclude": "Build,Analyzers",
+            "version": "2.3.9"
+          },
+          {
+            "id": "MySqlConnector",
+            "exclude": "Build,Analyzers",
+            "version": "2.5.0"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  },
+  {
+    "packageSha256": "A0DEEA824E7B0FA9D0A3422279A28DDD000A39D19CA422C21DB03AC54F59827C",
+    "entryHashes": {
+      "README.md": "4d7caf6b504272cb304b70326277ac5ada98259acd4ed09b4654250fcda92033",
+      "lib/net10.0/DataAccessProvider.Postgres.dll": "d986c8f9031145aabe01f38db68ae36b6dedce3e4861ccec7651a6601028e386"
+    },
+    "id": "DataAccessProvider.PostgreSql",
+    "repositoryCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.PostgreSql.nuspec",
+      "README.md",
+      "lib/net10.0/DataAccessProvider.Postgres.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/nuget.psmdcp"
+    ],
+    "version": "1.3.4",
+    "origin": "local",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "DataAccessProvider.Core",
+            "exclude": "Build,Analyzers",
+            "version": "1.3.7"
+          },
+          {
+            "id": "Microsoft.Extensions.Configuration.Abstractions",
+            "exclude": "Build,Analyzers",
+            "version": "10.0.1"
+          },
+          {
+            "id": "Npgsql",
+            "exclude": "Build,Analyzers",
+            "version": "10.0.1"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  },
+  {
+    "packageSha256": "C71A7C7A5FC995ECA1F3FCCF245BBAB11EFF874A3B0AFCDB7A090292A9BEE31C",
+    "entryHashes": {
+      "README.md": "193f5d5fa42e005e7e8b7ea3d7d51dfc627c8358ac51515ab10df1fbd735cded",
+      "lib/net10.0/DataAccessProvider.Postgres.dll": "54dd42377d8a768eefdb00eac3ca9b3224685c34021d5922dc5fa3f2143615d7"
+    },
+    "id": "DataAccessProvider.PostgreSql",
+    "repositoryCommit": "4544886ef75204e54ce564f3e7d46a32d6be3fb7",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.PostgreSql.nuspec",
+      "README.md",
+      "lib/net10.0/DataAccessProvider.Postgres.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/nuget.psmdcp",
+      ".signature.p7s"
+    ],
+    "version": "1.3.4",
+    "origin": "published",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "DataAccessProvider.Core",
+            "exclude": "Build,Analyzers",
+            "version": "1.3.7"
+          },
+          {
+            "id": "Microsoft.Extensions.Configuration.Abstractions",
+            "exclude": "Build,Analyzers",
+            "version": "10.0.1"
+          },
+          {
+            "id": "Npgsql",
+            "exclude": "Build,Analyzers",
+            "version": "10.0.1"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  },
+  {
+    "packageSha256": "90DF95020EB6C05E292D7FB22707DFB6D883B6AD3D5F9FBE3523B2AE02B5E93F",
+    "entryHashes": {
+      "README.md": "5d5195ceb8108900251aaebe7f8a0894f82a0bea3239fe8235bdbc19314960f6",
+      "lib/net10.0/DataAccessProvider.MongoDB.dll": "926e6f1ee38de6ab3273c0386fec7b73a0390749578c6bd9805847d46259e6f7"
+    },
+    "id": "DataAccessProvider.MongoDB",
+    "repositoryCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.MongoDB.nuspec",
+      "README.md",
+      "lib/net10.0/DataAccessProvider.MongoDB.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/nuget.psmdcp"
+    ],
+    "version": "1.3.3",
+    "origin": "local",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "DataAccessProvider.Core",
+            "exclude": "Build,Analyzers",
+            "version": "1.3.7"
+          },
+          {
+            "id": "MongoDB.Driver",
+            "exclude": "Build,Analyzers",
+            "version": "3.5.2"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  },
+  {
+    "packageSha256": "32C503B61F68BF6913B851BF5719BF26F117AD17A4EA2F154EC38C2EABAE75F9",
+    "entryHashes": {
+      "README.md": "c2f2ce67e423dc6911bf1ae987ee303e88587eeee34782d4e55077550792f1e8",
+      "lib/net10.0/DataAccessProvider.MongoDB.dll": "65acac06d1e9179a6c4ece2d6fc8ad3a82bf40bd3b3e46b1772c29211bf9a900"
+    },
+    "id": "DataAccessProvider.MongoDB",
+    "repositoryCommit": "c0ff396979192749ebeda4c2716ab50ca8b5cc01",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.MongoDB.nuspec",
+      "README.md",
+      "lib/net10.0/DataAccessProvider.MongoDB.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/nuget.psmdcp",
+      ".signature.p7s"
+    ],
+    "version": "1.3.3",
+    "origin": "published",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "DataAccessProvider.Core",
+            "exclude": "Build,Analyzers",
+            "version": "1.3.6"
+          },
+          {
+            "id": "MongoDB.Driver",
+            "exclude": "Build,Analyzers",
+            "version": "3.5.2"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  },
+  {
+    "packageSha256": "1CF7E02771D3F203449EBDAF48E98C8317ED1CEED1078323599C45915BD75C90",
+    "entryHashes": {
+      "lib/net10.0/DataAccessProvider.Oracle.dll": "81cce5bd8bee45f8b224cfb2cfbf21f5693b14287b0eea21bb6c2ce2a02418e3"
+    },
+    "id": "DataAccessProvider.Oracle",
+    "repositoryCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.Oracle.nuspec",
+      "lib/net10.0/DataAccessProvider.Oracle.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/nuget.psmdcp"
+    ],
+    "version": "1.0.0",
+    "origin": "local",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "DataAccessProvider.Core",
+            "exclude": "Build,Analyzers",
+            "version": "1.3.7"
+          },
+          {
+            "id": "Oracle.ManagedDataAccess.Core",
+            "exclude": "Build,Analyzers",
+            "version": "23.26.0"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  },
+  {
+    "packageSha256": "FE81BEB8F3B2BA830579FDDD5D115D6748C4B208108B33108E021533706B7880",
+    "entryHashes": {
+      "lib/net10.0/DataAccessProvider.Snowflake.dll": "1a9f6e5d8596e5801bc348f2d002435e42826068ec895f4ff382b7bedae2b94b"
+    },
+    "id": "DataAccessProvider.Snowflake",
+    "repositoryCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "files": [
+      "_rels/.rels",
+      "DataAccessProvider.Snowflake.nuspec",
+      "lib/net10.0/DataAccessProvider.Snowflake.dll",
+      "[Content_Types].xml",
+      "package/services/metadata/core-properties/nuget.psmdcp"
+    ],
+    "version": "1.0.0",
+    "origin": "local",
+    "dependencyGroups": [
+      {
+        "dependencies": [
+          {
+            "id": "DataAccessProvider.Core",
+            "exclude": "Build,Analyzers",
+            "version": "1.3.7"
+          },
+          {
+            "id": "AWSSDK.Core",
+            "exclude": "Build,Analyzers",
+            "version": "4.0.3.8"
+          },
+          {
+            "id": "Snowflake.Data",
+            "exclude": "Build,Analyzers",
+            "version": "5.3.0"
+          }
+        ],
+        "framework": "net10.0"
+      }
+    ]
+  }
+]

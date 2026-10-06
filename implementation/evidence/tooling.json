@@ -1,0 +1,6 @@
+{
+  "scripts": 7,
+  "status": "passed",
+  "check": "PowerShell parser",
+  "workflowExecution": "pending GitHub CI; YAML manually inspected"
+}

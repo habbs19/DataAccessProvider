@@ -1,0 +1,9 @@
+{
+  "container": "ce6877eab8304d34a237f635ca1617f10d21744c6fc94f94e251bcf0612d7721",
+  "status": "ran",
+  "exitCode": 0,
+  "image": "mcr.microsoft.com/mssql/server:2022-CU27-ubuntu-22.04",
+  "imageId": "sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "port": "59001",
+  "symbol": "MSSQL"
+}

@@ -1,0 +1,9 @@
+{
+  "symbol": "ORACLE",
+  "status": "ran",
+  "port": "51772",
+  "image": "container-registry.oracle.com/database/free:latest-lite",
+  "imageId": "sha256:cf540c3fa190d7cffad08c491652ac07fc70314e510f6b87890449517d565e94",
+  "exitCode": 0,
+  "container": "10528dabd62b2d49b8dd0f1dd84253fdde991e5f627623a1178508d7af01d1d6"
+}

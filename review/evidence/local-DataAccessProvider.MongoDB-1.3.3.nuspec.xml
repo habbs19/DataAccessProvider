@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>DataAccessProvider.MongoDB</id>
+    <version>1.3.3</version>
+    <title>DataAccessProvider.MongoDB</title>
+    <authors>Habib Shakibanejad</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <readme>README.md</readme>
+    <description>This package offers a flexible and generic database abstraction supporting MongoDB. It facilitates asynchronous execution of queries with methods like ExecuteReaderAsync and ExecuteNonQueryAsync. Designed for extensibility and integration with dependency injection, it is ideal for applications using the repository pattern. The package simplifies multi-database integration, providing customizable database connections for efficient data handling in .NET applications.</description>
+    <tags>Data Access Layer MongoDB DbAbstraction DataAccess</tags>
+    <repository type="git" url="https://github.com/habbs19/DataAccessProvider" commit="0fe75f74d5c2e2254f7b08ef70f44e623a926fd8" />
+    <dependencies>
+      <group targetFramework="net10.0">
+        <dependency id="DataAccessProvider.Core" version="1.3.7" exclude="Build,Analyzers" />
+        <dependency id="MongoDB.Driver" version="3.5.2" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

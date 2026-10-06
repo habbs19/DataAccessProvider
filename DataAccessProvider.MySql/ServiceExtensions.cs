@@ -1,74 +1,33 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using DataAccessProvider.Core.Interfaces;
+using DataAccessProvider.Core;
 using DataAccessProvider.Core.DataSource;
+using DataAccessProvider.Core.Extensions;
+using DataAccessProvider.Core.Interfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
-using Microsoft.AspNetCore.Builder;
-
 namespace DataAccessProvider.MySql;
+
 public static class ServiceExtensions
 {
-    public static IServiceCollection AddDataAccessProviderMySql(this IServiceCollection service, IConfiguration configuration)
+    public static IServiceCollection AddDataAccessProviderMySql(this IServiceCollection services, IConfiguration configuration)
+        => services.AddDataAccessProviderMySql(configuration.GetConnectionString(nameof(MySQLSource)) ?? string.Empty);
+    public static IServiceCollection AddDataAccessProviderMySql(this IServiceCollection services, string connectionString)
+        => services.AddDataAccessProviderMySql(connectionString, new DatabaseClientOptions());
+    public static IServiceCollection AddDataAccessProviderMySql(this IServiceCollection services, string connectionString, DatabaseClientOptions options)
     {
-        // Register necessary services
-        service.TryAddScoped<IDataSourceProvider, DataSourceProvider>();
-        service.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
-        service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
-
-        // Add database source service
-        string connectionString = configuration.GetConnectionString(nameof(MySQLSource)) ?? "";
-
-        AddMySQLSource(service, connectionString);
-
-        return service;
+        ArgumentException.ThrowIfNullOrWhiteSpace(connectionString);
+        options = ProviderRegistration.Snapshot(options);
+        services.AddDataAccessProviderCore();
+        if (!ProviderRegistration.Ensure(services, typeof(MySql), connectionString, options)) return services;
+        services.TryAddScoped(sp => new MySQLSource(connectionString, sp.GetService<IResiliencePolicy>()));
+        services.TryAddScoped<IDataSource<MySQLSourceParams>>(sp => sp.GetRequiredService<MySQLSource>());
+        services.TryAddScoped<IDatabaseTransactionProvider<MySQLSourceParams>>(sp => sp.GetRequiredService<MySQLSource>());
+        services.TryAddScoped(sp => new MySqlClient(connectionString, options));
+        services.TryAddScoped<IDatabaseClient<MySql>>(sp => sp.GetRequiredService<MySqlClient>());
+        services.AddSingleton(new DataSourceRegistration(typeof(MySQLSourceParams), typeof(MySQLSource)));
+        services.AddSingleton(new DataSourceRegistration(typeof(MySQLSourceParams<>), typeof(MySQLSource)));
+        return services;
     }
-
-    public static IServiceCollection AddDataAccessProviderMySql(this IServiceCollection service, string connectionString)
-    {
-        // Register necessary services
-        service.TryAddScoped<IDataSourceProvider, DataSourceProvider>();
-        service.TryAddScoped(typeof(IDataSourceProvider<>), typeof(DataSourceProvider<>));
-        service.TryAddSingleton<IDataSourceFactory, DataSourceFactory>();
-
-        AddMySQLSource(service, connectionString);
-
-        return service;
-    }
-
-    public static IServiceProvider UseDataAccessProviderMySql(this IServiceProvider provider)
-    {
-        var factory = provider.GetRequiredService<IDataSourceFactory>();
-        if (factory == null)
-        {
-            throw new InvalidOperationException("IDataSourceFactory is not registered. Use AddDataAccessProviderMySql");
-        }
-        factory.RegisterDataSource<MySQLSourceParams, MySQLSource>();
-        return provider;
-    }
-
-    public static IApplicationBuilder UseDataAccessProviderMySql(this IApplicationBuilder app)
-    {
-        var factory = app.ServerFeatures.Get<IDataSourceFactory>();
-        if (factory == null)
-        {
-            throw new InvalidOperationException("IDataSourceFactory is not registered. Use AddDataAccessProviderMySql");
-        }
-        factory.RegisterDataSource<MySQLSourceParams, MySQLSource>();
-        return app;
-    }
-
-    private static void AddMySQLSource(IServiceCollection services, string connectionString)
-    {
-        services.AddScoped(sp =>
-        {
-            var policy = sp.GetService<IResiliencePolicy>();
-            return new MySQLSource(connectionString, policy);
-        });
-        services.AddScoped<IDataSource<MySQLSourceParams>>(
-            sp => sp.GetRequiredService<MySQLSource>());
-        services.AddScoped<IDatabaseTransactionProvider<MySQLSourceParams>>(
-            sp => sp.GetRequiredService<MySQLSource>());
-    }
+    public static IServiceProvider UseDataAccessProviderMySql(this IServiceProvider provider) => provider;
+    public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseDataAccessProviderMySql(this Microsoft.AspNetCore.Builder.IApplicationBuilder app) { ArgumentNullException.ThrowIfNull(app); return app; }
 }
-

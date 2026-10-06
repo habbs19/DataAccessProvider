@@ -1,0 +1,21 @@
+RestoreExitCode: 0
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Example.csproj : warning NU1902: Package 'SharpCompress' 0.30.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-6c8g-7p36-r338
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Example.csproj : warning NU1903: Package 'Snappier' 1.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-pggp-6c3x-2xmx
+
+BuildExitCode: 1
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Example.csproj : warning NU1902: Package 'SharpCompress' 0.30.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-6c8g-7p36-r338
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Example.csproj : warning NU1903: Package 'Snappier' 1.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-pggp-6c3x-2xmx
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Program.cs(13,9): error CS1929: 'List<SqlParameter>' does not contain a definition for 'AddParameter' and the best extension method overload 'DbParameterExtensions.AddParameter(List<DataAccessParameter>, string, DataAccessDbType, object, DataAccessParameterDirection, int)' requires a receiver of type 'System.Collections.Generic.List<DataAccessProvider.Core.Types.DataAccessParameter>' [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Example.csproj]
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Program.cs(14,9): error CS1929: 'List<SqlParameter>' does not contain a definition for 'AddParameter' and the best extension method overload 'DbParameterExtensions.AddParameter(List<DataAccessParameter>, string, DataAccessDbType, object, DataAccessParameterDirection, int)' requires a receiver of type 'System.Collections.Generic.List<DataAccessProvider.Core.Types.DataAccessParameter>' [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Example.csproj]
+
+Build FAILED.
+
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Example.csproj : warning NU1902: Package 'SharpCompress' 0.30.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-6c8g-7p36-r338
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Example.csproj : warning NU1903: Package 'Snappier' 1.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-pggp-6c3x-2xmx
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Program.cs(13,9): error CS1929: 'List<SqlParameter>' does not contain a definition for 'AddParameter' and the best extension method overload 'DbParameterExtensions.AddParameter(List<DataAccessParameter>, string, DataAccessDbType, object, DataAccessParameterDirection, int)' requires a receiver of type 'System.Collections.Generic.List<DataAccessProvider.Core.Types.DataAccessParameter>' [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Example.csproj]
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Program.cs(14,9): error CS1929: 'List<SqlParameter>' does not contain a definition for 'AddParameter' and the best extension method overload 'DbParameterExtensions.AddParameter(List<DataAccessParameter>, string, DataAccessDbType, object, DataAccessParameterDirection, int)' requires a receiver of type 'System.Collections.Generic.List<DataAccessProvider.Core.Types.DataAccessParameter>' [C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\all-docs\DataAccessProvider-MSSQL-README-md-fence-6\Example.csproj]
+    2 Warning(s)
+    2 Error(s)
+
+Time Elapsed 00:00:02.40
+

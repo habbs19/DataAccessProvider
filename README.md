@@ -1,320 +1,77 @@
-# Data Access Provider Framework
+# DataAccessProvider
 
-The **Data Access Provider Framework** offers a flexible, pluggable way to interact with various data sources such as SQL databases (MSSQL, PostgreSQL, MySQL), file-based sources (JSON), and non-relational databases (MongoDB). By standardizing the approach to data access with source parameters (SourceParams), the framework allows developers to seamlessly switch between different data sources with minimal code changes.
+.NET 10 data access with one chosen provider package. Drivers, Core, configuration and dependency injection flow transitively. Version 1.4.0 is an unpublished local candidate until release validation and publication are completed.
 
-## Table of Contents
+| Database | Package | Namespace | Client | Registration |
+|---|---|---|---|---|
+| SQL Server | DataAccessProvider.MSSQL | DataAccessProvider.MSSQL | SqlServerClient | AddDataAccessProviderMSSQL |
+| MySQL | DataAccessProvider.MySql | DataAccessProvider.MySql | MySqlClient | AddDataAccessProviderMySql |
+| PostgreSQL | DataAccessProvider.PostgreSql | DataAccessProvider.Postgres | PostgreSqlClient | AddDataAccessProviderPostgres |
+| MongoDB | DataAccessProvider.MongoDB | DataAccessProvider.MongoDB | MongoDocumentClient | AddDataAccessProviderMongoDB |
+| Oracle | DataAccessProvider.Oracle | DataAccessProvider.Oracle | OracleClient | AddDataAccessProviderOracle |
+| Snowflake | DataAccessProvider.Snowflake | DataAccessProvider.Snowflake | SnowflakeClient | AddDataAccessProviderSnowflake |
 
-- [Data Access Provider Framework](#data-access-provider-framework)
-- [Features](#features)
-- [Supported Data Sources](#supported-data-sources)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation (Locally)](#installation-locally)
-  - [How It Works](#how-it-works)
-- [Connection Strings in appsettings.json](#connection-strings-in-appsettingsjson)
-- [Example Usage of IDataSourceProvider](#example-usage-of-idatasourceprovider)
-- [Registering a Custom Data Source](#registering-a-custom-data-source)
-  - [Method Definition](#method-definition)
-  - [Step 1: Create a Custom SourceParams Class](#step-1-create-a-custom-sourceparams-class)
-  - [Step 2: Implement a Custom IDataSource](#step-2-implement-a-custom-idatasource)
-  - [Step 3: Register the Custom Data Source with the Factory](#step-3-register-the-custom-data-source-with-the-factory)
-  - [Step 4: Use the Custom Data Source](#step-4-use-the-custom-data-source)
-- [Contributions](#contributions)
-- [License](#license)
+Pack the candidate and install only the provider you need from the local feed. Published releases use NuGet.org. A Core namespace import does not require another direct package reference.
 
-## Features
-
-- **Multi-Database Support**: Seamlessly switch between MSSQL, MySQL, PostgreSQL, MongoDB, Oracle, and other data sources with minimal code changes.
-- **Asynchronous Execution**: Supports `async/await` for efficient, non-blocking database operations.
-- **Parameterization & Result Mapping**: Safely execute parameterized queries and map results to objects or handle raw data.
-- **Extensibility & Custom Support**: Easily extend the framework to add new data sources or register custom ones.
-- **Unified API**: Standardized query execution methods across different databases.
-- **Flexible Testing**: Simplifies testing against multiple data sources with minimal setup.
-- **Seamless Switching**: Switch between data sources by passing appropriate parameter objects, without altering core logic.
-
-
-## Supported Data Sources
-
-- **SQL Databases**:
-  - MSSQL (`MSSQLSourceParams`)
-  - PostgreSQL (`PostgresSourceParams`)
-  - MySQL (`MySQLSourceParams`)
-  - Oracle (`OracleSourceParams`)
-- **NoSQL Databases**:
-  - MongoDB (`MongoDBParams`)
-- **File-Based**:
-  - JSON File (`JsonFileSourceParams`)
-  - Static Code (`StaticCodeParams`)
-
-You can also extend the provider to support any custom data source by registering new data source implementations.
-
----
-
-## Getting Started
-
-The **DataAccessProvider** is designed to provide a simple, consistent interface for interacting with multiple database types, such as MSSQL, MySQL, PostgreSQL, MongoDB, and more. By leveraging this provider, you can easily switch between databases by passing the appropriate data source parameters, without needing to modify your core application logic.
-
-### Prerequisites
-
-1. **.NET Framework or .NET Core**: Make sure you have a compatible version of .NET installed.
-2. **Database Drivers**: Install the necessary database drivers based on the data sources you're using.
-   - **MSSQL**: `Microsoft.Data.SqlClient`
-   - **PostgreSQL**: `Npgsql`
-   - **MySQL**: `MySql.Data`
-   - **MongoDB**: `MongoDB.Driver`
-
-### Installation (Locally)
-
-To get started, clone the repository and reference it in your project. You'll also need to install the required NuGet packages for your data sources.
-
-```bash
-git clone https://github.com/your-repo/dataaccessprovider.git
+```powershell
+# Run in this repository with PowerShell 7; restores both public and local dependencies.
+dotnet restore DataAccessProvider.sln --locked-mode
+dotnet build DataAccessProvider.sln -c Release --no-restore
+./eng/Verify-Packages.ps1 -ScratchRoot ./artifacts/validation
+# Run in a separate console project outside this repository's central package configuration.
+# Copy artifacts/validation/consumers/local-MSSQL/NuGet.Config into that project first.
+dotnet add package DataAccessProvider.MSSQL --version 1.4.0
 ```
 
-### Installation from GitHub NuGet
+## SQL quick start
 
-The **DataAccessProvider** is available as a NuGet package from GitHub. You can add it as a dependency to your project directly from the GitHub NuGet package repository.
-
-### How It Works:
-
-1. **`RegisterDataSource<TParams, TSource>()`**: This method allows the external consumer to register new custom data source types.
-2. **Custom Data Source**: You create new `BaseDataSourceParams` and `IDataSource` implementations.
-3. **Service Registration**: Register the custom data source with the DI container and factory in `Startup.cs`.
-4. **Usage**: Use the `IDataSourceProvider` to execute queries on the custom data source.
-
-## Example Usage of IDataSourceProvider
-
-### Add DataAccessProvider 
-
-```csharp    
-    // Add connection strings for each database type
-    services.AddDataAccessProvider(configuration)
-```
-
-## Connection Strings in appsettings.json
-
-To store your connection strings in the `appsettings.json` file, use the following structure:
-
-### Example `appsettings.json`:
-
-```json
-{
-  "ConnectionStrings": {
-    "MSSQLSource": "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;",
-    "PostgresSource": "Host=localhost;Port=5432;Database=mydb;Username=myuser;Password=mypassword",
-    "MySQLSource": "Server=myServerAddress;Database=myDataBase;User=myUsername;Password=myPassword;",
-    "OracleSource": "Data Source=MyOracleDB;User Id=myUsername;Password=myPassword;"
-  }
-}
-```
-
-## Example Usage of `IDataSourceProvider`
-
-The `IDataSourceProvider` in this framework automatically determines which data source to use based on the provided `SourceParams`. This makes it flexible to switch between different data sources like MSSQL, PostgreSQL, or even JSON files, without changing your core logic.
-
-Additionally, when using generic types, the provider can infer the type and return results mapped to a specified class, making it easy to handle type-safe responses.
-
-### Example Code:
+Supply a connection string securely from your application's configuration. Constructor-created clients are owned by their caller. Queries return collections for zero, one or many rows; commands and scalars have separate results.
 
 ```csharp
-// Resolve the IDataSourceProvider from the service provider
-var dataSourceProvider = serviceProvider.GetService<IDataSourceProvider>();
+using DataAccessProvider.Core;
+using DataAccessProvider.Core.Types;
+using DataAccessProvider.MSSQL;
 
-// Example 1: Execute a query using MSSQLSourceParams
-var mssqParams1 = new MSSQLSourceParams
-{
-    Query = "SELECT TOP 1 * FROM [dbo].[Diary]"
-};
-var result1 = await dataSourceProvider.ExecuteReaderAsync(mssqParams1);
-
-// Example 2: Execute a query with a typed return (e.g., Diary class)
-var mssqParams2 = new MSSQLSourceParams<Diary>
-{
-    Query = "SELECT TOP 1 * FROM [dbo].[Diary]"
-};
-var result2 = await dataSourceProvider.ExecuteReaderAsync(mssqParams2);
-
-// Example 3: Execute a query using PostgresSourceParams
-var pgParams = new PostgresSourceParams
-{
-    Query = "SELECT id, title FROM diary LIMIT 1"
-};
-var pgResult = await dataSourceProvider.ExecuteReaderAsync(pgParams);
-
-// Example 3: Execute a query using StaticCodeParams (for static content)
-var codeParams = new StaticCodeParams
-{
-    Content = "Hello World"
-};
-var result3 = await dataSourceProvider.ExecuteReaderAsync(codeParams);
-
-// Example 4: Execute a query using JsonFileSourceParams
-var jsonFileParams = new JsonFileSourceParams
-{
-    Content = @"{Name: 'Michael Jackson'}"
-};
-var result4 = await dataSourceProvider.ExecuteNonQueryAsync(jsonFileParams);
+await using var database = new SqlServerClient(Environment.GetEnvironmentVariable("DATABASE_CONNECTION")!);
+using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+var result = await database.QueryAsync<User>(
+    DatabaseCommand.Text("SELECT Id, Name FROM Users WHERE Id=@id")
+        .WithParameter("@id", DataAccessDbType.Int32, 1), cancellation.Token);
+foreach (var user in result.Rows) Console.WriteLine(user.Name);
+public sealed class User { public int Id { get; set; } public string? Name { get; set; } }
 ```
 
-### Results
-```csharp
-1:  [{"Id":1,"Title":"First Entry","Date":"2022-01-01T00:00:00"}]
-
-2:  [{"Id":1,"Title":"First Entry","Date":"2022-01-01T00:00:00"}]
-
-3:  "Hello World"
-
-4:  {"Name": "Michael Jackson"}
-```
-
-## Managed Transactions
-
-SQL Server, PostgreSQL, and MySQL expose a scoped transaction provider in addition to the existing `IDataSourceProvider` API. Resolve the provider for the database parameter family you are using and put every operation that must be atomic inside its callback:
+Standalone DI works with the same one provider reference. `Add…` completes registration; no `Use…` call is required. Resolve clients from an application scope.
 
 ```csharp
-using System.Data;
-using DataAccessProvider.Core.Interfaces;
+using DataAccessProvider.Core;
+using DataAccessProvider.MSSQL;
+using Microsoft.Extensions.DependencyInjection;
 
-var transactionProvider = serviceProvider
-    .GetRequiredService<IDatabaseTransactionProvider<MSSQLSourceParams>>();
-
-await transactionProvider.ExecuteInTransactionAsync(
-    async (transaction, cancellationToken) =>
-    {
-        await transaction.ExecuteNonQueryAsync(new MSSQLSourceParams
-        {
-            Query = "UPDATE Accounts SET Balance = Balance - 100 WHERE Id = 1",
-            CommandType = CommandType.Text
-        }, cancellationToken);
-
-        await transaction.ExecuteNonQueryAsync(new MSSQLSourceParams
-        {
-            Query = "UPDATE Accounts SET Balance = Balance + 100 WHERE Id = 2",
-            CommandType = CommandType.Text
-        }, cancellationToken);
-    },
-    isolationLevel: IsolationLevel.ReadCommitted,
-    cancellationToken: cancellationToken);
+var services = new ServiceCollection().AddDataAccessProviderMSSQL("Server=localhost;Database=example;Integrated Security=true;TrustServerCertificate=true");
+await using var host = services.BuildServiceProvider(new ServiceProviderOptions { ValidateScopes = true, ValidateOnBuild = true });
+await using var scope = host.CreateAsyncScope();
+var database = scope.ServiceProvider.GetRequiredService<IDatabaseClient<SqlServer>>();
 ```
 
-The callback commits only after it completes successfully. An exception or cancellation causes a rollback, and the connection and transaction are always disposed. Reader, typed-reader, scalar, and non-query operations are supported and all use the same connection and transaction.
+## Contracts and capabilities
 
-Transaction callbacks are local to one provider and their `IDatabaseTransaction` executor must not be retained after the callback. Commands within a callback are serialized. The configured resilience policy is intentionally not applied within a transaction: individual commands and commits are never retried automatically because doing so can duplicate writes or repeat a commit whose server outcome is unknown. Distributed transactions, nested transactions, and savepoints are not supported.
+Commands default to Text, a cooperative 30-second timeout and no wrapper retries. Explicitly select StoredProcedure or infinite timeout when needed. SQL and parameter values are separate; callers must validate/quote dynamic identifiers. Immutable command definitions do not freeze arbitrary native object values; callers must not mutate those during execution.
 
-## Registering a Custom Data Source
+Strict mapping rejects invalid conversions, database null into non-nullable members and duplicate dictionary column names. Use writable POCOs or the explicit DbDataReader mapper overload; automatic record-constructor mapping is not promised.
 
-The **DataAccessProvider** allows you to register your own custom data sources at runtime using the `RegisterDataSource<TParams, TSource>()` method. This enables you to extend the framework by adding support for new data source types, without modifying the existing factory.
+`StreamAsync` optionally streams the first result set without retaining all mapped rows. An `await foreach` early exit disposes its reader, command and connection. It does not retry, expose outputs, or join managed transaction sessions; use buffered queries for those contracts. Dispose manually obtained enumerators and do not let enumeration escape a client scope.
 
-### Method Definition
+`QueryResult.Rows` always contains a collection. ScalarState distinguishes NoRow, Null and Value. Outputs are captured after readers close. Native access callbacks own commands/readers they create and must complete before the library-owned connection/session ends.
 
-```csharp
-public void RegisterDataSource<TParams, TSource>() 
-    where TParams : BaseDataSourceParams
-    where TSource : IDataSource;
-```
+Transactions serialize commands, commit after successful callbacks, roll back on failure/cancellation and reject escaped sessions. A failed commit has an unknown outcome and is never automatically replayed. DDL can implicitly commit on some databases; the callback does not make such statements atomic.
 
-### Step 1: Create a Custom `SourceParams` Class
+Wrapper retries require both configured MaxRetries and an explicit ReadOnly/Idempotent declaration. Unknown/permanent errors, cancellation, ordinary writes and transaction operations are not retried. MongoDB relies on driver-managed retryable writes rather than an additional wrapper write retry loop. Cancellation is cooperative and driver exception types can differ; cancellation does not prove a write never occurred.
 
-Define a custom `SourceParams` class that extends `BaseDataSourceParams` and contains any additional properties you need.
+Oracle uses named binding in the modern client. Variable-width output parameters need an appropriate capacity. Snowflake uses text CALL commands and does not expose the universal stored-procedure/output-parameter contract; account-backed integration remains pending. Advanced bulk copy, arrays, ref cursors, aggregation and stages use each provider's typed native surface.
 
-```csharp
-public class XmlFileSourceParams : BaseDataSourceParams
-{
-    /// <summary>
-    /// Path to the XML file to be read.
-    /// </summary>
-    public string FilePath { get; set; }
+## Validation and migration
 
-    /// <summary>
-    /// The root element in the XML file where the data begins.
-    /// </summary>
-    public string RootElement { get; set; }
+Run `dotnet restore --locked-mode`, `dotnet test -c Release --no-restore`, and `pwsh ./eng/Verify-Packages.ps1`. Package checks are independent from database checks. See [migration examples](docs/migration.md), [verification](docs/implementation.md), and the historical [review](review/DataAccessProvider-review.md).
 
-    /// <summary>
-    /// An optional XPath query to select specific nodes from the XML document.
-    /// </summary>
-    public string? XPathQuery { get; set; }
-
-    /// <summary>
-    /// Specifies whether to ignore namespaces in the XML document.
-    /// </summary>
-    public bool IgnoreNamespaces { get; set; } = true;
-
-    /// <summary>
-    /// Additional attributes or settings related to XML parsing.
-    /// </summary>
-    public Dictionary<string, string>? AdditionalAttributes { get; set; }
-}
-```
-
-### Step 2: Implement a Custom `IDataSource`
-
-Create a custom data source by implementing the `IDataSource` interface and providing the necessary logic to interact with the custom data source.
-
-### Step 3: Register the Custom Data Source with the Factory
-
-Now that the `CustomSourceParams` and `CustomDataSource` are defined, you can register them with the `DataSourceFactory` by calling `RegisterDataSource<TParams, TSource>()` from the DataSourceFactory service.
-
-```csharp
-var dataSourceFactory = serviceProvider.GetService<IDataSourceFactory>();
-
-// Register the custom data source
-dataSourceFactory.RegisterDataSource<XmlFileSourceParams, XmlFileSource>();
-```
-
-### Step 4: Use the Custom Data Source
-
-Once the custom data source is registered, you can use it just like any other data source by passing `CustomSourceParams` to the `IDataSourceProvider`.
-```csharp
-var xmlFileParams = new XmlFileSourceParams
-{
-    FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "data.xml"),
-    RootElement = "Employees",
-    XPathQuery = "//Employee[Age > 30]", // Optional XPath to filter nodes
-    IgnoreNamespaces = true,
-    AdditionalAttributes = new Dictionary<string, string>
-    {
-        { "attribute1", "value1" },
-        { "attribute2", "value2" }
-    }
-};
-
-// Use IDataSourceProvider to execute the query
-var result = await dataSourceProvider.ExecuteReaderAsync(xmlFileParams);
-Console.WriteLine($"\nXML Data Source Result: {JsonSerializer.Serialize(result.Value)}");
-```
-
-## `DbParameter` Extension Method
-
-The library includes an extension method for adding database parameters to a list in a type-safe and generic manner. This method supports multiple database types, including SQL Server and PostgreSQL.
-
-### Example Usage
-
-Here is how you can use the `AddParameter` extension method to add parameters to a `List<DbParameter>`:
-
-```csharp
-public class Example
-{
-    public void AddParameters()
-    {
-        // For SQL Server
-        var parameters = new List<SqlParameter>();
-        parameters.AddParameter("@Id", DataAccessDbType.Int32, 1);
-        parameters.AddParameter("@Id", DataAccessDbType.Int32, 2);
-
-        // For PostgreSQL
-        var parameters = new List<NpgsqlParameter>();
-        parameters.AddParameter("@Name", DataAccessDbType.String, "John Doe");
-
-        // Use parameters with your database command
-    }
-}
-```
-
-## Contributions
-
-Contributions are welcome! If you'd like to add support for additional databases or improve the library, feel free to open a pull request.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE.txt) file for details.
+Legacy APIs remain available throughout 1.4. Their mutable request instances are not safe for concurrent reuse. The later 2.0 release retires them only after a stable 1.4 migration release.

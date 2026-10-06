@@ -1,0 +1,7 @@
+  Consumer -> C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\metadata-experiment\ORACLE\bin\Debug\net10.0\Consumer.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:03.53

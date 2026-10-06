@@ -1,0 +1,157 @@
+[
+  {
+    "name": "factoryReturnsDisposedScopedService",
+    "detail": true
+  },
+  {
+    "name": "sameNameRegistrationCollision",
+    "detail": "DataAccessProvider.Core.DataSource.Source.StaticCodeSource"
+  },
+  {
+    "name": "mappingDictionaryIsExternallyMutable",
+    "detail": true
+  },
+  {
+    "name": "genericSourcePolicyCalls",
+    "detail": 0
+  },
+  {
+    "name": "genericResourcesDisposed",
+    "detail": {
+      "connection": true,
+      "command": true
+    }
+  },
+  {
+    "name": "retryConnectionReuse",
+    "detail": {
+      "error": "InvalidOperationException",
+      "Opens": 3,
+      "Executions": 1
+    }
+  },
+  {
+    "name": "permanentFailureAttempts",
+    "detail": 3
+  },
+  {
+    "name": "timeoutIsCooperativeOnly",
+    "detail": {
+      "timeoutResult": "completed",
+      "elapsedMs": 57.9716
+    }
+  },
+  {
+    "name": "explicitTypedOverloadFailureBeforeDatabase",
+    "detail": {
+      "type": "ArgumentException",
+      "Message": "Invalid source parameters type."
+    }
+  },
+  {
+    "name": "outputParameterCopyBack",
+    "detail": 0
+  },
+  {
+    "name": "emptyTypedReadRetainsOldRows",
+    "detail": [
+      99
+    ]
+  },
+  {
+    "name": "dictionaryMapperSilentlyDefaultsBadValue",
+    "detail": 0
+  },
+  {
+    "name": "ordinaryCancellationOverloads",
+    "detail": 0
+  },
+  {
+    "name": "staticTypedReadFailure",
+    "detail": "ArgumentException"
+  },
+  {
+    "name": "defaultCommandSettings",
+    "detail": {
+      "CommandType": 4,
+      "Timeout": 0
+    }
+  },
+  {
+    "name": "mappingCaseNumericNullableEnumGuidBool",
+    "detail": {
+      "Id": 7,
+      "Optional": null,
+      "Status": 1,
+      "Token": "a72d79a9-c499-453b-977d-67e6cf4c1b91",
+      "Enabled": true
+    }
+  },
+  {
+    "name": "mappingNullNonNullableRetainsInitializer",
+    "detail": 99
+  },
+  {
+    "name": "mappingDateTimeToDateOnly",
+    "detail": "InvalidOperationException"
+  },
+  {
+    "name": "mappingIndexerAndFailureCleanup",
+    "detail": {
+      "error": "TypeInitializationException",
+      "connectionDisposed": true,
+      "commandDisposed": true,
+      "readerClosed": true
+    }
+  },
+  {
+    "name": "transactionParameterSetupFailureCleanup",
+    "detail": {
+      "connectionDisposed": true,
+      "transactionDisposed": true,
+      "commandDisposed": false
+    }
+  },
+  {
+    "name": "retryRepeatedWriteSimulation",
+    "detail": 3
+  },
+  {
+    "name": "fileWriterCannotCreateNewFile",
+    "detail": "FileNotFoundException"
+  },
+  {
+    "name": "fileWriteCharacterByteMismatch",
+    "detail": {
+      "reported": 1,
+      "actualFileBytes": 2
+    }
+  },
+  {
+    "name": "mappingMeasurement",
+    "detail": {
+      "rows": 1,
+      "repetitions": 5,
+      "elapsedMs": 0.106,
+      "allocatedBytes": 7840
+    }
+  },
+  {
+    "name": "mappingMeasurement",
+    "detail": {
+      "rows": 1000,
+      "repetitions": 5,
+      "elapsedMs": 8.7493,
+      "allocatedBytes": 329720
+    }
+  },
+  {
+    "name": "mappingMeasurement",
+    "detail": {
+      "rows": 10000,
+      "repetitions": 5,
+      "elapsedMs": 30.438,
+      "allocatedBytes": 3719000
+    }
+  }
+]

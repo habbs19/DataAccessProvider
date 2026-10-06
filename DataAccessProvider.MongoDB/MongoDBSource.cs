@@ -1,591 +1,184 @@
-﻿using DataAccessProvider.Core.Abstractions;
+using DataAccessProvider.Core;
+using DataAccessProvider.Core.Abstractions;
 using DataAccessProvider.Core.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
-using System.Text.Json;
 
 namespace DataAccessProvider.MongoDB;
 
-public sealed class MongoDBSource : BaseSource, IDataSource, IDataSource<MongoDBParams>
+public sealed class MongoDBSource : BaseSource, IDataSource, ICancellableDataSource, IDataSource<MongoDBParams>, IDisposable
 {
     private readonly string _connectionString;
-    private readonly IResiliencePolicy? _resiliencePolicy;
-    private readonly MongoClient _client;
-
+    private readonly IMongoClient _client;
+    private readonly ResourceOwnership _ownership;
+    private int _disposed;
     public MongoDBSource(string connectionString, IResiliencePolicy? resiliencePolicy = null)
+        : this(connectionString, new MongoClient(connectionString), ResourceOwnership.Owned, resiliencePolicy) { }
+    public MongoDBSource(string connectionString, IMongoClient client, ResourceOwnership ownership = ResourceOwnership.Borrowed, IResiliencePolicy? resiliencePolicy = null)
+    { _connectionString = connectionString; _client = client ?? throw new ArgumentNullException(nameof(client)); _ownership = ownership; }
+    internal IMongoDatabase Database(string? name = null)
     {
-        _connectionString = connectionString;
-        _resiliencePolicy = resiliencePolicy;
-        _client = new MongoClient(_connectionString);
+        ObjectDisposedException.ThrowIf(Volatile.Read(ref _disposed) != 0, this);
+        name ??= MongoUrl.Create(_connectionString).DatabaseName;
+        if (string.IsNullOrWhiteSpace(name)) throw new InvalidOperationException("Specify a database in the connection URI or parameters.");
+        return _client.GetDatabase(name);
     }
-
-    private IMongoDatabase GetDatabase(string? databaseName = null)
+    public void Dispose() { if (Interlocked.Exchange(ref _disposed, 1) == 0 && _ownership == ResourceOwnership.Owned) _client.Dispose(); }
+    protected override Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams p) => Read(p, CancellationToken.None);
+    private async Task<BaseDataSourceParams> Read(BaseDataSourceParams p, CancellationToken ct)
     {
-        if (!string.IsNullOrEmpty(databaseName))
+        ct.ThrowIfCancellationRequested();
+        if (p is not MongoDBParams request) throw new ArgumentException("Expected MongoDBParams.", nameof(p));
+        var collection = Database(request.DatabaseName).GetCollection<BsonDocument>(request.CollectionName);
+        List<BsonDocument> documents;
+        if (request.OperationType == MongoOperationType.Find)
         {
-            return _client.GetDatabase(databaseName);
+            var options = new FindOptions<BsonDocument> { Sort = request.Sort, Skip = request.Skip, Limit = request.Limit };
+            if (request.Projection is not null) options.Projection = request.Projection;
+            using var cursor = await collection.FindAsync(request.Filter ?? Builders<BsonDocument>.Filter.Empty, options, ct).ConfigureAwait(false);
+            documents = await cursor.ToListAsync(ct).ConfigureAwait(false);
         }
-
-        // Extract database name from connection string
-        var url = MongoUrl.Create(_connectionString);
-        if (string.IsNullOrEmpty(url.DatabaseName))
+        else if (request.OperationType == MongoOperationType.Aggregate)
         {
-            throw new InvalidOperationException("Database name must be specified either in connection string or in parameters.");
+            ArgumentNullException.ThrowIfNull(request.Pipeline);
+            using var cursor = await collection.AggregateAsync(request.Pipeline, cancellationToken: ct).ConfigureAwait(false);
+            documents = await cursor.ToListAsync(ct).ConfigureAwait(false);
         }
-
-        return _client.GetDatabase(url.DatabaseName);
+        else throw new ArgumentException("Reader requires Find or Aggregate.", nameof(p));
+        var rows = documents.Select(BsonDocumentToDictionary).ToList();
+        request.SetValue(rows.Count switch { 0 => (object)new Dictionary<string, object>(), 1 => rows[0], _ => rows });
+        return request;
     }
-
-    #region BaseSource Implementation
-
-    protected override async Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams @params)
+    private async Task<MongoDBParams<TValue>> ReadTyped<TValue>(MongoDBParams<TValue> request, CancellationToken ct) where TValue : class
     {
-        var mongoParams = @params as MongoDBParams;
-        if (mongoParams == null)
+        ct.ThrowIfCancellationRequested();
+        var collection = Database(request.DatabaseName).GetCollection<TValue>(request.CollectionName);
+        List<TValue> rows;
+        if (request.OperationType == MongoOperationType.Find)
         {
-            throw new ArgumentException("Invalid parameters type. Expected MongoDBParams.");
+            var options = new FindOptions<TValue> { Sort = request.Sort, Skip = request.Skip, Limit = request.Limit };
+            if (request.Projection is not null) options.Projection = request.Projection;
+            using var cursor = await collection.FindAsync(request.Filter ?? Builders<TValue>.Filter.Empty, options, ct).ConfigureAwait(false);
+            rows = await cursor.ToListAsync(ct).ConfigureAwait(false);
         }
-
-        async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
+        else if (request.OperationType == MongoOperationType.Aggregate)
         {
-            var database = GetDatabase(mongoParams.DatabaseName);
-            var collection = database.GetCollection<BsonDocument>(mongoParams.CollectionName);
-
-            long affectedCount = 0;
-
-            switch (mongoParams.OperationType)
-            {
-                case MongoOperationType.InsertOne:
-                    if (mongoParams.Document == null)
-                    {
-                        throw new InvalidOperationException("Document must be provided for InsertOne operation.");
-                    }
-                    await collection.InsertOneAsync(mongoParams.Document, cancellationToken: ct).ConfigureAwait(false);
-                    affectedCount = 1;
-                    break;
-
-                case MongoOperationType.InsertMany:
-                    if (mongoParams.Documents == null || mongoParams.Documents.Count == 0)
-                    {
-                        throw new InvalidOperationException("Documents must be provided for InsertMany operation.");
-                    }
-                    await collection.InsertManyAsync(mongoParams.Documents, cancellationToken: ct).ConfigureAwait(false);
-                    affectedCount = mongoParams.Documents.Count;
-                    break;
-
-                case MongoOperationType.UpdateOne:
-                    if (mongoParams.Filter == null || mongoParams.Update == null)
-                    {
-                        throw new InvalidOperationException("Filter and Update must be provided for UpdateOne operation.");
-                    }
-                    var updateOneResult = await collection.UpdateOneAsync(mongoParams.Filter, mongoParams.Update, cancellationToken: ct).ConfigureAwait(false);
-                    affectedCount = updateOneResult.ModifiedCount;
-                    break;
-
-                case MongoOperationType.UpdateMany:
-                    if (mongoParams.Filter == null || mongoParams.Update == null)
-                    {
-                        throw new InvalidOperationException("Filter and Update must be provided for UpdateMany operation.");
-                    }
-                    var updateManyResult = await collection.UpdateManyAsync(mongoParams.Filter, mongoParams.Update, cancellationToken: ct).ConfigureAwait(false);
-                    affectedCount = updateManyResult.ModifiedCount;
-                    break;
-
-                case MongoOperationType.DeleteOne:
-                    if (mongoParams.Filter == null)
-                    {
-                        throw new InvalidOperationException("Filter must be provided for DeleteOne operation.");
-                    }
-                    var deleteOneResult = await collection.DeleteOneAsync(mongoParams.Filter, cancellationToken: ct).ConfigureAwait(false);
-                    affectedCount = deleteOneResult.DeletedCount;
-                    break;
-
-                case MongoOperationType.DeleteMany:
-                    if (mongoParams.Filter == null)
-                    {
-                        throw new InvalidOperationException("Filter must be provided for DeleteMany operation.");
-                    }
-                    var deleteManyResult = await collection.DeleteManyAsync(mongoParams.Filter, cancellationToken: ct).ConfigureAwait(false);
-                    affectedCount = deleteManyResult.DeletedCount;
-                    break;
-
-                default:
-                    throw new InvalidOperationException($"Operation type {mongoParams.OperationType} is not supported for ExecuteNonQuery.");
-            }
-
-            mongoParams.SetValue(affectedCount);
-            return mongoParams;
+            ArgumentNullException.ThrowIfNull(request.Pipeline);
+            using var cursor = await collection.AggregateAsync(request.Pipeline, cancellationToken: ct).ConfigureAwait(false);
+            rows = await cursor.ToListAsync(ct).ConfigureAwait(false);
         }
-
-        if (_resiliencePolicy == null)
-        {
-            return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
-        }
-
-        return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
+        else throw new ArgumentException("Reader requires Find or Aggregate.", nameof(request));
+        request.SetValue(rows); return request;
     }
-
-    protected override async Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
+    protected override Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams p)
+        => ExecuteReaderAsync<TValue>(p,CancellationToken.None);
+    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams p,CancellationToken ct) where TValue:class,new()
     {
-        var mongoParams = @params as MongoDBParams;
-        if (mongoParams == null)
-        {
-            throw new ArgumentException("Invalid parameters type. Expected MongoDBParams.");
-        }
-
-        async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
-        {
-            var database = GetDatabase(mongoParams.DatabaseName);
-            var collection = database.GetCollection<BsonDocument>(mongoParams.CollectionName);
-
-            switch (mongoParams.OperationType)
-            {
-                case MongoOperationType.Find:
-                    var filter = mongoParams.Filter ?? Builders<BsonDocument>.Filter.Empty;
-                    var findOptions = new FindOptions<BsonDocument, BsonDocument>
-                    {
-                        Projection = mongoParams.Projection,
-                        Sort = mongoParams.Sort,
-                        Skip = mongoParams.Skip,
-                        Limit = mongoParams.Limit
-                    };
-
-                    var cursor = await collection.FindAsync(filter, findOptions, ct).ConfigureAwait(false);
-                    var documents = await cursor.ToListAsync(ct).ConfigureAwait(false);
-
-                    if (documents.Count == 1)
-                    {
-                        mongoParams.SetValue(BsonDocumentToDictionary(documents[0]));
-                    }
-                    else if (documents.Count > 1)
-                    {
-                        mongoParams.SetValue(documents.Select(BsonDocumentToDictionary).ToList());
-                    }
-                    else
-                    {
-                        mongoParams.SetValue(new Dictionary<string, object>());
-                    }
-                    break;
-
-                case MongoOperationType.Aggregate:
-                    if (mongoParams.Pipeline == null)
-                    {
-                        throw new InvalidOperationException("Pipeline must be provided for Aggregate operation.");
-                    }
-                    var aggregateCursor = await collection.AggregateAsync(mongoParams.Pipeline, cancellationToken: ct).ConfigureAwait(false);
-                    var aggregateResults = await aggregateCursor.ToListAsync(ct).ConfigureAwait(false);
-
-                    if (aggregateResults.Count == 1)
-                    {
-                        mongoParams.SetValue(BsonDocumentToDictionary(aggregateResults[0]));
-                    }
-                    else if (aggregateResults.Count > 1)
-                    {
-                        mongoParams.SetValue(aggregateResults.Select(BsonDocumentToDictionary).ToList());
-                    }
-                    else
-                    {
-                        mongoParams.SetValue(new Dictionary<string, object>());
-                    }
-                    break;
-
-                default:
-                    throw new InvalidOperationException($"Operation type {mongoParams.OperationType} is not supported for ExecuteReader.");
-            }
-
-            return mongoParams;
-        }
-
-        if (_resiliencePolicy == null)
-        {
-            return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
-        }
-
-        return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
+        if (p is not MongoDBParams request) throw new ArgumentException("Expected MongoDBParams.", nameof(p));
+        var result = await ReadTyped(Adapt<TValue>(request), ct).ConfigureAwait(false);
+        request.SetValue(result.Value!.ToList()); return result;
     }
-
-    protected override async Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params)
+    private static MongoDBParams<TValue> Adapt<TValue>(MongoDBParams p) where TValue : class
     {
-        var mongoParams = @params as MongoDBParams;
-        if (mongoParams == null)
+        var serializer = BsonSerializer.SerializerRegistry.GetSerializer<BsonDocument>();
+        return new()
         {
-            throw new ArgumentException("Invalid parameters type. Expected MongoDBParams.");
-        }
-
-        async Task<BaseDataSourceParams<TValue>> ExecuteCoreAsync(CancellationToken ct)
-        {
-            var database = GetDatabase(mongoParams.DatabaseName);
-            var collection = database.GetCollection<TValue>(mongoParams.CollectionName);
-
-            List<TValue> results = new List<TValue>();
-
-            switch (mongoParams.OperationType)
-            {
-                case MongoOperationType.Find:
-                    var filter = mongoParams.Filter != null
-                        ? BsonDocumentFilterToTypedFilter<TValue>(mongoParams.Filter)
-                        : Builders<TValue>.Filter.Empty;
-
-                    var findOptions = new FindOptions<TValue, TValue>
-                    {
-                        Projection = mongoParams.Projection != null ? BsonDocumentProjectionToTypedProjection<TValue>(mongoParams.Projection) : null,
-                        Sort = mongoParams.Sort != null ? BsonDocumentSortToTypedSort<TValue>(mongoParams.Sort) : null,
-                        Skip = mongoParams.Skip,
-                        Limit = mongoParams.Limit
-                    };
-
-                    var cursor = await collection.FindAsync(filter, findOptions, ct).ConfigureAwait(false);
-                    results = await cursor.ToListAsync(ct).ConfigureAwait(false);
-                    break;
-
-                case MongoOperationType.Aggregate:
-                    if (mongoParams.Pipeline == null)
-                    {
-                        throw new InvalidOperationException("Pipeline must be provided for Aggregate operation.");
-                    }
-                    var pipeline = BsonDocumentPipelineToTypedPipeline<TValue>(mongoParams.Pipeline);
-                    var aggregateCursor = await collection.AggregateAsync(pipeline, cancellationToken: ct).ConfigureAwait(false);
-                    results = await aggregateCursor.ToListAsync(ct).ConfigureAwait(false);
-                    break;
-
-                default:
-                    throw new InvalidOperationException($"Operation type {mongoParams.OperationType} is not supported for ExecuteReader<TValue>.");
-            }
-
-            if (results.Count == 1)
-            {
-                mongoParams.SetValue(results[0]);
-            }
-            else if (results.Count > 1)
-            {
-                mongoParams.SetValue(results);
-            }
-
-            return (BaseDataSourceParams<TValue>)(object)mongoParams;
-        }
-
-        if (_resiliencePolicy == null)
-        {
-            return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
-        }
-
-        return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
-    }
-
-    protected override async Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams @params)
-    {
-        var mongoParams = @params as MongoDBParams;
-        if (mongoParams == null)
-        {
-            throw new ArgumentException("Invalid parameters type. Expected MongoDBParams.");
-        }
-
-        async Task<BaseDataSourceParams> ExecuteCoreAsync(CancellationToken ct)
-        {
-            var database = GetDatabase(mongoParams.DatabaseName);
-            var collection = database.GetCollection<BsonDocument>(mongoParams.CollectionName);
-
-            object? result = null;
-
-            switch (mongoParams.OperationType)
-            {
-                case MongoOperationType.Count:
-                    var filter = mongoParams.Filter ?? Builders<BsonDocument>.Filter.Empty;
-                    result = await collection.CountDocumentsAsync(filter, cancellationToken: ct).ConfigureAwait(false);
-                    break;
-
-                case MongoOperationType.Aggregate:
-                    if (mongoParams.Pipeline == null)
-                    {
-                        throw new InvalidOperationException("Pipeline must be provided for Aggregate operation.");
-                    }
-                    var aggregateCursor = await collection.AggregateAsync(mongoParams.Pipeline, cancellationToken: ct).ConfigureAwait(false);
-                    var firstResult = await aggregateCursor.FirstOrDefaultAsync(ct).ConfigureAwait(false);
-                    
-                    if (firstResult != null && firstResult.ElementCount > 0)
-                    {
-                        // Return the first value from the document
-                        result = firstResult.GetElement(0).Value.ToString();
-                    }
-                    break;
-
-                default:
-                    throw new InvalidOperationException($"Operation type {mongoParams.OperationType} is not supported for ExecuteScalar.");
-            }
-
-            if (result != null)
-            {
-                mongoParams.SetValue(result);
-            }
-            
-            return mongoParams;
-        }
-
-        if (_resiliencePolicy == null)
-        {
-            return await ExecuteCoreAsync(CancellationToken.None).ConfigureAwait(false);
-        }
-
-        return await _resiliencePolicy.ExecuteAsync(ExecuteCoreAsync).ConfigureAwait(false);
-    }
-
-    #endregion
-
-    #region IDataSource Implementation
-
-    public async Task<bool> CheckHealthAsync()
-    {
-        try
-        {
-            var database = GetDatabase();
-            var command = new BsonDocument("ping", 1);
-            await database.RunCommandAsync<BsonDocument>(command).ConfigureAwait(false);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        if (@params is MongoDBParams mongoParams)
-        {
-            return CheckMongoHealthAsync(mongoParams);
-        }
-
-        return Task.FromResult(false);
-    }
-
-    private async Task<bool> CheckMongoHealthAsync(MongoDBParams mongoParams)
-    {
-        try
-        {
-            var database = GetDatabase(mongoParams.DatabaseName);
-            var command = new BsonDocument("ping", 1);
-            await database.RunCommandAsync<BsonDocument>(command).ConfigureAwait(false);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)await ExecuteNonQuery(@params).ConfigureAwait(false);
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)await ExecuteReader(@params).ConfigureAwait(false);
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TValue : class, new()
-        where TBaseDataSourceParams : BaseDataSourceParams<TValue>
-    {
-        var mongoParams = ConvertToMongoDBParams(@params);
-        var result = await ExecuteReader<TValue>(mongoParams).ConfigureAwait(false);
-        
-        // Copy the result back to the original params
-        if (result.Value != null)
-        {
-            foreach (var item in result.Value)
-            {
-                @params.SetValue(item);
-                break; // Set first item for single result
-            }
-        }
-        
-        return @params;
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(BaseDataSourceParams<TValue> @params)
-        where TValue : class, new()
-        where TBaseDataSourceParams : BaseDataSourceParams<TValue>
-    {
-        return (TBaseDataSourceParams)await ExecuteReaderAsync<TValue>(@params).ConfigureAwait(false);
-    }
-
-    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params)
-        where TValue : class, new()
-    {
-        var mongoParams = ConvertToMongoDBParams(@params);
-        return await ExecuteReader<TValue>(mongoParams).ConfigureAwait(false);
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)await ExecuteScalar(@params).ConfigureAwait(false);
-    }
-
-    #endregion
-
-    #region IDataSource<MongoDBParams> Implementation
-
-    public async Task<MongoDBParams> ExecuteNonQueryAsync(MongoDBParams @params)
-    {
-        return (MongoDBParams)await ExecuteNonQuery(@params).ConfigureAwait(false);
-    }
-
-    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(MongoDBParams @params)
-        where TValue : class, new()
-    {
-        return await ExecuteReader<TValue>(@params).ConfigureAwait(false);
-    }
-
-    public async Task<MongoDBParams> ExecuteReaderAsync(MongoDBParams @params)
-    {
-        return (MongoDBParams)await ExecuteReader(@params).ConfigureAwait(false);
-    }
-
-    public async Task<MongoDBParams> ExecuteScalarAsync(MongoDBParams @params)
-    {
-        return (MongoDBParams)await ExecuteScalar(@params).ConfigureAwait(false);
-    }
-
-    #endregion
-
-    #region Helper Methods
-
-    private static MongoDBParams ConvertToMongoDBParams(object @params)
-    {
-        // Try to cast to MongoDBParams first
-        if (@params is MongoDBParams mongoParams)
-        {
-            return mongoParams;
-        }
-
-        // Try to extract properties using reflection for type safety
-        var paramsType = @params.GetType();
-        var mongoDbParams = new MongoDBParams();
-
-        var collectionNameProp = paramsType.GetProperty("CollectionName");
-        if (collectionNameProp != null)
-        {
-            mongoDbParams.CollectionName = collectionNameProp.GetValue(@params) as string ?? string.Empty;
-        }
-
-        var databaseNameProp = paramsType.GetProperty("DatabaseName");
-        if (databaseNameProp != null)
-        {
-            mongoDbParams.DatabaseName = databaseNameProp.GetValue(@params) as string;
-        }
-
-        var filterProp = paramsType.GetProperty("Filter");
-        if (filterProp != null)
-        {
-            mongoDbParams.Filter = filterProp.GetValue(@params) as FilterDefinition<BsonDocument>;
-        }
-
-        var projectionProp = paramsType.GetProperty("Projection");
-        if (projectionProp != null)
-        {
-            mongoDbParams.Projection = projectionProp.GetValue(@params) as ProjectionDefinition<BsonDocument>;
-        }
-
-        var sortProp = paramsType.GetProperty("Sort");
-        if (sortProp != null)
-        {
-            mongoDbParams.Sort = sortProp.GetValue(@params) as SortDefinition<BsonDocument>;
-        }
-
-        var skipProp = paramsType.GetProperty("Skip");
-        if (skipProp != null)
-        {
-            mongoDbParams.Skip = skipProp.GetValue(@params) as int?;
-        }
-
-        var limitProp = paramsType.GetProperty("Limit");
-        if (limitProp != null)
-        {
-            mongoDbParams.Limit = limitProp.GetValue(@params) as int?;
-        }
-
-        var operationTypeProp = paramsType.GetProperty("OperationType");
-        if (operationTypeProp != null)
-        {
-            var opType = operationTypeProp.GetValue(@params);
-            mongoDbParams.OperationType = opType != null ? (MongoOperationType)opType : MongoOperationType.Find;
-        }
-
-        var pipelineProp = paramsType.GetProperty("Pipeline");
-        if (pipelineProp != null)
-        {
-            mongoDbParams.Pipeline = pipelineProp.GetValue(@params) as PipelineDefinition<BsonDocument, BsonDocument>;
-        }
-
-        return mongoDbParams;
-    }
-
-    private static Dictionary<string, object> BsonDocumentToDictionary(BsonDocument document)
-    {
-        var dictionary = new Dictionary<string, object>();
-
-        foreach (var element in document.Elements)
-        {
-            dictionary[element.Name] = BsonValueToObject(element.Value);
-        }
-
-        return dictionary;
-    }
-
-    private static object BsonValueToObject(BsonValue value)
-    {
-        return value.BsonType switch
-        {
-            BsonType.ObjectId => value.AsObjectId.ToString(),
-            BsonType.String => value.AsString,
-            BsonType.Int32 => value.AsInt32,
-            BsonType.Int64 => value.AsInt64,
-            BsonType.Double => value.AsDouble,
-            BsonType.Decimal128 => Decimal128.ToDecimal(value.AsDecimal128),
-            BsonType.Boolean => value.AsBoolean,
-            BsonType.DateTime => value.ToUniversalTime(),
-            BsonType.Array => value.AsBsonArray.Select(BsonValueToObject).ToList(),
-            BsonType.Document => BsonDocumentToDictionary(value.AsBsonDocument),
-            BsonType.Null => null!,
-            _ => value.ToString()!
+            CollectionName = p.CollectionName,
+            DatabaseName = p.DatabaseName,
+            OperationType = p.OperationType,
+            Skip = p.Skip,
+            Limit = p.Limit,
+            Filter = p.Filter is null ? null : new BsonDocumentFilterDefinition<TValue>(p.Filter.Render(new(serializer, BsonSerializer.SerializerRegistry))),
+            Projection = p.Projection is null ? null : new BsonDocumentProjectionDefinition<TValue>(p.Projection.Render(new(serializer, BsonSerializer.SerializerRegistry))),
+            Sort = p.Sort is null ? null : new BsonDocumentSortDefinition<TValue>(p.Sort.Render(new(serializer, BsonSerializer.SerializerRegistry))),
+            Pipeline = p.Pipeline is null ? null : PipelineDefinition<TValue, TValue>.Create(p.Pipeline.Render(new(serializer, BsonSerializer.SerializerRegistry)).Documents)
         };
     }
-
-    private static FilterDefinition<TValue> BsonDocumentFilterToTypedFilter<TValue>(FilterDefinition<BsonDocument> bsonFilter)
+    protected override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams p) => Write(p, CancellationToken.None);
+    private async Task<BaseDataSourceParams> Write(BaseDataSourceParams p, CancellationToken ct)
     {
-        // Convert BsonDocument filter to typed filter by rendering and re-parsing
-        var serializer = BsonSerializer.SerializerRegistry.GetSerializer<BsonDocument>();
-        var rendered = bsonFilter.Render(new(serializer, BsonSerializer.SerializerRegistry));
-        return new BsonDocumentFilterDefinition<TValue>(rendered);
+        ct.ThrowIfCancellationRequested();
+        if (p is not MongoDBParams request) throw new ArgumentException("Expected MongoDBParams.", nameof(p));
+        var collection = Database(request.DatabaseName).GetCollection<BsonDocument>(request.CollectionName);
+        long count;
+        switch (request.OperationType)
+        {
+            case MongoOperationType.InsertOne: ArgumentNullException.ThrowIfNull(request.Document); await collection.InsertOneAsync(request.Document, cancellationToken: ct); count = 1; break;
+            case MongoOperationType.InsertMany: ArgumentNullException.ThrowIfNull(request.Documents); await collection.InsertManyAsync(request.Documents, cancellationToken: ct); count = request.Documents.Count; break;
+            case MongoOperationType.UpdateOne: ArgumentNullException.ThrowIfNull(request.Filter); ArgumentNullException.ThrowIfNull(request.Update); count = (await collection.UpdateOneAsync(request.Filter, request.Update, cancellationToken: ct)).ModifiedCount; break;
+            case MongoOperationType.UpdateMany: ArgumentNullException.ThrowIfNull(request.Filter); ArgumentNullException.ThrowIfNull(request.Update); count = (await collection.UpdateManyAsync(request.Filter, request.Update, cancellationToken: ct)).ModifiedCount; break;
+            case MongoOperationType.DeleteOne: ArgumentNullException.ThrowIfNull(request.Filter); count = (await collection.DeleteOneAsync(request.Filter, ct)).DeletedCount; break;
+            case MongoOperationType.DeleteMany: ArgumentNullException.ThrowIfNull(request.Filter); count = (await collection.DeleteManyAsync(request.Filter, ct)).DeletedCount; break;
+            default: throw new ArgumentException("A write operation is required.", nameof(p));
+        }
+        request.SetValue(count); return request;
     }
-
-    private static ProjectionDefinition<TValue>? BsonDocumentProjectionToTypedProjection<TValue>(ProjectionDefinition<BsonDocument> bsonProjection)
+    public async Task<MongoDBParams<TValue>> ExecuteNonQueryAsync<TValue>(MongoDBParams<TValue> request, CancellationToken cancellationToken = default) where TValue : class
     {
-        var serializer = BsonSerializer.SerializerRegistry.GetSerializer<BsonDocument>();
-        var rendered = bsonProjection.Render(new(serializer, BsonSerializer.SerializerRegistry));
-        return new BsonDocumentProjectionDefinition<TValue>(rendered);
+        cancellationToken.ThrowIfCancellationRequested();
+        var collection = Database(request.DatabaseName).GetCollection<TValue>(request.CollectionName);
+        switch (request.OperationType)
+        {
+            case MongoOperationType.InsertOne: ArgumentNullException.ThrowIfNull(request.Document); await collection.InsertOneAsync(request.Document, cancellationToken: cancellationToken); break;
+            case MongoOperationType.InsertMany: ArgumentNullException.ThrowIfNull(request.Documents); await collection.InsertManyAsync(request.Documents, cancellationToken: cancellationToken); break;
+            case MongoOperationType.UpdateOne: ArgumentNullException.ThrowIfNull(request.Filter); ArgumentNullException.ThrowIfNull(request.Update); await collection.UpdateOneAsync(request.Filter, request.Update, cancellationToken: cancellationToken); break;
+            case MongoOperationType.UpdateMany: ArgumentNullException.ThrowIfNull(request.Filter); ArgumentNullException.ThrowIfNull(request.Update); await collection.UpdateManyAsync(request.Filter, request.Update, cancellationToken: cancellationToken); break;
+            case MongoOperationType.DeleteOne: ArgumentNullException.ThrowIfNull(request.Filter); await collection.DeleteOneAsync(request.Filter, cancellationToken); break;
+            case MongoOperationType.DeleteMany: ArgumentNullException.ThrowIfNull(request.Filter); await collection.DeleteManyAsync(request.Filter, cancellationToken); break;
+            default: throw new ArgumentException("A write operation is required.", nameof(request));
+        }
+        return request;
     }
-
-    private static SortDefinition<TValue>? BsonDocumentSortToTypedSort<TValue>(SortDefinition<BsonDocument> bsonSort)
+    protected override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams p) => Scalar(p, CancellationToken.None);
+    private async Task<BaseDataSourceParams> Scalar(BaseDataSourceParams p, CancellationToken ct)
     {
-        var serializer = BsonSerializer.SerializerRegistry.GetSerializer<BsonDocument>();
-        var rendered = bsonSort.Render(new(serializer, BsonSerializer.SerializerRegistry));
-        return new BsonDocumentSortDefinition<TValue>(rendered);
+        ct.ThrowIfCancellationRequested();
+        if (p is not MongoDBParams request) throw new ArgumentException("Expected MongoDBParams.", nameof(p));
+        var collection = Database(request.DatabaseName).GetCollection<BsonDocument>(request.CollectionName);
+        if (request.OperationType == MongoOperationType.Count) request.SetValue(await collection.CountDocumentsAsync(request.Filter ?? Builders<BsonDocument>.Filter.Empty, cancellationToken: ct));
+        else if (request.OperationType == MongoOperationType.Aggregate)
+        {
+            ArgumentNullException.ThrowIfNull(request.Pipeline);
+            using var cursor = await collection.AggregateAsync(request.Pipeline, cancellationToken: ct);
+            var first = await cursor.FirstOrDefaultAsync(ct);
+            request.SetValue(first is { ElementCount: > 0 } ? BsonTypeMapper.MapToDotNetValue(first.GetElement(0).Value) : null!);
+        }
+        else throw new ArgumentException("Scalar requires Count or Aggregate.", nameof(p));
+        return request;
     }
-
-    private static PipelineDefinition<TValue, TValue> BsonDocumentPipelineToTypedPipeline<TValue>(PipelineDefinition<BsonDocument, BsonDocument> bsonPipeline)
+    public Task<bool> CheckHealthAsync() => Health(null, CancellationToken.None);
+    public Task<bool> CheckHealthAsync(CancellationToken ct) => Health(null, ct);
+    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TBaseDataSourceParams : BaseDataSourceParams => Health((p as MongoDBParams)?.DatabaseName, ct);
+    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => Health((p as MongoDBParams)?.DatabaseName, CancellationToken.None);
+    private async Task<bool> Health(string? database, CancellationToken ct)
     {
-        var serializer = BsonSerializer.SerializerRegistry.GetSerializer<BsonDocument>();
-        var rendered = bsonPipeline.Render(new(serializer, BsonSerializer.SerializerRegistry));
-        var stages = rendered.Documents.Select(doc => new BsonDocumentPipelineStageDefinition<TValue, TValue>(doc)).ToList();
-        return new PipelineStagePipelineDefinition<TValue, TValue>(stages);
+        ct.ThrowIfCancellationRequested();
+        try { await Database(database).RunCommandAsync<BsonDocument>(new BsonDocument("ping", 1), cancellationToken: ct); return true; }
+        catch (OperationCanceledException) { throw; }
+        catch when (!ct.IsCancellationRequested) { return false; }
     }
-
-    #endregion
+    public Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => ExecuteReaderAsync(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await Read(p, ct);
+    public Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => ExecuteNonQueryAsync(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await Write(p, ct);
+    public Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => ExecuteScalarAsync(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await Scalar(p, ct);
+    public Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams p) where TValue : class, new() where TBaseDataSourceParams : BaseDataSourceParams<TValue> => ExecuteReaderAsync<TValue, TBaseDataSourceParams>(p, CancellationToken.None);
+    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams p, CancellationToken ct) where TValue : class, new() where TBaseDataSourceParams : BaseDataSourceParams<TValue>
+    {
+        if (p is not MongoDBParams<TValue> request) throw new ArgumentException("Expected typed MongoDBParams.", nameof(p));
+        await ReadTyped(request, ct); return p;
+    }
+    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(BaseDataSourceParams<TValue> p) where TValue : class, new() where TBaseDataSourceParams : BaseDataSourceParams<TValue>
+        => (TBaseDataSourceParams)await ExecuteReaderAsync<TValue>(p);
+    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> p) where TValue : class, new() => ExecuteReaderAsync(p, CancellationToken.None);
+    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> p, CancellationToken ct) where TValue : class, new()
+    { if (p is not MongoDBParams<TValue> request) throw new ArgumentException("Expected typed MongoDBParams.", nameof(p)); return await ReadTyped(request, ct); }
+    public async Task<MongoDBParams> ExecuteReaderAsync(MongoDBParams p) => (MongoDBParams)await Read(p, CancellationToken.None);
+    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(MongoDBParams p) where TValue : class, new() => ExecuteReader<TValue>(p);
+    public async Task<MongoDBParams> ExecuteNonQueryAsync(MongoDBParams p) => (MongoDBParams)await Write(p, CancellationToken.None);
+    public async Task<MongoDBParams> ExecuteScalarAsync(MongoDBParams p) => (MongoDBParams)await Scalar(p, CancellationToken.None);
+    private static Dictionary<string, object> BsonDocumentToDictionary(BsonDocument document)
+        => document.Elements.ToDictionary(x => x.Name, x => BsonTypeMapper.MapToDotNetValue(x.Value)!);
 }

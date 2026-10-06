@@ -1,0 +1,1762 @@
+[
+  {
+    "origin": "local",
+    "artifact": "local-MSSQL (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "restore",
+    "provider": "DataAccessProvider.MSSQL",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MSSQL (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "build",
+    "provider": "DataAccessProvider.MSSQL",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MSSQL (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "run",
+    "provider": "DataAccessProvider.MSSQL",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MSSQL (see consumer-matrix.json)",
+    "status": "failed",
+    "check": "registration",
+    "provider": "DataAccessProvider.MSSQL",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MSSQL-run.txt",
+    "status": "failed",
+    "check": "public assembly signature dependency closure",
+    "provider": "DataAccessProvider.MSSQL",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MySql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "restore",
+    "provider": "DataAccessProvider.MySql",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MySql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "build",
+    "provider": "DataAccessProvider.MySql",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MySql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "run",
+    "provider": "DataAccessProvider.MySql",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MySql (see consumer-matrix.json)",
+    "status": "failed",
+    "check": "registration",
+    "provider": "DataAccessProvider.MySql",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MYSQL-run.txt",
+    "status": "failed",
+    "check": "public assembly signature dependency closure",
+    "provider": "DataAccessProvider.MySql",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-PostgreSql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "restore",
+    "provider": "DataAccessProvider.PostgreSql",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-PostgreSql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "build",
+    "provider": "DataAccessProvider.PostgreSql",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-PostgreSql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "run",
+    "provider": "DataAccessProvider.PostgreSql",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-PostgreSql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "registration",
+    "provider": "DataAccessProvider.PostgreSql",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-POSTGRES-run.txt",
+    "status": "passed",
+    "check": "public assembly signature dependency closure",
+    "provider": "DataAccessProvider.PostgreSql",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MongoDB (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "restore",
+    "provider": "DataAccessProvider.MongoDB",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MongoDB (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "build",
+    "provider": "DataAccessProvider.MongoDB",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MongoDB (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "run",
+    "provider": "DataAccessProvider.MongoDB",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MongoDB (see consumer-matrix.json)",
+    "status": "failed",
+    "check": "registration",
+    "provider": "DataAccessProvider.MongoDB",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-MONGO-run.txt",
+    "status": "failed",
+    "check": "public assembly signature dependency closure",
+    "provider": "DataAccessProvider.MongoDB",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-Oracle (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "restore",
+    "provider": "DataAccessProvider.Oracle",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-Oracle (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "build",
+    "provider": "DataAccessProvider.Oracle",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-Oracle (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "run",
+    "provider": "DataAccessProvider.Oracle",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-Oracle (see consumer-matrix.json)",
+    "status": "not applicable",
+    "check": "registration",
+    "provider": "DataAccessProvider.Oracle",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-ORACLE-run.txt",
+    "status": "failed",
+    "check": "public assembly signature dependency closure",
+    "provider": "DataAccessProvider.Oracle",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-Snowflake (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "restore",
+    "provider": "DataAccessProvider.Snowflake",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-Snowflake (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "build",
+    "provider": "DataAccessProvider.Snowflake",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-Snowflake (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "run",
+    "provider": "DataAccessProvider.Snowflake",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-Snowflake (see consumer-matrix.json)",
+    "status": "not applicable",
+    "check": "registration",
+    "provider": "DataAccessProvider.Snowflake",
+    "area": "package"
+  },
+  {
+    "origin": "local",
+    "artifact": "local-SNOWFLAKE-run.txt",
+    "status": "failed",
+    "check": "public assembly signature dependency closure",
+    "provider": "DataAccessProvider.Snowflake",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MSSQL (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "restore",
+    "provider": "DataAccessProvider.MSSQL",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MSSQL (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "build",
+    "provider": "DataAccessProvider.MSSQL",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MSSQL (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "run",
+    "provider": "DataAccessProvider.MSSQL",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MSSQL (see consumer-matrix.json)",
+    "status": "failed",
+    "check": "registration",
+    "provider": "DataAccessProvider.MSSQL",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MSSQL-run.txt",
+    "status": "failed",
+    "check": "public assembly signature dependency closure",
+    "provider": "DataAccessProvider.MSSQL",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MySql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "restore",
+    "provider": "DataAccessProvider.MySql",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MySql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "build",
+    "provider": "DataAccessProvider.MySql",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MySql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "run",
+    "provider": "DataAccessProvider.MySql",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MySql (see consumer-matrix.json)",
+    "status": "failed",
+    "check": "registration",
+    "provider": "DataAccessProvider.MySql",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MYSQL-run.txt",
+    "status": "failed",
+    "check": "public assembly signature dependency closure",
+    "provider": "DataAccessProvider.MySql",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-PostgreSql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "restore",
+    "provider": "DataAccessProvider.PostgreSql",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-PostgreSql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "build",
+    "provider": "DataAccessProvider.PostgreSql",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-PostgreSql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "run",
+    "provider": "DataAccessProvider.PostgreSql",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-PostgreSql (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "registration",
+    "provider": "DataAccessProvider.PostgreSql",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-POSTGRES-run.txt",
+    "status": "passed",
+    "check": "public assembly signature dependency closure",
+    "provider": "DataAccessProvider.PostgreSql",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MongoDB (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "restore",
+    "provider": "DataAccessProvider.MongoDB",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MongoDB (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "build",
+    "provider": "DataAccessProvider.MongoDB",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MongoDB (see consumer-matrix.json)",
+    "status": "passed",
+    "check": "run",
+    "provider": "DataAccessProvider.MongoDB",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MongoDB (see consumer-matrix.json)",
+    "status": "failed",
+    "check": "registration",
+    "provider": "DataAccessProvider.MongoDB",
+    "area": "package"
+  },
+  {
+    "origin": "published",
+    "artifact": "published-MONGO-run.txt",
+    "status": "failed",
+    "check": "public assembly signature dependency closure",
+    "provider": "DataAccessProvider.MongoDB",
+    "area": "package"
+  },
+  {
+    "artifact": "integration-MONGO-results.json",
+    "provider": "MONGO",
+    "check": "health",
+    "error": null,
+    "observation": true,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MONGO-results.json",
+    "provider": "MONGO",
+    "check": "insertTwoDocuments",
+    "error": null,
+    "observation": 2,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MONGO-results.json",
+    "provider": "MONGO",
+    "check": "untypedRead",
+    "error": "ArgumentNullException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MONGO-results.json",
+    "provider": "MONGO",
+    "check": "untypedReadWithProjectionAndSort",
+    "error": null,
+    "observation": [
+      {
+        "_id": 1,
+        "Name": "one"
+      },
+      {
+        "_id": 2,
+        "Name": "two"
+      }
+    ],
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MONGO-results.json",
+    "provider": "MONGO",
+    "check": "scalarCount",
+    "error": null,
+    "observation": 2,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MONGO-results.json",
+    "provider": "MONGO",
+    "check": "typedReadFromUntypedParams",
+    "error": "ArgumentNullException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MONGO-results.json",
+    "provider": "MONGO",
+    "check": "typedReadWithProjectionAndSort",
+    "error": "InvalidCastException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MONGO-results.json",
+    "provider": "MONGO",
+    "check": "typedReadFromTypedParams",
+    "error": "ArgumentNullException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MONGO-results.json",
+    "provider": "MONGO",
+    "check": "typedFilterDropped",
+    "error": null,
+    "observation": true,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "health",
+    "error": null,
+    "observation": true,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "parameterizedInsert",
+    "error": null,
+    "observation": 1,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "scalarCount",
+    "error": null,
+    "observation": 1,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "untypedRead",
+    "error": null,
+    "observation": {
+      "Id": 1,
+      "Name": "'; DROP TABLE probe; --"
+    },
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "typedRead",
+    "error": null,
+    "observation": [
+      {
+        "Id": 1,
+        "Name": "'; DROP TABLE probe; --"
+      }
+    ],
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "reusedTypedEmptyRead",
+    "error": null,
+    "observation": [
+      {
+        "Id": 1,
+        "Name": "'; DROP TABLE probe; --"
+      }
+    ],
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "explicitTypedOverload",
+    "error": "ArgumentException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "typedSourceInterfaceOverload",
+    "error": "InvalidCastException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "transactionCommit",
+    "error": null,
+    "observation": 1,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "transactionRollback",
+    "error": null,
+    "observation": 0,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "transactionEscapedExecutor",
+    "error": null,
+    "observation": "rejected",
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "transactionCancellation",
+    "error": null,
+    "observation": 0,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "inFlightTransactionCommandCancellation",
+    "error": null,
+    "observation": {
+      "outcome": "SqlException with requested cancellation",
+      "driverMessage": "A severe error occurred on the current command.  The results, if any, should be discarded.\r\nOperation cancelled by user.",
+      "cancellationRequested": true,
+      "elapsedMs": 229.3666,
+      "healthAfter": true
+    },
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "storedProcedureOutput",
+    "error": null,
+    "observation": [
+      {
+        "ParameterName": "@out",
+        "DbType": 24,
+        "Value": 0,
+        "Direction": 1,
+        "Size": -1
+      },
+      {
+        "ParameterName": "@return",
+        "DbType": 24,
+        "Value": 0,
+        "Direction": 3,
+        "Size": -1
+      }
+    ],
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "documentedSelectDefault",
+    "error": "SqlException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "multipleResultSets",
+    "error": null,
+    "observation": {
+      "0": [
+        {
+          "Id": 1
+        }
+      ],
+      "1": [
+        {
+          "Id": 2
+        }
+      ]
+    },
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "duplicateColumns",
+    "error": null,
+    "observation": {
+      "Id": 2
+    },
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "mappingErrorDisclosure",
+    "error": "InvalidOperationException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MSSQL-results.json",
+    "provider": "MSSQL",
+    "check": "callerOwnsGetConnection",
+    "error": null,
+    "observation": "Open",
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "health",
+    "error": null,
+    "observation": true,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "parameterizedInsert",
+    "error": null,
+    "observation": 1,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "scalarCount",
+    "error": null,
+    "observation": 1,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "untypedRead",
+    "error": null,
+    "observation": {
+      "Id": 1,
+      "Name": "'; DROP TABLE probe; --"
+    },
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "typedRead",
+    "error": null,
+    "observation": [
+      {
+        "Id": 1,
+        "Name": "'; DROP TABLE probe; --"
+      }
+    ],
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "reusedTypedEmptyRead",
+    "error": null,
+    "observation": [
+      {
+        "Id": 1,
+        "Name": "'; DROP TABLE probe; --"
+      }
+    ],
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "explicitTypedOverload",
+    "error": "ArgumentException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "typedSourceInterfaceOverload",
+    "error": "InvalidCastException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "transactionCommit",
+    "error": null,
+    "observation": 1,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "transactionRollback",
+    "error": null,
+    "observation": 0,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "transactionEscapedExecutor",
+    "error": null,
+    "observation": "rejected",
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "transactionCancellation",
+    "error": null,
+    "observation": 0,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "inFlightTransactionCommandCancellation",
+    "error": null,
+    "observation": {
+      "outcome": "OperationCanceledException",
+      "elapsedMs": 242.3586,
+      "healthAfter": true
+    },
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "storedProcedureOutput",
+    "error": null,
+    "observation": [
+      {
+        "ParameterName": "o",
+        "DbType": 24,
+        "Value": 0,
+        "Direction": 1,
+        "Size": -1
+      }
+    ],
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "multipleResultSets",
+    "error": null,
+    "observation": {
+      "0": [
+        {
+          "Id": 1
+        }
+      ],
+      "1": [
+        {
+          "Id": 2
+        }
+      ]
+    },
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "duplicateColumns",
+    "error": null,
+    "observation": {
+      "Id": 2
+    },
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "mappingErrorDisclosure",
+    "error": "InvalidOperationException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-MYSQL-results.json",
+    "provider": "MYSQL",
+    "check": "callerOwnsGetConnection",
+    "error": null,
+    "observation": "Open",
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-ORACLE-results.json",
+    "provider": "ORACLE",
+    "check": "health",
+    "error": null,
+    "observation": true,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-ORACLE-results.json",
+    "provider": "ORACLE",
+    "check": "parameterizedInsert",
+    "error": "ArgumentOutOfRangeException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-ORACLE-results.json",
+    "provider": "ORACLE",
+    "check": "parameterizedInsertWithExplicitSizes",
+    "error": null,
+    "observation": 1,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-ORACLE-results.json",
+    "provider": "ORACLE",
+    "check": "scalarCount",
+    "error": null,
+    "observation": 1,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-ORACLE-results.json",
+    "provider": "ORACLE",
+    "check": "untypedRead",
+    "error": null,
+    "observation": {
+      "ID": 1,
+      "NAME": "'; DROP TABLE probe; --"
+    },
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-ORACLE-results.json",
+    "provider": "ORACLE",
+    "check": "typedRead",
+    "error": null,
+    "observation": [
+      {
+        "Id": 1,
+        "Name": "'; DROP TABLE probe; --"
+      }
+    ],
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-ORACLE-results.json",
+    "provider": "ORACLE",
+    "check": "reusedTypedEmptyRead",
+    "error": null,
+    "observation": [
+      {
+        "Id": 1,
+        "Name": "'; DROP TABLE probe; --"
+      }
+    ],
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-ORACLE-results.json",
+    "provider": "ORACLE",
+    "check": "explicitTypedOverload",
+    "error": "ArgumentException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-ORACLE-results.json",
+    "provider": "ORACLE",
+    "check": "typedSourceInterfaceOverload",
+    "error": "InvalidCastException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-ORACLE-results.json",
+    "provider": "ORACLE",
+    "check": "anonymousBlockOutput",
+    "error": "ArgumentOutOfRangeException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-ORACLE-results.json",
+    "provider": "ORACLE",
+    "check": "anonymousBlockOutputWithExplicitSize",
+    "error": null,
+    "observation": [
+      {
+        "ParameterName": "out",
+        "DbType": 24,
+        "Value": 0,
+        "Direction": 1,
+        "Size": 0
+      }
+    ],
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "health",
+    "error": null,
+    "observation": true,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "parameterizedInsert",
+    "error": null,
+    "observation": 1,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "scalarCount",
+    "error": null,
+    "observation": 1,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "untypedRead",
+    "error": null,
+    "observation": {
+      "id": 1,
+      "name": "'; DROP TABLE probe; --"
+    },
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "typedRead",
+    "error": null,
+    "observation": [
+      {
+        "Id": 1,
+        "Name": "'; DROP TABLE probe; --"
+      }
+    ],
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "reusedTypedEmptyRead",
+    "error": null,
+    "observation": [
+      {
+        "Id": 1,
+        "Name": "'; DROP TABLE probe; --"
+      }
+    ],
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "explicitTypedOverload",
+    "error": "ArgumentException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "typedSourceInterfaceOverload",
+    "error": "InvalidCastException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "transactionCommit",
+    "error": null,
+    "observation": 1,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "transactionRollback",
+    "error": null,
+    "observation": 0,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "transactionEscapedExecutor",
+    "error": null,
+    "observation": "rejected",
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "transactionCancellation",
+    "error": null,
+    "observation": 0,
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "inFlightTransactionCommandCancellation",
+    "error": null,
+    "observation": {
+      "outcome": "OperationCanceledException",
+      "elapsedMs": 250.8035,
+      "healthAfter": true
+    },
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "storedProcedureServerOutput",
+    "error": null,
+    "observation": {
+      "o": 42
+    },
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "storedProcedureOutput",
+    "error": null,
+    "observation": [
+      {
+        "ParameterName": "o",
+        "DbType": 24,
+        "Value": 0,
+        "Direction": 2,
+        "Size": -1
+      }
+    ],
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "multipleResultSets",
+    "error": null,
+    "observation": {
+      "0": [
+        {
+          "id": 1
+        }
+      ],
+      "1": [
+        {
+          "id": 2
+        }
+      ]
+    },
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "duplicateColumns",
+    "error": null,
+    "observation": {
+      "id": 2
+    },
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "mappingErrorDisclosure",
+    "error": "InvalidOperationException",
+    "observation": null,
+    "area": "database",
+    "status": "failed",
+    "origin": "fresh local package"
+  },
+  {
+    "artifact": "integration-POSTGRES-results.json",
+    "provider": "POSTGRES",
+    "check": "callerOwnsGetConnection",
+    "error": null,
+    "observation": "Open",
+    "area": "database",
+    "status": "passed",
+    "origin": "fresh local package"
+  },
+  {
+    "reason": "No available test account or credentials",
+    "provider": "SNOWFLAKE",
+    "area": "database",
+    "check": "account-dependent integration",
+    "status": "blocked"
+  },
+  {
+    "origin": "published-minimum",
+    "artifact": "published-minimum-MYSQL-restore.txt",
+    "status": "passed",
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "check": "restore",
+    "provider": "MYSQL",
+    "area": "package"
+  },
+  {
+    "origin": "published-minimum",
+    "artifact": "published-minimum-MYSQL-build.txt",
+    "status": "passed",
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "check": "build",
+    "provider": "MYSQL",
+    "area": "package"
+  },
+  {
+    "origin": "published-minimum",
+    "artifact": "published-minimum-MYSQL-run.txt",
+    "status": "passed",
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "check": "run",
+    "provider": "MYSQL",
+    "area": "package"
+  },
+  {
+    "origin": "published-minimum",
+    "artifact": "published-minimum-MYSQL-registration.txt",
+    "status": "failed",
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "check": "registration",
+    "provider": "MYSQL",
+    "area": "package"
+  },
+  {
+    "origin": "published-minimum",
+    "artifact": "published-minimum-MYSQL-run.txt",
+    "status": "failed",
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "check": "public assembly signature dependency closure",
+    "provider": "MYSQL",
+    "area": "package"
+  },
+  {
+    "origin": "published-minimum",
+    "artifact": "published-minimum-MONGO-restore.txt",
+    "status": "passed",
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "check": "restore",
+    "provider": "MONGO",
+    "area": "package"
+  },
+  {
+    "origin": "published-minimum",
+    "artifact": "published-minimum-MONGO-build.txt",
+    "status": "passed",
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "check": "build",
+    "provider": "MONGO",
+    "area": "package"
+  },
+  {
+    "origin": "published-minimum",
+    "artifact": "published-minimum-MONGO-run.txt",
+    "status": "passed",
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "check": "run",
+    "provider": "MONGO",
+    "area": "package"
+  },
+  {
+    "origin": "published-minimum",
+    "artifact": "published-minimum-MONGO-registration.txt",
+    "status": "failed",
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "check": "registration",
+    "provider": "MONGO",
+    "area": "package"
+  },
+  {
+    "origin": "published-minimum",
+    "artifact": "published-minimum-MONGO-run.txt",
+    "status": "failed",
+    "resolvedCore": [
+      "DataAccessProvider.Core/1.3.6"
+    ],
+    "check": "public assembly signature dependency closure",
+    "provider": "MONGO",
+    "area": "package"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 89,
+    "status": "failed",
+    "check": "README-md-fence-1",
+    "source": "README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 119,
+    "status": "passed",
+    "check": "README-md-fence-3",
+    "source": "README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 160,
+    "status": "not applicable",
+    "check": "README-md-fence-4",
+    "source": "README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 174,
+    "status": "passed",
+    "check": "README-md-fence-5",
+    "source": "README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 210,
+    "status": "passed",
+    "check": "README-md-fence-6",
+    "source": "README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 220,
+    "status": "passed",
+    "check": "README-md-fence-7",
+    "source": "README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 258,
+    "status": "passed",
+    "check": "README-md-fence-8",
+    "source": "README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 268,
+    "status": "passed",
+    "check": "README-md-fence-9",
+    "source": "README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 295,
+    "status": "failed",
+    "check": "README-md-fence-10",
+    "source": "README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 144,
+    "status": "failed",
+    "check": "DataAccessProvider-Core-README-md-fence-3",
+    "source": "DataAccessProvider.Core/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 160,
+    "status": "failed",
+    "check": "DataAccessProvider-Core-README-md-fence-4",
+    "source": "DataAccessProvider.Core/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 173,
+    "status": "passed",
+    "check": "DataAccessProvider-Core-README-md-fence-5",
+    "source": "DataAccessProvider.Core/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 207,
+    "status": "not applicable",
+    "check": "DataAccessProvider-Core-README-md-fence-6",
+    "source": "DataAccessProvider.Core/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 223,
+    "status": "passed",
+    "check": "DataAccessProvider-Core-README-md-fence-7",
+    "source": "DataAccessProvider.Core/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 233,
+    "status": "passed",
+    "check": "DataAccessProvider-Core-README-md-fence-8",
+    "source": "DataAccessProvider.Core/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 271,
+    "status": "passed",
+    "check": "DataAccessProvider-Core-README-md-fence-9",
+    "source": "DataAccessProvider.Core/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 281,
+    "status": "passed",
+    "check": "DataAccessProvider-Core-README-md-fence-10",
+    "source": "DataAccessProvider.Core/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 308,
+    "status": "failed",
+    "check": "DataAccessProvider-Core-README-md-fence-11",
+    "source": "DataAccessProvider.Core/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 78,
+    "status": "failed",
+    "check": "DataAccessProvider-MSSQL-README-md-fence-1",
+    "source": "DataAccessProvider.MSSQL/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 107,
+    "status": "passed",
+    "check": "DataAccessProvider-MSSQL-README-md-fence-3",
+    "source": "DataAccessProvider.MSSQL/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 127,
+    "status": "not applicable",
+    "check": "DataAccessProvider-MSSQL-README-md-fence-4",
+    "source": "DataAccessProvider.MSSQL/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 137,
+    "status": "passed",
+    "check": "DataAccessProvider-MSSQL-README-md-fence-5",
+    "source": "DataAccessProvider.MSSQL/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 164,
+    "status": "failed",
+    "check": "DataAccessProvider-MSSQL-README-md-fence-6",
+    "source": "DataAccessProvider.MSSQL/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 78,
+    "status": "failed",
+    "check": "DataAccessProvider-MySql-README-md-fence-1",
+    "source": "DataAccessProvider.MySql/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 109,
+    "status": "passed",
+    "check": "DataAccessProvider-MySql-README-md-fence-3",
+    "source": "DataAccessProvider.MySql/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 129,
+    "status": "not applicable",
+    "check": "DataAccessProvider-MySql-README-md-fence-4",
+    "source": "DataAccessProvider.MySql/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 139,
+    "status": "passed",
+    "check": "DataAccessProvider-MySql-README-md-fence-5",
+    "source": "DataAccessProvider.MySql/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 166,
+    "status": "failed",
+    "check": "DataAccessProvider-MySql-README-md-fence-6",
+    "source": "DataAccessProvider.MySql/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 25,
+    "status": "passed",
+    "check": "DataAccessProvider-Postgres-README-md-fence-2",
+    "source": "DataAccessProvider.Postgres/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 36,
+    "status": "passed",
+    "check": "DataAccessProvider-Postgres-README-md-fence-3",
+    "source": "DataAccessProvider.Postgres/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 42,
+    "status": "failed",
+    "check": "DataAccessProvider-Postgres-README-md-fence-4",
+    "source": "DataAccessProvider.Postgres/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 59,
+    "status": "failed",
+    "check": "DataAccessProvider-Postgres-README-md-fence-5",
+    "source": "DataAccessProvider.Postgres/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 74,
+    "status": "passed",
+    "check": "DataAccessProvider-Postgres-README-md-fence-6",
+    "source": "DataAccessProvider.Postgres/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 34,
+    "status": "passed",
+    "check": "DataAccessProvider-MongoDB-README-md-fence-2",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 49,
+    "status": "passed",
+    "check": "DataAccessProvider-MongoDB-README-md-fence-3",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 79,
+    "status": "passed",
+    "check": "DataAccessProvider-MongoDB-README-md-fence-4",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 105,
+    "status": "passed",
+    "check": "DataAccessProvider-MongoDB-README-md-fence-5",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 129,
+    "status": "passed",
+    "check": "DataAccessProvider-MongoDB-README-md-fence-6",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 151,
+    "status": "passed",
+    "check": "DataAccessProvider-MongoDB-README-md-fence-7",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 163,
+    "status": "passed",
+    "check": "DataAccessProvider-MongoDB-README-md-fence-8",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "area": "documentation"
+  },
+  {
+    "artifact": "all-documentation-checks.json",
+    "line": 183,
+    "status": "passed",
+    "check": "DataAccessProvider-MongoDB-README-md-fence-9",
+    "source": "DataAccessProvider.MongoDB/README.md",
+    "area": "documentation"
+  }
+]

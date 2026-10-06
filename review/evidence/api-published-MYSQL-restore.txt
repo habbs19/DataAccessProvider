@@ -1,0 +1,6 @@
+dotnet restore C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\api\published-MYSQL\Consumer.csproj --configfile C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\api\published-MYSQL\NuGet.Config --packages C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\published-consumer-cache --verbosity minimal
+ExitCode: 0
+  Determining projects to restore...
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\api\published-MYSQL\Consumer.csproj : warning NU1603: DataAccessProvider.MySql 1.3.4 depends on DataAccessProvider.Core (>= 1.3.6) but DataAccessProvider.Core 1.3.6 was not found. DataAccessProvider.Core 1.3.7 was resolved instead.
+  Restored C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\api\published-MYSQL\Consumer.csproj (in 714 ms).
+

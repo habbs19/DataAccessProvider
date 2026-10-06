@@ -1,0 +1,32 @@
+[
+  {
+    "build": 0,
+    "run": 0,
+    "restore": 0,
+    "symbol": "MSSQL"
+  },
+  {
+    "build": 0,
+    "run": 0,
+    "restore": 0,
+    "symbol": "MYSQL"
+  },
+  {
+    "build": 0,
+    "run": 0,
+    "restore": 0,
+    "symbol": "MONGO"
+  },
+  {
+    "build": 0,
+    "run": 0,
+    "restore": 0,
+    "symbol": "ORACLE"
+  },
+  {
+    "build": 0,
+    "run": 0,
+    "restore": 0,
+    "symbol": "SNOWFLAKE"
+  }
+]

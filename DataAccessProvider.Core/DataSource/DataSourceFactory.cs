@@ -1,145 +1,75 @@
-﻿using DataAccessProvider.Core.Abstractions;
+using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
+using DataAccessProvider.Core.Abstractions;
 using DataAccessProvider.Core.DataSource.Params;
 using DataAccessProvider.Core.DataSource.Source;
-using DataAccessProvider.Core.Extensions;
 using DataAccessProvider.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DataAccessProvider.Core.DataSource;
 
+public sealed record DataSourceRegistration(Type Parameters, Type Source);
+public sealed class DataSourceRegistry
+{
+    private readonly ConcurrentDictionary<Type, Type> _types = new();
+    public DataSourceRegistry(IEnumerable<DataSourceRegistration> registrations)
+    {
+        _types[typeof(JsonFileSourceParams)] = typeof(JsonFileSource);
+        _types[typeof(JsonFileSourceParams<>)] = typeof(JsonFileSource);
+        _types[typeof(StaticCodeParams)] = typeof(StaticCodeSource);
+        _types[typeof(StaticCodeParams<>)] = typeof(StaticCodeSource);
+        var explicitMappings = new Dictionary<Type, Type>();
+        foreach (var registration in registrations)
+        {
+            if (explicitMappings.TryGetValue(registration.Parameters, out var existing) && existing != registration.Source)
+                throw new InvalidOperationException($"Conflicting source mapping for {registration.Parameters.FullName}.");
+            explicitMappings[registration.Parameters] = registration.Source;
+            _types[registration.Parameters] = registration.Source;
+        }
+    }
+    public IReadOnlyDictionary<Type, Type> Snapshot => new ReadOnlyDictionary<Type, Type>(new Dictionary<Type, Type>(_types));
+    internal void Register(Type parameters, Type source) => _types[parameters.IsGenericType ? parameters.GetGenericTypeDefinition() : parameters] = source;
+    internal bool TryGet(Type type, out Type source) => _types.TryGetValue(type, out source!) || (type.IsGenericType && _types.TryGetValue(type.GetGenericTypeDefinition(), out source!));
+}
+[Obsolete("Migrate to the 1.4 client, command and result API before 2.0; see docs/migration.md.", DiagnosticId = "DAP001")]
 public class DataSourceFactory : IDataSourceFactory
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly Dictionary<string, Type> _dataSourceMappings = new();
-
-    public DataSourceFactory(IServiceProvider serviceProvider)
+    private readonly IServiceProvider _provider;
+    private readonly DataSourceRegistry _registry;
+    public DataSourceFactory(IServiceProvider serviceProvider) : this(serviceProvider, new DataSourceRegistry([])) { }
+    public DataSourceFactory(IServiceProvider serviceProvider, DataSourceRegistry registry) { _provider = serviceProvider; _registry = registry; }
+    public Dictionary<string, Type> GetRegisteredDataSources()
     {
-        _serviceProvider = serviceProvider;
-
-        // Default data source mappings
-        _dataSourceMappings.Add(nameof(JsonFileSourceParams), typeof(JsonFileSource));
-        _dataSourceMappings.Add(nameof(StaticCodeParams), typeof(StaticCodeSource));
+        var result = new Dictionary<string, Type>();
+        foreach (var group in _registry.Snapshot.GroupBy(x => x.Key.Name))
+            foreach (var entry in group) result[group.Count() == 1 ? entry.Key.Name : entry.Key.FullName!] = entry.Value;
+        return result;
     }
-
-    public Dictionary<string, Type> GetRegisteredDataSources() => _dataSourceMappings;
-
-    public void RegisterDataSource<TParams, TSource>()
-     where TParams : BaseDataSourceParams
-     where TSource : IDataSource
-    {
-        // Register the non-generic type
-        _dataSourceMappings[typeof(TParams).Name] = typeof(TSource);
-
-        // Check if TParams is a generic type definition and register the generic type
-        if (typeof(TParams).IsGenericTypeDefinition)
-        {
-            var name = typeof(TParams).GetGenericTypeDefinition().GetCleanGenericTypeName();
-            _dataSourceMappings[name] = typeof(TSource);
-        }
-        else if (typeof(TParams).IsGenericType)
-        {
-            var name = typeof(TParams).GetGenericTypeDefinition().GetCleanGenericTypeName();
-            _dataSourceMappings[name] = typeof(TSource);
-        }
-    }
-
-    public IDataSource CreateDataSource(BaseDataSourceParams baseDataSourceParams)
-    {
-        var paramType = baseDataSourceParams.GetType();
-
-        // Check if there is a registered mapping for the given parameter type
-        if (TryResolveDataSourceType(paramType, out var dataSourceType))
-        {
-            using var scope = _serviceProvider.CreateScope();
-            var dataSource = scope.ServiceProvider.GetService(dataSourceType);
-            if (dataSource == null)
-            {
-                throw new InvalidOperationException($"{dataSourceType.Name} not found in service provider");
-            }
-            return (IDataSource)dataSource;
-        }
-
-        throw new ArgumentException($"Unsupported data source type: {paramType.Name}");
-    }
-
-    public IDataSource CreateDataSource<TValue>(BaseDataSourceParams<TValue> baseDataSourceParams) where TValue : class
-    {
-        // Get the actual runtime type
-        var type = baseDataSourceParams.GetType();
-
-        // Check if there is a registered mapping for the given parameter type
-        if (TryResolveDataSourceType(type, out var dataSourceType))
-        {
-            using var scope = _serviceProvider.CreateScope();
-            var dataSource = scope.ServiceProvider.GetService(dataSourceType);
-            if (dataSource == null)
-            {
-                throw new InvalidOperationException($"{dataSourceType.Name} not found in service provider");
-            }
-            return (IDataSource)dataSource;
-        }
-        throw new ArgumentException($"Unsupported data source type: {type.Name}");
-
-    }
-
+    public void RegisterDataSource<TParams, [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)] TSource>() where TParams : BaseDataSourceParams where TSource : IDataSource
+        => _registry.Register(typeof(TParams), typeof(TSource));
+    public IDataSource CreateDataSource(BaseDataSourceParams p) => Resolve<IDataSource>(p.GetType());
+    public IDataSource CreateDataSource<TValue>(BaseDataSourceParams<TValue> p) where TValue : class => Resolve<IDataSource>(p.GetType());
+    IDataSource<TParams> IDataSourceFactory.CreateDataSource<TParams>() => Resolve<IDataSource<TParams>>(typeof(TParams));
     public IBaseDataSourceParams CreateParams<IBaseDataSourceParams>() where IBaseDataSourceParams : BaseDataSourceParams
     {
-        throw new NotImplementedException();
+        var ctor = typeof(IBaseDataSourceParams).GetConstructor(Type.EmptyTypes);
+        if (typeof(IBaseDataSourceParams).IsAbstract || ctor is null) throw new InvalidOperationException($"{typeof(IBaseDataSourceParams).Name} requires a public parameterless constructor.");
+        return (IBaseDataSourceParams)ctor.Invoke(null);
     }
-
-    IDataSource<TBaseDataSourceParams> IDataSourceFactory.CreateDataSource<TBaseDataSourceParams>()
+    private T Resolve<T>(Type parameters)
     {
-        var paramType = typeof(TBaseDataSourceParams);
-
-        // Check if there is a registered mapping for the given parameter type
-        if (TryResolveDataSourceType(paramType, out var dataSourceType))
+        if (!_registry.TryGet(parameters, out var source))
         {
-            using var scope = _serviceProvider.CreateScope();
-            var dataSource = scope.ServiceProvider.GetService(dataSourceType);
-            if (dataSource == null)
+            var expected = parameters.Name.Split('`')[0];
+            if (expected.EndsWith("Params", StringComparison.Ordinal)) expected = expected[..^6];
+            var matches = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a =>
             {
-                throw new InvalidOperationException($"{dataSourceType.Name} not found in service provider");
-            }
-            return (IDataSource<TBaseDataSourceParams>)dataSource;
+                try { return a.GetTypes(); } catch (System.Reflection.ReflectionTypeLoadException ex) { return ex.Types.OfType<Type>().ToArray(); }
+            }).Where(t => t.Name == expected && typeof(IDataSource).IsAssignableFrom(t) && !t.IsAbstract).ToArray();
+            if (matches.Length != 1) throw new ArgumentException($"Unsupported data source type: {parameters.Name}; register an explicit type mapping.");
+            source = matches[0]; _registry.Register(parameters, source);
         }
-
-        throw new ArgumentException($"Unsupported data source type: {paramType.Name}");
-    }
-
-    private bool TryResolveDataSourceType(Type paramType, out Type dataSourceType)
-    {
-        var cleanName = paramType.GetCleanGenericTypeName();
-        var name = paramType.Name;
-        var genericName = paramType.GetGenericTypeName();
-
-        if (_dataSourceMappings.TryGetValue(cleanName, out dataSourceType)
-            || _dataSourceMappings.TryGetValue(name, out dataSourceType)
-            || _dataSourceMappings.TryGetValue(genericName, out dataSourceType))
-        {
-            return true;
-        }
-
-        // Fallback: map by convention (e.g. MSSQLSourceParams -> MSSQLSource) when registered in DI.
-        if (cleanName.EndsWith("Params", StringComparison.Ordinal))
-        {
-            var expectedSourceName = cleanName[..^"Params".Length];
-            var candidate = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypes())
-                .FirstOrDefault(t =>
-                    t.Name == expectedSourceName
-                    && typeof(IDataSource).IsAssignableFrom(t)
-                    && !t.IsInterface
-                    && !t.IsAbstract);
-
-            if (candidate is not null)
-            {
-                _dataSourceMappings[cleanName] = candidate;
-                dataSourceType = candidate;
-                return true;
-            }
-        }
-
-        dataSourceType = default!;
-        return false;
+        // The injected provider belongs to the caller's scope; this factory never creates or disposes that scope.
+        return (T)_provider.GetRequiredService(source);
     }
 }

@@ -1,0 +1,8 @@
+dotnet restore C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-MONGO\Consumer.csproj --configfile C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-MONGO\NuGet.Config --packages C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\published-consumer-cache --force --verbosity minimal
+ExitCode: 0
+  Determining projects to restore...
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-MONGO\Consumer.csproj : warning NU1603: DataAccessProvider.MongoDB 1.3.3 depends on DataAccessProvider.Core (>= 1.3.6) but DataAccessProvider.Core 1.3.6 was not found. DataAccessProvider.Core 1.3.7 was resolved instead.
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-MONGO\Consumer.csproj : warning NU1902: Package 'SharpCompress' 0.30.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-6c8g-7p36-r338
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-MONGO\Consumer.csproj : warning NU1903: Package 'Snappier' 1.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-pggp-6c3x-2xmx
+  Restored C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\published-MONGO\Consumer.csproj (in 2.36 sec).
+

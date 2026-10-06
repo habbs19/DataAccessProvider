@@ -37,7 +37,7 @@ public class Test_ResilienceWithDataAccess
 
                 if (callSequence <= 2)
                 {
-                    throw new InvalidOperationException($"Simulated transient failure #{callSequence}");
+                    throw new SimulatedTransientFailure();
                 }
 
                 // Simulate successful result
@@ -69,4 +69,5 @@ public class Test_ResilienceWithDataAccess
             ds => ds.ExecuteNonQueryAsync(It.IsAny<MSSQLSourceParams>()),
             Times.Exactly(3));
     }
+    private sealed class SimulatedTransientFailure : System.Data.Common.DbException { public override bool IsTransient => true; }
 }

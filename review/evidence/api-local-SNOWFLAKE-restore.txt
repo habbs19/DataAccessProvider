@@ -1,0 +1,5 @@
+dotnet restore C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\api\local-SNOWFLAKE\Consumer.csproj --configfile C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\api\local-SNOWFLAKE\NuGet.Config --packages C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\local-consumer-cache --verbosity minimal
+ExitCode: 0
+  Determining projects to restore...
+  Restored C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\api\local-SNOWFLAKE\Consumer.csproj (in 1.51 sec).
+

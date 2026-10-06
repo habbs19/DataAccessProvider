@@ -1,0 +1,27 @@
+dotnet run --project C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\consumers\local-MONGO\Consumer.csproj --no-build --no-restore
+ExitCode: 0
+[
+  {
+    "name": "construction",
+    "detail": "DataAccessProvider.MongoDB.MongoDBSource"
+  },
+  {
+    "name": "coreAssembly",
+    "detail": "1.3.7.0"
+  },
+  {
+    "name": "publicApiError",
+    "detail": {
+      "assembly": "DataAccessProvider.MongoDB",
+      "error": "System.IO.FileNotFoundException: Could not load file or assembly \u0027Microsoft.Extensions.DependencyInjection.Abstractions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60\u0027. The system cannot find the file specified.\r\nFile name: \u0027Microsoft.Extensions.DependencyInjection.Abstractions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60\u0027\r\n   at System.Signature..ctor(IRuntimeMethodInfo methodHandle, RuntimeType declaringType)\r\n   at System.Reflection.RuntimeMethodInfo.\u003Cget_Signature\u003Eg__LazyCreateSignature|25_0()\r\n   at System.Reflection.RuntimeMethodInfo.ToString()\r\n   at Program.\u003C\u003Ec.\u003C\u003CMain\u003E$\u003Eb__0_5(MethodInfo m) in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-MONGO\\Program.cs:line 53\r\n   at System.Linq.Enumerable.ArrayWhereSelectIterator\u00602.ToArray(ReadOnlySpan\u00601 source, Func\u00602 predicate, Func\u00602 selector)\r\n   at System.Linq.Enumerable.ArrayWhereSelectIterator\u00602.ToArray()\r\n   at System.Linq.Enumerable.OrderedIterator\u00601.ToArray()\r\n   at Program.\u003C\u003Ec.\u003C\u003CMain\u003E$\u003Eb__0_2(Type t) in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-MONGO\\Program.cs:line 50\r\n   at System.Linq.Enumerable.IteratorSelectIterator\u00602.Fill(Iterator\u00601 source, Span\u00601 results, Func\u00602 func)\r\n   at System.Linq.Enumerable.IteratorSelectIterator\u00602.PreallocatingToArray(Int32 count)\r\n   at System.Linq.Enumerable.IteratorSelectIterator\u00602.ToArray()\r\n   at Program.\u003CMain\u003E$(String[] args) in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-MONGO\\Program.cs:line 50"
+    }
+  },
+  {
+    "name": "publicApiError",
+    "detail": {
+      "assembly": "DataAccessProvider.Core",
+      "error": "System.IO.FileNotFoundException: Could not load file or assembly \u0027Microsoft.Extensions.DependencyInjection.Abstractions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60\u0027. The system cannot find the file specified.\r\nFile name: \u0027Microsoft.Extensions.DependencyInjection.Abstractions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60\u0027\r\n   at System.Signature..ctor(IRuntimeMethodInfo methodHandle, RuntimeType declaringType)\r\n   at System.Reflection.RuntimeMethodInfo.\u003Cget_Signature\u003Eg__LazyCreateSignature|25_0()\r\n   at System.Reflection.RuntimeMethodInfo.ToString()\r\n   at Program.\u003C\u003Ec.\u003C\u003CMain\u003E$\u003Eb__0_5(MethodInfo m) in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-MONGO\\Program.cs:line 53\r\n   at System.Linq.Enumerable.ArrayWhereSelectIterator\u00602.ToArray(ReadOnlySpan\u00601 source, Func\u00602 predicate, Func\u00602 selector)\r\n   at System.Linq.Enumerable.ArrayWhereSelectIterator\u00602.ToArray()\r\n   at System.Linq.Enumerable.OrderedIterator\u00601.ToArray()\r\n   at Program.\u003C\u003Ec.\u003C\u003CMain\u003E$\u003Eb__0_2(Type t) in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-MONGO\\Program.cs:line 50\r\n   at System.Linq.Enumerable.IteratorSelectIterator\u00602.Fill(Iterator\u00601 source, Span\u00601 results, Func\u00602 func)\r\n   at System.Linq.Enumerable.IteratorSelectIterator\u00602.PreallocatingToArray(Int32 count)\r\n   at System.Linq.Enumerable.IteratorSelectIterator\u00602.ToArray()\r\n   at Program.\u003CMain\u003E$(String[] args) in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-MONGO\\Program.cs:line 50"
+    }
+  }
+]
+

@@ -1,0 +1,65 @@
+[
+  {
+    "restore": 0,
+    "run": -1,
+    "symbol": "POSTGRES",
+    "build": 1,
+    "name": "postgres-query-verbatim"
+  },
+  {
+    "restore": 0,
+    "run": -1,
+    "symbol": "POSTGRES",
+    "build": 1,
+    "name": "postgres-typed-verbatim"
+  },
+  {
+    "restore": 0,
+    "run": -1,
+    "symbol": "MSSQL",
+    "build": 1,
+    "name": "root-registration-verbatim"
+  },
+  {
+    "restore": 0,
+    "run": -1,
+    "symbol": "MSSQL",
+    "build": 1,
+    "name": "core-registration-verbatim"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "symbol": "MSSQL",
+    "build": 0,
+    "name": "hosted-registration-MSSQL"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "symbol": "MYSQL",
+    "build": 0,
+    "name": "hosted-registration-MYSQL"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "symbol": "POSTGRES",
+    "build": 0,
+    "name": "hosted-registration-POSTGRES"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "symbol": "MONGO",
+    "build": 0,
+    "name": "hosted-registration-MONGO"
+  },
+  {
+    "restore": 0,
+    "run": -1,
+    "symbol": "POSTGRES",
+    "build": 0,
+    "name": "postgres-corrected-query-and-transaction"
+  }
+]

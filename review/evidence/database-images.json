@@ -1,0 +1,52 @@
+[
+  {
+    "reference": "mcr.microsoft.com/mssql/server:2022-CU27-ubuntu-22.04",
+    "id": "sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+    "architecture": "amd64",
+    "os": "linux",
+    "repoDigests": [
+      "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090"
+    ],
+    "created": "2026-08-26T23:55:36.644529591Z"
+  },
+  {
+    "reference": "postgres:16-alpine",
+    "id": "sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+    "architecture": "amd64",
+    "os": "linux",
+    "repoDigests": [
+      "postgres@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea"
+    ],
+    "created": "2026-09-17T21:31:24.32976807Z"
+  },
+  {
+    "reference": "mysql:latest",
+    "id": "sha256:66aec17cd21a956029b83f083b813073859e8355dc1a00e55df6ba02f0e32345",
+    "architecture": "amd64",
+    "os": "linux",
+    "repoDigests": [
+      "mysql@sha256:66aec17cd21a956029b83f083b813073859e8355dc1a00e55df6ba02f0e32345"
+    ],
+    "created": "2026-07-27T22:08:24.079468627Z"
+  },
+  {
+    "reference": "mongo:8.0",
+    "id": "sha256:d0d926f94df099bff534b7ee5b5986458131a22489dfff8664509af0c1e2ca9c",
+    "architecture": "amd64",
+    "os": "linux",
+    "repoDigests": [
+      "mongo@sha256:d0d926f94df099bff534b7ee5b5986458131a22489dfff8664509af0c1e2ca9c"
+    ],
+    "created": "2026-10-02T01:32:02.070367839Z"
+  },
+  {
+    "reference": "container-registry.oracle.com/database/free:latest-lite",
+    "id": "sha256:cf540c3fa190d7cffad08c491652ac07fc70314e510f6b87890449517d565e94",
+    "architecture": "amd64",
+    "os": "linux",
+    "repoDigests": [
+      "container-registry.oracle.com/database/free@sha256:cf540c3fa190d7cffad08c491652ac07fc70314e510f6b87890449517d565e94"
+    ],
+    "created": "2026-07-05T22:24:10.901297197Z"
+  }
+]

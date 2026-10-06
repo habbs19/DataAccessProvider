@@ -1,0 +1,3 @@
+  Determining projects to restore...
+C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\historical-api\Consumer.csproj : warning NU1603: DataAccessProvider.MySql 1.3.4 depends on DataAccessProvider.Core (>= 1.3.6) but DataAccessProvider.Core 1.3.6 was not found. DataAccessProvider.Core 1.3.7 was resolved instead.
+  Restored C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\historical-api\Consumer.csproj (in 429 ms).

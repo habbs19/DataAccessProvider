@@ -1,0 +1,152 @@
+[
+  {
+    "name": "health",
+    "status": "completed",
+    "detail": true
+  },
+  {
+    "name": "parameterizedInsert",
+    "status": "completed",
+    "detail": 1
+  },
+  {
+    "name": "scalarCount",
+    "status": "completed",
+    "detail": 1
+  },
+  {
+    "name": "untypedRead",
+    "status": "completed",
+    "detail": {
+      "Id": 1,
+      "Name": "\u0027; DROP TABLE probe; --"
+    }
+  },
+  {
+    "name": "typedRead",
+    "status": "completed",
+    "detail": [
+      {
+        "Id": 1,
+        "Name": "\u0027; DROP TABLE probe; --"
+      }
+    ]
+  },
+  {
+    "name": "reusedTypedEmptyRead",
+    "status": "completed",
+    "detail": [
+      {
+        "Id": 1,
+        "Name": "\u0027; DROP TABLE probe; --"
+      }
+    ]
+  },
+  {
+    "name": "explicitTypedOverload",
+    "status": "exception",
+    "error": "ArgumentException",
+    "message": "Invalid source parameters type.",
+    "stack": "   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.ExecuteReader[TValue](BaseDataSourceParams params)\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.ExecuteReaderAsync[TValue,TBaseDataSourceParams](TBaseDataSourceParams params)\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eb__10\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\MSSQL\\Program.cs:line 98\r\n--- End of stack trace from previous location ---\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eg__Test|0\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\MSSQL\\Program.cs:line 37"
+  },
+  {
+    "name": "typedSourceInterfaceOverload",
+    "status": "exception",
+    "error": "InvalidCastException",
+    "message": "Unable to cast object of type \u0027DataAccessProvider.MSSQL.MSSQLSourceParams\u0027 to type \u0027DataAccessProvider.Core.Abstractions.BaseDataSourceParams\u00601[Row]\u0027.",
+    "stack": "   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.\u003C\u003Ec__DisplayClass1_0\u00601.\u003C\u003CExecuteReader\u003Eg__ExecuteCoreAsync|0\u003Ed.MoveNext()\r\n--- End of stack trace from previous location ---\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.ExecuteReader[TValue](BaseDataSourceParams params)\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource\u00601.DataAccessProvider.Core.Interfaces.IDataSource\u003CTDatabaseSourceParams\u003E.ExecuteReaderAsync[TValue](TDatabaseSourceParams params)\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eb__11\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\MSSQL\\Program.cs:line 99\r\n--- End of stack trace from previous location ---\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eg__Test|0\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\MSSQL\\Program.cs:line 37"
+  },
+  {
+    "name": "transactionCommit",
+    "status": "completed",
+    "detail": 1
+  },
+  {
+    "name": "transactionRollback",
+    "status": "completed",
+    "detail": 0
+  },
+  {
+    "name": "transactionEscapedExecutor",
+    "status": "completed",
+    "detail": "rejected"
+  },
+  {
+    "name": "transactionCancellation",
+    "status": "completed",
+    "detail": 0
+  },
+  {
+    "name": "inFlightTransactionCommandCancellation",
+    "status": "completed",
+    "detail": {
+      "outcome": "SqlException with requested cancellation",
+      "driverMessage": "A severe error occurred on the current command.  The results, if any, should be discarded.\r\nOperation cancelled by user.",
+      "cancellationRequested": true,
+      "elapsedMs": 229.3666,
+      "healthAfter": true
+    }
+  },
+  {
+    "name": "storedProcedureOutput",
+    "status": "completed",
+    "detail": [
+      {
+        "ParameterName": "@out",
+        "DbType": 24,
+        "Value": 0,
+        "Direction": 1,
+        "Size": -1
+      },
+      {
+        "ParameterName": "@return",
+        "DbType": 24,
+        "Value": 0,
+        "Direction": 3,
+        "Size": -1
+      }
+    ]
+  },
+  {
+    "name": "documentedSelectDefault",
+    "status": "exception",
+    "error": "SqlException",
+    "message": "Could not find stored procedure \u0027SELECT Id, Name FROM probe\u0027.",
+    "stack": "   at Microsoft.Data.SqlClient.SqlCommand.\u003C\u003Ec.\u003CExecuteDbDataReaderAsync\u003Eb__195_0(Task\u00601 result)\r\n   at System.Threading.Tasks.ContinuationResultTaskFromResultTask\u00602.InnerInvoke()\r\n   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)\r\n--- End of stack trace from previous location ---\r\n   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)\r\n   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task\u0026 currentTaskSlot, Thread threadPoolThread)\r\n--- End of stack trace from previous location ---\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.\u003C\u003Ec__DisplayClass0_0.\u003C\u003CExecuteReader\u003Eg__ExecuteCoreAsync|0\u003Ed.MoveNext()\r\n--- End of stack trace from previous location ---\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.ExecuteReader(BaseDataSourceParams params)\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource\u00601.ExecuteReaderAsync(TDatabaseSourceParams params)\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eb__18\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\MSSQL\\Program.cs:line 128\r\n--- End of stack trace from previous location ---\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eg__Test|0\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\MSSQL\\Program.cs:line 37"
+  },
+  {
+    "name": "multipleResultSets",
+    "status": "completed",
+    "detail": {
+      "0": [
+        {
+          "Id": 1
+        }
+      ],
+      "1": [
+        {
+          "Id": 2
+        }
+      ]
+    }
+  },
+  {
+    "name": "duplicateColumns",
+    "status": "completed",
+    "detail": {
+      "Id": 2
+    }
+  },
+  {
+    "name": "mappingErrorDisclosure",
+    "status": "exception",
+    "error": "InvalidOperationException",
+    "message": "Error setting property \u0027Id\u0027 on type \u0027Row\u0027 with value \u0027SECRET-SENTINEL\u0027 (String).",
+    "stack": "   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.GetPropertyValue[TValue](PropertyInfo property, Object value)\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.MaterializeAsync[TValue](DbDataReader reader, CancellationToken cancellationToken)\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.\u003C\u003Ec__DisplayClass22_0\u00601.\u003C\u003CExecuteReaderAsync\u003Eg__ExecuteCoreAsync|0\u003Ed.MoveNext()\r\n--- End of stack trace from previous location ---\r\n   at DataAccessProvider.Core.Abstractions.BaseDatabaseSource.ExecuteReaderAsync[TValue](BaseDataSourceParams\u00601 params)\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eb__21\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\MSSQL\\Program.cs:line 140\r\n--- End of stack trace from previous location ---\r\n   at Program.\u003C\u003Ec__DisplayClass0_0.\u003C\u003C\u003CMain\u003E$\u003Eg__Test|0\u003Ed.MoveNext() in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\integration\\MSSQL\\Program.cs:line 37"
+  },
+  {
+    "name": "callerOwnsGetConnection",
+    "status": "completed",
+    "detail": "Open"
+  }
+]

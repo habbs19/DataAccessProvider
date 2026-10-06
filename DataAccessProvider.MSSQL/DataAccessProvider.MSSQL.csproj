@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+  <PropertyGroup><EnablePackageValidation>true</EnablePackageValidation><PackageValidationBaselineVersion>1.3.7</PackageValidationBaselineVersion>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -10,24 +10,22 @@
 
 	  <OutputType>library</OutputType>
 	  <PackageId>DataAccessProvider.MSSQL</PackageId>
-	  <Version>1.3.7</Version>
+	  <Version>1.4.0</Version>
 	  <Authors>Habib Shakibanejad</Authors>
 	  <Company>HSX</Company>
 	  <Title>DataAccessProvider.MSSQL</Title>
 	  <PackageTags>Data Access Layer; MSSQL; DbAbstraction; DataAccess</PackageTags>
 	  <PackageDescription>This package offers a flexible and generic database abstraction supporting multiple providers, including MySQL. It facilitates asynchronous execution of SQL commands, stored procedures, and parameterized queries with methods like ExecuteReaderAsync and ExecuteNonQueryAsync. Designed for extensibility and integration with dependency injection, it is ideal for applications using the repository pattern. The package simplifies multi-database integration, providing customizable database connections for efficient data handling in .NET applications.</PackageDescription>
 	  <RepositoryUrl>https://github.com/habbs19/DataAccessProvider</RepositoryUrl>
-	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.1">
-		<PrivateAssets>all</PrivateAssets>
+	<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions">
 	</PackageReference>
-	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1">
-		<PrivateAssets>all</PrivateAssets>
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
 	</PackageReference>
-	<PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.3" />
+	<PackageReference Include="Microsoft.Data.SqlClient" />
   </ItemGroup>
 
   <ItemGroup>

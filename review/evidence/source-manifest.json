@@ -1,0 +1,502 @@
+[
+  {
+    "path": ".editorconfig",
+    "sha256": "22ABDFC349C7F21C2EED1F805EB1FAC7427CDAA5CCE424F51FF3B88E7EBB743D",
+    "lines": 82
+  },
+  {
+    "path": ".github/workflows/ci.yml",
+    "sha256": "4583C5BF27E326C261B95CF565A3F3104FC2DDF95C61021F345A2BA58C507DD1",
+    "lines": 32
+  },
+  {
+    "path": ".github/workflows/publish-nuget.yml",
+    "sha256": "AD3DDD48E807A7CC1B267BBA977EC268BCF214C639ED72E4B9F6FDDFEAD2E018",
+    "lines": 52
+  },
+  {
+    "path": "DataAccessProvider.Core/Abstractions/BaseDataSourceParams.cs",
+    "sha256": "ECC1A3819F442928188EDDDFD878668C55C8086223F7CC96764CF4F3E14C93E9",
+    "lines": 24
+  },
+  {
+    "path": "DataAccessProvider.Core/Abstractions/BaseDatabaseSource.Transactions.cs",
+    "sha256": "95E8B8B1A24EEC58DC1B30FA018581B7804757660B1F0C780B4BA70CF3F4FB7A",
+    "lines": 352
+  },
+  {
+    "path": "DataAccessProvider.Core/Abstractions/BaseDatabaseSource.cs",
+    "sha256": "88436337D34133B04D24429F779D7F42FAA3D39FD950EA232B8EB19CDE8128A7",
+    "lines": 655
+  },
+  {
+    "path": "DataAccessProvider.Core/Abstractions/BaseDatabaseSourceParams.cs",
+    "sha256": "CC5236A8D811F09B6EC0681AE472897F291A2BB7ABC8D3E2052C4BB89009D5D5",
+    "lines": 33
+  },
+  {
+    "path": "DataAccessProvider.Core/Abstractions/BaseFileSourceParams.cs",
+    "sha256": "D0DA766BE4C9FEB23D1645A02DDB104D02EB9C2A63FAC458D88606629731055F",
+    "lines": 20
+  },
+  {
+    "path": "DataAccessProvider.Core/Abstractions/BaseSource.cs",
+    "sha256": "95455D3659C377C6060E2383ADF2CA81522420DD7D7EE7774A49E0980993DC68",
+    "lines": 10
+  },
+  {
+    "path": "DataAccessProvider.Core/Abstractions/IDataAccessDbTypeMapper.cs",
+    "sha256": "15918AB71C593BD699952604DD5B40B04CD16B5CE0FF71EAB3A4A2A4E7A017E8",
+    "lines": 8
+  },
+  {
+    "path": "DataAccessProvider.Core/DataAccessProvider.Core.csproj",
+    "sha256": "F4FE0FB128DC0793BF77F1CD757D80237F87B51D3054C921845359750AB5E079",
+    "lines": 36
+  },
+  {
+    "path": "DataAccessProvider.Core/DataSource/DataSourceFactory.cs",
+    "sha256": "E46878EC339B18D2AE3A6BEE2F5B9AAAE5096AA7691FCD986189EED85EF6C7A3",
+    "lines": 145
+  },
+  {
+    "path": "DataAccessProvider.Core/DataSource/DataSourceProvidercs.cs",
+    "sha256": "BB3F2B5853206C22E8ED5AC3D8344660D1CCCCFC0068DD0CFE8D24979053EDFF",
+    "lines": 155
+  },
+  {
+    "path": "DataAccessProvider.Core/DataSource/Params/JsonFileSourceParams.cs",
+    "sha256": "F6CA76FF238E0EACAAEEE8DEAF3288B6527A388547E88DB4913DD8F823A81A16",
+    "lines": 17
+  },
+  {
+    "path": "DataAccessProvider.Core/DataSource/Params/StaticCodeParams.cs",
+    "sha256": "130B7B43DD542F7F1A826E323220A7BE2DD7541B69D2CA4B1FA40D116690EDE1",
+    "lines": 17
+  },
+  {
+    "path": "DataAccessProvider.Core/DataSource/Source/JsonFileSource.cs",
+    "sha256": "843145135BD934F5480CA6C8C847EE45AEE301250F36660C80EA5252C5322BA6",
+    "lines": 216
+  },
+  {
+    "path": "DataAccessProvider.Core/DataSource/Source/StaticCodeSource.cs",
+    "sha256": "E70F75DBB89E3BF312B9D280DB6A11E8948CEB4BBE19FE7FAC9DFD46BAA125CB",
+    "lines": 166
+  },
+  {
+    "path": "DataAccessProvider.Core/Extensions/DictionaryExtensions.cs",
+    "sha256": "75E5C3F4DAF4C9D0023AD7C73DD89E44499FEFC84B44A41EB0E7A3BCA0D90F16",
+    "lines": 62
+  },
+  {
+    "path": "DataAccessProvider.Core/Extensions/GenericTypeExtensions.cs",
+    "sha256": "4987F55A3749E96028D97F08AEC49EEF4C516546616CC231D3C933CD50E50ABF",
+    "lines": 92
+  },
+  {
+    "path": "DataAccessProvider.Core/Extensions/ObjectExtensions.cs",
+    "sha256": "4C829782EF4E087A90165A61A5747E327AEE10C41ECA38B09A6A84C4F0049F2D",
+    "lines": 66
+  },
+  {
+    "path": "DataAccessProvider.Core/Extensions/ServiceExtensions.cs",
+    "sha256": "46CFB6F0359E99BAE646D6322714BA29446AC7CF7FE12158685D60334766F80D",
+    "lines": 35
+  },
+  {
+    "path": "DataAccessProvider.Core/Interfaces/IDataSource.cs",
+    "sha256": "5BA19611FA5DDAB48F794B697A0C3F9A57AA6150548C177DAE164EE8FA43CCA1",
+    "lines": 199
+  },
+  {
+    "path": "DataAccessProvider.Core/Interfaces/IDataSourceFactory.cs",
+    "sha256": "42E1AC4DB7876E5A3EAB128E8A3E0891B9BA28557E945BFEC87DD1282E57232D",
+    "lines": 45
+  },
+  {
+    "path": "DataAccessProvider.Core/Interfaces/IDataSourceProvider.cs",
+    "sha256": "2A3D125D8114C4B6843CF529DD1B34C7AA90AAEC8DFC416DF01ABED6D4C4DFE7",
+    "lines": 15
+  },
+  {
+    "path": "DataAccessProvider.Core/Interfaces/IDatabaseTransaction.cs",
+    "sha256": "4A41F60F40CA1C0C10A486CB1FC980733804E471BC894A061B5F87AE79864809",
+    "lines": 54
+  },
+  {
+    "path": "DataAccessProvider.Core/Interfaces/IResiliencePolicy.cs",
+    "sha256": "08F7A84A61F46BA9FDAB05DF610E2546644F18E0D9F48F6F0850572B76FC600A",
+    "lines": 12
+  },
+  {
+    "path": "DataAccessProvider.Core/Properties/AssemblyInfo.cs",
+    "sha256": "D1E532582C02A2004E734FE650DC641CECC3A108C998C3933AEA78CE7FEE61C0",
+    "lines": 6
+  },
+  {
+    "path": "DataAccessProvider.Core/README.md",
+    "sha256": "63B8A795ED0812CD95EA8378BF0D11B27B4A88E9E5832A3D44D9256659355C60",
+    "lines": 333
+  },
+  {
+    "path": "DataAccessProvider.Core/Resilience/BasicResiliencePolicy.cs",
+    "sha256": "8491ABC5B5646376BD28CA5D4B43234BBEB3EB362997947A67087EB165C9354F",
+    "lines": 39
+  },
+  {
+    "path": "DataAccessProvider.Core/Resilience/ResilienceOptions.cs",
+    "sha256": "2B16C68C7C080910ADA366A91BD2AB317D18051775F0E289F0553ECFED0ADD8D",
+    "lines": 11
+  },
+  {
+    "path": "DataAccessProvider.Core/Types/DataAccessDbType.cs",
+    "sha256": "70E9F2BDFE8B7524D50175ADEFC58E0E7F63BD8C18C5F2A0360232BA18ED6AA6",
+    "lines": 48
+  },
+  {
+    "path": "DataAccessProvider.Core/Types/DataAccessParameter.cs",
+    "sha256": "C8C1566FBA7B04A31E8AE53D1B70626F9B8E6F7F81D0C899A07C0D9622A62642",
+    "lines": 10
+  },
+  {
+    "path": "DataAccessProvider.Core/Types/DataAccessParameterDirection.cs",
+    "sha256": "1AFA9DD6B29450AFFA81A169E9B619A42BF2044B2F09096C1EF91147E90B76B5",
+    "lines": 9
+  },
+  {
+    "path": "DataAccessProvider.Core/Types/DataSourceType.cs",
+    "sha256": "B9779578BFD6972559E6DB87F664D25DC142A8671BDD7DAAABEE4988A85DB8BA",
+    "lines": 47
+  },
+  {
+    "path": "DataAccessProvider.Core/Types/DatabaseTransactionException.cs",
+    "sha256": "D314714CC7D936EE922D212647A3FD1290FBF77285DD4D4C0BD04D1435449F8A",
+    "lines": 39
+  },
+  {
+    "path": "DataAccessProvider.MSSQL/DataAccessProvider.MSSQL.csproj",
+    "sha256": "CBEC557CC81E49D260A321625BD20F2B841D35EAADD3751A590B9C3C8AF6CE03",
+    "lines": 41
+  },
+  {
+    "path": "DataAccessProvider.MSSQL/DbParameterExtensions.cs",
+    "sha256": "F82F54920C77608F39B89A55EF2434238AAD474F54F2DF1001DCA8AC8A16ED1A",
+    "lines": 40
+  },
+  {
+    "path": "DataAccessProvider.MSSQL/MSSQLSource.cs",
+    "sha256": "7A74A2C2B6DFE00FBA9DCC03DEC50E7ED9606B52D5C75F2715A401690470C067",
+    "lines": 62
+  },
+  {
+    "path": "DataAccessProvider.MSSQL/MSSQLSourceParams.cs",
+    "sha256": "71AA1BCD92006D2B4CF7F4AAEFE45B799346F92F7B087E3108B39C6C3B194101",
+    "lines": 13
+  },
+  {
+    "path": "DataAccessProvider.MSSQL/README.md",
+    "sha256": "04F6528CB8F211DD7D678C90A4EE4A9C34B181FB649DE8068A6049CA16DF2F3A",
+    "lines": 185
+  },
+  {
+    "path": "DataAccessProvider.MSSQL/ServiceExtensions.cs",
+    "sha256": "12BDD7794B719F2E3C94C6ABEF3CE53B06EF39D17575E3A518F61038F9A80291",
+    "lines": 68
+  },
+  {
+    "path": "DataAccessProvider.MSSQL/SqlServerDbTypeMapper.cs",
+    "sha256": "D3133A775E2885FF50DEA259A2722B24C90B71058F4F31A425039A242B690415",
+    "lines": 60
+  },
+  {
+    "path": "DataAccessProvider.MongoDB/DataAccessProvider.MongoDB.csproj",
+    "sha256": "96A88581DE597413CBAEC4157C2B0A641E881053BC15458AF30D4856C1252FCE",
+    "lines": 41
+  },
+  {
+    "path": "DataAccessProvider.MongoDB/MongoDBParams.cs",
+    "sha256": "1D37B230A7D1B862838839392950A4D981629CC6F0A68E2198EACFBCC8306559",
+    "lines": 147
+  },
+  {
+    "path": "DataAccessProvider.MongoDB/MongoDBSource.cs",
+    "sha256": "3A3B96E89BCAF109D8B657C43629DA03D252A48B9B4AFF6CE23EBA38AA931180",
+    "lines": 591
+  },
+  {
+    "path": "DataAccessProvider.MongoDB/README.md",
+    "sha256": "5D5195CEB8108900251AAEBE7F8A0894F82A0BEA3239FE8235BDBC19314960F6",
+    "lines": 215
+  },
+  {
+    "path": "DataAccessProvider.MongoDB/ServiceExtensions.cs",
+    "sha256": "5CACB4C576BFC2ED65A6B4DEF29E0734C5F2A898C13509E6E4420518E3EA4174",
+    "lines": 67
+  },
+  {
+    "path": "DataAccessProvider.MySql/DataAccessProvider.MySql.csproj",
+    "sha256": "482B5878D6C1E22A68B2E9A5784D83538D75E6B3461513AC485382237B5E5FBD",
+    "lines": 42
+  },
+  {
+    "path": "DataAccessProvider.MySql/DbParameterExtensions.cs",
+    "sha256": "3413DEDADB143F4DCFADD767D374E15F234C3C321838B4A33A1456ED2D616C3D",
+    "lines": 75
+  },
+  {
+    "path": "DataAccessProvider.MySql/MySQLSource.cs",
+    "sha256": "6B9C23A1DFDE1351FD2DE768F15E2EC54B1A1D6202C50557D7D3883C9C79F3E1",
+    "lines": 59
+  },
+  {
+    "path": "DataAccessProvider.MySql/MySQLSourceParams.cs",
+    "sha256": "9D6D0385A03E134C574F4CC22E66500C271B3A5F670947BA430266A99E46E4FF",
+    "lines": 13
+  },
+  {
+    "path": "DataAccessProvider.MySql/MySqlDbTypeMapper.cs",
+    "sha256": "FA1ADE51414CACA80CCA37EDF7782806E2DA8D401E13787EEA85008B572BA6BD",
+    "lines": 60
+  },
+  {
+    "path": "DataAccessProvider.MySql/README.md",
+    "sha256": "E292BACFCBDBB53835D4FB436D0A0D90EE31A1F65936AE39F9A9021B695564D9",
+    "lines": 191
+  },
+  {
+    "path": "DataAccessProvider.MySql/ServiceExtensions.cs",
+    "sha256": "C1F782D9BF5143253EC89A79C8987CCEF6E134E0CB08E0975C8CDFDD4007C941",
+    "lines": 74
+  },
+  {
+    "path": "DataAccessProvider.Oracle/DataAccessProvider.Oracle.csproj",
+    "sha256": "12190C2369D5FC7C22428F2E65CED0C333BA326A9977C4DB4EF56535CCF3F17C",
+    "lines": 17
+  },
+  {
+    "path": "DataAccessProvider.Oracle/DbParameterExtensions.cs",
+    "sha256": "4B80E7D55D673E5E7C16B2E08F40B9DDF214094C322647AD69424077D87A7E65",
+    "lines": 22
+  },
+  {
+    "path": "DataAccessProvider.Oracle/OracleDbTypeMapper.cs",
+    "sha256": "D5676A09B16CCC6269C10AE3842BD794D8A505D4C1E58908902150AAE66F4FC6",
+    "lines": 60
+  },
+  {
+    "path": "DataAccessProvider.Oracle/OracleSource.cs",
+    "sha256": "B4E06C18952413B79515CB9D9186456CB9D0948E295A24C3885AEAE6C2203D3A",
+    "lines": 46
+  },
+  {
+    "path": "DataAccessProvider.Oracle/OracleSourceParams.cs",
+    "sha256": "3AE2B9D39F79F4C75855D029B2F66564A31FF7837EE37C9C75C29ECE2D3D05BF",
+    "lines": 13
+  },
+  {
+    "path": "DataAccessProvider.Postgres/DataAccessProvider.Postgres.csproj",
+    "sha256": "B9107EA11BABB817EE2B76A77645E68C64CE499740AA34BF8B7E9A5B58F0A22B",
+    "lines": 52
+  },
+  {
+    "path": "DataAccessProvider.Postgres/DbParameterExtensions.cs",
+    "sha256": "5BB88C1C6514FC4B96A6FF01F933E3AC288F4AAB40570F7E8539FDF48272C651",
+    "lines": 22
+  },
+  {
+    "path": "DataAccessProvider.Postgres/PostgresDbTypeMapper.cs",
+    "sha256": "44E422B8842F4A2AA085A1F9113CD7A5527D0CC44F07C03E281791692D5C36A5",
+    "lines": 60
+  },
+  {
+    "path": "DataAccessProvider.Postgres/PostgresSource.cs",
+    "sha256": "67368E1066AC23A47DBBEFBC4CF1AF8A855DE81B49B4A289A10FC804449FD73D",
+    "lines": 61
+  },
+  {
+    "path": "DataAccessProvider.Postgres/PostgresSourceParams.cs",
+    "sha256": "2353C8C6DFF2D91624F0A0A9022033154BEB88F9133E5E2AEA8EF34CE38E3312",
+    "lines": 13
+  },
+  {
+    "path": "DataAccessProvider.Postgres/README.md",
+    "sha256": "4D7CAF6B504272CB304B70326277AC5ADA98259ACD4ED09B4654250FCDA92033",
+    "lines": 89
+  },
+  {
+    "path": "DataAccessProvider.Postgres/ServiceExtensions.cs",
+    "sha256": "B14E1BE4993015B9EB159BB498C37BF9D329C24BDEDE46FEC07A8D5FC16D882A",
+    "lines": 59
+  },
+  {
+    "path": "DataAccessProvider.Snowflake/DataAccessProvider.Snowflake.csproj",
+    "sha256": "9236A338F99A2C1913D24D334357AA03EE2B302BCFD4F17911B2086C9B968158",
+    "lines": 18
+  },
+  {
+    "path": "DataAccessProvider.Snowflake/DbParameterExtensions.cs",
+    "sha256": "7DDF905010BD5859783F077E9753392FE1FEBCB137B561699375E0130CFE9F66",
+    "lines": 58
+  },
+  {
+    "path": "DataAccessProvider.Snowflake/SnowflakeSource.cs",
+    "sha256": "31BF8195B2FDFA310EDF1E4B26B4C80D72979DF43870305BA43C6C4C4359F8AE",
+    "lines": 45
+  },
+  {
+    "path": "DataAccessProvider.Snowflake/SnowflakeSourceParams.cs",
+    "sha256": "0AA07FA866F22A4D94AF8F0F6824A2648F9F104CD87BD4F4B040F481F379626C",
+    "lines": 7
+  },
+  {
+    "path": "DataAccessProvider.sln",
+    "sha256": "91D3C09BBBF938524477D6A7255EA85C6C5AB779FCB51E360E3DBA015D44EE30",
+    "lines": 174
+  },
+  {
+    "path": "DataAccessProviderConsole/Classes/Movie.cs",
+    "sha256": "2BEAF7F318DB7A49962F2951E165DF3BD188B67E6E4608538E138B5104F6AFA1",
+    "lines": 64
+  },
+  {
+    "path": "DataAccessProviderConsole/DataAccessProviderConsole.csproj",
+    "sha256": "0842A52349C6D1141524F7333FC55C3F9D8141B45C1DC8AAB287B6E9AB29D07E",
+    "lines": 25
+  },
+  {
+    "path": "DataAccessProviderConsole/Demos/DataAccessDemo.cs",
+    "sha256": "3AD7CEA57928909476EE23C8947BCF66B5E512D0113D51C81C17C122DCD7AB3C",
+    "lines": 145
+  },
+  {
+    "path": "DataAccessProviderConsole/Demos/ResilienceDemo.cs",
+    "sha256": "ED6F2301073D842798658D64487627CF3D391E9CD9ABC862E73FBC79F170F146",
+    "lines": 42
+  },
+  {
+    "path": "DataAccessProviderConsole/Models/AppUser.cs",
+    "sha256": "C55EC1FB8ECE0C17739E83345CD77F00DC097D1B0392892AA5E7E1BE4B9A9ECD",
+    "lines": 26
+  },
+  {
+    "path": "DataAccessProviderConsole/Models/Diary.cs",
+    "sha256": "5FE33CC6DAAF0717BB7165C6F8330072AB8AEE1B32982BBFE77B91993FB55A5D",
+    "lines": 10
+  },
+  {
+    "path": "DataAccessProviderConsole/Models/Genre.cs",
+    "sha256": "91B87F4E0337DC9C7BDA2AEA8F99515127B54BF84C7A7EB27D7E55EDA3C50D7A",
+    "lines": 17
+  },
+  {
+    "path": "DataAccessProviderConsole/Models/IdentityUser.cs",
+    "sha256": "E21F7D6B192BFFEE89C16BFF5FFF81DE5855A5F249236A36C9E5A1BB3658713F",
+    "lines": 48
+  },
+  {
+    "path": "DataAccessProviderConsole/Models/MemberGroupEnum.cs",
+    "sha256": "0A22717B3BF9B7F815F9618ED7C4E9C93619DCD6406D5A8A40DB251C29D5032D",
+    "lines": 10
+  },
+  {
+    "path": "DataAccessProviderConsole/Program.cs",
+    "sha256": "1F5D8BB84FF8CC1100792E86230BACC96E4337FCA86A78BAA29B9DFE86800F09",
+    "lines": 10
+  },
+  {
+    "path": "DataAccessProviderConsole/Setup/ServiceConfiguration.cs",
+    "sha256": "FCAF37C3A42DA80870B79056A7EF6051B76910968D43E7AD538812C3D766E20F",
+    "lines": 74
+  },
+  {
+    "path": "DataAccessProviderConsole/TestFiles/Movie.json",
+    "sha256": "ED5CECD45221D0D519DB0A5E5EC1B8CE67C221507100D3288EEC01AE048E8DE1",
+    "lines": 115
+  },
+  {
+    "path": "DataAccessProviderConsole/appsettings.json",
+    "sha256": "2742E79A8EE79B86269F3581443AEA428F74FE263DECB2A49C45E13B6007778E",
+    "lines": 13
+  },
+  {
+    "path": "README.md",
+    "sha256": "C272193941119596F10770ABB7E149DEC8669A041514AE9DB1D9A5852EB28B3A",
+    "lines": 320
+  },
+  {
+    "path": "Test/GlobalUsings.cs",
+    "sha256": "D645E0DD910E3FA62E90673BEEB1C81D976A71C3CB9DAD00432A296CC22D47DE",
+    "lines": 1
+  },
+  {
+    "path": "Test/Test.csproj",
+    "sha256": "9E8D4630DC57536BCD63F220E7734BE8223027662030538D5AF0AF098113525F",
+    "lines": 36
+  },
+  {
+    "path": "Test/Test_DbTypeMapperOwnership.cs",
+    "sha256": "ABC87AD4A71EF983265709FD80C709255F93CC723176AE8CEC67DBDFC812E4D5",
+    "lines": 129
+  },
+  {
+    "path": "Test/Test_MSSQL.cs",
+    "sha256": "8880E914661262B5D3ADB7F0CCCD74C41D38335D29A3E2037949820351776C94",
+    "lines": 71
+  },
+  {
+    "path": "Test/Test_ResilienceWithDataAccess.cs",
+    "sha256": "AE3C5A575FB632AA3369FA605362689FC959DB690A98C17BB077ACB89F5D4DC0",
+    "lines": 72
+  },
+  {
+    "path": "Test/Test_TransactionRegistrations.cs",
+    "sha256": "7761A80F503A9552806C74F3D67AAB0D55F2B8F3299E9D645B8B853D0178C8B5",
+    "lines": 53
+  },
+  {
+    "path": "Test/appsettings.json",
+    "sha256": "570CB492E9EAB775438B8A4E333C4147CD3E52C1D4C4A1878A394D86A9EDDCF6",
+    "lines": 5
+  },
+  {
+    "path": "nuget_template.config",
+    "sha256": "2E48C548F1CD8478F279AC407D1AB1948E752A113F158A8E3BCA492C27EFF2C0",
+    "lines": 13
+  },
+  {
+    "path": "tests/DataAccessProvider.Core.Tests/BaseDataSourceParamsTests.cs",
+    "sha256": "CF0973FDCBDAF2255B9B2D391CCD9BA3801916116F594F58E24AC7FC305F724D",
+    "lines": 88
+  },
+  {
+    "path": "tests/DataAccessProvider.Core.Tests/DataAccessProvider.Core.Tests.csproj",
+    "sha256": "DF4C15EB8B58011CD99222C594E01AA250861FAA6396B5165D04819E6D745E60",
+    "lines": 30
+  },
+  {
+    "path": "tests/DataAccessProvider.Core.Tests/DataSourceFactoryTests.cs",
+    "sha256": "E5F504B5E1D886EB60872D4255A7E4250FE9AE608804850DF8266B99C8BE153D",
+    "lines": 148
+  },
+  {
+    "path": "tests/DataAccessProvider.Core.Tests/DataSourceProviderTests.cs",
+    "sha256": "6BA0B23EC0B4DB4151D6CA984572AB0D90DFB23AF1E024236DBE1ECE26D9CE78",
+    "lines": 71
+  },
+  {
+    "path": "tests/DataAccessProvider.Core.Tests/DatabaseTransactionTests.cs",
+    "sha256": "C4E811089D54405E55D0ADB83C3E2D03B2BCB7BF841BF90D0E7937B141A060EA",
+    "lines": 417
+  },
+  {
+    "path": "tests/DataAccessProvider.Core.Tests/GlobalUsings.cs",
+    "sha256": "F006E57ED1A5B38955BADB20C52802393287EB620DEBF7D34D4CD51969B6C0FB",
+    "lines": 1
+  },
+  {
+    "path": "tests/DataAccessProvider.Core.Tests/ObjectExtensionsTests.cs",
+    "sha256": "AAFE15474277767470BEA9EFF5DDCDF50A9095C04FF871155B366EC377499295",
+    "lines": 160
+  }
+]

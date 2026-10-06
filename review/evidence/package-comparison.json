@@ -1,0 +1,87 @@
+[
+  {
+    "id": "DataAccessProvider.Core",
+    "version": "1.3.7",
+    "localCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "publishedCommit": "4544886ef75204e54ce564f3e7d46a32d6be3fb7",
+    "entryComparison": [
+      {
+        "path": "README.md",
+        "sameHash": false
+      },
+      {
+        "path": "lib/net10.0/DataAccessProvider.Core.dll",
+        "sameHash": false
+      }
+    ],
+    "dependencyMetadataMatches": true
+  },
+  {
+    "id": "DataAccessProvider.MSSQL",
+    "version": "1.3.7",
+    "localCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "publishedCommit": "4544886ef75204e54ce564f3e7d46a32d6be3fb7",
+    "entryComparison": [
+      {
+        "path": "README.md",
+        "sameHash": false
+      },
+      {
+        "path": "lib/net10.0/DataAccessProvider.MSSQL.dll",
+        "sameHash": false
+      }
+    ],
+    "dependencyMetadataMatches": true
+  },
+  {
+    "id": "DataAccessProvider.MySql",
+    "version": "1.3.4",
+    "localCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "publishedCommit": "41273661c05a6a96be19e7cf8657254cfd6720cb",
+    "entryComparison": [
+      {
+        "path": "README.md",
+        "sameHash": false
+      },
+      {
+        "path": "lib/net10.0/DataAccessProvider.MySql.dll",
+        "sameHash": false
+      }
+    ],
+    "dependencyMetadataMatches": false
+  },
+  {
+    "id": "DataAccessProvider.PostgreSql",
+    "version": "1.3.4",
+    "localCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "publishedCommit": "4544886ef75204e54ce564f3e7d46a32d6be3fb7",
+    "entryComparison": [
+      {
+        "path": "README.md",
+        "sameHash": false
+      },
+      {
+        "path": "lib/net10.0/DataAccessProvider.Postgres.dll",
+        "sameHash": false
+      }
+    ],
+    "dependencyMetadataMatches": true
+  },
+  {
+    "id": "DataAccessProvider.MongoDB",
+    "version": "1.3.3",
+    "localCommit": "0fe75f74d5c2e2254f7b08ef70f44e623a926fd8",
+    "publishedCommit": "c0ff396979192749ebeda4c2716ab50ca8b5cc01",
+    "entryComparison": [
+      {
+        "path": "README.md",
+        "sameHash": false
+      },
+      {
+        "path": "lib/net10.0/DataAccessProvider.MongoDB.dll",
+        "sameHash": false
+      }
+    ],
+    "dependencyMetadataMatches": false
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "restore": 0,
+    "run": 0,
+    "id": "DataAccessProvider.MSSQL",
+    "case": "C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-MSSQL",
+    "build": 0,
+    "version": "1.3.7",
+    "registration": 1,
+    "origin": "local"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "id": "DataAccessProvider.MySql",
+    "case": "C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-MYSQL",
+    "build": 0,
+    "version": "1.3.4",
+    "registration": 1,
+    "origin": "local"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "id": "DataAccessProvider.PostgreSql",
+    "case": "C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-POSTGRES",
+    "build": 0,
+    "version": "1.3.4",
+    "registration": 0,
+    "origin": "local"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "id": "DataAccessProvider.MongoDB",
+    "case": "C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-MONGO",
+    "build": 0,
+    "version": "1.3.3",
+    "registration": 1,
+    "origin": "local"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "id": "DataAccessProvider.Oracle",
+    "case": "C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-ORACLE",
+    "build": 0,
+    "version": "1.0.0",
+    "registration": -1,
+    "origin": "local"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "id": "DataAccessProvider.Snowflake",
+    "case": "C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\local-SNOWFLAKE",
+    "build": 0,
+    "version": "1.0.0",
+    "registration": -1,
+    "origin": "local"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "id": "DataAccessProvider.MSSQL",
+    "case": "C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\published-MSSQL",
+    "build": 0,
+    "version": "1.3.7",
+    "registration": 1,
+    "origin": "published"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "id": "DataAccessProvider.MySql",
+    "case": "C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\published-MYSQL",
+    "build": 0,
+    "version": "1.3.4",
+    "registration": 1,
+    "origin": "published"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "id": "DataAccessProvider.PostgreSql",
+    "case": "C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\published-POSTGRES",
+    "build": 0,
+    "version": "1.3.4",
+    "registration": 0,
+    "origin": "published"
+  },
+  {
+    "restore": 0,
+    "run": 0,
+    "id": "DataAccessProvider.MongoDB",
+    "case": "C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\consumers\\published-MONGO",
+    "build": 0,
+    "version": "1.3.3",
+    "registration": 1,
+    "origin": "published"
+  }
+]

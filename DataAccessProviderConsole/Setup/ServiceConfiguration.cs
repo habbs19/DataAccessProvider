@@ -50,25 +50,8 @@ public static class ServiceConfiguration
         //services.AddScoped<IDataSource, MongoDBSource>();
         //services.AddScoped<IDataSource, StaticCodeSource>();
 
-        return services.BuildServiceProvider();
+        return services.BuildServiceProvider(new ServiceProviderOptions { ValidateScopes = true, ValidateOnBuild = true });
     }
 
-    public static void ConfigureProviders(ServiceProvider serviceProvider)
-    {
-        // These will work for whichever providers you actually registered above
-        if (serviceProvider.GetService<IDataSource<MSSQLSourceParams>>() is not null)
-        {
-            serviceProvider.UseDataAccessProviderMSSQL();
-        }
-
-        if (serviceProvider.GetService<IDataSource<MySQLSourceParams>>() is not null)
-        {
-            serviceProvider.UseDataAccessProviderMySql();
-        }
-
-        if (serviceProvider.GetService<IDataSource<PostgresSourceParams>>() is not null)
-        {
-            serviceProvider.UseDataAccessProviderPostgres();
-        }
-    }
+    public static void ConfigureProviders(ServiceProvider serviceProvider) { /* Add-provider registration is complete; retained compatibility shim. */ }
 }

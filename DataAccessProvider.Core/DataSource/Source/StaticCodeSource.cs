@@ -1,166 +1,44 @@
-﻿using DataAccessProvider.Core.Abstractions;
+using DataAccessProvider.Core.Abstractions;
 using DataAccessProvider.Core.DataSource.Params;
 using DataAccessProvider.Core.Interfaces;
 using System.Text;
-
 namespace DataAccessProvider.Core.DataSource.Source;
-#region Props
-public partial class StaticCodeSource : BaseSource
+
+public partial class StaticCodeSource : BaseSource, IDataSource, ICancellableDataSource, IDataSource<StaticCodeParams>
 {
-    protected async override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams @params)
-    {
-        // Check if the parameters are of type StaticCodeParams
-        if (@params is StaticCodeParams staticCodeParams)
-        {
-            // Perform logic related to non-query operations on StaticCodeParams
-            var content = staticCodeParams.Content;
-
-            var updatedContent = $"{content} - NonQuery executed";
-
-            // Simulate asynchronous work
-            await Task.CompletedTask;
-
-            // Set the updated content as the result
-            staticCodeParams.SetValue(updatedContent);
-
-            return staticCodeParams;
-        }
-
-        // Handle other types of BaseDataSourceParams if needed
-        throw new ArgumentException("Unsupported data source parameter type.");
-    }
-
-    protected async override Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams @params)
-    {
-        // Check if the parameters are of type StaticCodeParams
-        if (@params is StaticCodeParams staticCodeParams)
-        {
-            staticCodeParams.SetValue(staticCodeParams.Content);
-
-            await Task.CompletedTask;
-
-            return staticCodeParams;
-        }
-
-        // Handle other BaseDataSourceParams types if needed
-        throw new ArgumentException("Unsupported data source parameter type.");
-    }
-
-    protected async override Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams @params)
-    {
-        // Check if the parameters are of type StaticCodeParams
-        if (@params is StaticCodeParams<TValue> staticCodeParams)
-        {
-            TValue content = (TValue)Convert.ChangeType(staticCodeParams.Content, typeof(TValue));
-
-            // Perform any logic required here
-            await Task.CompletedTask;
-
-            staticCodeParams.SetValue(content);
-            return staticCodeParams;
-        }
-
-        // Handle other BaseDataSourceParams types if needed
-        throw new ArgumentException("Unsupported data source parameter type.");
-    }
-
-    protected async override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams @params)
-    {
-        // Cast the params to StaticCodeParams<TValue>
-        StaticCodeParams? staticCodeParams = @params as StaticCodeParams;
-
-        if (staticCodeParams == null)
-        {
-            throw new ArgumentException("Invalid parameter type. Expected StaticCodeParams.");
-        }
-
-        try
-        {
-            // Calculate the size of the content in bytes using UTF-8 encoding
-            int contentSizeInBytes = Encoding.UTF8.GetByteCount(staticCodeParams.Content.ToString()!);
-
-            // Set the scalar result (content size in bytes)
-            staticCodeParams.SetValue(contentSizeInBytes);
-
-            await Task.CompletedTask;
-
-            // Return the modified params with the result
-            return (BaseDataSourceParams)(object)staticCodeParams;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"Error processing content: {ex.Message}", ex);
-        }
-    }
-}
-
-
-
-#endregion Props
-
-public partial class StaticCodeSource : IDataSource
-{
-    public Task<bool> CheckHealthAsync()
-    {
-        return Task.FromResult(true);
-    }
-
-    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return Task.FromResult(true);
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)await ExecuteNonQuery(@params);
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams @params)
-        where TValue : class, new()
-        where TBaseDataSourceParams : BaseDataSourceParams<TValue>
-    {
-        var sourceParams = @params as BaseDataSourceParams;
-        return (TBaseDataSourceParams)(object)await ExecuteReader<TValue>(sourceParams!);
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)await ExecuteReader(@params);
-    }
-
-    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> @params) where TValue : class, new()
-    {
-        var sourceParams = @params as BaseDataSourceParams;
-        return await ExecuteReader<TValue>(sourceParams!);
-    }
-
-    public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams @params) where TBaseDataSourceParams : BaseDataSourceParams
-    {
-        return (TBaseDataSourceParams)await ExecuteScalar(@params);
-    }
-}
-
-public partial class StaticCodeSource : IDataSource<StaticCodeParams>
-{
-    public async Task<StaticCodeParams> ExecuteNonQueryAsync(StaticCodeParams @params)
-    {
-        return (StaticCodeParams)await ExecuteNonQuery(@params);
-    }
-
-    public async Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(StaticCodeParams @params) where TValue : class, new()
-    {
-        var sourceParams = @params as BaseDataSourceParams;
-        return await ExecuteReader<TValue>(sourceParams);
-    }
-
-    public async Task<StaticCodeParams> ExecuteReaderAsync(StaticCodeParams @params)
-    {
-        return (StaticCodeParams)await ExecuteReader(@params);
-    }
-
-    public async Task<StaticCodeParams> ExecuteScalarAsync(StaticCodeParams @params)
-    {
-        return (StaticCodeParams)await ExecuteScalar(@params);
-    }
+    public Task<BaseDataSourceParams<T>> ExecuteReaderAsync<T>(BaseDataSourceParams p, CancellationToken ct) where T:class,new()
+    {ct.ThrowIfCancellationRequested();return ExecuteReader<T>(p);}
+    public Task<TParams> ExecuteReaderAsync<TParams>(TParams p, CancellationToken ct) where TParams : BaseDataSourceParams
+    { ct.ThrowIfCancellationRequested(); return ExecuteReaderAsync(p); }
+    public Task<TParams> ExecuteScalarAsync<TParams>(TParams p, CancellationToken ct) where TParams : BaseDataSourceParams
+    { ct.ThrowIfCancellationRequested(); return ExecuteScalarAsync(p); }
+    public Task<TParams> ExecuteNonQueryAsync<TParams>(TParams p, CancellationToken ct) where TParams : BaseDataSourceParams
+    { ct.ThrowIfCancellationRequested(); return ExecuteNonQueryAsync(p); }
+    public Task<TParams> ExecuteReaderAsync<T, TParams>(TParams p, CancellationToken ct) where T : class, new() where TParams : BaseDataSourceParams<T>
+    { ct.ThrowIfCancellationRequested(); return ExecuteReaderAsync<T, TParams>(p); }
+    public Task<BaseDataSourceParams<T>> ExecuteReaderAsync<T>(BaseDataSourceParams<T> p, CancellationToken ct) where T : class, new()
+    { ct.ThrowIfCancellationRequested(); return ExecuteReaderAsync(p); }
+    public Task<bool> CheckHealthAsync<TParams>(TParams p, CancellationToken ct) where TParams : BaseDataSourceParams
+    { ct.ThrowIfCancellationRequested(); return CheckHealthAsync(p); }
+    protected override Task<BaseDataSourceParams> ExecuteReader(BaseDataSourceParams p)
+    { if (p is not StaticCodeParams request) throw new ArgumentException("Expected StaticCodeParams.", nameof(p)); request.SetValue(request.Content); return Task.FromResult(p); }
+    protected override Task<BaseDataSourceParams> ExecuteNonQuery(BaseDataSourceParams p)
+    { if (p is not StaticCodeParams request) throw new ArgumentException("Expected StaticCodeParams.", nameof(p)); request.SetValue($"{request.Content} - NonQuery executed"); return Task.FromResult(p); }
+    protected override Task<BaseDataSourceParams> ExecuteScalar(BaseDataSourceParams p)
+    { if (p is not StaticCodeParams request) throw new ArgumentException("Expected StaticCodeParams.", nameof(p)); request.SetValue(Encoding.UTF8.GetByteCount(request.Content?.ToString() ?? string.Empty)); return Task.FromResult(p); }
+    protected override Task<BaseDataSourceParams<TValue>> ExecuteReader<TValue>(BaseDataSourceParams p)
+    { if (p is not StaticCodeParams request) throw new ArgumentException("Expected StaticCodeParams.", nameof(p)); return Typed(new StaticCodeParams<TValue> { Content = request.Content }); }
+    private static Task<BaseDataSourceParams<TValue>> Typed<TValue>(BaseDataSourceParams<TValue> p) where TValue : class, new()
+    { if (p is not StaticCodeParams<TValue> request) throw new ArgumentException("Expected typed StaticCodeParams.", nameof(p)); var value = (TValue?)ValueConversion.ConvertValue(request.Content, typeof(TValue), "Content"); request.SetValue(value is null ? [] : [value]); return Task.FromResult(p); }
+    public Task<bool> CheckHealthAsync() => Task.FromResult(true);
+    public Task<bool> CheckHealthAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => CheckHealthAsync();
+    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await ExecuteReader(p);
+    public async Task<TBaseDataSourceParams> ExecuteNonQueryAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await ExecuteNonQuery(p);
+    public async Task<TBaseDataSourceParams> ExecuteScalarAsync<TBaseDataSourceParams>(TBaseDataSourceParams p) where TBaseDataSourceParams : BaseDataSourceParams => (TBaseDataSourceParams)await ExecuteScalar(p);
+    public async Task<TBaseDataSourceParams> ExecuteReaderAsync<TValue, TBaseDataSourceParams>(TBaseDataSourceParams p) where TValue : class, new() where TBaseDataSourceParams : BaseDataSourceParams<TValue> => (TBaseDataSourceParams)await Typed(p);
+    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(BaseDataSourceParams<TValue> p) where TValue : class, new() => Typed(p);
+    public async Task<StaticCodeParams> ExecuteReaderAsync(StaticCodeParams p) => (StaticCodeParams)await ExecuteReader(p);
+    public Task<BaseDataSourceParams<TValue>> ExecuteReaderAsync<TValue>(StaticCodeParams p) where TValue : class, new() => ExecuteReader<TValue>(p);
+    public async Task<StaticCodeParams> ExecuteNonQueryAsync(StaticCodeParams p) => (StaticCodeParams)await ExecuteNonQuery(p);
+    public async Task<StaticCodeParams> ExecuteScalarAsync(StaticCodeParams p) => (StaticCodeParams)await ExecuteScalar(p);
 }

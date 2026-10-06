@@ -1,0 +1,6 @@
+dotnet pack C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.MongoDB\DataAccessProvider.MongoDB.csproj -c Release --no-build --no-restore --output C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\local-feed
+ExitCode: 0
+C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.MongoDB\DataAccessProvider.MongoDB.csproj : warning NU1902: Package 'SharpCompress' 0.30.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-6c8g-7p36-r338
+C:\Users\habibs\source\repos\DataAccessProvider\DataAccessProvider.MongoDB\DataAccessProvider.MongoDB.csproj : warning NU1903: Package 'Snappier' 1.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-pggp-6c3x-2xmx
+  Successfully created package 'C:\Users\habibs\AppData\Local\Temp\DataAccessProvider-review-0fe75f7\local-feed\DataAccessProvider.MongoDB.1.3.3.nupkg'.
+

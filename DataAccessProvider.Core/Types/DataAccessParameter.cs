@@ -6,5 +6,7 @@ public sealed class DataAccessParameter
     public DataAccessDbType DbType { get; set; }
     public object? Value { get; set; }
     public DataAccessParameterDirection Direction { get; set; } = DataAccessParameterDirection.Input;
+    public byte? Precision { get; set; }
+    public byte? Scale { get; set; }
     public int Size { get; set; } = -1;
 }

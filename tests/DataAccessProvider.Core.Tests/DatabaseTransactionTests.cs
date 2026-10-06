@@ -8,7 +8,7 @@ using DataAccessProvider.Core.Types;
 
 namespace DataAccessProvider.Core.Tests;
 
-public class DatabaseTransactionTests
+public partial class DatabaseTransactionTests
 {
     [Fact]
     public async Task Success_UsesOneTransactionForAllCommandKinds_AndCommits()
@@ -232,6 +232,9 @@ public class DatabaseTransactionTests
         public int OpenCount { get; private set; }
         public bool IsDisposed { get; private set; }
         public TimeSpan CommandDelay { get; init; }
+        public DataTable? ReaderTable { get; init; }
+        public Exception? CommandFailure { get; init; }
+        public bool IgnoreCancellation { get; init; }
         public int MaximumConcurrentCommands { get; private set; }
         private int _activeCommands;
 
@@ -267,7 +270,7 @@ public class DatabaseTransactionTests
             {
                 if (CommandDelay > TimeSpan.Zero)
                 {
-                    await Task.Delay(CommandDelay, cancellationToken);
+                    await Task.Delay(CommandDelay, IgnoreCancellation ? CancellationToken.None : cancellationToken);
                 }
             }
             finally
@@ -324,6 +327,8 @@ public class DatabaseTransactionTests
 
         public RecordingCommand(RecordingConnection connection) => _connection = connection;
 
+        public bool IsDisposed { get; private set; }
+        protected override void Dispose(bool disposing) { IsDisposed = true; base.Dispose(disposing); }
         public DbTransaction? AssignedTransaction => _transaction;
         [AllowNull]
         public override string CommandText { get; set; } = string.Empty;
@@ -343,8 +348,7 @@ public class DatabaseTransactionTests
 
         public override async Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken)
         {
-            await _connection.EnterCommandAsync(cancellationToken);
-            return 1;
+            await _connection.EnterCommandAsync(cancellationToken); if (_connection.CommandFailure is not null) throw _connection.CommandFailure; foreach (DbParameter parameter in _parameters) if (parameter.Direction != ParameterDirection.Input) parameter.Value = parameter.Direction == ParameterDirection.ReturnValue ? 9 : 42; return 1;
         }
 
         public override async Task<object?> ExecuteScalarAsync(CancellationToken cancellationToken)
@@ -363,9 +367,9 @@ public class DatabaseTransactionTests
             return CreateReader();
         }
 
-        private static DbDataReader CreateReader()
+        private DbDataReader CreateReader()
         {
-            var table = new DataTable();
+            if (_connection.ReaderTable is not null) return _connection.ReaderTable.CreateDataReader(); var table = new DataTable();
             table.Columns.Add("Name", typeof(string));
             table.Rows.Add("Ada");
             return table.CreateDataReader();

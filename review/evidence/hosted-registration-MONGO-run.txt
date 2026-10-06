@@ -1,0 +1,23 @@
+[
+  {
+    "name": "providerAddRegistersCoreServices",
+    "detail": true
+  },
+  {
+    "name": "nullProjectionConversion",
+    "detail": "ArgumentNullException: Value cannot be null. (Parameter \u0027projection\u0027)",
+    "stack": "   at MongoDB.Driver.Core.Misc.Ensure.IsNotNull[T](T value, String paramName)\r\n   at MongoDB.Driver.KnownResultTypeProjectionDefinitionAdapter\u00602..ctor(ProjectionDefinition\u00601 projection, IBsonSerializer\u00601 projectionSerializer)\r\n   at MongoDB.Driver.ProjectionDefinition\u00602.op_Implicit(ProjectionDefinition\u00601 projection)\r\n   at Program.\u003CMain\u003E$(String[] args) in C:\\Users\\habibs\\AppData\\Local\\Temp\\DataAccessProvider-review-0fe75f7\\examples\\hosted-registration-MONGO\\Program.cs:line 42"
+  },
+  {
+    "name": "factoryWorksWithoutUseViaConvention",
+    "detail": "ArgumentException: Unsupported data source type: MongoDBParams"
+  },
+  {
+    "name": "concreteAndInterfaceAreSameScopedInstance",
+    "detail": false
+  },
+  {
+    "name": "factoryWorksAfterUse",
+    "detail": "DataAccessProvider.MongoDB.MongoDBSource"
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "file": "DataAccessProviderConsole/appsettings.json",
+    "key": "MSSQL",
+    "hasPassword": false,
+    "hasUser": false,
+    "integratedAuth": true,
+    "valueRedacted": true
+  },
+  {
+    "file": "DataAccessProviderConsole/appsettings.json",
+    "key": "Postgres",
+    "hasPassword": false,
+    "hasUser": false,
+    "integratedAuth": false,
+    "valueRedacted": true
+  },
+  {
+    "file": "DataAccessProviderConsole/appsettings.json",
+    "key": "MySql",
+    "hasPassword": false,
+    "hasUser": false,
+    "integratedAuth": false,
+    "valueRedacted": true
+  },
+  {
+    "file": "Test/appsettings.json",
+    "key": "TestConnection",
+    "hasPassword": false,
+    "hasUser": false,
+    "integratedAuth": true,
+    "valueRedacted": true
+  }
+]

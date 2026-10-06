@@ -1,0 +1,35 @@
+[
+  {
+    "symbol": "MSSQL",
+    "differences": []
+  },
+  {
+    "symbol": "MYSQL",
+    "differences": [
+      {
+        "InputObject": "DataAccessProvider.MySql.MySQLSourceParams AddJSONParams(DataAccessProvider.MySql.MySQLSourceParams, Int32, System.Object)",
+        "SideIndicator": "=>"
+      },
+      {
+        "InputObject": "DataAccessProvider.MySql.MySQLSourceParams`1[TValue] AddJSONParams[TValue](DataAccessProvider.MySql.MySQLSourceParams`1[TValue], Int32, System.Object)",
+        "SideIndicator": "=>"
+      },
+      {
+        "InputObject": "DataAccessProvider.MySql.MySQLSourceParams AddJSONParams(DataAccessProvider.MySql.MySQLSourceParams, Int32, System.Object, System.String, System.String)",
+        "SideIndicator": "<="
+      },
+      {
+        "InputObject": "DataAccessProvider.MySql.MySQLSourceParams`1[TValue] AddJSONParams[TValue](DataAccessProvider.MySql.MySQLSourceParams`1[TValue], Int32, System.Object, System.String, System.String)",
+        "SideIndicator": "<="
+      }
+    ]
+  },
+  {
+    "symbol": "POSTGRES",
+    "differences": []
+  },
+  {
+    "symbol": "MONGO",
+    "differences": []
+  }
+]
